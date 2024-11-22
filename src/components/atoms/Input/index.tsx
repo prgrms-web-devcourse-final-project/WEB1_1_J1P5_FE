@@ -34,7 +34,7 @@ export const Input = ({
     <InputWrapper
       value={value}
       placeholder={placeholder}
-      onChange={onClick || handleInputChange}
+      onChange={onClick ? () => {} : handleInputChange}
       onClick={onClick && handleInputClick}
     />
   );
