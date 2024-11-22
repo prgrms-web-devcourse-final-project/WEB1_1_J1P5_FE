@@ -2,7 +2,9 @@ import type { HTMLAttributes, FC } from "react";
 import { H1Wrapper, H5Wrapper, Body1Wrapper, ButtonWrapper } from "./styled";
 
 interface ITextProps extends HTMLAttributes<HTMLParagraphElement> {
+  /** Text에 들어가는 내용 */
   content: string;
+  /** Text의 타입 (스타일 가이드 준수) */
   variant?: "h1" | "h5" | "body1" | "button";
 }
 

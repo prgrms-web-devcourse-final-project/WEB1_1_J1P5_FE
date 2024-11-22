@@ -19,7 +19,7 @@ export const H5Wrapper: ReturnType<typeof styled.p> = styled.h5`
 `;
 
 export const Body1Wrapper: ReturnType<typeof styled.p> = styled.p`
-  font-size: 1.5rem;
+  font-size: 1rem;
   ${commonStyles};
 `;
 
