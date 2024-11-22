@@ -6,3 +6,4 @@ export { SearchIcon } from "./SearchIcon";
 export { NotificationIcon } from "./NotificationIcon";
 export { SellIcon } from "./SellIcon";
 export { BuyIcon } from "./BuyIcon";
+export { MyLocationIcon } from "./MyLocationIcon";
