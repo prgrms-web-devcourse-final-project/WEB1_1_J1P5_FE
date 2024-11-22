@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { Text } from ".";
 
 const meta: Meta<typeof Text> = {
-  title: "Atoms/Text",
+  title: "atom/Text",
   component: Text,
   tags: ["autodocs"]
 };
@@ -37,4 +37,3 @@ export const Button: Story = {
     children: "This is a button text"
   }
 };
-
