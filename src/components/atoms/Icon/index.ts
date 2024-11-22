@@ -12,3 +12,8 @@ export { KebabIcon } from "./KebabIcon";
 export { PlusIcon } from "./PlusIcon";
 export { LinkIcon } from "./LinkIcon";
 export { HistoryIcon } from "./HistoryIcon";
+export { XIcon } from "./XIcon";
+export { HomeIcon } from "./HomeIcon";
+export { MarketPriceIcon } from "./MarketPriceIcon";
+export { ChatIcon } from "./ChatIcon";
+export { MyPageIcon } from "./MyPageIcon";
