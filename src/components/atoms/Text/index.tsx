@@ -1,13 +1,13 @@
 import type { HTMLAttributes, FC } from "react";
-import { H1Wrapper, H5Wrapper, Body1Wrapper, ButtonWrapper } from "./style";
+import { H1Wrapper, H5Wrapper, Body1Wrapper, ButtonWrapper } from "./styled";
 
 interface ITextProps extends HTMLAttributes<HTMLParagraphElement> {
-  children: string;
-  variant: "h1" | "h5" | "body1" | "button";
+  content: string;
+  variant?: "h1" | "h5" | "body1" | "button";
 }
 
 const variantMap: {
-  [key in ITextProps["variant"]]: React.ComponentType<
+  [key in NonNullable<ITextProps["variant"]>]: React.ComponentType<
     HTMLAttributes<HTMLParagraphElement>
   >;
 } = {
@@ -17,7 +17,7 @@ const variantMap: {
   button: ButtonWrapper
 };
 
-export const Text: FC<ITextProps> = ({ children, variant }) => {
-  const Component = variantMap[variant] || Body1Wrapper;
-  return <Component>{children}</Component>;
+export const Text: FC<ITextProps> = ({ content, variant = "body1" }) => {
+  const Component = variantMap[variant];
+  return <Component>{content}</Component>;
 };

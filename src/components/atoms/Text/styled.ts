@@ -27,4 +27,3 @@ export const ButtonWrapper: ReturnType<typeof styled.p> = styled.p`
   font-size: 0.875rem;
   ${commonStyles};
 `;
-
