@@ -1,7 +1,5 @@
-import DividerWrapper from "components/atoms/Divider/styled";
+import { DividerWrapper } from "./styled";
 
-const Divider = () => {
+export const Divider = () => {
   return <DividerWrapper />;
 };
-
-export default Divider;
