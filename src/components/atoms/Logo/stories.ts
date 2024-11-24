@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { Divider } from ".";
+import { Logo } from ".";
 
-const meta: Meta<typeof Divider> = {
-  title: "atoms/Divider",
-  component: Divider,
+const meta: Meta<typeof Logo> = {
+  title: "atoms/Logo",
+  component: Logo,
 };
 export default meta;
 type Story = StoryObj<typeof meta>;
