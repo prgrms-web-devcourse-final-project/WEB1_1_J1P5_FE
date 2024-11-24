@@ -1,7 +1,7 @@
 import { createRoot } from "react-dom/client";
 import { ToastManager } from "./ToastManager";
 
-class Toast {
+export class Toast {
   private _portal?: HTMLElement;
   private _createToast!: (message: string, duration: number) => void;
 
@@ -29,6 +29,4 @@ class Toast {
     this._createToast(message, duration);
   }
 }
-
-export default new Toast();
 
