@@ -2,7 +2,7 @@ import { Image, Text } from "components/atoms";
 import { RoundImageWithTextWrapper } from "./styled";
 
 interface IRoundImageWithText {
-  /** */
+  /** 이미지 아래 텍스트 */
   title: string;
   /** 클릭 이벤트 */
   onClick: () => void;
