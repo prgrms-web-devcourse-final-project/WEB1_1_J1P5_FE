@@ -28,7 +28,7 @@ export const TextButtonWrapper: ReturnType<
     `}
 
   ${({ size }) =>
-    (size! || size === "m") &&
+    size === "m" &&
     css`
       height: 2rem;
       padding-left: 1.5rem;
@@ -43,4 +43,3 @@ export const TextButtonWrapper: ReturnType<
       padding-right: 2rem;
     `}
 `;
-
