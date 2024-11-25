@@ -1,8 +1,12 @@
 export { Badge } from "./Badge";
+export { IconButton, LoginButton, TextButton } from "./Button";
 export { Divider } from "./Divider";
+export { Image } from "./Image";
 export { ImageUpload } from "./ImageUpload";
+export { Input } from "./Input";
 export { Label } from "./Label";
 export { Logo } from "./Logo";
+export { Select } from "./Select";
 export { TabIndicator } from "./TabIndicator";
 export { Text } from "./Text";
 export { TextButton } from "./Button";
