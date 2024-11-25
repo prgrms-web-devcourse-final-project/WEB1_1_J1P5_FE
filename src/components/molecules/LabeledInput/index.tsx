@@ -2,7 +2,7 @@ import { Label, Input } from "components/atoms";
 import { LabeledInputWrapper } from "./styled";
 
 interface ILabeledInputProps {
-  /** label와 input의 htmlFor */
+  /** Label와 Input의 htmlFor */
   id: string;
   /** Label에 들어갈 텍스트 */
   label: string;

@@ -1,7 +1,7 @@
 import { LabelWrapper } from "./styled";
 
 interface ILabelProps {
-  /** input의 id를 연결하기 위한 htmlFor */
+  /** Input or Select의 id를 연결하기 위한 htmlFor */
   htmlFor?: string;
   /** Label에 들어갈 텍스트 */
   text: string;

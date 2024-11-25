@@ -1,12 +1,10 @@
 import ReactSelect from "react-select";
 import { SelectWrapper } from "./styled";
-
-interface ISelectOption {
-  value: string;
-  label: string;
-}
+import type { ISelectOption } from "types";
 
 interface ISelectProps {
+  /** Select의 id */
+  id?: string;
   /** 현재 선택되어있는 값 */
   value: ISelectOption | undefined;
   /** 값 변경 시 함수 */
@@ -21,7 +19,7 @@ export const Select = ({
   value,
   onChange,
   options,
-  placeholder = "선택해주세요",
+  placeholder = "선택해주세요"
 }: ISelectProps) => {
   return (
     <SelectWrapper>
