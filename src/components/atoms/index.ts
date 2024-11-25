@@ -9,5 +9,4 @@ export { Logo } from "./Logo";
 export { Select } from "./Select";
 export { TabIndicator } from "./TabIndicator";
 export { Text } from "./Text";
-export { TextButton } from "./Button";
 export { ToastInstance as Toast } from "./Toast";
