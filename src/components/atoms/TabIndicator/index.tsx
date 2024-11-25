@@ -1,4 +1,4 @@
-import type { HTMLAttributes, FC } from "react";
+import type { HTMLAttributes } from "react";
 import { TabIndicatorWrapper } from "./styled";
 
 export interface ITabIndicatorProps extends HTMLAttributes<HTMLDivElement> {
