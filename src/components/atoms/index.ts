@@ -5,5 +5,5 @@ export { Label } from "./Label";
 export { Logo } from "./Logo";
 export { TabIndicator } from "./TabIndicator";
 export { Text } from "./Text";
-export { TextButton } from "./Button/TextButton";
+export { TextButton } from "./Button";
 export { ToastInstance as Toast } from "./Toast";
