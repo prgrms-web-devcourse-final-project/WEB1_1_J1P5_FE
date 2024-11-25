@@ -3,8 +3,8 @@ import KakaoLogo from "assets/LoginButton/kakao.svg";
 import NaverLogo from "assets/LoginButton/naver.svg";
 
 interface ILoginButtonProps {
-  /** 로그인 버튼의 타입 (default: "naver") */
-  type?: "naver" | "kakao";
+  /** 로그인 버튼의 타입 */
+  type: "naver" | "kakao";
   /** 로그인 버튼 클릭 시 이벤트 */
   onClick?: () => void;
 }
@@ -31,7 +31,7 @@ const NaverLoginButton = ({ onClick }: Omit<ILoginButtonProps, "type">) => {
  * 소셜 로그인 버튼
  */
 export const LoginButton = ({
-  type = "naver",
+  type,
   onClick = () => {},
 }: ILoginButtonProps) => {
   const Component = type === "kakao" ? KakaoLoginButton : NaverLoginButton;
