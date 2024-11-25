@@ -19,7 +19,7 @@ const variantMap: {
   button: ButtonWrapper
 };
 
-export const Text: FC<ITextProps> = ({ content, variant = "body1" }) => {
+export const Text = ({ content, variant = "body1" }: ITextProps) => {
   const Component = variantMap[variant];
   return <Component>{content}</Component>;
 };
