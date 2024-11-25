@@ -6,7 +6,6 @@ export interface ITabIndicatorProps extends HTMLAttributes<HTMLDivElement> {
   isActive?: boolean;
 }
 
-export const TabIndicator: FC<ITabIndicatorProps> = ({ isActive = false }) => {
+export const TabIndicator = ({ isActive = false }: ITabIndicatorProps) => {
   return <TabIndicatorWrapper isActive={isActive} />;
 };
-
