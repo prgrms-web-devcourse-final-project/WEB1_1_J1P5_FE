@@ -1,4 +1,4 @@
-import { type HTMLAttributes, type FC, useState } from "react";
+import { type HTMLAttributes, useState } from "react";
 
 import { ToastItemWrapper } from "./styled";
 import { useTimeout } from "hooks";
@@ -9,11 +9,7 @@ interface IToastItemProps extends HTMLAttributes<HTMLDivElement> {
   onDone: () => void;
 }
 
-export const ToastItem: FC<IToastItemProps> = ({
-  message,
-  duration,
-  onDone
-}) => {
+export const ToastItem = ({ message, duration, onDone }: IToastItemProps) => {
   const [show, setShow] = useState(true);
 
   useTimeout(() => {

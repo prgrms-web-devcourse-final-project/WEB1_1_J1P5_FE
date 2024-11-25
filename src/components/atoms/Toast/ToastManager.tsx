@@ -1,4 +1,4 @@
-import { type FC, useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 import { ToastManagerWrapper } from "./styled";
@@ -14,7 +14,7 @@ export interface IToastManagerProps {
   bind: (createToast: (message: string, duration: number) => void) => void;
 }
 
-export const ToastManager: FC<IToastManagerProps> = ({ bind }) => {
+export const ToastManager = ({ bind }: IToastManagerProps) => {
   const [toasts, setToasts] = useState<IToast[]>([]);
 
   const createToast = useCallback((message: string, duration: number) => {
