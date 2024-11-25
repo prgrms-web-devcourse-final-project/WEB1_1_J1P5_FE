@@ -5,11 +5,7 @@ const meta: Meta<typeof RoundImageWithText> = {
   title: "Molecules/RoundImageWithText",
   component: RoundImageWithText,
   tags: ["autodocs"],
-  decorators: [
-    (story) => (
-      <div style={{ width: "100%", maxWidth: "300px" }}>{story()}</div>
-    ),
-  ],
+  decorators: [(story) => <div style={{ maxWidth: "300px" }}>{story()}</div>],
 };
 
 type Story = StoryObj<typeof meta>;
