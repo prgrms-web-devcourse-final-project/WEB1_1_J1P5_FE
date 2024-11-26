@@ -7,7 +7,7 @@ const meta: Meta<typeof NavBarItem> = {
   component: NavBarItem,
   tags: ["autodocs"],
   argTypes: {
-    type: {
+    state: {
       control: "inline-radio",
       options: ["default", "active"],
     },
@@ -22,7 +22,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    type: "default",
+    state: "default",
     icon: Icons.BackIcon,
     title: "Title",
     onClick: () => console.log("NavBar Item 클릭"),
@@ -38,7 +38,7 @@ export const Default: Story = {
 
 export const Active: Story = {
   args: {
-    type: "active",
+    state: "active",
     icon: Icons.BackIcon,
     title: "Title",
     onClick: () => console.log("NavBar Item 클릭"),

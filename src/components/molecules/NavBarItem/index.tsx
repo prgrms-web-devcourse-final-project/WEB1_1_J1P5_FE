@@ -6,7 +6,7 @@ export type NavBarItemType = "default" | "active";
 
 interface INavBarItemProps {
   /** 현재 선택된 아이템인지 아닌지 구분 */
-  type: NavBarItemType;
+  state: NavBarItemType;
   /** 타이틀 */
   title: string;
   /** 아이콘 */
@@ -16,14 +16,14 @@ interface INavBarItemProps {
 }
 
 export const NavBarItem = ({
-  type,
+  state,
   title,
   icon,
   onClick,
 }: INavBarItemProps) => {
   const IconComponent = icon;
   return (
-    <NavBarItemWrapper type={type} onClick={onClick}>
+    <NavBarItemWrapper state={state} onClick={onClick}>
       <IconComponent size="m" />
       <Text content={title} variant="button" />
     </NavBarItemWrapper>
