@@ -1,5 +1,4 @@
 export { IconWithText } from "./IconWithText";
-// export { IconWithText_Compound } from "./IconWithText_Compound";
 export { ImageSlider } from "./ImageSlider";
 export { InputWithButton } from "./InputWithButton";
 export { KebabMenu } from "./KebabMenu";

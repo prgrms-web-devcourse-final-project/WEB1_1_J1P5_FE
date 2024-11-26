@@ -1,41 +1,50 @@
 import { IconType } from "types/icon";
-import { IconWithTextWrapper } from "./styled";
+import { IconWithTextContentWrapper, IconWithTextWrapper } from "./styled";
 import { Text } from "components/atoms";
+
+// IconWithText 기본 컴포넌트
 export interface IIconWithTextProps {
-  /** 아이콘 컴포넌트 : atoms/Icon 경로 참조 */
-  icon: IconType;
+  children?: React.ReactNode;
+}
+
+const IconWithTextRoot = ({ children }: IIconWithTextProps) => {
+  return <IconWithTextWrapper>{children}</IconWithTextWrapper>;
+};
+
+// Content 컴포넌트
+export interface IIconWithTextContentProps {
   /** Text 내용 */
   content: string;
   /** 부가설명 내용(권한 설정 화면) */
   desc?: string;
-  /** 클릭 이벤트 */
-  onClick?: () => void;
-  /** 아이콘 위치 ,default는 왼쪽 */
-  iconLocation?: "default" | "right";
 }
-export const IconWithText = ({
-  icon,
-  content,
-  desc,
-  onClick,
-  iconLocation = "default",
-}: IIconWithTextProps) => {
-  const IconComponent = icon;
+
+const Content = ({ content, desc }: IIconWithTextContentProps) => {
   return (
-    <IconWithTextWrapper
-      icon={icon}
-      content={content}
-      desc={desc}
-      onClick={onClick}
-      iconLocation={iconLocation}
-    >
-      <IconComponent></IconComponent>
-      <div className="text-con">
-        {/** 이후 디자인 나오고 Text 에 variant 추가 되면 변경*/}
-        <Text content={content} variant={"body1"}></Text>
-        {/** 이후 디자인 나오고 Text 에 variant 추가 되면 변경*/}
-        {desc && <Text content={desc} variant={"button"}></Text>}
-      </div>
-    </IconWithTextWrapper>
+    <IconWithTextContentWrapper content={content}>
+      <Text content={content} variant={"body1"}></Text>
+      {desc && <Text content={desc} variant={"button"}></Text>}
+    </IconWithTextContentWrapper>
   );
 };
+
+// Icon 컴포넌트
+export interface IIconWithTextIconProps {
+  /** 아이콘 컴포넌트 : atoms/Icon 경로 참조 */
+  icon: IconType;
+  /** 아이콘 사이즈 : s / m / l */
+  size?: "s" | "m" | "l";
+}
+
+const Icon = ({ icon, size = "m" }: IIconWithTextIconProps) => {
+  const IconComponent = icon;
+  return <IconComponent size={size} />;
+};
+
+export const IconWithText: typeof IconWithTextRoot & {
+  Icon: typeof Icon;
+  Content: typeof Content;
+} = Object.assign(IconWithTextRoot, {
+  Icon,
+  Content
+});
