@@ -7,7 +7,7 @@ export interface IIconWithTextProps {
   children?: React.ReactNode;
 }
 
-export const IconWithText = ({ children }: IIconWithTextProps) => {
+const IconWithTextRoot = ({ children }: IIconWithTextProps) => {
   return <IconWithTextWrapper>{children}</IconWithTextWrapper>;
 };
 
@@ -19,10 +19,7 @@ export interface IIconWithTextContentProps {
   desc?: string;
 }
 
-IconWithText.Content = function IconWithTextContent({
-  content,
-  desc,
-}: IIconWithTextContentProps) {
+const Content = ({ content, desc }: IIconWithTextContentProps) => {
   return (
     <IconWithTextContentWrapper content={content}>
       <Text content={content} variant={"body1"}></Text>
@@ -39,10 +36,15 @@ export interface IIconWithTextIconProps {
   size?: "s" | "m" | "l";
 }
 
-IconWithText.Icon = function IconWithTextIcon({
-  icon,
-  size = "m",
-}: IIconWithTextIconProps) {
+const Icon = ({ icon, size = "m" }: IIconWithTextIconProps) => {
   const IconComponent = icon;
   return <IconComponent size={size} />;
 };
+
+export const IconWithText: typeof IconWithTextRoot & {
+  Icon: typeof Icon;
+  Content: typeof Content;
+} = Object.assign(IconWithTextRoot, {
+  Icon,
+  Content,
+});

@@ -1,57 +1,63 @@
 import { Meta, StoryObj } from "@storybook/react";
 import { IconWithText } from ".";
-import { LocationIcon } from "components/atoms/Icon";
+import { IconSizes } from "components/atoms/Icon/styled";
+import * as Icons from "components/atoms/Icon";
 
-const meta: Meta<typeof IconWithText> = {
+const meta: Meta<(typeof IconWithText)[keyof typeof IconWithText]> = {
   title: "Molecules/IconWithText_Compound",
-  component: IconWithText,
+  // component: IconWithText,
   tags: ["autodocs"],
+  argTypes: {
+    icon: {
+      control: "select",
+      options: Object.keys(Icons),
+      mapping: Icons,
+    },
+    size: {
+      control: "select",
+      options: Object.keys(IconSizes),
+    },
+    content: {
+      control: "text",
+    },
+    desc: {
+      control: "text",
+    },
+  },
 };
 
 export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const NoDescIconLeftState: Story = {
+export const IconLeft: Story = {
   args: {
-    children: (
-      <>
-        <IconWithText.Icon icon={LocationIcon} size="m" />
-        <IconWithText.Content content="위치" />
-      </>
-    ),
+    icon: Icons.LocationIcon,
+    size: "m",
+    content: "위치",
+  },
+  render: (args) => {
+    return (
+      <IconWithText>
+        <IconWithText.Icon icon={args.icon} size={args.size} />
+        <IconWithText.Content content={args.content} desc={args.desc} />
+      </IconWithText>
+    );
   },
 };
 
-export const NoDescIconRightState: Story = {
+export const IconRight: Story = {
   args: {
-    children: (
-      <>
-        <IconWithText.Content content="위치" />
-        <IconWithText.Icon icon={LocationIcon} size="m" />
-      </>
-    ),
+    icon: Icons.LocationIcon,
+    size: "m",
+    content: "위치",
   },
-};
-
-export const hasDescIconRightState: Story = {
-  args: {
-    children: (
-      <>
-        <IconWithText.Content content="위치" desc="어디에서 사용되는지 작성" />
-        <IconWithText.Icon icon={LocationIcon} size="m" />
-      </>
-    ), // 아이콘만 사용한 예시
-  },
-};
-
-export const hasDescIconLeftState: Story = {
-  args: {
-    children: (
-      <>
-        <IconWithText.Icon icon={LocationIcon} size="m" />
-        <IconWithText.Content content="위치" desc="어디에서 사용되는지 작성" />
-      </>
-    ), // 아이콘만 사용한 예시
+  render: (args) => {
+    return (
+      <IconWithText>
+        <IconWithText.Content content={args.content} desc={args.desc} />
+        <IconWithText.Icon icon={args.icon} size={args.size} />
+      </IconWithText>
+    );
   },
 };
