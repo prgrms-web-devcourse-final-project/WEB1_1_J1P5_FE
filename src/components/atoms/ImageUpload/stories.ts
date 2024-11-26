@@ -11,6 +11,9 @@ type Story = StoryObj<typeof meta>;
 
 export const defaultState: Story = {
   args: {
-    onFileChange: () => {},
+    onFileChange: (file) => {
+      // 파일명을 콘솔에 출력
+      console.log("Selected file:", file.name);
+    },
   },
 };
