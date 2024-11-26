@@ -20,7 +20,7 @@ export const getTimeRemaining = (targetDate: Date): string => {
   const target = dayjs(targetDate);
 
   if (target.isBefore(now)) {
-    return "마감시간이 지나 경매가 종료되었습니다!";
+    return "over";
   }
 
   const diff = dayjs.duration(target.diff(now));
@@ -30,8 +30,7 @@ export const getTimeRemaining = (targetDate: Date): string => {
   if (diff.hours() > 0) parts.push(`${diff.hours()}시간`);
   if (diff.minutes() > 0)
     parts.push(`${String(diff.minutes()).padStart(2, "0")}분`);
-  if (diff.seconds() > 0)
-    parts.push(`${String(diff.seconds()).padStart(2, "0")}초`);
+  parts.push(`${String(diff.seconds()).padStart(2, "0")}초`);
 
   return parts.join(" ");
 };
