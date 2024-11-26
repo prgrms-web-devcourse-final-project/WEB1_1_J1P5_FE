@@ -1,4 +1,4 @@
-import type { HTMLAttributes, FC } from "react";
+import type { HTMLAttributes } from "react";
 import { H1Wrapper, H5Wrapper, Body1Wrapper, ButtonWrapper } from "./styled";
 
 interface ITextProps extends HTMLAttributes<HTMLParagraphElement> {
@@ -16,10 +16,14 @@ const variantMap: {
   h1: H1Wrapper,
   h5: H5Wrapper,
   body1: Body1Wrapper,
-  button: ButtonWrapper
+  button: ButtonWrapper,
 };
 
-export const Text = ({ content, variant = "body1" }: ITextProps) => {
+export const Text = ({
+  content,
+  variant = "body1",
+  onClick = () => {},
+}: ITextProps) => {
   const Component = variantMap[variant];
-  return <Component>{content}</Component>;
+  return <Component onClick={onClick}>{content}</Component>;
 };
