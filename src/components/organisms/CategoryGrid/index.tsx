@@ -1,5 +1,5 @@
 import { RoundImageWithText } from "components/molecules";
-import { CategoryGridWrapper } from "./styled";
+import { CategoryGridWrapper, CategoryItemWrapper } from "./styled";
 
 export interface ICategory {
   title: string;
@@ -22,14 +22,15 @@ export const CategoryGrid = ({
     <CategoryGridWrapper>
       {categories.map((category, idx) => {
         return (
-          <RoundImageWithText
-            key={idx}
-            imgUrl={category.imgUrl}
-            title={category.title}
-            onClick={() => {
-              handleClick(category.title);
-            }}
-          ></RoundImageWithText>
+          <CategoryItemWrapper key={idx}>
+            <RoundImageWithText
+              imgUrl={category.imgUrl}
+              title={category.title}
+              onClick={() => {
+                handleClick(category.title);
+              }}
+            ></RoundImageWithText>
+          </CategoryItemWrapper>
         );
       })}
     </CategoryGridWrapper>
