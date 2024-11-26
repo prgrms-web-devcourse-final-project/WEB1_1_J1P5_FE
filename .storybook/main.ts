@@ -11,10 +11,6 @@ const config: StorybookConfig = {
     "@storybook/addon-essentials",
     "@chromatic-com/storybook",
     "@storybook/addon-interactions",
-    /** storybook에서 react-router-dom 을 사용하기 위한 설정
-     * https://moontomato.tistory.com/40 참고
-     */
-    "storybook-addon-react-router-v6",
   ],
   framework: {
     name: "@storybook/react-vite",
