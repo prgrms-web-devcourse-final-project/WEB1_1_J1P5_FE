@@ -13,12 +13,12 @@ export interface IIconWithTextProps {
   /** 아이콘 위치 ,default는 왼쪽 */
   iconLocation?: "default" | "right";
 }
-const IconWithText = ({
+export const IconWithText_Legacy = ({
   icon,
   content,
   desc,
   onClick,
-  iconLocation = "default"
+  iconLocation = "default",
 }: IIconWithTextProps) => {
   const IconComponent = icon;
   return (
