@@ -17,3 +17,4 @@ export { HomeIcon } from "./HomeIcon";
 export { MarketPriceIcon } from "./MarketPriceIcon";
 export { ChatIcon } from "./ChatIcon";
 export { MyPageIcon } from "./MyPageIcon";
+export { DownIcon } from "./DownIcon";
