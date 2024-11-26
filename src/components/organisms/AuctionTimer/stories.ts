@@ -53,14 +53,14 @@ export const ThirtyMinutes: Story = {
   }
 };
 
-export const TenSeconds: Story = {
+export const ThirtySeconds: Story = {
   args: {
-    targetDate: new Date(Date.now() + 1000 * 10)
+    targetDate: new Date(Date.now() + 1000 * 30)
   },
   parameters: {
     docs: {
       description: {
-        story: "현재 시간으로부터 10초 남은 타이머"
+        story: "현재 시간으로부터 30초 남은 타이머"
       }
     }
   }
