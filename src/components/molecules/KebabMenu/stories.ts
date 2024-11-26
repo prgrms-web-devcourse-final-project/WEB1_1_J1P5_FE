@@ -1,0 +1,29 @@
+import type { Meta, StoryObj } from "@storybook/react";
+import { IMenu, KebabMenu } from ".";
+
+const meta: Meta<typeof KebabMenu> = {
+  title: "Molecules/KebabMenu",
+  component: KebabMenu,
+  tags: ["autodocs"],
+};
+
+type Story = StoryObj<typeof meta>;
+
+const testItems: IMenu[] = [
+  {
+    content: "신고하기",
+    onClick: () => console.log("신고하기 클릭"),
+  },
+  {
+    content: "차단하기",
+    onClick: () => console.log("차단하기 클릭"),
+  },
+];
+
+export const Default: Story = {
+  args: {
+    menus: testItems,
+  },
+};
+
+export default meta;
