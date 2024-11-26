@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { IIconWithTextProps } from ".";
+import { IIconWithTextContentProps, IIconWithTextProps } from ".";
 
 export const IconWithTextWrapper: ReturnType<
   typeof styled.div<IIconWithTextProps>
@@ -8,12 +8,12 @@ export const IconWithTextWrapper: ReturnType<
   justify-content: flex-start;
   align-items: center;
   gap: 8px;
-
   cursor: pointer;
+`;
 
-  .text-con {
-    display: flex;
-    flex-direction: column;
-    order: ${({ iconLocation }) => (iconLocation === "default" ? "0" : "-1")};
-  }
+export const IconWithTextContentWrapper: ReturnType<
+  typeof styled.div<IIconWithTextContentProps>
+> = styled.div<IIconWithTextContentProps>`
+  display: flex;
+  flex-direction: column;
 `;
