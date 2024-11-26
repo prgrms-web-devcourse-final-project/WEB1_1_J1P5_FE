@@ -5,10 +5,16 @@ import { Text } from "components/atoms";
 // IconWithText 기본 컴포넌트
 export interface IIconWithTextProps {
   children?: React.ReactNode;
+  onClick?: () => void;
 }
 
-const IconWithTextRoot = ({ children }: IIconWithTextProps) => {
-  return <IconWithTextWrapper>{children}</IconWithTextWrapper>;
+const IconWithTextRoot = ({
+  children,
+  onClick = () => {},
+}: IIconWithTextProps) => {
+  return (
+    <IconWithTextWrapper onClick={onClick}>{children}</IconWithTextWrapper>
+  );
 };
 
 // Content 컴포넌트
@@ -46,5 +52,5 @@ export const IconWithText: typeof IconWithTextRoot & {
   Content: typeof Content;
 } = Object.assign(IconWithTextRoot, {
   Icon,
-  Content
+  Content,
 });
