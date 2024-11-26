@@ -1,4 +1,14 @@
 export { IconWithText } from "./IconWithText";
-export { LabeledInput } from "./LabeledInput";
-export { TextWithImage } from "./TextWithImage";
+// export { IconWithText_Compound } from "./IconWithText_Compound";
 export { ImageSlider } from "./ImageSlider";
+export { InputWithButton } from "./InputWithButton";
+export { KebabMenu } from "./KebabMenu";
+export { LabeledInput } from "./LabeledInput";
+export { LabeledSelect } from "./LabeledSelect";
+export { NavBarItem } from "./NavBarItem";
+export { OverlappingImage } from "./OverlappingImage";
+export { RoundImageWithText } from "./RoundImageWithText";
+export { TabItem } from "./TabItem";
+export { TabMenu } from "./TabMenu";
+export { TextDividerList } from "./TextDividerList";
+export { TextWithImage } from "./TextWithImage";
