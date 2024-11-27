@@ -1,6 +1,6 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { getRelativeTime, getTimeRemaining } from "utils/dayFormatter";
+import { getRelativeTime } from "utils/dayFormatter";
 
 const queryClient: QueryClient = new QueryClient();
 
