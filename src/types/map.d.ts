@@ -4,3 +4,9 @@ export interface ICoord {
   /** 경도 */
   lng: number;
 }
+
+export interface IMapProps {
+  coord?: ICoord;
+  isCenterMarkerExist: boolean;
+  onSubmitButtonClick?: (coord: ICoord) => void;
+}

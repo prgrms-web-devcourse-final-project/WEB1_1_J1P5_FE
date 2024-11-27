@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { Map } from ".";
 import { NavermapsProvider } from "react-naver-maps";
+import { Map } from ".";
 
 const meta: Meta<typeof Map> = {
   title: "Organisms/Map",
