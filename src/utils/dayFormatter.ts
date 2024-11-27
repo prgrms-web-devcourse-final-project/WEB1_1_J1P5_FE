@@ -12,10 +12,10 @@ dayjs.locale("ko");
 
 /**
  * 현재 시간이랑 param으로 들어온 Date 비교해서 남은 시간을 `XX일 XX시간 XX분 XX초` 형태로 리턴하는 함수입니다.
- * @param targetDate Date
+ * @param targetDate Date | string
  * @returns string
  */
-export const getTimeRemaining = (targetDate: Date): string => {
+export const getTimeRemaining = (targetDate: Date | string): string => {
   const now = dayjs();
   const target = dayjs(targetDate);
 
@@ -44,10 +44,10 @@ export const getTimeRemaining = (targetDate: Date): string => {
  * 1일 ~ 29일 = "n 일 전"
  * 30일 ~ 364일 = "n 개월 전"
  * 365일 단위로 = "n 년 전"
- * @param date Date
+ * @param date Date | string
  * @returns string
  */
-export const getRelativeTime = (date: Date): string => {
+export const getRelativeTime = (date: Date | string): string => {
   const now = dayjs();
   const target = dayjs(date);
   if (target.isAfter(now)) {
