@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { IconWithText } from ".";
+import { IconWithText_Legacy } from ".";
 import { LocationIcon } from "components/atoms/Icon";
 
-const meta: Meta<typeof IconWithText> = {
-  title: "Molecules/IconWithText",
-  component: IconWithText,
+const meta: Meta<typeof IconWithText_Legacy> = {
+  title: "Molecules/IconWithText_Legacy",
+  component: IconWithText_Legacy,
   tags: ["autodocs"],
 };
 export default meta;
