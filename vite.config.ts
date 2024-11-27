@@ -10,4 +10,7 @@ export default defineConfig({
     }),
     tsconfigPaths(),
   ],
+  define: {
+    "process.env": process.env
+  }
 });
