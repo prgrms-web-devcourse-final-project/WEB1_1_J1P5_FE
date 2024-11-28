@@ -5,6 +5,21 @@ const meta: Meta<typeof ChatMessage> = {
   title: "Organisms/ChatMessage",
   component: ChatMessage,
   tags: ["autodocs"],
+  argTypes: {
+    msg: {
+      description: "채팅 메시지 내용",
+    },
+    isLastMsg: {
+      description:
+        "해당 채팅이 그룹에서 마지막 메시지인지 구분,(시간 표시 유무 구분)",
+    },
+    isRead: {
+      description: "해당 채팅을 읽었는지 구분",
+    },
+    createdAt: {
+      description: "해당 메시지 보낸 시간",
+    },
+  },
 };
 
 type Story = StoryObj<typeof meta>;
