@@ -7,7 +7,7 @@ import { IMapProps } from "types";
 
 export const Map = ({
   coord,
-  isCenterMarkerExist,
+  isCenterMarkerExist = false,
   onSubmitButtonClick
 }: IMapProps) => {
   const {
