@@ -1,51 +1,57 @@
-import { Fragment, useCallback } from "react";
+import { Fragment, useCallback, useEffect } from "react";
 import { UploadedImageCounter } from "components/molecules";
 import { PostImageItem } from "components/organisms";
 
 import { PostImageManagerWrapper, PostImageListWrapper } from "./styled";
+import { ImageInfo } from "types";
 
 interface IPostImageManagerProps {
-  imgUrls: string[];
-  setImgUrls: React.Dispatch<React.SetStateAction<string[]>>;
+  /** ImageInfo 배열 (url: S3에 업로드 된 이미지 url, base64Url: 아직 S3에 올라가지 않아서 미리보기만 제공되는 url, file: 아직 안올라간 이미지들을 나중에 S3에 올리기 위해 필요한 file)*/
+  imageInfos: ImageInfo[];
+  /** imageInfos를 설정하는 함수 */
+  setImageInfos: React.Dispatch<React.SetStateAction<ImageInfo[]>>;
 }
 
 export const PostImageManager = ({
-  imgUrls,
-  setImgUrls
+  imageInfos,
+  setImageInfos
 }: IPostImageManagerProps) => {
   const onChange = useCallback(
     (file: File) => {
       const reader = new FileReader();
       reader.onload = (e) => {
-        const url = e.target?.result;
-        if (typeof url === "string") {
-          setImgUrls((prev) => [...prev, url]);
-        }
+        const base64Url = e.target?.result as string;
+        const newImgData: ImageInfo = {
+          url: "",
+          base64Url,
+          file
+        };
+        setImageInfos((prev) => [...prev, newImgData]);
       };
       reader.readAsDataURL(file);
     },
-    [setImgUrls]
+    [setImageInfos]
   );
 
   const handleRemoveImage = useCallback(
     (index: number) => {
-      setImgUrls((prev) => prev.filter((_, i) => i !== index));
+      setImageInfos((prev) => prev.filter((_, i) => i !== index));
     },
-    [setImgUrls]
+    [setImageInfos]
   );
 
   return (
     <PostImageManagerWrapper>
       <UploadedImageCounter
         text="사진 등록"
-        currentCount={imgUrls.length}
+        currentCount={imageInfos.length}
         onChange={onChange}
       />
       <PostImageListWrapper>
-        {imgUrls.map((url, index) => (
+        {imageInfos.map((info, index) => (
           <Fragment key={index}>
             <PostImageItem
-              imgUrl={url}
+              imgUrl={(info.url || info.base64Url) as string}
               isThumbnail={index === 0}
               onClick={() => handleRemoveImage(index)}
             />
