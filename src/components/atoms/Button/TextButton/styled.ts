@@ -3,8 +3,13 @@ import { css } from "@emotion/react";
 import { ITextButtonProps } from ".";
 
 export const TextButtonWrapper: ReturnType<
-  typeof styled.div<ITextButtonProps>
-> = styled.div<ITextButtonProps>`
+  typeof styled.button<ITextButtonProps>
+> = styled.button<ITextButtonProps>`
+  // 버튼 스타일 초기화
+  outline: none;
+  border: none;
+
+  //
   display: inline-flex;
   align-items: center;
   justify-content: center;

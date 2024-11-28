@@ -2,9 +2,14 @@ import styled from "@emotion/styled";
 import { IIconButtonProps } from ".";
 
 export const IconButtonWrapper: ReturnType<
-  typeof styled.div<IIconButtonProps>
-> = styled.div<IIconButtonProps>`
-  width: fit-content;
+  typeof styled.button<IIconButtonProps>
+> = styled.button<IIconButtonProps>`
+  // 버튼 스타일 초기화
+  outline: none;
+  border: none;
+
+  //
+  //width: fit-content;
 
   display: flex;
   justify-content: center;
