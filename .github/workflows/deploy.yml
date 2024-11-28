@@ -12,6 +12,13 @@ jobs:
       - uses: actions/checkout@v4
       - name: Install mustache (to update the date)
         run: apk add ruby && gem install mustache
+
+      - name: List current directory
+        run: ls -la
+      
+      - name: Check .storybook directory
+        run: ls -la .storybook
+        
       - name: creates output
         run: sh ./build.sh
       - name: Pushes to another repository
