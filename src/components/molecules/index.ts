@@ -11,3 +11,4 @@ export { TabItem } from "./TabItem";
 export { TabMenu } from "./TabMenu";
 export { TextDividerList } from "./TextDividerList";
 export { TextWithImage } from "./TextWithImage";
+export { UploadedImageCounter } from "./UploadedImageCounter";
