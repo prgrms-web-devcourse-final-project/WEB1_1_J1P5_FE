@@ -18,7 +18,7 @@ module.exports = {
     "plugin:react/jsx-runtime",
     "plugin:@tanstack/eslint-plugin-query/recommended",
     "plugin:storybook/recommended",
-    "plugin:storybook/recommended"
+    "plugin:storybook/recommended",
   ],
   settings: {
     // 공통으로 넣고 싶은 설정이 있으면 추가합니다.
@@ -79,6 +79,20 @@ module.exports = {
     "react/no-unknown-property": "off",
     // 정의한 props 중에 빠진게 있는지 체크 (NextPage 등 일부 추상화 컴포넌트에서 복잡해지므로 기본은 off)
     "react/prop-types": "off",
+    // 사용하지 않는 변수를 underscore(_)로 작성할 수 있도록 선행 underscore 허용
+    "@typescript-eslint/naming-convention": [
+      "error",
+      {
+        selector: "parameter",
+        format: ["camelCase"],
+        leadingUnderscore: "allow",
+      },
+      {
+        selector: "variable",
+        format: ["camelCase", "UPPER_CASE", "PascalCase"],
+        leadingUnderscore: "allow",
+      },
+    ],
   },
   ignorePatterns: ["dist"], // dist 폴더는 ESLint 분석에서 제외
 };
