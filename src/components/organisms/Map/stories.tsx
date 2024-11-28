@@ -14,10 +14,12 @@ const meta: Meta<typeof Map> = {
       defaultValue: {
         lat: 37.5666805,
         lng: 126.9784147
-      }
+      },
+      description: "좌표 (위도, 경도)"
     },
-    isCenterMarkerExist: {
-      control: "boolean"
+    onSubmitButtonClick: {
+      action: "onSubmitButtonClick",
+      description: "최종 좌표를 처리하는 버튼의 클릭 이벤트 핸들러"
     }
   },
   decorators: (story) => (
