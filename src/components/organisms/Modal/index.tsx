@@ -1,4 +1,10 @@
-import { type Context, createContext, useContext } from "react";
+import {
+  type Context,
+  createContext,
+  useContext,
+  useEffect,
+  useRef,
+} from "react";
 import { IconButton, Text, TextButton } from "components/atoms";
 import { XIcon } from "components/atoms/Icon";
 import type { ITextButtonProps } from "components/atoms/Button/TextButton";
@@ -11,14 +17,36 @@ import {
   ModalButtonContainerWrapper,
 } from "./styled";
 
+/* -------------------------------------------------------------------
+ * Modal Context
+ * ------------------------------------------------------------------- */
+
 interface IModalContextProps {
-  onClose: () => void;
+  open: boolean;
+  /** 모달 닫기 함수 */
+  onClose: (() => void) | null; // @rushstack/no-new-null 걸림 ㅠ..
 }
 
 const ModalContext: Context<IModalContextProps> =
   createContext<IModalContextProps>({
-    onClose: () => {},
+    open: false,
+    onClose: null,
   });
+
+/**
+ * Modal 하위 컴포넌트에서 사용되는지 검사를 위한 훅
+ */
+const useModal = () => {
+  const context = useContext(ModalContext);
+  if (!context) {
+    throw new Error("Modal Context 내에서만 사용 가능합니다.");
+  }
+  return context;
+};
+
+/* -------------------------------------------------------------------
+ * Modal Root
+ * ------------------------------------------------------------------- */
 
 export interface IModalRootProps {
   children: React.ReactNode;
@@ -43,12 +71,16 @@ const ModalRoot = ({
 }: IModalRootProps) => {
   return (
     <ModalRootWrapper open={open} className={className}>
-      <ModalContext.Provider value={{ onClose }}>
+      <ModalContext.Provider value={{ open, onClose }}>
         {children}
       </ModalContext.Provider>
     </ModalRootWrapper>
   );
 };
+
+/* -------------------------------------------------------------------
+ * Modal Background
+ * ------------------------------------------------------------------- */
 
 interface IModalBackgroundProps {
   hasClickEvent?: boolean;
@@ -59,11 +91,15 @@ interface IModalBackgroundProps {
  * @param hasClickEvent 배경 클릭 시 닫힐지 여부
  */
 const ModalBackground = ({ hasClickEvent }: IModalBackgroundProps) => {
-  const { onClose } = useContext(ModalContext);
+  const { onClose } = useModal();
   return (
-    <ModalBackgroundWrapper onClick={hasClickEvent ? onClose : () => {}} />
+    <ModalBackgroundWrapper onClick={(hasClickEvent && onClose) || undefined} />
   );
 };
+
+/* -------------------------------------------------------------------
+ * Modal Container
+ * ------------------------------------------------------------------- */
 
 interface IModalContainerProps {
   children: React.ReactNode;
@@ -74,8 +110,35 @@ interface IModalContainerProps {
  * @param children
  */
 const ModalContainer = ({ children }: IModalContainerProps) => {
-  return <ModalContainerWrapper>{children}</ModalContainerWrapper>;
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { open, onClose } = useModal();
+
+  useEffect(() => {
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape" && open) {
+        // 눌린 Key가 ESC면서 open=true 상태
+        onClose!(); // 여기로 넘어왔다는건 확실하게 있다는거니까 타입 단언
+      }
+    };
+    if (open) {
+      // open=true가 되면 keydown 이벤트에 handleEscape 넣기
+      document.addEventListener("keydown", handleEscape);
+      containerRef.current?.focus();
+    }
+    return () => {
+      // 언마운트 될 때 제거
+      document.removeEventListener("keydown", handleEscape);
+    };
+  }, [open, onClose]);
+
+  return (
+    <ModalContainerWrapper ref={containerRef}>{children}</ModalContainerWrapper>
+  );
 };
+
+/* -------------------------------------------------------------------
+ * Modal Header
+ * ------------------------------------------------------------------- */
 
 interface IModalHeaderProps {
   title?: string;
@@ -88,7 +151,7 @@ interface IModalHeaderProps {
  * @param hasCloseButton closeButton(X) 있을지 여부 (default=true)
  */
 const ModalHeader = ({ title, hasCloseButton = true }: IModalHeaderProps) => {
-  const { onClose } = useContext(ModalContext);
+  const { onClose } = useModal();
   return (
     <ModalHeaderWrapper>
       {title && <Text content={title} variant="body1" />}
@@ -97,12 +160,16 @@ const ModalHeader = ({ title, hasCloseButton = true }: IModalHeaderProps) => {
           icon={XIcon}
           size="s"
           backgroundColor="transparent"
-          onClick={onClose}
+          onClick={onClose || undefined}
         />
       )}
     </ModalHeaderWrapper>
   );
 };
+
+/* -------------------------------------------------------------------
+ * Modal Body
+ * ------------------------------------------------------------------- */
 
 interface IModalBodyProps {
   children: React.ReactNode;
@@ -117,6 +184,10 @@ interface IModalBodyProps {
 const ModalBody = ({ children, className = "" }: IModalBodyProps) => {
   return <ModalBodyWrapper className={className}>{children}</ModalBodyWrapper>;
 };
+
+/* -------------------------------------------------------------------
+ * Modal ButtonContainer
+ * ------------------------------------------------------------------- */
 
 export interface IButton {
   title: string;
@@ -151,6 +222,10 @@ const ModalButtonContainer = ({
     </ModalButtonContainerWrapper>
   );
 };
+
+/* -------------------------------------------------------------------
+ * Export
+ * ------------------------------------------------------------------- */
 
 export const Modal: typeof ModalRoot & {
   Background: typeof ModalBackground;
