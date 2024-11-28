@@ -17,7 +17,9 @@ export const useKebabMenuManager = () => {
   const onBlock = useCallback(() => {
     console.log("차단하기 클릭");
   }, []);
-
+  const onRepot = useCallback(() => {
+    console.log("신고하기 클릭");
+  }, []);
   const getMenus = useCallback(
     (scenario: string): IMenu[] => {
       switch (scenario) {
@@ -33,13 +35,13 @@ export const useKebabMenuManager = () => {
           return [
             { content: "답글", onClick: onReply },
             { content: "차단하기", onClick: onBlock },
-            { content: "삭제하기", onClick: onDelete },
+            { content: "신고하기", onClick: onRepot },
           ];
         default:
           return [];
       }
     },
-    [onBlock, onDelete, onEdit, onReply]
+    [onBlock, onDelete, onEdit, onReply, onRepot]
   );
 
   return { getMenus };

@@ -7,11 +7,17 @@ import { useKebabMenuManager } from "hooks/useKebabMenuManager";
 import { KebabMenu } from "components/molecules";
 
 interface ICommentItemProps {
+  /** 댓글 아이디 */
   commentId: number;
+  /** 프로필 img Url */
   imgUrl: string;
+  /** 작성자 닉네임 */
   nickname: string;
+  /** 작성 날짜*/
   createdAt: string;
+  /** 내용 */
   content: string;
+  /** 해당 댓글이 내가 작성한 댓글인지 여부 */
   isMyComment: boolean;
 }
 
