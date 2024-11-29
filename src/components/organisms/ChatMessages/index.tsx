@@ -8,7 +8,9 @@ import {
 } from "./styled";
 
 interface IComponentProps {
+  /** ChatBubble 목록 */
   chatBubbles: IChatBubbleProps[];
+  /** 메시지 전송시 실행할 함수 */
   onWriteMessage: (message: string) => void;
 }
 
