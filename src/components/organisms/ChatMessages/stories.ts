@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { ChatMessages } from ".";
 
 const meta: Meta<typeof ChatMessages> = {
-  title: "Organisms/Component",
+  title: "Organisms/ChatMessages",
   component: ChatMessages,
   tags: ["autodocs"],
   argTypes: {},
