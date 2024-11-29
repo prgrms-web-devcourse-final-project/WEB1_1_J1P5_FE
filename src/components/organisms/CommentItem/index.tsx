@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import { useKebabMenuManager } from "hooks/useKebabMenuManager";
 import { KebabMenu } from "components/molecules";
 
-interface ICommentItemProps {
+export interface ICommentItemProps {
   /** 댓글 아이디 */
   commentId: number;
   /** 프로필 img Url */
