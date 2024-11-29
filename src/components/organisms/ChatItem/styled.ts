@@ -32,5 +32,9 @@ export const ChatItemWrapper: ReturnType<typeof styled.div> = styled.div`
   }
 
   .time-cnt-con {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
   }
 `;
