@@ -1,4 +1,4 @@
-import { Fragment, useCallback, useEffect } from "react";
+import { Fragment, useCallback } from "react";
 import { UploadedImageCounter } from "components/molecules";
 import { PostImageItem } from "components/organisms";
 
@@ -14,7 +14,7 @@ interface IPostImageManagerProps {
 
 export const PostImageManager = ({
   imageInfos,
-  setImageInfos
+  setImageInfos,
 }: IPostImageManagerProps) => {
   const onChange = useCallback(
     (file: File) => {
@@ -24,20 +24,20 @@ export const PostImageManager = ({
         const newImgData: ImageInfo = {
           url: "",
           base64Url,
-          file
+          file,
         };
         setImageInfos((prev) => [...prev, newImgData]);
       };
       reader.readAsDataURL(file);
     },
-    [setImageInfos]
+    [setImageInfos],
   );
 
   const handleRemoveImage = useCallback(
     (index: number) => {
       setImageInfos((prev) => prev.filter((_, i) => i !== index));
     },
-    [setImageInfos]
+    [setImageInfos],
   );
 
   return (
@@ -61,4 +61,3 @@ export const PostImageManager = ({
     </PostImageManagerWrapper>
   );
 };
-

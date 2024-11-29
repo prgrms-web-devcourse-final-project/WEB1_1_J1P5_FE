@@ -2,8 +2,16 @@ import styled from "@emotion/styled";
 import { IIconButtonProps } from ".";
 
 export const IconButtonWrapper: ReturnType<
-  typeof styled.button<IIconButtonProps>
-> = styled.button<IIconButtonProps>`
+  typeof styled.button<
+    Pick<IIconButtonProps, "backgroundColor"> & {
+      shape: IIconButtonProps["type"];
+    }
+  >
+> = styled.button<
+  Pick<IIconButtonProps, "backgroundColor"> & {
+    shape: IIconButtonProps["type"];
+  }
+>`
   // 버튼 스타일 초기화
   outline: none;
   border: none;
@@ -16,7 +24,7 @@ export const IconButtonWrapper: ReturnType<
   align-items: center;
 
   padding: 4px;
-  border-radius: ${({ type }) => (type === "square" ? "16px" : "50%")};
+  border-radius: ${({ shape }) => (shape === "square" ? "16px" : "50%")};
   background-color: ${({ backgroundColor }) =>
     backgroundColor === "transparent" ? "transparent" : "#D9D9D9"};
 

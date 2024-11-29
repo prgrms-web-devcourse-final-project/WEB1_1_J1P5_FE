@@ -2,13 +2,7 @@ import {} from "components/atoms";
 import { TabItem } from "components/molecules";
 import { ChatList } from "components/organisms";
 import { ChatOverviewRootWrapper, ListWrapper, PanelWrapper } from "./styled";
-import {
-  type Context,
-  createContext,
-  useContext,
-  useEffect,
-  useState
-} from "react";
+import { type Context, createContext, useContext, useState } from "react";
 
 import { IChatItemProps } from "components/organisms/ChatItem";
 
@@ -26,7 +20,7 @@ interface IChatOverviewContextProps {
 const ChatOverviewContext: Context<IChatOverviewContextProps> =
   createContext<IChatOverviewContextProps>({
     selectedIndex: 0,
-    setSelectedIndex: undefined
+    setSelectedIndex: undefined,
   });
 
 /**
@@ -119,6 +113,5 @@ export const ChatOverview: typeof ChatOverviewRoot & {
 } = Object.assign(ChatOverviewRoot, {
   List: List,
   Trigger: Trigger,
-  Panel: Panel
+  Panel: Panel,
 });
-

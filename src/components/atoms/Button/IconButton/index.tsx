@@ -22,8 +22,7 @@ export const IconButton = ({
   const IconComponent = icon;
   return (
     <IconButtonWrapper
-      icon={IconComponent}
-      type={type}
+      shape={type}
       backgroundColor={backgroundColor}
       onClick={onClick}
     >

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Text, TextButton } from "components/atoms";
 import { NeighborhoodAuthFormWrapper } from "./styled";
 import { Map } from "components/organisms";
@@ -10,7 +10,7 @@ interface INeighborhoodAuthFormProps {
 }
 
 export const NeighborhoodAuthForm = ({
-  onSubmitButtonClick
+  onSubmitButtonClick,
 }: INeighborhoodAuthFormProps) => {
   const [myCoord, setMyCoord] = useState<any>(null);
   const [myICoord, setMyICoord] = useState<ICoord | null>(null);
@@ -20,13 +20,13 @@ export const NeighborhoodAuthForm = ({
     if (myCoord) {
       const iCoord = {
         lat: myCoord.lat(),
-        lng: myCoord.lng()
+        lng: myCoord.lng(),
       } as const;
       setMyICoord(iCoord);
 
       // TODO: 위경도를 가지고 'OO동' 반환하는 유틸함수에 저장
       setMyNeighborhood(
-        `lat: ${iCoord.lat.toString()}, lng: ${iCoord.lng.toString()}`
+        `lat: ${iCoord.lat.toString()}, lng: ${iCoord.lng.toString()}`,
       );
     }
   }, [myCoord]);
@@ -47,4 +47,3 @@ export const NeighborhoodAuthForm = ({
     </NeighborhoodAuthFormWrapper>
   );
 };
-

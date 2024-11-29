@@ -3,7 +3,7 @@ import { ChatItemWrapper } from "./styled";
 import { Badge, Text } from "components/atoms";
 import { getRelativeTime } from "utils";
 
-interface IChatItemProps {
+export interface IChatItemProps {
   profileImgUrl: string;
   itemImgUrl: string;
   name: string;
