@@ -4,3 +4,4 @@ export { SearchHistoryItem } from "./SearchHistoryItem";
 
 export { ChatMessage } from "./ChatMessage";
 export { ChatBubble } from "./ChatBubble";
+export { ChatList } from "./ChatList";
