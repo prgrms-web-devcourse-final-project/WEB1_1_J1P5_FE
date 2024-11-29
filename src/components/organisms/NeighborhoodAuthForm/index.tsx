@@ -5,6 +5,7 @@ import { Map } from "components/organisms";
 import { ICoord } from "types";
 
 interface INeighborhoodAuthFormProps {
+  /** 동네 인증 버튼 클릭 이벤트 */
   onSubmitButtonClick?: (coord: ICoord) => void;
 }
 
@@ -17,15 +18,15 @@ export const NeighborhoodAuthForm = ({
 
   useEffect(() => {
     if (myCoord) {
-      const icoord = {
+      const iCoord = {
         lat: myCoord.lat(),
         lng: myCoord.lng()
       } as const;
-      setMyICoord(icoord);
+      setMyICoord(iCoord);
 
       // TODO: 위경도를 가지고 'OO동' 반환하는 유틸함수에 저장
       setMyNeighborhood(
-        `lat: ${icoord.lat.toString()}, lng: ${icoord.lng.toString()}`
+        `lat: ${iCoord.lat.toString()}, lng: ${iCoord.lng.toString()}`
       );
     }
   }, [myCoord]);
