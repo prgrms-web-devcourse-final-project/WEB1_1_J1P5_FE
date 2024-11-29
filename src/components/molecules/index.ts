@@ -12,3 +12,4 @@ export { TabMenu } from "./TabMenu";
 export { TextDividerList } from "./TextDividerList";
 export { TextWithImage } from "./TextWithImage";
 export { UploadedImageCounter } from "./UploadedImageCounter";
+export { ModalBottomSheet } from "./ModalBottomSheet";
