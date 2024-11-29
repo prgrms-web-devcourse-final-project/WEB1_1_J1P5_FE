@@ -1,6 +1,6 @@
 import { Container as MapDiv, NaverMap, Marker } from "react-naver-maps";
 import { MyLocationIcon } from "components/atoms/Icon";
-import { Image, IconButton, TextButton } from "components/atoms";
+import { Image, IconButton } from "components/atoms";
 import { MapWrapper, CenterMarkerWrapper } from "./styled";
 import { useMap } from "hooks";
 import { IMapProps } from "types";
@@ -8,7 +8,8 @@ import { IMapProps } from "types";
 export const Map = ({
   coord,
   isCenterMarkerExist = false,
-  onSubmitButtonClick
+  setCenterCoord,
+  setMyCoord
 }: IMapProps) => {
   const {
     navermaps,
@@ -16,9 +17,8 @@ export const Map = ({
     setMap,
     setMyMarker,
     setTransactionMarker,
-    moveToCurrentLocation,
-    getCenterCoord
-  } = useMap({ coord, isCenterMarkerExist, onSubmitButtonClick });
+    moveToCurrentLocation
+  } = useMap({ coord, isCenterMarkerExist, setMyCoord });
 
   return (
     <MapWrapper>
@@ -28,7 +28,12 @@ export const Map = ({
           height: "80vh"
         }}
       >
-        <NaverMap defaultCenter={defaultCenter} defaultZoom={16} ref={setMap}>
+        <NaverMap
+          defaultCenter={defaultCenter}
+          defaultZoom={16}
+          onCenterChanged={setCenterCoord}
+          ref={setMap}
+        >
           <Marker
             icon={{
               url: "https://url.kr/y7fjy4",
@@ -56,12 +61,6 @@ export const Map = ({
           />
         </NaverMap>
       </MapDiv>
-      {onSubmitButtonClick && (
-        <TextButton
-          text={"지도 center 위경도 버튼(수정 필요)"}
-          onClick={getCenterCoord}
-        />
-      )}
     </MapWrapper>
   );
 };

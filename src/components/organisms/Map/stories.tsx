@@ -16,10 +16,6 @@ const meta: Meta<typeof Map> = {
         lng: 126.9784147
       },
       description: "좌표 (위도, 경도)"
-    },
-    onSubmitButtonClick: {
-      action: "onSubmitButtonClick",
-      description: "최종 좌표를 처리하는 버튼의 클릭 이벤트 핸들러"
     }
   },
   decorators: (story) => (
@@ -33,10 +29,7 @@ type Story = StoryObj<typeof meta>;
 
 export const RegisterLocation: Story = {
   args: {
-    isCenterMarkerExist: true,
-    onSubmitButtonClick: (coord) => {
-      console.log(coord);
-    }
+    isCenterMarkerExist: true
   },
   parameters: {
     docs: {
@@ -54,10 +47,7 @@ export const EditLocation: Story = {
       lat: 37.5666805,
       lng: 126.9784147
     },
-    isCenterMarkerExist: true,
-    onSubmitButtonClick: (coord) => {
-      console.log(coord);
-    }
+    isCenterMarkerExist: true
   },
   parameters: {
     docs: {
@@ -74,10 +64,7 @@ export const ViewLocation: Story = {
       lat: 37.5666805,
       lng: 126.9784147
     },
-    isCenterMarkerExist: false,
-    onSubmitButtonClick: (coord) => {
-      console.log(coord);
-    }
+    isCenterMarkerExist: false
   },
   parameters: {
     docs: {
@@ -90,10 +77,7 @@ export const ViewLocation: Story = {
 };
 export const VerifyNeighborhood: Story = {
   args: {
-    isCenterMarkerExist: false,
-    onSubmitButtonClick: (coord) => {
-      console.log(coord);
-    }
+    isCenterMarkerExist: false
   },
   parameters: {
     docs: {

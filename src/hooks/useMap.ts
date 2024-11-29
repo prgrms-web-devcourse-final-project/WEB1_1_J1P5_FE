@@ -5,7 +5,7 @@ import { IMapProps } from "types";
 export const useMap = ({
   coord,
   isCenterMarkerExist,
-  onSubmitButtonClick
+  setMyCoord
 }: IMapProps) => {
   const navermaps = useNavermaps();
   const defaultCenter = new navermaps.LatLng(37.5666805, 126.9784147);
@@ -20,6 +20,10 @@ export const useMap = ({
         position.coords.latitude,
         position.coords.longitude
       );
+
+      if (setMyCoord) {
+        setMyCoord(location);
+      }
 
       myMarker.setPosition(location);
       map.setZoom(16);
@@ -56,20 +60,6 @@ export const useMap = ({
     requestGeolocation();
   }, [map, myMarker, requestGeolocation]);
 
-  const getCenterCoord = useCallback(() => {
-    if (map) {
-      const center = map.getCenter();
-      const coord = {
-        lat: center.lat(),
-        lng: center.lng()
-      };
-
-      if (onSubmitButtonClick) {
-        onSubmitButtonClick(coord);
-      }
-    }
-  }, [map, onSubmitButtonClick]);
-
   useEffect(() => {
     if (!map || !myMarker) return;
 
@@ -101,8 +91,6 @@ export const useMap = ({
     setMyMarker,
     transactionMarker,
     setTransactionMarker,
-    moveToCurrentLocation,
-    getCenterCoord
+    moveToCurrentLocation
   };
 };
-
