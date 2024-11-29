@@ -10,7 +10,7 @@ const meta: Meta<typeof NeighborhoodAuthForm> = {
   argTypes: {
     onSubmitButtonClick: {
       action: "onSubmitButtonClick",
-      description: "동네 인증 완료 버튼 클릭 시 호출되는 함수"
+      description: "동네 인증 완료 버튼 클릭 이벤트"
     }
   },
   decorators: (story) => (
