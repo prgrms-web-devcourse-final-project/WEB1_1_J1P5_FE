@@ -16,5 +16,6 @@ export const IconSizes = {
  */
 export const IconWrapper: ReturnType<typeof styled.i<IIconProps>> =
   styled.i<IIconProps>`
+    line-height: 0;
     font-size: ${(props) => IconSizes[props.size!]};
   `;
