@@ -41,6 +41,7 @@ export const ChatMessages = ({
         <InputWithButton
           value={message}
           setValue={setMessage}
+          placeholder="메시지를 입력하세요."
           buttonText="전송"
           onButtonClick={handleSendButtonClick}
         />
