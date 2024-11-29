@@ -1,5 +1,5 @@
-import { IMenu } from "components/molecules/KebabMenu";
 import { useCallback } from "react";
+import type { IMenu } from "types";
 
 export const useKebabMenuManager = () => {
   const onReply = useCallback(() => {
@@ -41,7 +41,7 @@ export const useKebabMenuManager = () => {
           return [];
       }
     },
-    [onBlock, onDelete, onEdit, onReply, onRepot]
+    [onBlock, onDelete, onEdit, onReply, onRepot],
   );
 
   return { getMenus };

@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { IMenu, KebabMenu } from ".";
+import type { IMenu } from "types";
+import { KebabMenu } from ".";
 
 const meta: Meta<typeof KebabMenu> = {
   title: "Molecules/KebabMenu",
