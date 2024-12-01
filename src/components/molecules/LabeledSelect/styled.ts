@@ -5,5 +5,6 @@ export const LabeledSelectWrapper: ReturnType<typeof styled.div> = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
+  gap: 8px;
+  width: 100%;
 `;
-

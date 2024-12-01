@@ -9,10 +9,10 @@ export const TextareaWrapper: ReturnType<
 > = styled.div<ITextareaWrapperProps>`
   border: 1px solid ${({ focus }) => (focus ? "#344fff" : "#ECEEF3")};
   border-radius: 10px;
+  width: 100%;
 
   textarea {
     background: transparent;
-    font-sie: 1.5rem;
     border: none;
     outline: none;
     width: 100%;
@@ -47,4 +47,3 @@ export const TextareaWrapper: ReturnType<
     }
   }
 `;
-
