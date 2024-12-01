@@ -11,10 +11,13 @@ import { PostRegisterFormWrapper, DivWrapper } from "./styled";
 import type { IPostForm, IImageInfo, ISelectOption } from "types";
 
 interface IPostRegisterFormProps {
-  /** Submit 이벤트 발생 시 실행할 함수 */
+  /** product Id */
   productId?: number;
+  /** 글 등록할 때 필요한 form 데이터 */
   postForm?: IPostForm;
+  /** Submit 이벤트 발생 시 실행할 함수 */
   onSubmit: (data: IPostForm) => void;
+  /** 거래 희망 장소 클릭 시 실행할 함수 */
   onClick: () => string;
 }
 
