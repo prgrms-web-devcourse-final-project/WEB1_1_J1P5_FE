@@ -197,7 +197,7 @@ export const PostRegisterForm = ({
           <DivWrapper>
             <LabeledSelect
               id="product-expiredTime"
-              label="카테고리"
+              label="경매 마감 일시"
               options={expiredTimes}
               value={expiredTimes.find((option) => option.value === value)}
               onChange={(option) => onChange(option)}
