@@ -4,6 +4,7 @@ export { InputWithButton } from "./InputWithButton";
 export { KebabMenu } from "./KebabMenu";
 export { LabeledInput } from "./LabeledInput";
 export { LabeledSelect } from "./LabeledSelect";
+export { LabeledTextarea } from "./LabeledTextarea";
 export { NavBarItem } from "./NavBarItem";
 export { OverlappingImage } from "./OverlappingImage";
 export { RoundImageWithText } from "./RoundImageWithText";

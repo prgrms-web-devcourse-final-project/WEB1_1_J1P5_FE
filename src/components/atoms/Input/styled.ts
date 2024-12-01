@@ -9,6 +9,7 @@ export const InputWrapper: ReturnType<
 > = styled.div<IInputWrapperProps>`
   border: 1px solid ${({ focus }) => (focus ? "#344fff" : "#ECEEF3")};
   border-radius: 10px;
+  width: 100%;
 
   input {
     background: transparent;

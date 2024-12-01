@@ -2,6 +2,8 @@ import { type ChangeEvent, useCallback, useState } from "react";
 import { TextareaWrapper } from "./styled";
 
 interface ITextareaProps {
+  /** Textarea의 id */
+  id?: string;
   /** Textarea의 name */
   name?: string;
   /** Textarea의 value */
@@ -13,6 +15,7 @@ interface ITextareaProps {
 }
 
 export const Textarea = ({
+  id,
   name,
   value,
   placeholder,
@@ -37,6 +40,7 @@ export const Textarea = ({
   return (
     <TextareaWrapper focus={focus}>
       <textarea
+        id={id}
         name={name}
         onChange={handleInputChange}
         value={value}
@@ -48,4 +52,3 @@ export const Textarea = ({
     </TextareaWrapper>
   );
 };
-
