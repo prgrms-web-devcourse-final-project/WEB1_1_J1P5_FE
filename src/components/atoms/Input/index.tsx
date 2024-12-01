@@ -2,8 +2,8 @@ import type { ChangeEvent, MouseEvent } from "react";
 import { InputWrapper } from "./styled";
 
 interface IInputProps {
-  /** Input의 id */
-  id?: string;
+  /** Input의 name */
+  name?: string;
   /** Input의 value */
   value: string;
   /** placeholder */
@@ -18,7 +18,7 @@ interface IInputProps {
  * Input 컴포넌트
  */
 export const Input = ({
-  id,
+  name,
   value,
   placeholder,
   setValue,
@@ -35,7 +35,7 @@ export const Input = ({
   };
   return (
     <InputWrapper
-      id={id}
+      name={name}
       value={value}
       placeholder={placeholder}
       onChange={onClick ? () => {} : handleInputChange}
