@@ -13,6 +13,7 @@ export const SelectWrapper: ReturnType<typeof styled.div> = styled.div`
       min-height: auto;
       padding: 0.75rem 0.5rem;
       border-radius: 0.5rem;
+      border: 1px solid #eceef3;
       &--is-focused,
       &--is-open {
         box-shadow: unset;
@@ -22,6 +23,14 @@ export const SelectWrapper: ReturnType<typeof styled.div> = styled.div`
         border: 1px solid #344fff;
       }
     }
+
+    /**
+     * placeholder
+     */
+    &__placeholder {
+      color: #9b9fbc;
+    }
+
     /**
 		 * 선택된 value container
 		 */
@@ -45,7 +54,7 @@ export const SelectWrapper: ReturnType<typeof styled.div> = styled.div`
 		 */
     &__option {
       position: relative;
-      &::after {
+      &:not(:last-child)::after {
         content: "";
         display: block;
         width: 95%;
