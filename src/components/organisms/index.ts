@@ -1,4 +1,5 @@
 export { Map } from "./Map";
+export { PostImageManager } from "./PostImageManager";
 export { PostImageItem } from "./PostImageItem";
 export { SearchHistoryItem } from "./SearchHistoryItem";
 export { ChatMessage } from "./ChatMessage";
