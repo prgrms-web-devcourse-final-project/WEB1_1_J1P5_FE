@@ -1,9 +1,15 @@
-import type { ChangeEvent, MouseEvent } from "react";
+import {
+  type ChangeEvent,
+  type MouseEvent,
+  useCallback,
+  useState
+} from "react";
+
 import { InputWrapper } from "./styled";
 
 interface IInputProps {
-  /** Input의 id */
-  id?: string;
+  /** Input의 name */
+  name?: string;
   /** Input의 value */
   value: string;
   /** placeholder */
@@ -18,12 +24,22 @@ interface IInputProps {
  * Input 컴포넌트
  */
 export const Input = ({
-  id,
+  name,
   value,
   placeholder,
   setValue,
   onClick
 }: IInputProps) => {
+  const [focus, setFocus] = useState(false);
+
+  const onFocus = useCallback(() => {
+    setFocus(true);
+  }, []);
+
+  const onBlur = useCallback(() => {
+    setFocus(false);
+  }, []);
+
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (setValue) {
       setValue(event.target.value);
@@ -33,13 +49,18 @@ export const Input = ({
     event.currentTarget.blur(); // Focusout
     onClick!();
   };
+
   return (
-    <InputWrapper
-      id={id}
-      value={value}
-      placeholder={placeholder}
-      onChange={onClick ? () => {} : handleInputChange}
-      onClick={onClick && handleInputClick}
-    />
+    <InputWrapper focus={focus}>
+      <input
+        name={name}
+        value={value}
+        placeholder={placeholder}
+        onChange={onClick ? () => {} : handleInputChange}
+        onClick={onClick && handleInputClick}
+        onFocus={onFocus}
+        onBlur={onBlur}
+      />
+    </InputWrapper>
   );
 };
