@@ -18,12 +18,6 @@ export const Textarea = ({
   placeholder,
   setValue
 }: ITextareaProps) => {
-  const handleInputChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
-    if (setValue) {
-      setValue(event.target.value);
-    }
-  };
-
   const [focus, setFocus] = useState(false);
 
   const onFocus = useCallback(() => {
@@ -34,6 +28,12 @@ export const Textarea = ({
     setFocus(false);
   }, []);
 
+  const handleInputChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
+    if (setValue) {
+      setValue(event.target.value);
+    }
+  };
+
   return (
     <TextareaWrapper focus={focus}>
       <textarea
@@ -43,6 +43,7 @@ export const Textarea = ({
         placeholder={placeholder}
         onFocus={onFocus}
         onBlur={onBlur}
+        maxLength={500}
       />
     </TextareaWrapper>
   );
