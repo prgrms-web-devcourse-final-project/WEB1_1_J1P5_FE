@@ -1,4 +1,10 @@
-import type { ChangeEvent, MouseEvent } from "react";
+import {
+  type ChangeEvent,
+  type MouseEvent,
+  useCallback,
+  useState
+} from "react";
+
 import { InputWrapper } from "./styled";
 
 interface IInputProps {
@@ -24,6 +30,16 @@ export const Input = ({
   setValue,
   onClick
 }: IInputProps) => {
+  const [focus, setFocus] = useState(false);
+
+  const onFocus = useCallback(() => {
+    setFocus(true);
+  }, []);
+
+  const onBlur = useCallback(() => {
+    setFocus(false);
+  }, []);
+
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (setValue) {
       setValue(event.target.value);
@@ -33,13 +49,18 @@ export const Input = ({
     event.currentTarget.blur(); // Focusout
     onClick!();
   };
+
   return (
-    <InputWrapper
-      name={name}
-      value={value}
-      placeholder={placeholder}
-      onChange={onClick ? () => {} : handleInputChange}
-      onClick={onClick && handleInputClick}
-    />
+    <InputWrapper focus={focus}>
+      <input
+        name={name}
+        value={value}
+        placeholder={placeholder}
+        onChange={onClick ? () => {} : handleInputChange}
+        onClick={onClick && handleInputClick}
+        onFocus={onFocus}
+        onBlur={onBlur}
+      />
+    </InputWrapper>
   );
 };
