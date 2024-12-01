@@ -7,20 +7,32 @@ interface IInputWrapperProps {
 export const InputWrapper: ReturnType<
   typeof styled.div<IInputWrapperProps>
 > = styled.div<IInputWrapperProps>`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 4px;
+
   border: 1px solid ${({ focus }) => (focus ? "#344fff" : "#ECEEF3")};
   border-radius: 10px;
   width: 100%;
+  height: 50px;
+  padding: 16px;
+
+  p {
+    font-size: 1rem;
+    line-height: 140%;
+  }
 
   input {
     background: transparent;
-    font-sie: 1.5rem;
     border: none;
     outline: none;
     width: 100%;
-    height: 50px;
     color: #2d2d39;
-    padding: 16px;
     box-sizing: border-box;
+    padding: 0px;
+    font-size: 1rem;
+    line-height: 140%;
 
     transition: all 0.125s ease-in;
 
