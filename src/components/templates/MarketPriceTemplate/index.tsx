@@ -1,7 +1,6 @@
 import { MarketPriceTemplateWrapper } from "./styled";
 import { IPost, PostList } from "components/organisms/PostList";
 import { EmptyTemplate } from "../EmptyTemplate";
-import { BottomNavBar } from "components/organisms";
 
 interface IMarketPriceTemplateProps {
   posts: IPost[];
@@ -17,7 +16,6 @@ export const MarketPriceTemplate = ({ posts }: IMarketPriceTemplateProps) => {
           <PostList posts={posts} type={"default"}></PostList>
         )}
       </div>
-      <BottomNavBar></BottomNavBar>
     </MarketPriceTemplateWrapper>
   );
 };
