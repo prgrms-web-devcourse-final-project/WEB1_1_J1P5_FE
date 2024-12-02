@@ -883,6 +883,11 @@
   resolved "https://registry.yarnpkg.com/@rushstack/tree-pattern/-/tree-pattern-0.3.4.tgz#7f937f5cfc7c74dc483fff0634c2a84d24621c5c"
   integrity sha512-9uROnkiHWsQqxW6HirXABfTRlgzhYp6tevbYIGkwKQ09VaayUBkvFvt/urDKMwlo+tGU0iQQLuVige6c48wTgw==
 
+"@stomp/stompjs@^7.0.0":
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/@stomp/stompjs/-/stompjs-7.0.0.tgz#46b5c454a9dc8262e0b20f3b3dbacaa113993077"
+  integrity sha512-fGdq4wPDnSV/KyOsjq4P+zLc8MFWC3lMmP5FBgLWKPJTYcuCbAIrnRGjB7q2jHZdYCOD5vxLuFoKIYLy5/u8Pw==
+
 "@storybook/addon-actions@8.4.4":
   version "8.4.4"
   resolved "https://registry.yarnpkg.com/@storybook/addon-actions/-/addon-actions-8.4.4.tgz#905f14e37eaf53196cf70245994d7bb083378b10"
