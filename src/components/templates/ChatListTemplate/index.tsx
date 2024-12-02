@@ -1,34 +1,35 @@
-import {} from "components/atoms";
-import { TabMenu } from "components/molecules";
 import { ChatListTemplateWrapper } from "./styled";
 import { IChatItemProps } from "components/organisms/ChatItem";
-import { ChatList } from "components/organisms";
-import { EmptyTemplate } from "../EmptyTemplate";
+import { ChatOverview } from "components/organisms";
 
 interface IChatListTemplateProps {
-  /** 탭 메뉴 title 리스트 */
-  menus: string[];
-  /** 탭 메뉴 클릭 이벤트 */
-  onClick: (tab: string) => void;
   /** 채팅 방 아이템 리스트 Organisms/ChatItem 컴포넌트 참조  */
-  chatItems: IChatItemProps[];
+  allChatItems: IChatItemProps[];
+  sellingChatItems: IChatItemProps[];
+  buyingChatItems: IChatItemProps[];
+  unreadChatItems: IChatItemProps[];
 }
 
 export const ChatListTemplate = ({
-  menus,
-  onClick,
-  chatItems,
+  allChatItems,
+  sellingChatItems,
+  buyingChatItems,
+  unreadChatItems,
 }: IChatListTemplateProps) => {
   return (
     <ChatListTemplateWrapper>
-      <TabMenu menus={menus} onClick={onClick}></TabMenu>
-      <div className="chat-con">
-        {chatItems.length === 0 ? (
-          <EmptyTemplate type={"chat"}></EmptyTemplate>
-        ) : (
-          <ChatList chatItems={chatItems}></ChatList>
-        )}
-      </div>
+      <ChatOverview>
+        <ChatOverview.List>
+          <ChatOverview.Trigger index={0} title="전체" />
+          <ChatOverview.Trigger index={1} title="판매" />
+          <ChatOverview.Trigger index={2} title="구매" />
+          <ChatOverview.Trigger index={3} title="안 읽은 채팅방" />
+        </ChatOverview.List>
+        <ChatOverview.Panel index={0} chatItems={allChatItems} />
+        <ChatOverview.Panel index={1} chatItems={sellingChatItems} />
+        <ChatOverview.Panel index={2} chatItems={buyingChatItems} />
+        <ChatOverview.Panel index={3} chatItems={unreadChatItems} />
+      </ChatOverview>
     </ChatListTemplateWrapper>
   );
 };
