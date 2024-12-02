@@ -75,6 +75,26 @@ export const ViewLocation: Story = {
     }
   }
 };
+
+export const ViewLocationWithInfo: Story = {
+  args: {
+    coord: {
+      lat: 37.5666805,
+      lng: 126.9784147
+    },
+    isCenterMarkerExist: false,
+    markerInfo: "서울 시청"
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "거래 희망 장소 조회 지도로, coord, isCenterMarkerExist(false)가 포함됩니다."
+      }
+    }
+  }
+};
+
 export const VerifyNeighborhood: Story = {
   args: {
     isCenterMarkerExist: false

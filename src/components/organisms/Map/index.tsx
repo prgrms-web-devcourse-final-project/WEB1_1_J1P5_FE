@@ -1,4 +1,9 @@
-import { Container as MapDiv, NaverMap, Marker } from "react-naver-maps";
+import {
+  Container as MapDiv,
+  NaverMap,
+  Marker,
+  InfoWindow
+} from "react-naver-maps";
 import { MyLocationIcon } from "components/atoms/Icon";
 import { Image, IconButton } from "components/atoms";
 import { MapWrapper, CenterMarkerWrapper } from "./styled";
@@ -9,7 +14,8 @@ export const Map = ({
   coord,
   isCenterMarkerExist = false,
   setCenterCoord,
-  setMyCoord
+  setMyCoord,
+  markerInfo
 }: IMapProps) => {
   const {
     navermaps,
@@ -17,15 +23,16 @@ export const Map = ({
     setMap,
     setMyMarker,
     setTransactionMarker,
+    setInfoWindow,
     moveToCurrentLocation
-  } = useMap({ coord, isCenterMarkerExist, setMyCoord });
+  } = useMap({ coord, isCenterMarkerExist, setMyCoord, markerInfo });
 
   return (
     <MapWrapper>
       <MapDiv
         style={{
           width: "100%",
-          height: "80vh"
+          height: "100%"
         }}
       >
         <NaverMap
@@ -51,6 +58,9 @@ export const Map = ({
 
           {!isCenterMarkerExist && coord && (
             <Marker ref={setTransactionMarker} />
+          )}
+          {markerInfo && (
+            <InfoWindow content={markerInfo} ref={setInfoWindow} />
           )}
           <IconButton
             icon={MyLocationIcon}
