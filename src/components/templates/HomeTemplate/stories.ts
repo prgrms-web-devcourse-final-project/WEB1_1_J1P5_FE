@@ -11,7 +11,7 @@ const meta: Meta<typeof HomeTemplate> = {
 
 type Story = StoryObj<typeof meta>;
 
-const tempPosts: IPost[] = Array.from({ length: 5 }, (_, index) => ({
+const tempPosts: IPost[] = Array.from({ length: 30 }, (_, index) => ({
   productId: index + 1,
   imgUrl: DEFAULT_IMG_PATH,
   title: `물품 ${index + 1}`,
