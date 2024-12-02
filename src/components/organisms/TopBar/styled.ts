@@ -1,30 +1,36 @@
 import styled from "@emotion/styled";
 import { InputWrapper } from "components/atoms/Input/styled";
+import { Body1Wrapper } from "components/atoms/Text/styled";
 
-const CommonIconWrapper: ReturnType<typeof styled.div> = styled.div`
-  position: absolute;
-  top: 50%;
-  translate: 0 -50%;
-`;
+const CommonIconWrapper: ReturnType<typeof styled.div> = styled.div``;
 export const TopBarBackIconWrapper: typeof CommonIconWrapper = styled(
   CommonIconWrapper,
-)`
-  left: 1rem;
-`;
+)``;
 export const TopBarIconWrapper: typeof CommonIconWrapper = styled(
   CommonIconWrapper,
-)`
-  right: 1rem;
-`;
+)``;
 
 export const TopBarWrapper: ReturnType<typeof styled.div> = styled.div`
   display: flex;
   justify-content: center;
-  background-color: #e9e9e9;
+  align-items: center;
+  background-color: #ffffff;
   position: relative;
-  padding: 1rem 0;
+  padding: 0.5rem 1rem;
+  gap: 0.5rem;
+  & > ${Body1Wrapper} {
+    flex: 1;
+    padding: 0.5rem;
+    text-align: center;
+  }
   & > ${InputWrapper} {
     flex: 1;
-    margin: 0 4.5rem;
+    height: auto;
+    padding: 0.5rem 1rem;
+    background-color: #eee;
+  }
+  &:has(${InputWrapper}) ${TopBarIconWrapper} {
+    position: absolute;
+    right: 1.5rem;
   }
 `;
