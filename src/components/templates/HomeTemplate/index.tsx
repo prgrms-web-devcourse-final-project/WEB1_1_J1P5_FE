@@ -2,7 +2,6 @@ import { TextButton } from "components/atoms";
 import { HomeTemplateWrapper } from "./styled";
 import { IPost, PostList } from "components/organisms/PostList";
 import { EmptyTemplate } from "../EmptyTemplate";
-import { BottomNavBar } from "components/organisms";
 
 interface IHomeTemplateProps {
   posts: IPost[];
@@ -21,7 +20,6 @@ export const HomeTemplate = ({ posts, onClick }: IHomeTemplateProps) => {
         )}
       </div>
       <TextButton text={textBtnContent} onClick={onClick} size="m"></TextButton>
-      <BottomNavBar></BottomNavBar>
     </HomeTemplateWrapper>
   );
 };

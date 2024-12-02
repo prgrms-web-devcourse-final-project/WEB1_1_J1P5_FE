@@ -1,5 +1,4 @@
 import styled from "@emotion/styled";
-import { BottomNavBarWrapper } from "components/organisms/BottomNavBar/styled";
 
 export const MarketPriceTemplateWrapper: ReturnType<
   typeof styled.div
@@ -11,9 +10,5 @@ export const MarketPriceTemplateWrapper: ReturnType<
   .post-con {
     flex: 1;
     overflow-y: auto;
-  }
-
-  ${BottomNavBarWrapper} {
-    position: sticky;
   }
 `;
