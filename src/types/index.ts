@@ -7,5 +7,6 @@ export * from "./menu";
 export * from "./navMenu";
 export * from "./notification";
 export * from "./post";
+export * from "./response";
 export * from "./selectOption";
 export * from "./user";

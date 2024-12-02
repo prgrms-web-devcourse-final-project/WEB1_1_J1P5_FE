@@ -17,6 +17,7 @@
     "@naver-maps/react": "^1.0.0",
     "@tanstack/react-query": "^5.60.6",
     "@tanstack/react-query-devtools": "^5.60.6",
+    "axios": "^1.7.8",
     "dayjs": "^1.11.13",
     "framer-motion": "^11.11.17",
     "lodash-es": "^4.17.21",
