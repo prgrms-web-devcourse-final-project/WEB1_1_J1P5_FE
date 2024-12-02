@@ -22,62 +22,67 @@ const commonArgs: {
 
   onClick: () => console.log("chatItem 클릭"),
 };
-
-const chatItems: IChatItemProps[] = [
-  {
-    ...commonArgs,
-    lastMsg: "last message",
-    lastMsgCnt: 1,
-    lastMsgTime: "2024-11-26T06:24:31:22",
-  },
-  {
-    ...commonArgs,
-    lastMsg: "last message",
-    lastMsgCnt: 1,
-    lastMsgTime: "2024-11-17T06:24:31:22",
-  },
-  {
-    ...commonArgs,
-    lastMsg: "last message",
-    lastMsgCnt: 0,
-    lastMsgTime: "2024-10-27T06:24:31:22",
-  },
-  {
-    ...commonArgs,
-    lastMsg: "last message",
-    lastMsgCnt: 0,
-    lastMsgTime: "2023-11-27T06:24:31:22",
-  },
-  {
-    ...commonArgs,
-    lastMsg: "last message",
-    lastMsgCnt: 0,
-    lastMsgTime: "2022-11-27T06:24:31:22",
-  },
-  {
-    ...commonArgs,
-    lastMsg: "last messageeeeeeeeeeeeeeee",
-    lastMsgCnt: 1,
-    lastMsgTime: "2024-11-28T15:24:31:22",
-  },
-];
 export const Default: Story = {
   args: {
-    chatItems: chatItems,
-    menus: ["전체", "판매", "구매", "안 읽은 채팅방"],
-    onClick: (tab: string) => {
-      console.log(tab + " 클릭");
-    },
+    allChatItems: [
+      {
+        ...commonArgs,
+        lastMsg: "(판매) last message",
+        lastMsgCnt: 0,
+        lastMsgTime: "2024-11-26T06:24:31:22",
+      },
+      {
+        ...commonArgs,
+        lastMsg: "(구매) last message",
+        lastMsgCnt: 100,
+        lastMsgTime: "2024-11-17T06:24:31:22",
+      },
+      {
+        ...commonArgs,
+        lastMsg: "(구매) last message",
+        lastMsgCnt: 0,
+        lastMsgTime: "2024-11-17T06:24:31:22",
+      },
+    ],
+    sellingChatItems: [
+      {
+        ...commonArgs,
+        lastMsg: "(판매) last message",
+        lastMsgCnt: 0,
+        lastMsgTime: "2024-11-26T06:24:31:22",
+      },
+    ],
+    buyingChatItems: [
+      {
+        ...commonArgs,
+        lastMsg: "(구매) last message",
+        lastMsgCnt: 100,
+        lastMsgTime: "2024-11-26T06:24:31:22",
+      },
+      {
+        ...commonArgs,
+        lastMsg: "(구매) last message",
+        lastMsgCnt: 0,
+        lastMsgTime: "2024-11-17T06:24:31:22",
+      },
+    ],
+    unreadChatItems: [
+      {
+        ...commonArgs,
+        lastMsg: "(구매) last message",
+        lastMsgCnt: 100,
+        lastMsgTime: "2024-11-26T06:24:31:22",
+      },
+    ],
   },
 };
 
 export const Empty: Story = {
   args: {
-    chatItems: [],
-    menus: ["전체", "판매", "구매", "안 읽은 채팅방"],
-    onClick: () => {
-      console.log("탭 클릭");
-    },
+    allChatItems: [],
+    sellingChatItems: [],
+    buyingChatItems: [],
+    unreadChatItems: [],
   },
 };
 export default meta;
