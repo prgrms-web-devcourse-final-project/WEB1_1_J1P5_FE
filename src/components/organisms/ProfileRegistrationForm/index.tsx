@@ -22,6 +22,14 @@ export const ProfileRegistrationForm = ({
       profile: user?.profile,
     },
   });
+
+  const getProfileImageURL = (profile: IUser["profile"]) => {
+    if (!profile || typeof profile === "string") {
+      return profile;
+    }
+    return URL.createObjectURL(profile);
+  };
+
   return (
     <ProfileRegistrationFormWrapper onSubmit={handleSubmit(onSubmit)}>
       <Controller
@@ -29,12 +37,12 @@ export const ProfileRegistrationForm = ({
         control={control}
         render={({ field: { value } }) => (
           <ProfileImageWrapper>
-            <Image type="round" url={value} alt="유저 프로필 사진" />
-            <ImageUpload
-              onFileChange={(file) =>
-                setValue("profile", URL.createObjectURL(file))
-              }
+            <Image
+              type="round"
+              url={getProfileImageURL(value)}
+              alt="유저 프로필 사진"
             />
+            <ImageUpload onFileChange={(file) => setValue("profile", file)} />
           </ProfileImageWrapper>
         )}
       />
