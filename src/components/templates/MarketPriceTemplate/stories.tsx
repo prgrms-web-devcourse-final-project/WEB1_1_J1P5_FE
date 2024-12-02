@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { HomeTemplate } from ".";
-import { IPost } from "components/organisms/PostList";
+import { MarketPriceTemplate } from ".";
 import { DEFAULT_IMG_PATH } from "constants/imgPath";
+import { IPost } from "components/organisms/PostList";
 
-const meta: Meta<typeof HomeTemplate> = {
-  title: "Templates/HomeTemplate",
-  component: HomeTemplate,
+const meta: Meta<typeof MarketPriceTemplate> = {
+  title: "Templates/MarketPriceTemplate",
+  component: MarketPriceTemplate,
   tags: ["autodocs"],
 };
 
@@ -34,18 +34,18 @@ const tempPosts: IPost[] = Array.from({ length: 30 }, (_, index) => ({
 export const Default: Story = {
   args: {
     posts: tempPosts,
-    onClick: () => {
-      console.log("클릭");
-    },
+  },
+  parameters: {
+    initialEntries: ["/history"], // 스토리별 초기 URL 설정
   },
 };
 
 export const Empty: Story = {
   args: {
     posts: [],
-    onClick: () => {
-      console.log("클릭");
-    },
+  },
+  parameters: {
+    initialEntries: ["/history"], // 스토리별 초기 URL 설정
   },
 };
 export default meta;
