@@ -1,4 +1,4 @@
-import { IImageInfo } from "types";
+import { IImageInfo, ICoord } from "types";
 
 export interface IPostForm {
   title: string;
@@ -13,3 +13,7 @@ export interface IPostForm {
   imgUrls: ImageInfo[];
 }
 
+export interface ILocation {
+  coord?: ICoord;
+  address?: string;
+}
