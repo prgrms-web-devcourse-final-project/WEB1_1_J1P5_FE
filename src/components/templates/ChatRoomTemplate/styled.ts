@@ -17,6 +17,6 @@ export const ChatRoomTemplateWrapper: ReturnType<
   }
 
   ${ChatMessagesWrapper} {
-    margin-top: 60px;
+    margin-top: 108px;
   }
 `;
