@@ -11,7 +11,7 @@ interface ITextareaProps {
   /** placeholder */
   placeholder?: string;
   /** value set 함수 */
-  setValue?: React.Dispatch<React.SetStateAction<string>>;
+  setValue?: (value: string) => void;
 }
 
 export const Textarea = ({

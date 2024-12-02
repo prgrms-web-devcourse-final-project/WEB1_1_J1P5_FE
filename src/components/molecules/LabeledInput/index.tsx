@@ -2,6 +2,8 @@ import { Label, Input } from "components/atoms";
 import { LabeledInputWrapper } from "./styled";
 
 interface ILabeledInputProps {
+  /** Input의 type */
+  type?: "text" | "number";
   /** Label의 htmlFor 및 Input의 id */
   id: string;
   /** Label에 들어갈 텍스트 */
@@ -17,6 +19,7 @@ interface ILabeledInputProps {
 }
 
 export const LabeledInput = ({
+  type = "text",
   id,
   label,
   value,
@@ -27,6 +30,7 @@ export const LabeledInput = ({
   <LabeledInputWrapper>
     <Label text={label} htmlFor={id}></Label>
     <Input
+      type={type}
       id={id}
       name={id}
       placeholder={placeholder}

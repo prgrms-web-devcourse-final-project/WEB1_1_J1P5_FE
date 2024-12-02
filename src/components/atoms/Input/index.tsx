@@ -8,6 +8,8 @@ import {
 import { InputWrapper } from "./styled";
 
 interface IInputProps {
+  /** Input의 type */
+  type?: "text" | "number";
   /** Input의 id */
   id?: string;
   /** Input의 name */
@@ -26,6 +28,7 @@ interface IInputProps {
  * Input 컴포넌트
  */
 export const Input = ({
+  type = "text",
   id,
   name,
   value,
@@ -55,7 +58,9 @@ export const Input = ({
 
   return (
     <InputWrapper focus={focus}>
+      {type === "number" && <p>₩</p>}
       <input
+        type={type}
         id={id}
         name={name}
         value={value}
