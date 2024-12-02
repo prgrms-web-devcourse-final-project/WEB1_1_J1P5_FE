@@ -61,7 +61,15 @@ export const PostList = ({ posts, type }: IPostListProps) => {
       </PostItem>
     );
   };
-  const ChatState = ({ productId, imgUrl, title, price, onClick }: IPost) => {
+  const ChatState = ({
+    productId,
+    imgUrl,
+    title,
+    price,
+    onClick,
+    onTextButtonClick,
+    onIconButtonClick,
+  }: IPost) => {
     return (
       <PostItem key={productId} onClick={onClick}>
         <PostItem.Image imgUrl={imgUrl} size={"mini"} />
@@ -69,6 +77,12 @@ export const PostList = ({ posts, type }: IPostListProps) => {
           <PostItem.Title title={title} />
           <PostItem.Price price={price} />
         </PostItem.Container>
+        <PostItem.ButtonContainer
+          buttonText={"거래 완료"}
+          onTextButtonClick={onTextButtonClick}
+          icon={DownIcon}
+          onIconButtonClick={onIconButtonClick}
+        />
       </PostItem>
     );
   };
