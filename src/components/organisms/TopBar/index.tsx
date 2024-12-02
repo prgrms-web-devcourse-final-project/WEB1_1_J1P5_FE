@@ -24,6 +24,7 @@ const TopBarBackIcon = ({ onBackIconClick }: ITopBarBackIconProps) => {
   return (
     <TopBarBackIconWrapper>
       <IconButton
+        size="s"
         icon={BackIcon}
         onClick={onBackIconClick}
         backgroundColor="transparent"
@@ -43,6 +44,7 @@ const TopBarIcon = ({ icon, onIconClick }: ITopBarIconProps) => {
   return (
     <TopBarIconWrapper>
       <IconButton
+        size="s"
         icon={icon}
         onClick={onIconClick}
         backgroundColor="transparent"
@@ -57,7 +59,7 @@ interface ITopBarTitleProps {
 }
 
 const TopBarTitle = ({ title }: ITopBarTitleProps) => {
-  return <Text content={title} />;
+  return <Text variant="body1" content={title} />;
 };
 
 interface ITopBarInputProps {
