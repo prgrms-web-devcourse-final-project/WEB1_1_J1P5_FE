@@ -10,7 +10,7 @@ import { useTopBarStore } from "stores";
 export const useSearchTopBar = (value: string = "") => {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState(value);
-  const { setSearchBar, setIcon, setRightClick } = useTopBarStore();
+  const { setSearchBar, setRightIcon } = useTopBarStore();
 
   /**
    * 검색 페이지로 이동하는 함수
@@ -22,8 +22,7 @@ export const useSearchTopBar = (value: string = "") => {
 
   useEffect(() => {
     setSearchBar(searchTerm, setSearchTerm);
-    setIcon(SearchIcon);
-    setRightClick(handleSearch);
+    setRightIcon(SearchIcon, handleSearch);
   }, []);
 
   return {
