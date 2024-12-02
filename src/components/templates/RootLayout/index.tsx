@@ -72,7 +72,14 @@ export const RootLayout = () => {
           onLocationClick={handleLocationButtonClick}
         />
       )}
-      {!["/", "/market-price", "/chat", "/my-page"].includes(pathname) && (
+      {![
+        "/",
+        "/market-price",
+        "/chat",
+        "/my-page",
+        "/login",
+        "/permission-request",
+      ].includes(pathname) && (
         <TopBar>
           <TopBar.BackIcon onBackIconClick={onBackClick} />
           {!["/search"].includes(pathname) && (
