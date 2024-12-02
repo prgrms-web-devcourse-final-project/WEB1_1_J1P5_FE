@@ -1,6 +1,4 @@
 import { LoginButton, Logo, Text } from "components/atoms";
-import {} from "components/molecules";
-import {} from "components/organisms";
 import { LoginButtonWrapper, LoginTemplateWrapper } from "./styled";
 
 interface IComponentProps {
