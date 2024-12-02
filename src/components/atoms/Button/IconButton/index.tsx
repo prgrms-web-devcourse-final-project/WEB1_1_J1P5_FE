@@ -17,14 +17,20 @@ export const IconButton = ({
   type = "square",
   size = "m",
   backgroundColor = "default",
-  onClick = () => {},
+  onClick = () => {}
 }: IIconButtonProps) => {
   const IconComponent = icon;
+
+  const handleOnClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    onClick();
+  };
+
   return (
     <IconButtonWrapper
       shape={type}
       backgroundColor={backgroundColor}
-      onClick={onClick}
+      onClick={handleOnClick}
     >
       <IconComponent size={size}></IconComponent>
     </IconButtonWrapper>

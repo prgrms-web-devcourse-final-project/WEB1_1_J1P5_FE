@@ -7,17 +7,23 @@ const meta: Meta<typeof Input> = {
   component: Input,
   tags: ["autodocs"],
   argTypes: {
-    value: {
-      control: "text",
+    type: {
+      control: {
+        type: "select",
+        options: ["text", "number"]
+      }
     },
-  },
+    value: {
+      control: "text"
+    }
+  }
 };
 
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    placeholder: "Default Input",
+    placeholder: "Default Input"
   },
   render: (args) => {
     const Component = () => {
@@ -29,15 +35,15 @@ export const Default: Story = {
   parameters: {
     docs: {
       description: {
-        story: "일반 Input 컴포넌트입니다.",
-      },
-    },
-  },
+        story: "일반 Input 컴포넌트입니다."
+      }
+    }
+  }
 };
 
 export const Clickable: Story = {
   args: {
-    placeholder: "Clickable Input",
+    placeholder: "Clickable Input"
   },
   render: (args) => {
     const Component = () => {
@@ -56,10 +62,10 @@ export const Clickable: Story = {
     docs: {
       description: {
         story:
-          "Click Input 컴포넌트입니다. 클릭 시 현재 시간이 출력되도록 설정되어있습니다.",
-      },
-    },
-  },
+          "Click Input 컴포넌트입니다. 클릭 시 현재 시간이 출력되도록 설정되어있습니다."
+      }
+    }
+  }
 };
 
 export default meta;

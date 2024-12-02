@@ -1,6 +1,8 @@
 import styled from "@emotion/styled";
 
 export const SelectWrapper: ReturnType<typeof styled.div> = styled.div`
+  width: 100%;
+
   .rs {
     /**
 		 * Select Control box
@@ -11,15 +13,24 @@ export const SelectWrapper: ReturnType<typeof styled.div> = styled.div`
       min-height: auto;
       padding: 0.75rem 0.5rem;
       border-radius: 0.5rem;
+      border: 1px solid #eceef3;
       &--is-focused,
       &--is-open {
         box-shadow: unset;
-        border: 1px solid #cccccc;
+        border: 1px solid #eceef3;
       }
       &:hover {
-        border: 1px solid #999999;
+        border: 1px solid #344fff;
       }
     }
+
+    /**
+     * placeholder
+     */
+    &__placeholder {
+      color: #9b9fbc;
+    }
+
     /**
 		 * 선택된 value container
 		 */
@@ -42,14 +53,31 @@ export const SelectWrapper: ReturnType<typeof styled.div> = styled.div`
 		 * isSelected: 현재 선택된 option
 		 */
     &__option {
+      position: relative;
+      &:not(:last-child)::after {
+        content: "";
+        display: block;
+        width: 95%;
+        height: 1px;
+        background-color: #eceef3;
+        position: absolute;
+        bottom: -1px;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+
       &--is-focused {
-        background-color: #d9d9d9;
+        color: #344fff;
+        background-color: transparent;
       }
       &--is-selected {
-        background-color: #a9a9a9;
+        // background-color: #344fff;
+        color: #344fff;
+        background-color: transparent;
       }
       &:active {
-        background-color: #bbbbbb;
+        color: #344fff;
+        background-color: transparent;
       }
     }
   }

@@ -6,13 +6,13 @@ interface ITabMenuProps {
   /** TabItem 리스트 */
   menus: string[];
   /** TabItem 클릭 이벤트  */
-  onClick: () => void;
+  onClick: (tab: string) => void;
 }
 
 export const TabMenu = ({ menus, onClick }: ITabMenuProps) => {
   const [currentIdx, setCurrentIdx] = useState(0);
   const handleTabMenu = (idx: number) => {
-    onClick();
+    onClick(menus[idx]);
     setCurrentIdx(idx);
   };
   return (

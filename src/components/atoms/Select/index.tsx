@@ -5,6 +5,8 @@ import type { ISelectOption } from "types";
 interface ISelectProps {
   /** Select의 id */
   id?: string;
+  /** Select의 name */
+  name?: string;
   /** 현재 선택되어있는 값 */
   value: ISelectOption | undefined;
   /** 값 변경 시 함수 */
@@ -16,6 +18,8 @@ interface ISelectProps {
 }
 
 export const Select = ({
+  id,
+  name,
   value,
   onChange,
   options,
@@ -24,6 +28,8 @@ export const Select = ({
   return (
     <SelectWrapper>
       <ReactSelect
+        id={id}
+        name={name}
         classNamePrefix="rs"
         placeholder={placeholder}
         value={value}

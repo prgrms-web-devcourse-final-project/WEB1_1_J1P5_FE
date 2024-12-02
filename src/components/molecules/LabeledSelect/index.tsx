@@ -3,7 +3,7 @@ import { LabeledSelectWrapper } from "./styled";
 import type { ISelectOption } from "types";
 
 interface ILabeledSelectProps {
-  /** Label와 Select의 htmlFor */
+  /** Label의 htmlFor 및 Select의 id */
   id?: string;
   /** Label에 들어갈 텍스트 */
   label: string;
@@ -29,6 +29,7 @@ export const LabeledSelect = ({
     <Label text={label} htmlFor={id}></Label>
     <Select
       id={id}
+      name={id}
       placeholder={placeholder}
       value={value}
       onChange={onChange}

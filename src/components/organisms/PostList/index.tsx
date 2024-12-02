@@ -26,9 +26,15 @@ export interface IPost {
   /** 아이콘 버튼 클릭 이벤트 */
   onIconButtonClick: () => void;
 }
+export type PostItemType =
+  | "completed"
+  | "default"
+  | "chat"
+  | "selling"
+  | "buying";
 interface IPostListProps {
   posts: IPost[];
-  type: "completed" | "default" | "chat" | "selling" | "buying";
+  type: PostItemType;
 }
 
 export const PostList = ({ posts, type }: IPostListProps) => {
