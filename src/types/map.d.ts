@@ -14,4 +14,6 @@ export interface IMapProps {
   setCenterCoord?: React.Dispatch<React.SetStateAction<any>>;
   /** 현재 위치 좌표 설정 함수  */
   setMyCoord?: React.Dispatch<React.SetStateAction<any>>;
+  /** 마커에 들어간 info */
+  markerInfo?: string;
 }

@@ -1,0 +1,2 @@
+export { TransactionLocationTemplate } from "./TransactionLocationTemplate";
+
