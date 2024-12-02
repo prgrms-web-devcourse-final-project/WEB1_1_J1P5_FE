@@ -15,6 +15,7 @@ export const RootLayout = () => {
     onRightClick,
     setValue,
     value,
+    placeholder,
     setBackClick,
   } = useTopBarStore();
   /**
@@ -78,7 +79,11 @@ export const RootLayout = () => {
             <TopBar.Title title={topBarTitle} />
           )}
           {["/search"].includes(pathname) && (
-            <TopBar.Input value={value} setValue={setValue} />
+            <TopBar.Input
+              value={value}
+              setValue={setValue}
+              placeholder={placeholder}
+            />
           )}
           <TopBar.Icon icon={icon} onIconClick={onRightClick} />
         </TopBar>

@@ -21,7 +21,7 @@ export const useSearchTopBar = (value: string = "") => {
   };
 
   useEffect(() => {
-    setSearchBar(searchTerm, setSearchTerm);
+    setSearchBar(searchTerm, setSearchTerm, "검색어를 입력해주세요.");
     setRightIcon(SearchIcon, handleSearch);
   }, []);
 

@@ -7,12 +7,17 @@ interface TopBarState {
   onBackClick: () => void;
   value: string;
   setValue: (value: string) => void;
+  placeholder?: string;
   icon?: IconType;
   onRightClick?: () => void;
   // SetActions
   setTitle: (title: string) => void;
   setBackClick: (backClick: () => void) => void;
-  setSearchBar: (value: string, setValue: (value: string) => void) => void;
+  setSearchBar: (
+    value: string,
+    setValue: (value: string) => void,
+    placeholder?: string,
+  ) => void;
   setRightIcon: (icon: IconType, onClick: () => void) => void;
   clear: () => void;
 }
@@ -27,12 +32,14 @@ export const useTopBarStore: UseBoundStore<StoreApi<TopBarState>> =
     ...defaultState,
     title: "",
     value: "",
+    placeholder: "",
     setValue: () => {},
     onBackClick: () => {},
     //
     setTitle: (title) => set({ ...get(), title }),
     setBackClick: (backClick) => set({ onBackClick: backClick }),
-    setSearchBar: (value, setValue) => set({ ...get(), value, setValue }),
+    setSearchBar: (value, setValue, placeholder = "") =>
+      set({ ...get(), value, setValue, placeholder }),
     setRightIcon: (icon, onClick) =>
       set({ ...get(), icon, onRightClick: onClick }),
     clear: () => set({ ...get(), ...defaultState }),
