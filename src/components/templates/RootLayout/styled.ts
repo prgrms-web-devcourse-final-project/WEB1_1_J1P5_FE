@@ -6,6 +6,7 @@ import { BottomNavBarWrapper } from "components/organisms/BottomNavBar/styled";
 export const PageLayoutWrapper: ReturnType<typeof styled.div> = styled.div`
   flex: 1;
   background-color: #ffffff;
+  display: flex;
 `;
 
 export const RootLayoutWrapper: ReturnType<typeof styled.div> = styled.div`
