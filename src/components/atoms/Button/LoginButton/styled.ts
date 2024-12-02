@@ -13,8 +13,6 @@ const DefaultLoginButtonWrapper: ReturnType<typeof styled.button> =
     border-radius: 0.5rem;
     font-size: 1rem;
     cursor: pointer;
-    /* 화면에서 보여질 크기 */
-    max-width: 375px;
     width: 100%;
     /* 아이콘을 absolute 왼쪽에 띄우기 위한 스타일 */
     position: relative;
