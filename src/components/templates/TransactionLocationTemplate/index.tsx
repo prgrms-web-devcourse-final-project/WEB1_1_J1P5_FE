@@ -1,5 +1,3 @@
-import {} from "components/atoms";
-import {} from "components/molecules";
 import { Map } from "components/organisms";
 import { TransactionLocationTemplateWrapper } from "./styled";
 import { ICoord } from "types";
