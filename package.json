@@ -20,6 +20,7 @@
     "@tanstack/react-query-devtools": "^5.60.6",
     "axios": "^1.7.8",
     "dayjs": "^1.11.13",
+    "firebase": "^11.0.2",
     "framer-motion": "^11.11.17",
     "lodash-es": "^4.17.21",
     "react": "^18.3.1",
