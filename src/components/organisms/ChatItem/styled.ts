@@ -2,7 +2,6 @@ import styled from "@emotion/styled";
 import { OverlappingImageContainer } from "components/molecules/OverlappingImage/styled";
 
 export const ChatItemWrapper: ReturnType<typeof styled.div> = styled.div`
-  max-width: 350px;
   display: flex;
   justify-content: space-between;
   cursor: pointer;
