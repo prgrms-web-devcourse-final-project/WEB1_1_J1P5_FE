@@ -6,7 +6,6 @@ export const PermissionRequestPage = () => {
 
   /**
    * 권한 요청 함수
-   *   permission = true일 때까지 반복
    */
   const requestPermission = () => {
     handleRequestPermission()
