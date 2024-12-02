@@ -39,5 +39,12 @@ export const Default: Story = {
     },
   },
 };
-
+export const Empty: Story = {
+  args: {
+    posts: [],
+    onClick: () => {
+      console.log("탭 클릭");
+    },
+  },
+};
 export default meta;
