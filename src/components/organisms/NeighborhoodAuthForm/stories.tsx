@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { NavermapsProvider } from "react-naver-maps";
 import { NeighborhoodAuthForm } from ".";
-import { ICoord } from "types";
+import { ILocation } from "types";
 
 const meta: Meta<typeof NeighborhoodAuthForm> = {
   title: "Organisms/NeighborhoodAuthForm",
@@ -14,7 +14,10 @@ const meta: Meta<typeof NeighborhoodAuthForm> = {
     }
   },
   decorators: (story) => (
-    <NavermapsProvider ncpClientId={import.meta.env.VITE_NAVER_MAP_CLIENT_ID}>
+    <NavermapsProvider
+      ncpClientId={import.meta.env.VITE_NAVER_MAP_CLIENT_ID}
+      submodules={["geocoder"]}
+    >
       {story()}
     </NavermapsProvider>
   )
@@ -23,9 +26,8 @@ const meta: Meta<typeof NeighborhoodAuthForm> = {
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  args: { onSubmitButtonClick: (coord: ICoord) => console.log(coord) },
+  args: { onSubmitButtonClick: (location: ILocation) => console.log(location) },
   render: (args) => <NeighborhoodAuthForm {...args} />
 };
 
 export default meta;
-
