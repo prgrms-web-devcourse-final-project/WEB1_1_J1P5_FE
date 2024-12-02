@@ -9,5 +9,17 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    <script>
+      if ("serviceWorker" in navigator) {
+        navigator.serviceWorker
+          .register("/firebase-messaging-sw.js")
+          .then((registration) => {
+            console.log("Service Worker 등록 성공:", registration);
+          })
+          .catch((error) => {
+            console.error("Service Worker 등록 실패:", error);
+          });
+      }
+    </script>
   </body>
 </html>
