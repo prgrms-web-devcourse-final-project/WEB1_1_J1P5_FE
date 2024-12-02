@@ -1,1 +1,2 @@
-export { TransactionLocationTemplateWrapper } from "./TransactionLocationTemplateWrapper";
+export { TransactionLocationTemplate } from "./TransactionLocationTemplate";
+
