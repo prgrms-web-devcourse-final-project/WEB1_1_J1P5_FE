@@ -5,13 +5,16 @@ import { IMapProps } from "types";
 export const useMap = ({
   coord,
   isCenterMarkerExist,
-  setMyCoord
+  setMyCoord,
+  markerInfo
 }: IMapProps) => {
   const navermaps = useNavermaps();
   const defaultCenter = new navermaps.LatLng(37.5666805, 126.9784147);
   const [map, setMap] = useState<any>(null);
   const [myMarker, setMyMarker] = useState<any>(null);
   const [transactionMarker, setTransactionMarker] = useState<any>(null);
+  const [infowindow, setInfoWindow] = useState<any>(null);
+
   const isFirstExecution = useRef(true);
 
   const onSuccessGeolocation = useCallback(
@@ -69,6 +72,12 @@ export const useMap = ({
 
       if (!isCenterMarkerExist && transactionMarker) {
         transactionMarker.setPosition(position);
+        if (infowindow && markerInfo) {
+          infowindow.setContent(
+            '<div style="padding:8px;">' + markerInfo + "</div>"
+          );
+          infowindow.open(map, transactionMarker);
+        }
       }
     }
     requestGeolocation();
@@ -79,7 +88,7 @@ export const useMap = ({
     coord,
     isCenterMarkerExist,
     requestGeolocation,
-    navermaps.LatLng
+    infowindow
   ]);
 
   return {
@@ -91,6 +100,8 @@ export const useMap = ({
     setMyMarker,
     transactionMarker,
     setTransactionMarker,
+    infowindow,
+    setInfoWindow,
     moveToCurrentLocation
   };
 };
