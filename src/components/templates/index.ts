@@ -1,0 +1,1 @@
+export { TransactionLocationTemplateWrapper } from "./TransactionLocationTemplateWrapper";

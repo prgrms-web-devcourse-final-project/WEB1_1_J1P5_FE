@@ -74,7 +74,7 @@ export const useMap = ({
         transactionMarker.setPosition(position);
         if (infowindow && markerInfo) {
           infowindow.setContent(
-            '<div style="padding:20px;">' + markerInfo + "</div>"
+            '<div style="padding:8px;">' + markerInfo + "</div>"
           );
           infowindow.open(map, transactionMarker);
         }
