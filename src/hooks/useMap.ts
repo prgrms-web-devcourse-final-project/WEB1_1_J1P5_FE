@@ -77,7 +77,6 @@ export const useMap = ({
             '<div style="padding:20px;">' + markerInfo + "</div>"
           );
           infowindow.open(map, transactionMarker);
-          console.log(markerInfo);
         }
       }
     }
