@@ -24,17 +24,17 @@ export function useWebSocket() {
 
   const connect = async (roomId: string) => {
     if (isConnected) {
-      console.log("WebSocket already connected.");
+      //console.log("WebSocket already connected.");
       return;
     }
 
     stompClient = new Client({
       brokerURL: "ws://localhost:8080/ws", // WebSocket 서버 URL
       debug: function (str: string) {
-        console.log(str);
+        //console.log(str);
       },
       onConnect: () => {
-        console.log("연결 완료");
+        //console.log("연결 완료");
         setIsConnected(true); // 상태 업데이트
 
         // 연결 후 자동으로 채팅방 구독

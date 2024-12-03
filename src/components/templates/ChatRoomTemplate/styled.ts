@@ -5,7 +5,6 @@ export const ChatRoomTemplateWrapper: ReturnType<
   typeof styled.div
 > = styled.div`
   margin-top: 144px;
-
   width: 100%;
   display: flex;
   flex-direction: column;

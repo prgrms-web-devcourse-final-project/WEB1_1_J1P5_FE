@@ -10,12 +10,15 @@ export interface IChatRoomTemplateProps {
   chatBubbles: IChatBubbleProps[];
   /** 메시지 전송시 실행할 함수 */
   onWriteMessage: (message: string) => void;
+  /** 스크롤 컨테이너를 참조할 ref */
+  scrollContainerRef?: React.RefObject<HTMLDivElement>;
 }
 
 export const ChatRoomTemplate = ({
   post,
   chatBubbles,
   onWriteMessage,
+  scrollContainerRef,
 }: IChatRoomTemplateProps) => {
   return (
     <ChatRoomTemplateWrapper>
@@ -23,6 +26,7 @@ export const ChatRoomTemplate = ({
       <ChatMessages
         chatBubbles={chatBubbles}
         onWriteMessage={onWriteMessage}
+        scrollContainerRef={scrollContainerRef}
       ></ChatMessages>
     </ChatRoomTemplateWrapper>
   );

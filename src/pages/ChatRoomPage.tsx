@@ -3,7 +3,8 @@ import { ChatRoomTemplate } from "components/templates/ChatRoomTemplate";
 import { DEFAULT_IMG_PATH } from "constants/imgPath";
 import { useChatGroups } from "hooks/useChatGroups";
 import { useWebSocket } from "hooks/useWebSocket";
-import { useEffect, useState } from "react";
+import { throttle } from "lodash";
+import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { http } from "services/api";
 import { IResponse } from "types";
@@ -44,16 +45,24 @@ interface IChatRoomPageResponse extends IResponse {
     messages: IChatMsg[];
   };
 }
+interface IChatRoomNewMsgResponse extends IResponse {
+  result: IChatMsg[];
+}
 export const ChatRoomPage = () => {
   const { roomId } = useParams(); // URL에서 roomId 가져오기
   const decrtyptRoomId = roomId ? decryptRoomId(roomId) : null;
   const { connect, disconnect } = useWebSocket();
   const chatRoomEnterurl = `/chats/enter/${decrtyptRoomId}`;
+  const chatRoomNewMessagesurl = `/chats/messages`;
   const [post, setPost] = useState<IPost>();
   const [otherUserId, setOtherUserId] = useState<number>(-1);
   const [imgUrl, setImgUrl] = useState<string>(DEFAULT_IMG_PATH);
   const [chats, setChats] = useState<IChatMsg[]>([]);
+  const [lastMsgTime, setLastMsgTime] = useState<string>("");
+  const [isFirstFetch, setIsFirstFetch] = useState(true);
   const chatGroups = useChatGroups(chats, otherUserId, imgUrl);
+  const scrollContainerRef = useRef<HTMLDivElement | null>(null);
+  const ChatRoomRef = useRef<HTMLDivElement | null>(null);
 
   /** 백엔드 IChatRoom 타입을 프론트 IChatItemProps 으로 변환 함수
    * @param chatRoom : IChatRoom
@@ -81,11 +90,27 @@ export const ChatRoomPage = () => {
     },
   });
 
+  /** 메시지 시간순(오름차순) 으로 정렬하는 함수
+   * @param messages : IChatMsg[]
+   * @return messages : IChatMsg[]
+   */
+  const sortMessages = (messages: IChatMsg[]): IChatMsg[] => {
+    messages.sort((a, b) => {
+      const dateA = new Date(a.createdAt); // a의 createdAt을 Date 객체로 변환
+      const dateB = new Date(b.createdAt); // b의 createdAt을 Date 객체로 변환
+
+      return dateA.getTime() - dateB.getTime(); // 오름차순 정렬
+    });
+    return messages;
+  };
+
+  /** 초기 채팅방 진입 시 기본 정보 및 초기 메시지30 불러오는 함수
+   */
   const fetchMessages = async () => {
+    console.log("메시지를 fetch하는 함수 실행");
     try {
       const response = await http.post<IChatRoomPageResponse>(chatRoomEnterurl);
       if (response.success && response.code === "COMMON200") {
-        console.log(response);
         setOtherUserId(response.result.chatRoomBasicInfo.otherUserId);
         // 백엔드 타입 프론트엔드 타입으로 변환
         const createdPost = createChatRoomBasicInfo(
@@ -95,13 +120,52 @@ export const ChatRoomPage = () => {
         setImgUrl(
           response.result.chatRoomBasicInfo.productImage || DEFAULT_IMG_PATH
         );
-        setChats(response.result.messages);
+        const sortedMessages = sortMessages(response.result.messages);
+        console.log(sortedMessages[0].createdAt);
+        setChats(sortedMessages);
+        setLastMsgTime(sortedMessages[0].createdAt);
       }
     } catch (error) {
       console.error("Failed to fetch messages:", error);
     }
   };
 
+  /** 스크롤 올릴때마다 30개씩 새로운 메시지만 fetch 하는 함수
+   */
+  const fetchNewMessages = async () => {
+    console.log("새로운 메시지를 fetch하는 함수 실행");
+    console.log(lastMsgTime);
+    try {
+      const response = await http.get<
+        IChatRoomNewMsgResponse,
+        { roomId: string; beforeTime: string }
+      >(chatRoomNewMessagesurl, {
+        roomId: decrtyptRoomId || "",
+        beforeTime: lastMsgTime || "",
+      });
+      if (
+        response.success &&
+        response.code === "COMMON200" &&
+        response.result.length !== 0
+      ) {
+        const sortedMessages = sortMessages(response.result);
+        console.log(sortedMessages);
+        const responseLastMsgTime = sortedMessages[0].createdAt;
+        if (lastMsgTime !== responseLastMsgTime) {
+          setChats([...sortedMessages, ...chats]);
+          setLastMsgTime(responseLastMsgTime);
+        }
+      }
+    } catch (error) {
+      console.error("Failed to fetch messages:", error);
+    }
+  };
+
+  /** 초기 채팅방 진입 시 수행되는 useEffect
+   * 1. fetchChatMessages 호출
+   * 2. connectToWebSocket 호출(웹소켓 연결)
+   * 3. 컴포넌트 언마운트시 disconnectFromWebSocket 호출 설정
+   */
   useEffect(() => {
     const fetchChatMessages = async () => {
       await fetchMessages();
@@ -133,15 +197,61 @@ export const ChatRoomPage = () => {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  /** TODO: post as IPost 으로 Assertion 부분 이후에 post 값 없는 경우 에러 처리하도록 변경 */
+
+  /** 초기 채팅방 입장 시 스크롤 맨 아래로 내리는 함수
+   */
+  const scrollToBottom = () => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollIntoView({ behavior: "auto" });
+      console.log("3. 스크롤 함수 완료");
+    } else {
+      console.log("3. 없지 않나?");
+    }
+  };
+
+  /** 데이터가 fetch된 후, DOM이 렌더링된 상태에서 스크롤을 내리는 useEffect
+   *  isFirstFetch 값에 따라 scrollToBottom() 실행해서 맨 아래로 내림
+   */
+  useEffect(() => {
+    if (chatGroups.length !== 0 && isFirstFetch) {
+      console.log("2. 스크롤 함수 실행");
+      scrollToBottom();
+      setIsFirstFetch(false);
+    }
+  }, [chatGroups, isFirstFetch]); // 데이터가 fetch된 이후에만 실행
+
+  /** 스크롤 이벤트 핸들러, 스크롤 상단으로 올리는 경우 새로운 메시지 fetch 함수 실행
+   *  throttle 사용하여 1.5초 딜레이
+   */
+  const handleScroll = throttle(async () => {
+    const scrollTop = document.documentElement.scrollTop;
+    if (scrollTop <= 100) {
+      await fetchNewMessages();
+    }
+  }, 1500);
+
+  /** lastMsgTime 값에 따라 윈도우에 스크롤 이벤트 등록하는 useEffect
+   */
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [lastMsgTime]);
+
   return post ? (
-    <ChatRoomTemplate
-      post={post}
-      chatBubbles={chatGroups}
-      onWriteMessage={(message: string) => {
-        console.log(message);
-      }}
-    />
+    <div ref={ChatRoomRef}>
+      <ChatRoomTemplate
+        post={post}
+        chatBubbles={chatGroups}
+        onWriteMessage={(message: string) => {
+          console.log(message);
+        }}
+        scrollContainerRef={scrollContainerRef}
+      />
+    </div>
   ) : (
     <div>Loading...</div> // 로딩 화면 또는 다른 메시지 표시
   );
