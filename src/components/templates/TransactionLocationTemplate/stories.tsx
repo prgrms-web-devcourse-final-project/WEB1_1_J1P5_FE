@@ -36,8 +36,8 @@ export const Default: Story = {
       lat: 37.5666805,
       lng: 126.9784147
     },
-    location: "보라매공원 CU"
+    location: "보라매공원 CU",
+    locationErrorEvent: (message: string) => console.log(message)
   }
 };
 export default meta;
-

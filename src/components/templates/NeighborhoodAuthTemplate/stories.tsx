@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { NavermapsProvider } from "react-naver-maps";
-import { NeighborhoodAuthForm } from ".";
+import { NeighborhoodAuthTemplate } from ".";
 import { ILocation } from "types";
 
-const meta: Meta<typeof NeighborhoodAuthForm> = {
-  title: "Organisms/NeighborhoodAuthForm",
-  component: NeighborhoodAuthForm,
+const meta: Meta<typeof NeighborhoodAuthTemplate> = {
+  title: "Templates/NeighborhoodAuthTemplate",
+  component: NeighborhoodAuthTemplate,
   tags: ["autodocs"],
   argTypes: {
     onSubmitButtonClick: {
@@ -34,7 +34,7 @@ export const Default: Story = {
     onSubmitButtonClick: (location: ILocation) => console.log(location),
     locationErrorEvent: (message: string) => console.log(message)
   },
-  render: (args) => <NeighborhoodAuthForm {...args} />
+  render: (args) => <NeighborhoodAuthTemplate {...args} />
 };
 
 export default meta;

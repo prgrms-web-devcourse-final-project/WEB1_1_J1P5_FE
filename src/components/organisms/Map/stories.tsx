@@ -29,7 +29,8 @@ type Story = StoryObj<typeof meta>;
 
 export const RegisterLocation: Story = {
   args: {
-    isCenterMarkerExist: true
+    isCenterMarkerExist: true,
+    locationErrorEvent: (message: string) => console.log(message)
   },
   parameters: {
     docs: {
@@ -42,12 +43,14 @@ export const RegisterLocation: Story = {
 };
 
 export const EditLocation: Story = {
+  // 거래희망장소: 경복궁
   args: {
     coord: {
-      lat: 37.5666805,
+      lat: 37.58,
       lng: 126.9784147
     },
-    isCenterMarkerExist: true
+    isCenterMarkerExist: true,
+    locationErrorEvent: (message: string) => console.log(message)
   },
   parameters: {
     docs: {
@@ -64,7 +67,8 @@ export const ViewLocation: Story = {
       lat: 37.5666805,
       lng: 126.9784147
     },
-    isCenterMarkerExist: false
+    isCenterMarkerExist: false,
+    locationErrorEvent: (message: string) => console.log(message)
   },
   parameters: {
     docs: {
@@ -83,7 +87,8 @@ export const ViewLocationWithInfo: Story = {
       lng: 126.9784147
     },
     isCenterMarkerExist: false,
-    markerInfo: "서울 시청"
+    markerInfo: "서울 시청",
+    locationErrorEvent: (message: string) => console.log(message)
   },
   parameters: {
     docs: {
@@ -97,7 +102,8 @@ export const ViewLocationWithInfo: Story = {
 
 export const VerifyNeighborhood: Story = {
   args: {
-    isCenterMarkerExist: false
+    isCenterMarkerExist: false,
+    locationErrorEvent: (message: string) => console.log(message)
   },
   parameters: {
     docs: {
