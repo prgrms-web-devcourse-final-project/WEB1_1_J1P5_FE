@@ -1,4 +1,3 @@
-import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 import { MyPageTemplate } from ".";
 
@@ -32,4 +31,3 @@ export const Default: Story = {
 };
 
 export default meta;
-
