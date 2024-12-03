@@ -8,8 +8,8 @@ import {
 } from "components/molecules";
 import { PostImageManager } from "components/organisms";
 import { PostRegisterFormWrapper, DivWrapper } from "./styled";
-import type { IPostForm, IImageInfo, ISelectOption } from "types";
-
+import type { IPostForm, IImageInfo } from "types";
+import { CATEGORY_OPTIONS, EXPIRED_TIMES } from "constants/options";
 interface IPostRegisterFormProps {
   /** product Id */
   productId?: number;
@@ -20,22 +20,6 @@ interface IPostRegisterFormProps {
   /** 거래 희망 장소 클릭 시 실행할 함수 */
   onClick: () => string;
 }
-
-const categories: ISelectOption[] = [
-  { value: "디지털/가전", label: "디지털/가전" },
-  { value: "가구/인테리어", label: "가구/인테리어" },
-  { value: "유아동/유아도서", label: "유아동/유아도서" },
-  { value: "생활/가공식품", label: "생활/가공식품" },
-  { value: "스포츠/레저", label: "스포츠/레저" }
-];
-
-const expiredTimes: ISelectOption[] = [
-  { value: "3일 후", label: "3일 후" },
-  { value: "2일 후", label: "2일 후" },
-  { value: "1일 후", label: "1일 후" },
-  { value: "12시간 후", label: "12시간 후" },
-  { value: "6시간 후", label: "6시간 후" }
-];
 
 export const PostRegisterForm = ({
   productId,
@@ -90,8 +74,8 @@ export const PostRegisterForm = ({
             <LabeledSelect
               id="product-category"
               label="카테고리"
-              options={categories}
-              value={categories.find((option) => option.value === value)}
+              options={CATEGORY_OPTIONS}
+              value={CATEGORY_OPTIONS.find((option) => option.value === value)}
               onChange={(option) => onChange(option)}
               placeholder="카테고리를 검색해보세요!"
             />
@@ -198,8 +182,8 @@ export const PostRegisterForm = ({
             <LabeledSelect
               id="product-expiredTime"
               label="경매 마감 일시"
-              options={expiredTimes}
-              value={expiredTimes.find((option) => option.value === value)}
+              options={EXPIRED_TIMES}
+              value={EXPIRED_TIMES.find((option) => option.value === value)}
               onChange={(option) => onChange(option)}
               placeholder="경매 마감 일시를 선택해주세요."
             />
@@ -248,4 +232,3 @@ export const PostRegisterForm = ({
     </PostRegisterFormWrapper>
   );
 };
-

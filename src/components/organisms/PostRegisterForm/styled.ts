@@ -9,7 +9,7 @@ export const PostRegisterFormWrapper: ReturnType<
   align-items: flex-start;
   justify-content: center;
   gap: 30px;
-  width: calc(100% - 2rem);
+  width: 100%;
 
   ${TextButtonWrapper} {
     width: 100%;
@@ -24,4 +24,3 @@ export const DivWrapper: ReturnType<typeof styled.div> = styled.div`
   gap: 4px;
   width: 100%;
 `;
-
