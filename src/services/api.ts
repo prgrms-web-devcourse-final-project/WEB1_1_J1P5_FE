@@ -7,7 +7,7 @@ import axios, {
 import type { IResponse } from "types";
 
 const api: AxiosInstance = axios.create({
-  baseURL: `${import.meta.env.VITE_SERVER_URL}/api/v1`,
+  baseURL: `${import.meta.env.VITE_SERVER_URL}`,
   withCredentials: true, // TODO 토큰 처리 방식 확정 이후 확인
   timeout: 10000,
 });
@@ -16,7 +16,9 @@ const api: AxiosInstance = axios.create({
  * 응답
  * @param res
  */
-const onResponse = <T extends IResponse>(res: AxiosResponse<T>) => {
+const onResponse = <T extends IResponse>(
+  res: AxiosResponse<T>
+): T | undefined => {
   const { isSuccess } = res.data;
   if (isSuccess) {
     return res.data;
@@ -25,6 +27,7 @@ const onResponse = <T extends IResponse>(res: AxiosResponse<T>) => {
     const { statusCode, message } = res.data;
     // TODO Error 처리
     console.log(statusCode, message);
+    return undefined; // 혹은 다른 방식으로 에러 처리
   }
 };
 
@@ -60,7 +63,7 @@ export const http = {
   get: async <T extends IResponse, P = undefined>(
     url: string,
     params?: P,
-    options?: AxiosRequestConfig,
+    options?: AxiosRequestConfig
   ) => {
     return api.get<T>(url, { params, ...options });
   },
@@ -73,7 +76,7 @@ export const http = {
   post: async <T extends IResponse, D = undefined>(
     url: string,
     data?: D,
-    options?: AxiosRequestConfig,
+    options?: AxiosRequestConfig
   ) => {
     return api.post<T>(url, data && { ...data }, options);
   },
@@ -86,7 +89,7 @@ export const http = {
   put: async <T extends IResponse, D = undefined>(
     url: string,
     data?: D,
-    options?: AxiosRequestConfig,
+    options?: AxiosRequestConfig
   ) => {
     return api.put<T>(url, data && { ...data }, options);
   },
@@ -99,7 +102,7 @@ export const http = {
   patch: async <T extends IResponse, D = undefined>(
     url: string,
     data?: D,
-    options?: AxiosRequestConfig,
+    options?: AxiosRequestConfig
   ) => {
     return api.patch<T>(url, data && { ...data }, options);
   },
@@ -110,7 +113,7 @@ export const http = {
    */
   delete: async <T extends IResponse>(
     url: string,
-    options?: AxiosRequestConfig,
+    options?: AxiosRequestConfig
   ) => {
     return api.delete<T>(url, options);
   },
