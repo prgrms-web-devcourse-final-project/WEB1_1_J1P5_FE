@@ -23,7 +23,10 @@ const meta: Meta<typeof LocationPicker> = {
 type Story = StoryObj<typeof meta>;
 
 export const Register: Story = {
-  args: { onLocationSelect: (coord: ICoord) => console.log(coord) },
+  args: {
+    onLocationSelect: (coord: ICoord) => console.log(coord),
+    locationErrorEvent: (message: string) => console.log(message)
+  },
   render: (args) => <LocationPicker {...args} />
 };
 export const Edit: Story = {
@@ -32,10 +35,10 @@ export const Edit: Story = {
       lat: 37.5666805,
       lng: 126.9784147
     },
-    onLocationSelect: (coord: ICoord) => console.log(coord)
+    onLocationSelect: (coord: ICoord) => console.log(coord),
+    locationErrorEvent: (message: string) => console.log(message)
   },
   render: (args) => <LocationPicker {...args} />
 };
 
 export default meta;
-

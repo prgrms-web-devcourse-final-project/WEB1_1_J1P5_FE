@@ -9,11 +9,14 @@ interface ILocationPickerProps {
   coord?: ICoord;
   /** 거래희망장소 선택 완료 버튼 클릭 이벤트 */
   onLocationSelect: (selectedCoord: ICoord) => void;
+  /** 위치 권한 가져오기 실패 시 모달을 실행할 함수 */
+  locationErrorEvent: (message: string) => void;
 }
 
 export const LocationPicker = ({
   coord,
-  onLocationSelect
+  onLocationSelect,
+  locationErrorEvent
 }: ILocationPickerProps) => {
   const [centerCoord, setCenterCoord] = useState<any>(null);
 
@@ -35,9 +38,13 @@ export const LocationPicker = ({
         variant="h5"
       />
       <Text content="만나서 거래할 때는 누구나 찾기 쉬운 공공장소가 좋아요" />
-      <Map coord={coord} isCenterMarkerExist setCenterCoord={setCenterCoord} />
+      <Map
+        coord={coord}
+        isCenterMarkerExist
+        setCenterCoord={setCenterCoord}
+        locationErrorEvent={locationErrorEvent}
+      />
       <TextButton text="선택 완료" onClick={handleButtonClick} />
     </LocationPickerWrapper>
   );
 };
-
