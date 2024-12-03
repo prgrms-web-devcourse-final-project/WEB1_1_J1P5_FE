@@ -5,9 +5,11 @@ import { ChatOverviewRootWrapper, ListWrapper, PanelWrapper } from "./styled";
 import { type Context, createContext, useContext, useState } from "react";
 
 import { IChatItemProps } from "components/organisms/ChatItem";
+import { chatRoomTabMapKey } from "constants/Chat";
 
 interface IChatOverviewRootProps {
   children: React.ReactNode;
+  onClick?: (tab: chatRoomTabMapKey) => void; // onClick 핸들러 추가
 }
 
 interface IChatOverviewContextProps {
@@ -15,12 +17,14 @@ interface IChatOverviewContextProps {
   selectedIndex: number;
   /** 선택된 인덱스 변경 함수 */
   setSelectedIndex: React.Dispatch<React.SetStateAction<number>> | undefined;
+  onClick?: (tab: chatRoomTabMapKey) => void; // onClick 핸들러 추가
 }
 
 const ChatOverviewContext: Context<IChatOverviewContextProps> =
   createContext<IChatOverviewContextProps>({
     selectedIndex: 0,
     setSelectedIndex: undefined,
+    onClick: undefined, // 초기값으로 undefined 설정
   });
 
 /**
@@ -38,10 +42,10 @@ const useChatOverview = () => {
  * ChatOverview Root
  * ------------------------------------------------------------------- */
 
-const ChatOverviewRoot = ({ children }: IChatOverviewRootProps) => {
+const ChatOverviewRoot = ({ children, onClick }: IChatOverviewRootProps) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
 
-  const providerValue = { selectedIndex, setSelectedIndex };
+  const providerValue = { selectedIndex, setSelectedIndex, onClick };
 
   return (
     <ChatOverviewContext.Provider value={providerValue}>
@@ -64,16 +68,19 @@ const List = ({ children }: IChatOverviewRootProps) => {
 
 interface ITriggerProps {
   index: number;
-  title: string;
+  title: chatRoomTabMapKey;
 }
 
 const Trigger = ({ index, title }: ITriggerProps) => {
-  const { selectedIndex, setSelectedIndex } = useChatOverview();
+  const { selectedIndex, setSelectedIndex, onClick } = useChatOverview();
   const isActive = selectedIndex === index ? "active" : "default";
 
   const onSelect = () => {
     if (setSelectedIndex) {
       setSelectedIndex(index);
+    }
+    if (onClick) {
+      onClick(title); // onClick 핸들러 호출
     }
   };
 
