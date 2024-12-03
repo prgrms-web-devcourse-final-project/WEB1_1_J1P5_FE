@@ -25,7 +25,6 @@ export const NeighborhoodAuthForm = ({
   const { searchCoordinateToAddress } = useReverseGeocode();
 
   useEffect(() => {
-    console.log("실행");
     if (myCoord) {
       const iCoord = {
         lat: myCoord.lat(),
