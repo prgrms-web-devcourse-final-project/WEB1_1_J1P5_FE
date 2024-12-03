@@ -3,7 +3,7 @@ import { ChatRoomTemplateWrapper } from "./styled";
 import { IPost } from "components/organisms/PostList";
 import { IChatBubbleProps } from "components/organisms/ChatBubble";
 
-interface IChatRoomTemplateProps {
+export interface IChatRoomTemplateProps {
   /** 상품 정보 목록 */
   post: IPost;
   /** ChatBubble 목록 */
