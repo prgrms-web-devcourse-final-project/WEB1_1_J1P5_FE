@@ -57,7 +57,7 @@ export const NeighborhoodAuthForm = ({
           content={
             myNeighborhood
               ? `현재 위치가 '${myNeighborhood}'에 있어요`
-              : "현재 위치정보를 가져올 수 없어요. 잠시 후 다시 시도해주세요."
+              : "현재 위치정보를 가져올 수 없어요. 잠시 후 다시 시도해주세요"
           }
         />
         {myNeighborhood && (
