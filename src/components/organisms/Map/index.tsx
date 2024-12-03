@@ -13,20 +13,26 @@ import { IMapProps } from "types";
 export const Map = ({
   coord,
   isCenterMarkerExist = false,
+  locationErrorEvent,
+  markerInfo,
   setCenterCoord,
-  setMyCoord,
-  markerInfo
+  setMyCoord
 }: IMapProps) => {
   const {
-    navermaps,
     defaultCenter,
+    moveToCurrentLocation,
+    navermaps,
+    setInfoWindow,
     setMap,
     setMyMarker,
-    setTransactionMarker,
-    setInfoWindow,
-    moveToCurrentLocation
-  } = useMap({ coord, isCenterMarkerExist, setMyCoord, markerInfo });
-
+    setTransactionMarker
+  } = useMap({
+    coord,
+    isCenterMarkerExist,
+    locationErrorEvent,
+    markerInfo,
+    setMyCoord
+  });
   return (
     <MapWrapper>
       <MapDiv
@@ -62,13 +68,15 @@ export const Map = ({
           {markerInfo && (
             <InfoWindow content={markerInfo} ref={setInfoWindow} />
           )}
-          <IconButton
-            icon={MyLocationIcon}
-            type="round"
-            size="l"
-            backgroundColor="default"
-            onClick={moveToCurrentLocation}
-          />
+          {!(!isCenterMarkerExist && coord && !markerInfo) && (
+            <IconButton
+              icon={MyLocationIcon}
+              type="round"
+              size="l"
+              backgroundColor="default"
+              onClick={moveToCurrentLocation}
+            />
+          )}
         </NaverMap>
       </MapDiv>
     </MapWrapper>
