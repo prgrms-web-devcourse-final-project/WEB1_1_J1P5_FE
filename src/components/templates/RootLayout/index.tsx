@@ -15,8 +15,8 @@ export const RootLayout = () => {
     onRightClick,
     setValue,
     value,
+    placeholder,
     setBackClick,
-    clear,
   } = useTopBarStore();
   /**
    * 현재 페이지 체크 시 사용되는 pathname
@@ -54,13 +54,6 @@ export const RootLayout = () => {
     setBackClick(handleBackButtonClick);
   }, []);
 
-  /** search 이외에서 RightIcon / Title 초기화 */
-  useEffect(() => {
-    if (pathname !== "/search") {
-      clear();
-    }
-  }, [pathname]);
-
   return (
     <RootLayoutWrapper>
       {["/", "/market-price", "/chat", "/my-page"].includes(pathname) && (
@@ -86,11 +79,13 @@ export const RootLayout = () => {
             <TopBar.Title title={topBarTitle} />
           )}
           {["/search"].includes(pathname) && (
-            <TopBar.Input value={value} setValue={setValue} />
+            <TopBar.Input
+              value={value}
+              setValue={setValue}
+              placeholder={placeholder}
+            />
           )}
-          {icon && onRightClick && (
-            <TopBar.Icon icon={icon} onIconClick={onRightClick} />
-          )}
+          <TopBar.Icon icon={icon} onIconClick={onRightClick} />
         </TopBar>
       )}
       <PageLayoutWrapper>

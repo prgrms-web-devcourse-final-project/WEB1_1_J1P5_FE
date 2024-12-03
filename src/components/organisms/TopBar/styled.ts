@@ -1,6 +1,8 @@
 import styled from "@emotion/styled";
 import { InputWrapper } from "components/atoms/Input/styled";
 import { Body1Wrapper } from "components/atoms/Text/styled";
+import { NoIconWrapper } from "components/atoms/Icon/NoIcon/styled";
+import { IconButtonWrapper } from "components/atoms/Button/IconButton/styled";
 
 const CommonIconWrapper: ReturnType<typeof styled.div> = styled.div``;
 export const TopBarBackIconWrapper: typeof CommonIconWrapper = styled(
@@ -8,7 +10,11 @@ export const TopBarBackIconWrapper: typeof CommonIconWrapper = styled(
 )``;
 export const TopBarIconWrapper: typeof CommonIconWrapper = styled(
   CommonIconWrapper,
-)``;
+)`
+  ${IconButtonWrapper}:has(${NoIconWrapper}) {
+    cursor: default;
+  }
+`;
 
 export const TopBarWrapper: ReturnType<typeof styled.div> = styled.div`
   display: flex;
