@@ -11,10 +11,13 @@ import { useReverseGeocode } from "hooks";
 interface INeighborhoodAuthFormProps {
   /** 동네 인증 버튼 클릭 이벤트 */
   onSubmitButtonClick?: (location: ILocation) => void;
+  /** 위치 권한 가져오기 실패 시 모달을 실행할 함수 */
+  locationErrorEvent: (message: string) => void;
 }
 
 export const NeighborhoodAuthForm = ({
-  onSubmitButtonClick
+  onSubmitButtonClick,
+  locationErrorEvent
 }: INeighborhoodAuthFormProps) => {
   const [myCoord, setMyCoord] = useState<any>(null);
   const [myICoord, setMyICoord] = useState<ICoord | null>(null);
@@ -22,6 +25,7 @@ export const NeighborhoodAuthForm = ({
   const { searchCoordinateToAddress } = useReverseGeocode();
 
   useEffect(() => {
+    console.log("실행");
     if (myCoord) {
       const iCoord = {
         lat: myCoord.lat(),
@@ -48,7 +52,7 @@ export const NeighborhoodAuthForm = ({
 
   return (
     <NeighborhoodAuthFormWrapper>
-      <Map setMyCoord={setMyCoord} />
+      <Map setMyCoord={setMyCoord} locationErrorEvent={locationErrorEvent} />
       <LocationConfirmationContainer>
         <Text
           content={
