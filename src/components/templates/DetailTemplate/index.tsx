@@ -1,4 +1,4 @@
-import {} from "components/atoms";
+import type { ComponentProps } from "react";
 import { ImageSlider } from "components/molecules";
 import {
   AuctionControlBar,
@@ -8,10 +8,9 @@ import {
   LocationMap,
   Profile,
 } from "components/organisms";
+import type { ICommentItemProps } from "components/organisms/CommentItem";
 import type { ICoord } from "types";
 import { DetailTemplateWrapper, ImageSliderAndTimer } from "./styled";
-import type { ComponentProps } from "react";
-import type { ICommentItemProps } from "../../organisms/CommentItem";
 
 interface IBaseDetailTemplateProps {
   /** 판매자 정보 */
