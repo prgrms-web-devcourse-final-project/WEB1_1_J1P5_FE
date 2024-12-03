@@ -61,6 +61,7 @@ export const Input = ({
       {type === "number" && <p>₩</p>}
       <input
         type={type}
+        min="0"
         id={id}
         name={name}
         value={value}
