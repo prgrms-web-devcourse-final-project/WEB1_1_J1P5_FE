@@ -1,16 +1,26 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { NavermapsProvider } from "react-naver-maps";
 import { LocationPicker } from ".";
-import { ICoord } from "types";
+import { ILocation } from "types";
 
 const meta: Meta<typeof LocationPicker> = {
   title: "Organisms/LocationPicker",
   component: LocationPicker,
   tags: ["autodocs"],
   argTypes: {
+    coord: {
+      control: {
+        type: "object"
+      },
+      description: "거래희망장소 좌표 (위도, 경도)"
+    },
     onLocationSelect: {
-      action: "onSubmitButtonClick",
+      action: "onLocationSelect",
       description: "거래희망장소 선택 완료 버튼 클릭 이벤트"
+    },
+    locationErrorEvent: {
+      action: "locationErrorEvent",
+      description: "위치 권한 가져오기 실패 시 모달을 실행할 함수"
     }
   },
   decorators: (story) => (
@@ -27,7 +37,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Register: Story = {
   args: {
-    onLocationSelect: (coord: ICoord) => console.log(coord),
+    onLocationSelect: (location: ILocation) => console.log(location),
     locationErrorEvent: (message: string) => console.log(message)
   },
   render: (args) => <LocationPicker {...args} />
@@ -38,7 +48,7 @@ export const Edit: Story = {
       lat: 37.5666805,
       lng: 126.9784147
     },
-    onLocationSelect: (coord: ICoord) => console.log(coord),
+    onLocationSelect: (location: ILocation) => console.log(location),
     locationErrorEvent: (message: string) => console.log(message)
   },
   render: (args) => <LocationPicker {...args} />
