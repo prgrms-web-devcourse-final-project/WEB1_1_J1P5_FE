@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { ChatListTemplate } from ".";
-import { IChatItemProps } from "components/organisms/ChatItem";
 
 const meta: Meta<typeof ChatListTemplate> = {
   title: "Templates/ChatListTemplate",

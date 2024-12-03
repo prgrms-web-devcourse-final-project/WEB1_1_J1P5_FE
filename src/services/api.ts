@@ -7,8 +7,8 @@ import axios, {
 import type { IResponse } from "types";
 
 const api: AxiosInstance = axios.create({
-  baseURL: `${import.meta.env.VITE_SERVER_URL}/api/v1`,
-  withCredentials: true,
+  baseURL: `${import.meta.env.VITE_SERVER_URL}`,
+  withCredentials: true, // TODO 토큰 처리 방식 확정 이후 확인
   timeout: 10000,
 });
 
@@ -65,7 +65,7 @@ export const http = {
   get: async <T extends IResponse, P = undefined>(
     url: string,
     params?: P,
-    options?: AxiosRequestConfig,
+    options?: AxiosRequestConfig
   ) => {
     return api
       .get<T>(url, { params: params && { ...params }, ...options })
@@ -80,7 +80,7 @@ export const http = {
   post: async <T extends IResponse, D = undefined>(
     url: string,
     data?: D,
-    options?: AxiosRequestConfig,
+    options?: AxiosRequestConfig
   ) => {
     return api.post<T>(url, data && { ...data }, options).then(responseToData);
   },
@@ -93,7 +93,7 @@ export const http = {
   put: async <T extends IResponse, D = undefined>(
     url: string,
     data?: D,
-    options?: AxiosRequestConfig,
+    options?: AxiosRequestConfig
   ) => {
     return api.put<T>(url, data && { ...data }, options).then(responseToData);
   },
@@ -106,7 +106,7 @@ export const http = {
   patch: async <T extends IResponse, D = undefined>(
     url: string,
     data?: D,
-    options?: AxiosRequestConfig,
+    options?: AxiosRequestConfig
   ) => {
     return api.patch<T>(url, data && { ...data }, options).then(responseToData);
   },
@@ -117,7 +117,7 @@ export const http = {
    */
   delete: async <T extends IResponse>(
     url: string,
-    options?: AxiosRequestConfig,
+    options?: AxiosRequestConfig
   ) => {
     return api.delete<T>(url, options).then(responseToData);
   },
