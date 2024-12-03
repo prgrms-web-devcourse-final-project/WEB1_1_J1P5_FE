@@ -1,4 +1,5 @@
 export * from "./button";
+export * from "./category";
 export * from "./chat";
 export * from "./icon";
 export * from "./image";
