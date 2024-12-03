@@ -22,6 +22,7 @@ export const ChatBubble = ({ chats, isMe, imgUrl }: IChatBubbleProps) => {
             key={`chat_${isMe ? "me" : "other"}_${chat.createdAt}_${idx}`}
             isMe={isMe}
             {...chat}
+            isLastMsg={chats.length - 1 === idx ? true : false}
           />
         ))}
       </ChatMessagesWrapper>
