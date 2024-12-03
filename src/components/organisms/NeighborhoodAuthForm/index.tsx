@@ -20,34 +20,35 @@ export const NeighborhoodAuthForm = ({
   locationErrorEvent
 }: INeighborhoodAuthFormProps) => {
   const [myCoord, setMyCoord] = useState<any>(null);
-  const [myICoord, setMyICoord] = useState<ICoord | null>(null);
-  const [myNeighborhood, setMyNeighborhood] = useState<string>("");
+  const [location, setLocation] = useState<ILocation>({
+    coord: undefined,
+    address: ""
+  });
   const { searchCoordinateToAddress } = useReverseGeocode();
 
   useEffect(() => {
     if (myCoord) {
-      const iCoord = {
+      const iCoord: ICoord = {
         lat: myCoord.lat(),
         lng: myCoord.lng()
       } as const;
 
-      setMyICoord(iCoord);
       searchCoordinateToAddress(myCoord)
         .then((address) => {
-          setMyNeighborhood(address);
+          setLocation({ coord: iCoord, address });
         })
         .catch((error) => {
           console.error("Failed to fetch address:", error);
-          setMyNeighborhood("");
+          setLocation({ coord: iCoord, address: "" });
         });
     }
   }, [myCoord, searchCoordinateToAddress]);
 
   const handleButtonClick = useCallback(() => {
-    if (onSubmitButtonClick && myICoord && myNeighborhood) {
-      onSubmitButtonClick({ coord: myICoord, address: myNeighborhood });
+    if (location.address) {
+      onSubmitButtonClick?.(location);
     }
-  }, [onSubmitButtonClick, myICoord, myNeighborhood]);
+  }, [onSubmitButtonClick, location]);
 
   return (
     <NeighborhoodAuthFormWrapper>
@@ -55,12 +56,12 @@ export const NeighborhoodAuthForm = ({
       <LocationConfirmationContainer>
         <Text
           content={
-            myNeighborhood
-              ? `현재 위치가 '${myNeighborhood}'에 있어요`
+            location.address
+              ? `현재 위치가 '${location.address}'에 있어요`
               : "현재 위치정보를 가져올 수 없어요. 잠시 후 다시 시도해주세요"
           }
         />
-        {myNeighborhood && (
+        {location.address && (
           <TextButton text={"동네인증 완료하기"} onClick={handleButtonClick} />
         )}
       </LocationConfirmationContainer>
