@@ -14,14 +14,14 @@ export const PostItemContainerWrapper: ReturnType<
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: 0.5rem;
 `;
 
 export const PostItemLocationAndTimeWrapper: ReturnType<
   typeof styled.div
 > = styled.div`
   display: flex;
-  gap: 0.25rem;
+  gap: 0.5rem;
 `;
 
 export const PostItemPriceWrapper: ReturnType<typeof styled.div> = styled.div`
@@ -54,6 +54,7 @@ export const PostItemRootWrapper: ReturnType<typeof styled.div> = styled.div`
   align-items: start;
   gap: 1rem;
   cursor: pointer;
+  margin: 0.5rem;
 
   &:hover {
     background-color: #eeeeee;
