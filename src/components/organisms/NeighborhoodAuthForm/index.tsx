@@ -60,7 +60,9 @@ export const NeighborhoodAuthForm = ({
               : "현재 위치정보를 가져올 수 없어요. 잠시 후 다시 시도해주세요."
           }
         />
-        <TextButton text={"동네인증 완료하기"} onClick={handleButtonClick} />
+        {myNeighborhood && (
+          <TextButton text={"동네인증 완료하기"} onClick={handleButtonClick} />
+        )}
       </LocationConfirmationContainer>
     </NeighborhoodAuthFormWrapper>
   );
