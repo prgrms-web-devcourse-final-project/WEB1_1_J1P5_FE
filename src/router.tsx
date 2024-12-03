@@ -1,8 +1,4 @@
-import {
-  createBrowserRouter,
-  Outlet,
-  type RouteObject,
-} from "react-router-dom";
+import { createBrowserRouter, type RouteObject } from "react-router-dom";
 import {
   BlockedUsersPage,
   CategoryPage,
@@ -23,16 +19,12 @@ import {
   TransactionLocationPage,
   TransactionPage,
 } from "pages";
+import { RootLayout } from "components/templates";
 
 export const routes: RouteObject[] = [
   {
     path: "/",
-    element: (
-      // RootLayout
-      <>
-        <Outlet />
-      </>
-    ),
+    element: <RootLayout />,
     errorElement: <>404</>,
     children: [
       // home

@@ -1,5 +1,5 @@
 import { IconButton, Input, Text } from "components/atoms";
-import { BackIcon } from "components/atoms/Icon";
+import { BackIcon, NoIcon } from "components/atoms/Icon";
 import type { IconType } from "types";
 import {
   TopBarBackIconWrapper,
@@ -24,6 +24,7 @@ const TopBarBackIcon = ({ onBackIconClick }: ITopBarBackIconProps) => {
   return (
     <TopBarBackIconWrapper>
       <IconButton
+        size="s"
         icon={BackIcon}
         onClick={onBackIconClick}
         backgroundColor="transparent"
@@ -34,15 +35,16 @@ const TopBarBackIcon = ({ onBackIconClick }: ITopBarBackIconProps) => {
 
 interface ITopBarIconProps {
   /** 우측 아이콘 컴포넌트 */
-  icon: IconType;
+  icon?: IconType;
   /** 우측 아이콘 클릭 함수 */
-  onIconClick: () => void;
+  onIconClick?: () => void;
 }
 
-const TopBarIcon = ({ icon, onIconClick }: ITopBarIconProps) => {
+const TopBarIcon = ({ icon = NoIcon, onIconClick }: ITopBarIconProps) => {
   return (
     <TopBarIconWrapper>
       <IconButton
+        size="s"
         icon={icon}
         onClick={onIconClick}
         backgroundColor="transparent"
@@ -57,7 +59,7 @@ interface ITopBarTitleProps {
 }
 
 const TopBarTitle = ({ title }: ITopBarTitleProps) => {
-  return <Text content={title} />;
+  return <Text variant="body1" content={title} />;
 };
 
 interface ITopBarInputProps {

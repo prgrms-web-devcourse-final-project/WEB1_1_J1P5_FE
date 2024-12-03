@@ -49,9 +49,7 @@ export const Default: Story = {
       <TopBar>
         <TopBar.BackIcon onBackIconClick={args.onBackIconClick} />
         <TopBar.Title title={args.title} />
-        {args.icon && (
-          <TopBar.Icon icon={args.icon} onIconClick={args.onIconClick} />
-        )}
+        <TopBar.Icon icon={args.icon} onIconClick={args.onIconClick} />
       </TopBar>
     );
   },

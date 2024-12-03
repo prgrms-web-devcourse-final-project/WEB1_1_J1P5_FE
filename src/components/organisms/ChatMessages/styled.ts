@@ -24,5 +24,5 @@ export const ChatMessagesWrapper: ReturnType<typeof styled.div> = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  margin-bottom: 64px; // WriteBoxWrapper 만큼 빼야됨!!
+  margin-bottom: 80px; // WriteBoxWrapper 만큼 빼야됨!!
 `;

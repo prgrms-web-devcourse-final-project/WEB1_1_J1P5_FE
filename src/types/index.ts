@@ -6,6 +6,7 @@ export * from "./map";
 export * from "./menu";
 export * from "./navMenu";
 export * from "./notification";
+export * from "./profile";
 export * from "./post";
 export * from "./response";
 export * from "./selectOption";

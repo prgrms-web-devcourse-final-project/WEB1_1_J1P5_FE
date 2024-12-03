@@ -7,8 +7,8 @@ export interface IIconProps {
 
 export const IconSizes = {
   s: "1rem",
-  m: "2rem",
-  l: "3rem",
+  m: "1.5rem",
+  l: "2rem",
 } as const;
 
 /**

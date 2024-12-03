@@ -6,7 +6,7 @@ import { LabeledInputWrapper } from "components/molecules/LabeledInput/styled";
 
 export const ProfileImageWrapper: ReturnType<typeof styled.div> = styled.div`
   max-width: 200px;
-  width: calc(100% - 2rem);
+  width: 100%;
   border-radius: 50%;
   overflow: hidden;
   position: relative;
@@ -23,16 +23,16 @@ export const ProfileRegistrationFormWrapper: ReturnType<typeof styled.form> =
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    gap: 1rem;
+    gap: 2rem;
     ${LabeledInputWrapper} {
       flex: 1;
       justify-content: start;
-      width: calc(100% - 2rem);
+      width: 100%;
       ${InputWrapper} {
         width: 100%;
       }
     }
     ${TextButtonWrapper} {
-      width: calc(100% - 2rem);
+      width: 100%;
     }
   `;

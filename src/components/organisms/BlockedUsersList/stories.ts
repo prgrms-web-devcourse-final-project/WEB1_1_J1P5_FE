@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { BlockedUsersList, IBlockedUserItem } from ".";
-import { IProfile } from "../BlockedUserItem";
+import { BlockedUsersList } from ".";
+import type { IProfile, IBlockedUserItem } from "types";
 
 const meta: Meta<typeof BlockedUsersList> = {
   title: "Organisms/BlockedUsersList",
