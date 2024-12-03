@@ -24,17 +24,7 @@ export const useMap = ({
         position.coords.longitude
       );
 
-      setMyCoord?.((prevCoord) => {
-        // 이전 좌표와 새로운 좌표가 다를 때만 상태를 업데이트
-        if (
-          !prevCoord ||
-          prevCoord.lat() !== location.lat() ||
-          prevCoord.lng() !== location.lng()
-        ) {
-          return location;
-        }
-        return prevCoord;
-      });
+      setMyCoord?.(location);
 
       myMarker.setVisible(true);
       myMarker.setPosition(location);
@@ -77,13 +67,7 @@ export const useMap = ({
         }
       }
     },
-    [
-      coord,
-      isCenterMarkerExist,
-      locationErrorEvent,
-      onErrorGeolocation,
-      onSuccessGeolocation
-    ]
+    [locationErrorEvent, onErrorGeolocation, onSuccessGeolocation]
   );
 
   const requestGeolocation = useCallback(
@@ -109,13 +93,10 @@ export const useMap = ({
       }
     },
     [
-      coord,
-      defaultCenter,
-      isCenterMarkerExist,
       locationErrorEvent,
-      myMarker,
       onErrorGeolocation,
-      onSuccessGeolocation
+      onSuccessGeolocation,
+      handlePermission
     ]
   );
 
@@ -153,16 +134,7 @@ export const useMap = ({
     if (!coord || isCenterMarkerExist || markerInfo) {
       requestGeolocation("init");
     }
-  }, [
-    coord,
-    infowindow,
-    isCenterMarkerExist,
-    map,
-    markerInfo,
-    myMarker,
-    requestGeolocation,
-    transactionMarker
-  ]);
+  }, [map, myMarker, requestGeolocation]);
 
   return {
     defaultCenter,
