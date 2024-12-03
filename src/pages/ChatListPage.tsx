@@ -40,7 +40,7 @@ export const ChatListPage = () => {
   );
   const navigate = useNavigate();
 
-  const url = `/api/chat/rooms`;
+  const url = `/chats`;
 
   /** 백엔드 IChatRoom 타입을 프론트 IChatItemProps 으로 변환 함수
    * @param chatRoom : IChatRoom
@@ -71,20 +71,21 @@ export const ChatListPage = () => {
 
   /** userId 와 현재 category 정보를 parameter 로 하여 해당 유저의 채팅방 목록을 가져오는 함수
    * @param userId : string
-   * @param category : "ALL" | "SALE" | "PURCHASE"
+   * @param type : "ALL" | "SALE" | "PURCHASE"
    * @returns void
    */
   const fetchMessages = async () => {
     try {
-      const category = chatRoomTabMap.get(currentTab) || "ALL";
+      const type = chatRoomTabMap.get(currentTab) || "ALL";
       const response = await http.get<
         IChatRoomResponse,
-        { category: chatRoomTabMapValue }
-      >(url, { category });
+        { type: chatRoomTabMapValue }
+      >(url, { type });
       //TODO : 이 부분 실제로는 동작 잘 됨. IDE에서 빨간줄 뜨는 문제
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const data: IChatRoomResponse = response as any;
-      if (data.isSuccess && data.statusCode === "200") {
+      console.log("data");
+      if (data.success && data.code === "COMMON200") {
         // 백엔드 타입 프론트엔드 타입으로 변환
         const chatItems = data.result.map(createChatItem);
         //TODO : O(2N) 번 연산이 매번 들어가는 부분이기 때문에 이후 성능 개선 필요
