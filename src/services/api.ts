@@ -8,7 +8,7 @@ import type { IResponse } from "types";
 
 const api: AxiosInstance = axios.create({
   baseURL: `${import.meta.env.VITE_SERVER_URL}/api/v1`,
-  withCredentials: true, // TODO 토큰 처리 방식 확정 이후 확인
+  withCredentials: true,
   timeout: 10000,
 });
 
@@ -16,15 +16,16 @@ const api: AxiosInstance = axios.create({
  * 응답
  * @param res
  */
-const onResponse = <T extends IResponse>(res: AxiosResponse<T>) => {
+const onResponse = (res: AxiosResponse) => {
   const { isSuccess } = res.data;
   if (isSuccess) {
-    return res.data;
+    return res;
   } else {
     // isSuccess가 false일 때
     const { statusCode, message } = res.data;
     // TODO Error 처리
     console.log(statusCode, message);
+    return Promise.reject(res);
   }
 };
 
@@ -39,6 +40,10 @@ const onError = <T extends IResponse>(error: AxiosError<T>) => {
     console.log(statusCode, message);
   }
   return Promise.reject(error);
+};
+
+const responseToData = <T extends IResponse>(res: AxiosResponse<T>): T => {
+  return res.data;
 };
 
 api.interceptors.response.use(onResponse, onError);
@@ -62,7 +67,9 @@ export const http = {
     params?: P,
     options?: AxiosRequestConfig,
   ) => {
-    return api.get<T>(url, { params, ...options });
+    return api
+      .get<T>(url, { params: params && { ...params }, ...options })
+      .then(responseToData);
   },
   /**
    * HTTP POST Method
@@ -75,7 +82,7 @@ export const http = {
     data?: D,
     options?: AxiosRequestConfig,
   ) => {
-    return api.post<T>(url, data && { ...data }, options);
+    return api.post<T>(url, data && { ...data }, options).then(responseToData);
   },
   /**
    * HTTP PUT Method
@@ -88,7 +95,7 @@ export const http = {
     data?: D,
     options?: AxiosRequestConfig,
   ) => {
-    return api.put<T>(url, data && { ...data }, options);
+    return api.put<T>(url, data && { ...data }, options).then(responseToData);
   },
   /**
    * HTTP PATCH Method
@@ -101,7 +108,7 @@ export const http = {
     data?: D,
     options?: AxiosRequestConfig,
   ) => {
-    return api.patch<T>(url, data && { ...data }, options);
+    return api.patch<T>(url, data && { ...data }, options).then(responseToData);
   },
   /**
    * HTTP DELETE Method
@@ -112,6 +119,6 @@ export const http = {
     url: string,
     options?: AxiosRequestConfig,
   ) => {
-    return api.delete<T>(url, options);
+    return api.delete<T>(url, options).then(responseToData);
   },
 } as const;
