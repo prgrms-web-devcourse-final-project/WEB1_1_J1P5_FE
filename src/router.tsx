@@ -12,6 +12,7 @@ import {
   NeighborhoodAuthPage,
   NeighborhoodSelectionPage,
   NotificationPage,
+  OAuthCallbackPage,
   PermissionRequestPage,
   PostRegisterPage,
   ProfileRegistrationPage,
@@ -34,7 +35,14 @@ export const routes: RouteObject[] = [
       // 권한 요청
       { path: "permission-request", element: <PermissionRequestPage /> },
       // 로그인
-      { path: "login", element: <LoginPage /> },
+      {
+        path: "login",
+        element: <LoginPage />,
+        children: [
+          // OAuth callback 페이지
+          { path: "callback/:provider", element: <OAuthCallbackPage /> },
+        ],
+      },
       // 프로필 등록/수정
       { path: "profile", element: <ProfileRegistrationPage /> },
       // 중고물품 등록/수정

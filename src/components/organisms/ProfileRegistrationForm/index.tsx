@@ -18,7 +18,7 @@ export const ProfileRegistrationForm = ({
   const { control, handleSubmit, setValue } = useForm<IUser>({
     mode: "onChange",
     defaultValues: {
-      nickname: user?.nickname || "",
+      nickname: user?.nickname,
       profile: user?.profile,
     },
   });
@@ -57,7 +57,7 @@ export const ProfileRegistrationForm = ({
             <LabeledInput
               id="profile-nickname"
               label="닉네임"
-              value={value}
+              value={value || ""}
               setValue={(value) => {
                 setValue("nickname", value);
               }}
