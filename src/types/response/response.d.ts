@@ -1,5 +1,5 @@
 export interface IResponse {
-  isSuccess: boolean;
-  statusCode: string;
+  success: boolean;
+  code: string;
   message?: string;
 }

@@ -2,7 +2,7 @@ import {
   type ChangeEvent,
   type MouseEvent,
   useCallback,
-  useState
+  useState,
 } from "react";
 
 import { InputWrapper } from "./styled";
@@ -22,6 +22,8 @@ interface IInputProps {
   setValue?: (value: string) => void;
   /** Input 클릭 시 수행할 액션 */
   onClick?: () => void;
+  /** Input Enter 눌렀을때 수행할 액션 */
+  onKeyDown?: () => void;
 }
 
 /**
@@ -34,7 +36,8 @@ export const Input = ({
   value,
   placeholder,
   setValue,
-  onClick
+  onClick,
+  onKeyDown,
 }: IInputProps) => {
   const [focus, setFocus] = useState(false);
 
@@ -56,6 +59,15 @@ export const Input = ({
     onClick!();
   };
 
+  // 엔터 키로 메시지 전송
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter" && !e.nativeEvent.isComposing) {
+      e.preventDefault();
+      onKeyDown!();
+      return;
+    }
+  };
+
   return (
     <InputWrapper focus={focus}>
       {type === "number" && <p>₩</p>}
@@ -70,6 +82,7 @@ export const Input = ({
         onClick={onClick && handleInputClick}
         onFocus={onFocus}
         onBlur={onBlur}
+        onKeyDown={handleKeyPress}
       />
     </InputWrapper>
   );

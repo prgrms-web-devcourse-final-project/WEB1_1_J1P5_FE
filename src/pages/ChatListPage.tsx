@@ -1,6 +1,7 @@
 import { IChatItemProps } from "components/organisms/ChatItem";
 import { ChatListTemplate } from "components/templates/ChatListTemplate";
 import {
+  CHAT_URL,
   chatRoomTabMap,
   chatRoomTabMapKey,
   chatRoomTabMapValue,
@@ -40,8 +41,6 @@ export const ChatListPage = () => {
   );
   const navigate = useNavigate();
 
-  const url = `/api/chat/rooms`;
-
   /** 백엔드 IChatRoom 타입을 프론트 IChatItemProps 으로 변환 함수
    * @param chatRoom : IChatRoom
    * @returns IChatItemProps
@@ -71,22 +70,19 @@ export const ChatListPage = () => {
 
   /** userId 와 현재 category 정보를 parameter 로 하여 해당 유저의 채팅방 목록을 가져오는 함수
    * @param userId : string
-   * @param category : "ALL" | "SALE" | "PURCHASE"
+   * @param type : "ALL" | "SALE" | "PURCHASE"
    * @returns void
    */
   const fetchMessages = async () => {
     try {
-      const category = chatRoomTabMap.get(currentTab) || "ALL";
+      const type = chatRoomTabMap.get(currentTab) || "ALL";
       const response = await http.get<
         IChatRoomResponse,
-        { category: chatRoomTabMapValue }
-      >(url, { category });
-      //TODO : 이 부분 실제로는 동작 잘 됨. IDE에서 빨간줄 뜨는 문제
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const data: IChatRoomResponse = response as any;
-      if (data.isSuccess && data.statusCode === "200") {
+        { type: chatRoomTabMapValue }
+      >(CHAT_URL, { type });
+      if (response.success && response.code === "COMMON200") {
         // 백엔드 타입 프론트엔드 타입으로 변환
-        const chatItems = data.result.map(createChatItem);
+        const chatItems = response.result.map(createChatItem);
         //TODO : O(2N) 번 연산이 매번 들어가는 부분이기 때문에 이후 성능 개선 필요
         setAllChatItems(filterChatItems(chatItems));
 
@@ -132,7 +128,7 @@ export const ChatListPage = () => {
       clearTimeout(timerId); // 컴포넌트 언마운트 시 타이머 해제
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [url, currentTab, firstFetchTime]); // 필요한 의존성 추가
+  }, [CHAT_URL, currentTab, firstFetchTime]); // 필요한 의존성 추가
 
   const onHandleTab = (tab: chatRoomTabMapKey) => {
     setCurrentTab(tab);

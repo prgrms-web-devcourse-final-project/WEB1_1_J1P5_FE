@@ -17,14 +17,14 @@ const api: AxiosInstance = axios.create({
  * @param res
  */
 const onResponse = (res: AxiosResponse) => {
-  const { isSuccess } = res.data;
-  if (isSuccess) {
+  const { success } = res.data;
+  if (success) {
     return res;
   } else {
     // isSuccess가 false일 때
-    const { statusCode, message } = res.data;
+    const { code, message } = res.data;
     // TODO Error 처리
-    console.log(statusCode, message);
+    console.log(code, message);
     return Promise.reject(res);
   }
 };
@@ -35,9 +35,9 @@ const onResponse = (res: AxiosResponse) => {
  */
 const onError = <T extends IResponse>(error: AxiosError<T>) => {
   if (error.response) {
-    const { statusCode, message } = error.response.data;
+    const { code, message } = error.response.data;
     // TODO Error 처리
-    console.log(statusCode, message);
+    console.log(code, message);
   }
   return Promise.reject(error);
 };

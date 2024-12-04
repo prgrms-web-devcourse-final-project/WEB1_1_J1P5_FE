@@ -12,11 +12,13 @@ interface IComponentProps {
   chatBubbles: IChatBubbleProps[];
   /** 메시지 전송시 실행할 함수 */
   onWriteMessage: (message: string) => void;
+  scrollContainerRef?: React.RefObject<HTMLDivElement>;
 }
 
 export const ChatMessages = ({
   chatBubbles,
   onWriteMessage,
+  scrollContainerRef,
 }: IComponentProps) => {
   const [message, setMessage] = useState("");
   const handleSendButtonClick = () => {
@@ -24,6 +26,7 @@ export const ChatMessages = ({
       return;
     }
     onWriteMessage(message);
+    setMessage("");
   };
 
   useEffect(() => {
@@ -37,6 +40,7 @@ export const ChatMessages = ({
           <ChatBubble key={`chat_bubble_${idx}`} {...bubble} />
         ))}
       </ChatBubblesWrapper>
+      <div ref={scrollContainerRef}></div>
       <WriteBoxWrapper>
         <InputWithButton
           value={message}
