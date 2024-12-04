@@ -63,7 +63,9 @@ export const Input = ({
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && !e.nativeEvent.isComposing) {
       e.preventDefault();
-      onKeyDown!();
+      if (onKeyDown) {
+        onKeyDown();
+      }
       return;
     }
   };

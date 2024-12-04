@@ -50,14 +50,16 @@ export const routes: RouteObject[] = [
       // 동네 선택
       {
         path: "neighborhood-selection",
-        element: <NeighborhoodSelectionPage />
+        element: <NeighborhoodSelectionPage />,
       },
       // 카테고리
       { path: "category", element: <CategoryPage /> },
       // 검색 히스토리
       { path: "search", element: <SearchPage /> },
       // 검색 결과
-      { path: "search/:query", element: <SearchResultPage /> },
+      { path: "search/keyword/:query", element: <SearchResultPage /> },
+      // 검색 결과
+      { path: "search/category/:query", element: <SearchResultPage /> },
       // 거래 장소 선택
       { path: "location-selection", element: <SelectLocationPage /> },
       // 상품 상세
@@ -79,9 +81,9 @@ export const routes: RouteObject[] = [
       // 1:1 채팅
       { path: "chat/:roomId", element: <ChatRoomPage /> },
       // 시세 조회
-      { path: "market-price", element: <MarketPricePage /> }
-    ]
-  }
+      { path: "market-price", element: <MarketPricePage /> },
+    ],
+  },
 ];
 
 export const router: ReturnType<typeof createBrowserRouter> =
@@ -91,6 +93,6 @@ export const router: ReturnType<typeof createBrowserRouter> =
       v7_fetcherPersist: true,
       v7_normalizeFormMethod: true,
       v7_partialHydration: true,
-      v7_skipActionErrorRevalidation: true
-    }
+      v7_skipActionErrorRevalidation: true,
+    },
   });
