@@ -38,7 +38,7 @@ export function useWebSocket() {
     stompClient = new Client({
       brokerURL: "ws://localhost:8080/ws", // WebSocket 서버 URL
       debug: function (str: string) {
-        //console.log(str);
+        console.log(str);
       },
       onConnect: () => {
         console.log("연결 완료");
