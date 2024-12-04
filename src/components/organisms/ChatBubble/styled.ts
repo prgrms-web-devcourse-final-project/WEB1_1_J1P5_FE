@@ -16,6 +16,7 @@ export const ChatBubbleWrapper: ReturnType<
   flex-direction: ${({ isMe }) => (isMe ? "row-reverse" : "row")};
   gap: 0.25rem;
   ${ImageWrapper} {
-    width: 40px;
+    width: 60px;
+    height: 60px;
   }
 `;
