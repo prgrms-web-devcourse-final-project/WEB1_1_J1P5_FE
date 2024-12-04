@@ -26,6 +26,7 @@ export const ChatMessages = ({
       return;
     }
     onWriteMessage(message);
+    setMessage("");
   };
 
   useEffect(() => {
