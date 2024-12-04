@@ -6,7 +6,8 @@ export const useMap = ({
   coord,
   isCenterMarkerExist,
   setMyCoord,
-  markerInfo
+  markerInfo,
+  locationErrorEvent
 }: IMapProps) => {
   const navermaps = useNavermaps();
   const defaultCenter = new navermaps.LatLng(37.5666805, 126.9784147);
@@ -14,7 +15,6 @@ export const useMap = ({
   const [myMarker, setMyMarker] = useState<any>(null);
   const [transactionMarker, setTransactionMarker] = useState<any>(null);
   const [infowindow, setInfoWindow] = useState<any>(null);
-
   const isFirstExecution = useRef(true);
 
   const onSuccessGeolocation = useCallback(
@@ -24,10 +24,9 @@ export const useMap = ({
         position.coords.longitude
       );
 
-      if (setMyCoord) {
-        setMyCoord(location);
-      }
+      setMyCoord?.(location);
 
+      myMarker.setVisible(true);
       myMarker.setPosition(location);
       map.setZoom(16);
 
@@ -38,29 +37,72 @@ export const useMap = ({
 
       map.setCenter(location);
     },
-    [coord, map, myMarker]
+    [coord, map, myMarker, setMyCoord]
   );
 
   const onErrorGeolocation = useCallback(() => {
-    const center = map.getCenter();
-    myMarker.setPosition(new navermaps.LatLng(center.lat(), center.lng()));
-  }, [map, myMarker]);
+    /**
+     * TODO: 권한 요청을 했는데, 그냥 취소 누른 경우 실행되는 부분
+     */
+    locationErrorEvent?.(
+      "위치를 불러오는데 실패했어요. 잠시 후에 다시 실행해주세요."
+    );
+  }, [locationErrorEvent]);
 
-  const requestGeolocation = useCallback(() => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        onSuccessGeolocation,
-        onErrorGeolocation
-      );
-    } else {
-      const center = map.getCenter();
-      myMarker.setPosition(new navermaps.LatLng(center.lat(), center.lng()));
-    }
-  }, [onSuccessGeolocation, onErrorGeolocation, map, myMarker]);
+  const handlePermission = useCallback(
+    (result: PermissionStatus, type: string) => {
+      if (result.state === "granted" || result.state === "prompt") {
+        navigator.geolocation.getCurrentPosition(
+          onSuccessGeolocation,
+          onErrorGeolocation
+        );
+      } else if (result.state === "denied") {
+        if (
+          type === "getMyLocation" ||
+          (type === "init" && !coord && !isCenterMarkerExist)
+        ) {
+          locationErrorEvent?.(
+            "위치 권한이 거부되었습니다. 권한을 허용해주세요."
+          );
+        }
+      }
+    },
+    [locationErrorEvent, onErrorGeolocation, onSuccessGeolocation]
+  );
+
+  const requestGeolocation = useCallback(
+    (type: string) => {
+      if (navigator.permissions) {
+        navigator.permissions
+          .query({ name: "geolocation" })
+          .then((result) => handlePermission(result, type))
+          .catch((error) => {
+            console.error("Error querying geolocation permissions:", error);
+          });
+      } else {
+        /**
+         * 만일의 경우를 대비한 처리. 실제로 사용될 일은 드물 것으로 예상됨
+         * TODO: 추후에 개발 후 처분 결정
+         */
+        locationErrorEvent?.(
+          "브라우저가 위치 정보를 지원하지 않습니다. 위치 권한을 허용해주세요."
+        );
+
+        myMarker.setPosition(defaultCenter);
+        myMarker.setVisible(!coord && !isCenterMarkerExist);
+      }
+    },
+    [
+      locationErrorEvent,
+      onErrorGeolocation,
+      onSuccessGeolocation,
+      handlePermission
+    ]
+  );
 
   const moveToCurrentLocation = useCallback(() => {
     if (!map || !myMarker) return;
-    requestGeolocation();
+    requestGeolocation("getMyLocation");
   }, [map, myMarker, requestGeolocation]);
 
   useEffect(() => {
@@ -80,28 +122,31 @@ export const useMap = ({
         }
       }
     }
-    requestGeolocation();
-  }, [
-    map,
-    myMarker,
-    transactionMarker,
-    coord,
-    isCenterMarkerExist,
-    requestGeolocation,
-    infowindow
-  ]);
+
+    /**
+     * 위치 요청 보내기 전 전처리
+     * 동네 인증 시 내 위치를 못 불러와도 내 마커를 보여줘야 함
+     * 나머지 경우에는 마커를 숨김
+     */
+    myMarker.setPosition(defaultCenter);
+    myMarker.setVisible(!coord && !isCenterMarkerExist);
+
+    if (!coord || isCenterMarkerExist || markerInfo) {
+      requestGeolocation("init");
+    }
+  }, [map, myMarker, requestGeolocation]);
 
   return {
-    navermaps,
     defaultCenter,
-    map,
-    setMap,
-    myMarker,
-    setMyMarker,
-    transactionMarker,
-    setTransactionMarker,
     infowindow,
+    map,
+    moveToCurrentLocation,
+    myMarker,
+    navermaps,
     setInfoWindow,
-    moveToCurrentLocation
+    setMap,
+    setMyMarker,
+    setTransactionMarker,
+    transactionMarker
   };
 };

@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { NavermapsProvider } from "react-naver-maps";
-import { LocationPicker } from ".";
+import { SelectLocationTemplate } from ".";
 import { ILocation } from "types";
 
-const meta: Meta<typeof LocationPicker> = {
-  title: "Organisms/LocationPicker",
-  component: LocationPicker,
+const meta: Meta<typeof SelectLocationTemplate> = {
+  title: "Templates/SelectLocationTemplate",
+  component: SelectLocationTemplate,
   tags: ["autodocs"],
   argTypes: {
     coord: {
@@ -40,7 +40,7 @@ export const Register: Story = {
     onLocationSelect: (location: ILocation) => console.log(location),
     locationErrorEvent: (message: string) => console.log(message)
   },
-  render: (args) => <LocationPicker {...args} />
+  render: (args) => <SelectLocationTemplate {...args} />
 };
 export const Edit: Story = {
   args: {
@@ -51,7 +51,8 @@ export const Edit: Story = {
     onLocationSelect: (location: ILocation) => console.log(location),
     locationErrorEvent: (message: string) => console.log(message)
   },
-  render: (args) => <LocationPicker {...args} />
+  render: (args) => <SelectLocationTemplate {...args} />
 };
 
 export default meta;
+

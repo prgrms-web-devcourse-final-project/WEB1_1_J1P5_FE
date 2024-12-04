@@ -75,10 +75,10 @@ export const RootLayout = () => {
       ].includes(pathname) && (
         <TopBar>
           <TopBar.BackIcon onBackIconClick={onBackClick} />
-          {!["/search"].includes(pathname) && (
+          {!["/search", "/neighborhood-selection"].includes(pathname) && (
             <TopBar.Title title={topBarTitle} />
           )}
-          {["/search"].includes(pathname) && (
+          {["/search", "/neighborhood-selection"].includes(pathname) && (
             <TopBar.Input
               value={value}
               setValue={setValue}
