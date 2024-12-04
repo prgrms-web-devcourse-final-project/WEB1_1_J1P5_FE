@@ -11,10 +11,8 @@ const queryClient: QueryClient = new QueryClient();
 
 const App = () => {
   useForegroundNotification();
-  const { isOpen, content } = useModalStore((store) => ({
-    isOpen: store.isOpen,
-    content: store.content
-  }));
+  const isOpen = useModalStore((store) => store.isOpen);
+  const content = useModalStore((store) => store.content);
   const { closeModal } = useModalStore((store) => store.actions);
 
   return (
@@ -23,7 +21,7 @@ const App = () => {
       <RouterProvider
         router={router}
         future={{
-          v7_startTransition: true,
+          v7_startTransition: true
         }}
       />
       <Modal open={isOpen} onClose={closeModal}>

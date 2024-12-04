@@ -17,10 +17,6 @@ const meta: Meta<typeof SelectLocationTemplate> = {
     onLocationSelect: {
       action: "onLocationSelect",
       description: "거래희망장소 선택 완료 버튼 클릭 이벤트"
-    },
-    locationErrorEvent: {
-      action: "locationErrorEvent",
-      description: "위치 권한 가져오기 실패 시 모달을 실행할 함수"
     }
   },
   decorators: (story) => (
@@ -37,8 +33,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Register: Story = {
   args: {
-    onLocationSelect: (location: ILocation) => console.log(location),
-    locationErrorEvent: (message: string) => console.log(message)
+    onLocationSelect: (location: ILocation) => console.log(location)
   },
   render: (args) => <SelectLocationTemplate {...args} />
 };
@@ -48,11 +43,9 @@ export const Edit: Story = {
       lat: 37.5666805,
       lng: 126.9784147
     },
-    onLocationSelect: (location: ILocation) => console.log(location),
-    locationErrorEvent: (message: string) => console.log(message)
+    onLocationSelect: (location: ILocation) => console.log(location)
   },
   render: (args) => <SelectLocationTemplate {...args} />
 };
 
 export default meta;
-
