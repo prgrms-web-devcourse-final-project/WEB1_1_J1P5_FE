@@ -50,8 +50,8 @@ interface IChatRoomNewMsgResponse extends IResponse {
 }
 export const ChatRoomPage = () => {
   const { roomId } = useParams(); // URL에서 roomId 가져오기
-  const decrtyptRoomId = roomId ? decryptRoomId(roomId) : null;
-  const { connect, disconnect } = useWebSocket();
+  const decrtyptRoomId = roomId ? decryptRoomId(roomId) : "";
+  const { connect, disconnect, sendMessage, isConnected } = useWebSocket();
   const chatRoomEnterurl = `/chats/enter/${decrtyptRoomId}`;
   const chatRoomNewMessagesurl = `/chats/messages`;
   const [post, setPost] = useState<IPost>();
@@ -120,10 +120,12 @@ export const ChatRoomPage = () => {
         setImgUrl(
           response.result.chatRoomBasicInfo.productImage || DEFAULT_IMG_PATH
         );
-        const sortedMessages = sortMessages(response.result.messages);
-        console.log(sortedMessages[0].createdAt);
-        setChats(sortedMessages);
-        setLastMsgTime(sortedMessages[0].createdAt);
+        if (response.result.messages.length !== 0) {
+          const sortedMessages = sortMessages(response.result.messages);
+          console.log(sortedMessages[0].createdAt);
+          setChats(sortedMessages);
+          setLastMsgTime(sortedMessages[0].createdAt);
+        }
       }
     } catch (error) {
       console.error("Failed to fetch messages:", error);
@@ -163,8 +165,6 @@ export const ChatRoomPage = () => {
 
   /** 초기 채팅방 진입 시 수행되는 useEffect
    * 1. fetchChatMessages 호출
-   * 2. connectToWebSocket 호출(웹소켓 연결)
-   * 3. 컴포넌트 언마운트시 disconnectFromWebSocket 호출 설정
    */
   useEffect(() => {
     const fetchChatMessages = async () => {
@@ -173,7 +173,14 @@ export const ChatRoomPage = () => {
     fetchChatMessages().catch((error) => {
       console.error("Error fetchting Chat Message:", error);
     });
+  }, []);
 
+  /**
+   * 2. connectToWebSocket 호출(웹소켓 연결)
+   * 3. 컴포넌트 언마운트시 disconnectFromWebSocket 호출 설정
+   * (isConnected 값 바로 반영안되는 문제로 초기 채팅방 진입 시 수행되는 useEffect와 분리 하였음)
+   */
+  useEffect(() => {
     /** 웹 소켓 연결 */
     const connectToWebSocket = async () => {
       if (decrtyptRoomId) {
@@ -196,7 +203,7 @@ export const ChatRoomPage = () => {
       }); // 연결 시도 중 발생할 수 있는 오류를 처리
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [isConnected]);
 
   /** 초기 채팅방 입장 시 스크롤 맨 아래로 내리는 함수
    */
@@ -241,14 +248,15 @@ export const ChatRoomPage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [lastMsgTime]);
 
+  const handleInput = (message: string) => {
+    sendMessage(decrtyptRoomId, otherUserId, message);
+  };
   return post ? (
     <div ref={ChatRoomRef}>
       <ChatRoomTemplate
         post={post}
         chatBubbles={chatGroups}
-        onWriteMessage={(message: string) => {
-          console.log(message);
-        }}
+        onWriteMessage={handleInput}
         scrollContainerRef={scrollContainerRef}
       />
     </div>

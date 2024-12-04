@@ -24,7 +24,7 @@ export function useWebSocket() {
 
   const connect = async (roomId: string) => {
     if (isConnected) {
-      //console.log("WebSocket already connected.");
+      console.log("WebSocket already connected.");
       return;
     }
 
@@ -34,7 +34,7 @@ export function useWebSocket() {
         //console.log(str);
       },
       onConnect: () => {
-        //console.log("연결 완료");
+        console.log("연결 완료");
         setIsConnected(true); // 상태 업데이트
 
         // 연결 후 자동으로 채팅방 구독
@@ -52,6 +52,8 @@ export function useWebSocket() {
   };
 
   const disconnect = async () => {
+    console.log("disconnect 실행");
+    console.log(isConnected);
     if (!isConnected) {
       console.log("WebSocket is not connected.");
       return;
@@ -64,7 +66,7 @@ export function useWebSocket() {
     console.log("Disconnected");
   };
 
-  const sendMessage = (roomId: string, senderId: string, content: string) => {
+  const sendMessage = (roomId: string, senderId: number, content: string) => {
     if (stompClient && stompClient.connected) {
       const chatMessage = {
         roomId: roomId,

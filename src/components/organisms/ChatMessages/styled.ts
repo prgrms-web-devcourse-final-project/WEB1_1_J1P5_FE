@@ -13,8 +13,11 @@ export const WriteBoxWrapper: ReturnType<typeof styled.div> = styled.div`
   background-color: #eeeeee;
   position: fixed;
   bottom: 0;
-  left: 0;
   width: 100%;
+  max-width: 375px;
+
+  /* bottom Nav Bar 빠질떄까지 임시 */
+  margin-bottom: 50px;
   ${InputWrapper} {
     flex: 1;
   }
