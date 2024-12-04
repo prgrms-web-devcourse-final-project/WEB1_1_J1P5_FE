@@ -1,4 +1,5 @@
 import { Client } from "@stomp/stompjs";
+import { IChatMsg } from "pages/ChatRoomPage";
 import { useState } from "react";
 
 let stompClient: Client | undefined = undefined;
@@ -10,19 +11,25 @@ export function useWebSocket() {
     roomId: string,
     //TODO : 이 message 뭐 들어오는지 확인
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    onMessageReceived: (message: any) => void
+    setChats: React.Dispatch<React.SetStateAction<IChatMsg[]>>
   ) => {
     if (stompClient && stompClient.connected) {
-      return stompClient.subscribe(
-        "/sub/chatroom/" + roomId,
-        onMessageReceived
-      );
+      return stompClient.subscribe("/sub/chatroom/" + roomId, (message) => {
+        const newMsg = JSON.parse(message.body);
+        newMsg.createdAt = new Date();
+        newMsg.id = "0";
+        console.log("메시지 수신:", JSON.parse(message.body));
+        setChats((prev) => [...prev, newMsg]);
+      });
     } else {
       console.error("WebSocket is not connected for subscription.");
     }
   };
 
-  const connect = async (roomId: string) => {
+  const connect = async (
+    roomId: string,
+    setChats: React.Dispatch<React.SetStateAction<IChatMsg[]>>
+  ) => {
     if (isConnected) {
       console.log("WebSocket already connected.");
       return;
@@ -37,10 +44,14 @@ export function useWebSocket() {
         console.log("연결 완료");
         setIsConnected(true); // 상태 업데이트
 
-        // 연결 후 자동으로 채팅방 구독
-        subscribeToChatRoom(roomId, (message) => {
-          console.log("메시지 수신:", JSON.parse(message.body));
-        });
+        // 구독 실행 및 반환 값 확인
+        const subscription = subscribeToChatRoom(roomId, setChats);
+
+        if (subscription) {
+          console.log("Successfully subscribed to room:", subscription);
+        } else {
+          console.error("Failed to subscribe to room:", subscription);
+        }
       },
       onStompError: (frame) => {
         console.error("Broker reported error: " + frame.headers.message);
@@ -70,7 +81,7 @@ export function useWebSocket() {
     if (stompClient && stompClient.connected) {
       const chatMessage = {
         roomId: roomId,
-        senderId: senderId,
+        receiverId: senderId,
         content: content,
       };
       console.log("Sending message:", chatMessage);

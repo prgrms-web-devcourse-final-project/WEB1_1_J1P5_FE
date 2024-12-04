@@ -23,7 +23,12 @@ export const InputWithButton = ({
 }: IInputWithButtonProps) => {
   return (
     <InputWithButtonWrapper>
-      <Input value={value} setValue={setValue} placeholder={placeholder} />
+      <Input
+        value={value}
+        setValue={setValue}
+        placeholder={placeholder}
+        onKeyDown={onButtonClick}
+      />
       <TextButton text={buttonText} onClick={onButtonClick} />
     </InputWithButtonWrapper>
   );

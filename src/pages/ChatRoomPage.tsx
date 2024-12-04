@@ -51,7 +51,7 @@ interface IChatRoomNewMsgResponse extends IResponse {
 export const ChatRoomPage = () => {
   const { roomId } = useParams(); // URL에서 roomId 가져오기
   const decrtyptRoomId = roomId ? decryptRoomId(roomId) : "";
-  const { connect, disconnect, sendMessage, isConnected } = useWebSocket();
+
   const chatRoomEnterurl = `/chats/enter/${decrtyptRoomId}`;
   const chatRoomNewMessagesurl = `/chats/messages`;
   const [post, setPost] = useState<IPost>();
@@ -62,8 +62,8 @@ export const ChatRoomPage = () => {
   const [isFirstFetch, setIsFirstFetch] = useState(true);
   const chatGroups = useChatGroups(chats, otherUserId, imgUrl);
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
-  const ChatRoomRef = useRef<HTMLDivElement | null>(null);
-
+  const { connect, disconnect, sendMessage, isConnected } = useWebSocket();
+  const [isMsgSended, setIsMsgSended] = useState<boolean>(false);
   /** 백엔드 IChatRoom 타입을 프론트 IChatItemProps 으로 변환 함수
    * @param chatRoom : IChatRoom
    * @returns IChatItemProps
@@ -173,6 +173,7 @@ export const ChatRoomPage = () => {
     fetchChatMessages().catch((error) => {
       console.error("Error fetchting Chat Message:", error);
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   /**
@@ -184,7 +185,7 @@ export const ChatRoomPage = () => {
     /** 웹 소켓 연결 */
     const connectToWebSocket = async () => {
       if (decrtyptRoomId) {
-        await connect(decrtyptRoomId);
+        await connect(decrtyptRoomId, setChats);
       }
     };
 
@@ -250,16 +251,23 @@ export const ChatRoomPage = () => {
 
   const handleInput = (message: string) => {
     sendMessage(decrtyptRoomId, otherUserId, message);
+    setIsMsgSended(true);
   };
+
+  useEffect(() => {
+    if (chatGroups.length >= 0 && isMsgSended) {
+      scrollToBottom();
+      setIsMsgSended(false);
+    }
+  }, [chatGroups]); // 데이터가 fetch된 이후에만 실행
+
   return post ? (
-    <div ref={ChatRoomRef}>
-      <ChatRoomTemplate
-        post={post}
-        chatBubbles={chatGroups}
-        onWriteMessage={handleInput}
-        scrollContainerRef={scrollContainerRef}
-      />
-    </div>
+    <ChatRoomTemplate
+      post={post}
+      chatBubbles={chatGroups}
+      onWriteMessage={handleInput}
+      scrollContainerRef={scrollContainerRef}
+    />
   ) : (
     <div>Loading...</div> // 로딩 화면 또는 다른 메시지 표시
   );
