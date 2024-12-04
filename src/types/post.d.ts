@@ -1,16 +1,33 @@
 import { IImageInfo, ICoord } from "types";
 
+type Category =
+  | "ELECTRONIC"
+  | "FURNITURE"
+  | "CLOTHING"
+  | "FOOD"
+  | "BEAUTY"
+  | "SPORTS"
+  | "TOYS"
+  | "BOOKS"
+  | "AUTOMOTIVE"
+  | "JEWELRY"
+  | "HOME_APPLIANCES"
+  | "PET_SUPPLIES"
+  | "OFFICE_SUPPLIES"
+  | "GARDEN"
+  | "MUSIC";
+
 export interface IPostForm {
-  title: string;
-  content: string;
-  price: number;
-  category: string; // 나중에 리터럴로 취급
-  // latitude: number;
-  // longitude: number;
-  // address: number; // 시군구
-  location: string;
-  expiredTime: string;
-  imgUrls: ImageInfo[];
+  title?: string;
+  content?: string;
+  price?: number;
+  category: Category;
+  latitude?: number;
+  longitude?: number;
+  address?: string;
+  location?: string;
+  expiredTime?: string;
+  imgUrls?: ImageInfo[];
 }
 
 export interface ILocation {
