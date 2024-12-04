@@ -5,7 +5,7 @@ import { TextButtonWrapper } from "components/atoms/Button/TextButton/styled";
 import { LabeledInputWrapper } from "components/molecules/LabeledInput/styled";
 
 export const ProfileImageWrapper: ReturnType<typeof styled.div> = styled.div`
-  max-width: 200px;
+  max-width: 140px;
   width: 100%;
   border-radius: 50%;
   overflow: hidden;
