@@ -10,14 +10,17 @@ interface IPostImageManagerProps {
   imageInfos: IImageInfo[];
   /** imageInfos를 설정하는 함수 */
   setImageInfos: React.Dispatch<React.SetStateAction<IImageInfo[]>>;
+  disabled?: boolean;
 }
 
 export const PostImageManager = ({
   imageInfos,
-  setImageInfos
+  setImageInfos,
+  disabled = false
 }: IPostImageManagerProps) => {
   const onChange = useCallback(
     (file: File) => {
+      if (disabled) return;
       const reader = new FileReader();
       reader.onload = (e) => {
         const base64Url = e.target?.result as string;
@@ -30,18 +33,19 @@ export const PostImageManager = ({
       };
       reader.readAsDataURL(file);
     },
-    [setImageInfos]
+    [setImageInfos, disabled]
   );
 
   const handleRemoveImage = useCallback(
     (index: number) => {
+      if (disabled) return;
       setImageInfos((prev) => prev.filter((_, i) => i !== index));
     },
-    [setImageInfos]
+    [setImageInfos, disabled]
   );
 
   return (
-    <PostImageManagerWrapper>
+    <PostImageManagerWrapper disabled={disabled}>
       <UploadedImageCounter
         text="사진 등록"
         currentCount={imageInfos.length}

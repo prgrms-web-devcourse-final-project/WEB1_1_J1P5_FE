@@ -18,6 +18,12 @@ const meta: Meta<typeof PostImageManager> = {
     setImageInfos: {
       action: "setImageInfos",
       description: "imageInfos를 설정하는 함수"
+    },
+    disabled: {
+      control: {
+        type: "boolean"
+      },
+      description: "비활성화 여부"
     }
   }
 };
@@ -57,6 +63,32 @@ export const ImageExist: Story = {
         <PostImageManager
           imageInfos={imageInfos}
           setImageInfos={setImageInfos}
+        />
+      );
+    };
+    return <Component />;
+  }
+};
+
+export const Disabled: Story = {
+  args: {
+    imageInfos: [
+      { url: "https://github.com/moypp.png", base64Url: "", file: undefined },
+      { url: "https://github.com/ppyom.png", base64Url: "", file: undefined },
+      { url: "https://github.com/moypp.png", base64Url: "", file: undefined },
+      { url: "https://github.com/ppyom.png", base64Url: "", file: undefined }
+    ]
+  },
+  render: (args) => {
+    const Component = () => {
+      const [imageInfos, setImageInfos] = useState<IImageInfo[]>(
+        args.imageInfos
+      );
+      return (
+        <PostImageManager
+          imageInfos={imageInfos}
+          setImageInfos={setImageInfos}
+          disabled={true}
         />
       );
     };

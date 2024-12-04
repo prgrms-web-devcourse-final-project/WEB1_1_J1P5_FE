@@ -4,8 +4,10 @@ import { Body1Wrapper } from "components/atoms/Text/styled";
 
 export const PostImageItemWrapper: ReturnType<typeof styled.div> = styled.div`
   position: relative;
-
+  min-width: 100px;
   max-width: 100px;
+  aspect-ratio: 1 / 1;
+
   ${IconButtonWrapper} {
     position: absolute;
     top: 0;
