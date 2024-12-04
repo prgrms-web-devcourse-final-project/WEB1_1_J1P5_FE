@@ -1,6 +1,7 @@
 import { Controller, useForm } from "react-hook-form";
 import { Image, ImageUpload, Text, TextButton } from "components/atoms";
 import { LabeledInput } from "components/molecules";
+import ProfileUpload from "assets/ProfileRegistrationForm/profile_upload.svg";
 import type { IUser } from "types";
 import { ProfileImageWrapper, ProfileRegistrationFormWrapper } from "./styled";
 
@@ -39,7 +40,7 @@ export const ProfileRegistrationForm = ({
           <ProfileImageWrapper>
             <Image
               type="round"
-              url={getProfileImageURL(value)}
+              url={getProfileImageURL(value) || ProfileUpload}
               alt="유저 프로필 사진"
             />
             <ImageUpload onFileChange={(file) => setValue("profile", file)} />
