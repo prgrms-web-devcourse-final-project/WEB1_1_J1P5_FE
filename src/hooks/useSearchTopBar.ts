@@ -7,23 +7,24 @@ import { useTopBarStore } from "stores";
  * SearchTopBar가 필요한 페이지(search, searchResult)에서 사용하는 hook
  * @param value searchTerm의 기본 값 (default: "")
  */
-export const useSearchTopBar = (value: string = "") => {
+export const useSearchTopBar = () => {
   const navigate = useNavigate();
-  const [searchTerm, setSearchTerm] = useState(value);
-  const { setSearchBar, setRightIcon } = useTopBarStore();
+  const [searchTerm, setSearchTerm] = useState("");
 
+  const { setSearchBar, setRightIcon } = useTopBarStore();
   /**
    * 검색 페이지로 이동하는 함수
    */
   const handleSearch = () => {
-    console.log(searchTerm);
-    navigate(`/search/${searchTerm}`);
+    if (searchTerm.trim()) {
+      navigate(`/search/keyword/${searchTerm}`);
+    }
   };
 
   useEffect(() => {
-    setSearchBar(searchTerm, setSearchTerm, "검색어를 입력해주세요.");
     setRightIcon(SearchIcon, handleSearch);
-  }, []);
+    setSearchBar(searchTerm, setSearchTerm, "검색어를 입력해주세요.");
+  }, [searchTerm]);
 
   return {
     setSearchTerm,
