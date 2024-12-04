@@ -2,26 +2,30 @@ import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 import type { IModalBottomSheetProps } from ".";
 
-export const ModalBottomSheetBackgroundWrapper: ReturnType<typeof styled.div> =
-  styled.div`
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: #00000011;
-    backdrop-filter: blur(5px);
-  `;
+export const ModalBottomSheetBackgroundWrapper: ReturnType<
+  typeof styled.div
+> = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #00000080;
+`;
 
-export const ModalBottomSheetBodyWrapper: ReturnType<typeof styled.div> =
-  styled.div`
-    position: fixed;
-    left: 0;
-    width: 100%;
-    padding: 1rem;
-    border-radius: 1rem 1rem 0 0;
-    background-color: white;
-  `;
+export const ModalBottomSheetBodyWrapper: ReturnType<
+  typeof styled.div
+> = styled.div`
+  position: fixed;
+  left: 0;
+  width: 100%;
+  max-width: 375px;
+  left: 50%;
+  translate: -50%;
+  padding: 1rem;
+  border-radius: 1rem 1rem 0 0;
+  background-color: white;
+`;
 
 const modalBottomSheetConfig = (open: boolean) => css`
   visibility: ${open ? "visible" : "hidden"};

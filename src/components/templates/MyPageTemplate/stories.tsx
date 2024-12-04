@@ -7,15 +7,15 @@ const meta: Meta<typeof MyPageTemplate> = {
   tags: ["autodocs"],
   argTypes: {
     imgUrl: {
-      control: "text"
+      control: "text",
     },
     nickname: {
-      control: "text"
+      control: "text",
     },
     location: {
-      control: "text"
-    }
-  }
+      control: "text",
+    },
+  },
 };
 
 type Story = StoryObj<typeof meta>;
@@ -26,8 +26,8 @@ export const Default: Story = {
     nickname: "nickname",
     location: "location",
     onProfileEditButtonClick: () => console.log("프로필 수정 버튼 클릭"),
-    onMenuClick: (pathname) => console.log(pathname)
-  }
+    onMenuClick: (pathname) => console.log(pathname),
+  },
 };
 
 export default meta;

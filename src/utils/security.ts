@@ -1,20 +1,20 @@
-import CryptoJS from "crypto-js";
+//import CryptoJS from "crypto-js";
 
-import Utf8 from "crypto-js/enc-utf8";
+//import Utf8 from "crypto-js/enc-utf8";
 
 // 암호화 후 대체할 문자
-const substitutionsAfterEncryption: Map<string, string> = new Map([
-  ["+", "-"],
-  ["/", "_"],
-  ["=", "~"],
-]);
+// const substitutionsAfterEncryption: Map<string, string> = new Map([
+//   ["+", "-"],
+//   ["/", "_"],
+//   ["=", "~"],
+// ]);
 
 // 복호화 전 복원할 문자
-const substitutionsBeforeDecryption: Map<string, string> = new Map([
-  ["-", "+"],
-  ["_", "/"],
-  ["~", "="],
-]);
+// const substitutionsBeforeDecryption: Map<string, string> = new Map([
+//   ["-", "+"],
+//   ["_", "/"],
+//   ["~", "="],
+// ]);
 
 export const encryptRoomId = (roomId: string): string => {
   return roomId;
