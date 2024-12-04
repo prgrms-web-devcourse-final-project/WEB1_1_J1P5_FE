@@ -118,7 +118,8 @@ export const ChatRoomPage = () => {
         );
         setPost(createdPost);
         setImgUrl(
-          response.result.chatRoomBasicInfo.productImage || DEFAULT_IMG_PATH
+          response.result.chatRoomBasicInfo.otherProfileImage ||
+            DEFAULT_IMG_PATH
         );
         if (response.result.messages.length !== 0) {
           const sortedMessages = sortMessages(response.result.messages);

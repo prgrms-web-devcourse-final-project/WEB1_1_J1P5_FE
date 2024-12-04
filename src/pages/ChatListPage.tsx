@@ -85,8 +85,6 @@ export const ChatListPage = () => {
         const chatItems = response.result.map(createChatItem);
         //TODO : O(2N) 번 연산이 매번 들어가는 부분이기 때문에 이후 성능 개선 필요
         setAllChatItems(filterChatItems(chatItems));
-
-        console.log(dayjs());
       }
     } catch (error) {
       console.error("Failed to fetch messages:", error);
