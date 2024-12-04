@@ -9,7 +9,6 @@ import {
   Profile,
 } from "components/organisms";
 import type { ICommentItemProps } from "components/organisms/CommentItem";
-import type { ICoord } from "types";
 import { DetailTemplateWrapper, ImageSliderAndTimer } from "./styled";
 
 interface IBaseDetailTemplateProps {
@@ -33,7 +32,8 @@ interface IBaseDetailTemplateProps {
   uploadTime: string;
   /** 거래 희망 장소 */
   productLocation: {
-    coordinate: ICoord;
+    longtitude: number;
+    latitube: number;
     address: string;
     location: string;
   };
@@ -62,7 +62,7 @@ export const DetailTemplate = ({
   // 판매자 정보
   seller: { name, image },
   // 거래 희망 장소
-  productLocation: { coordinate, address, location },
+  productLocation: { longtitude, latitube, address, location },
   onLocationClick,
   // 댓글
   comments,
@@ -85,7 +85,7 @@ export const DetailTemplate = ({
       />
       <Profile imgUrl={image} nickname={name} location={address} />
       <LocationMap
-        coord={coordinate}
+        coord={{ lat: latitube, lng: longtitude }}
         location={location}
         onClick={onLocationClick}
       />
