@@ -92,12 +92,7 @@ export const useMap = ({
         myMarker.setVisible(!coord && !isCenterMarkerExist);
       }
     },
-    [
-      locationErrorEvent,
-      onErrorGeolocation,
-      onSuccessGeolocation,
-      handlePermission
-    ]
+    [locationErrorEvent, handlePermission]
   );
 
   const moveToCurrentLocation = useCallback(() => {
@@ -106,9 +101,12 @@ export const useMap = ({
   }, [map, myMarker, requestGeolocation]);
 
   useEffect(() => {
+    console.log("render1");
     if (!map || !myMarker) return;
+    console.log("render2");
 
     if (coord) {
+      console.log("coord", coord);
       const position = new navermaps.LatLng(coord.lat, coord.lng);
       map.setCenter(position);
 
