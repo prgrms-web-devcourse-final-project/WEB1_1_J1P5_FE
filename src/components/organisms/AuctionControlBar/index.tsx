@@ -3,10 +3,8 @@ import {
   AuctionControlBarRootWrapper,
   BidWrapper,
   BidContainerWrapper,
-  ButtonContainerWrapper
+  ButtonContainerWrapper,
 } from "./styled";
-
-import type { IButton } from "types";
 
 /* -------------------------------------------------------------------
  * AuctionControlBar Root
@@ -24,6 +22,7 @@ const AuctionControlBarRoot = ({ children }: IAuctionControlBarRootProps) => {
 
 /* -------------------------------------------------------------------
  * Bid
+ * TODO 형식 변경되면서 BidContainer의 자식으로 사용 처리 필요
  * ------------------------------------------------------------------- */
 
 export interface IBidProps {
@@ -42,20 +41,15 @@ const Bid = ({ title, price }: IBidProps) => {
 
 /* -------------------------------------------------------------------
  * BidContainer
+ * TODO 형식 변경되면서 context로 처리 필요
  * ------------------------------------------------------------------- */
 
 export interface IBidsProps {
-  bids: IBidProps[];
+  children: React.ReactNode;
 }
 
-const BidContainer = ({ bids }: IBidsProps) => {
-  return (
-    <BidContainerWrapper>
-      {bids.map(({ title, price }, idx) => (
-        <Bid key={`bid_${title}_${idx}`} title={title} price={price} />
-      ))}
-    </BidContainerWrapper>
-  );
+const BidContainer = ({ children }: IBidsProps) => {
+  return <BidContainerWrapper>{children}</BidContainerWrapper>;
 };
 
 /* -------------------------------------------------------------------
@@ -63,24 +57,13 @@ const BidContainer = ({ bids }: IBidsProps) => {
  * ------------------------------------------------------------------- */
 
 export interface IAuctionControlBarButtonContainerProps {
-  buttons: IButton[];
+  children: React.ReactNode;
 }
 
 const ButtonContainer = ({
-  buttons
+  children,
 }: IAuctionControlBarButtonContainerProps) => {
-  return (
-    <ButtonContainerWrapper>
-      {buttons.map(({ title, background, onClick }, idx) => (
-        <TextButton
-          key={`auctionControlBar_buttons_${title}_${idx}`}
-          text={title}
-          backgroundColor={background}
-          onClick={onClick}
-        />
-      ))}
-    </ButtonContainerWrapper>
-  );
+  return <ButtonContainerWrapper>{children}</ButtonContainerWrapper>;
 };
 
 /* -------------------------------------------------------------------
@@ -89,9 +72,12 @@ const ButtonContainer = ({
 
 export const AuctionControlBar: typeof AuctionControlBarRoot & {
   BidContainer: typeof BidContainer;
+  Bid: typeof Bid;
   ButtonContainer: typeof ButtonContainer;
+  Button: typeof TextButton;
 } = Object.assign(AuctionControlBarRoot, {
   BidContainer: BidContainer,
-  ButtonContainer: ButtonContainer
+  Bid: Bid,
+  ButtonContainer: ButtonContainer,
+  Button: TextButton,
 });
-
