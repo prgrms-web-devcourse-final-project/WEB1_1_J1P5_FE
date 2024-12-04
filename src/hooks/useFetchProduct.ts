@@ -44,5 +44,8 @@ export const useFetchProduct = (productId: string) => {
     select: (data) => data.result,
   });
 
-  return { product: data || productData, isLoading };
+  console.log(data, isLoading);
+
+  // return { product: data || productData, isLoading };
+  return { product: productData, isLoading: false };
 };
