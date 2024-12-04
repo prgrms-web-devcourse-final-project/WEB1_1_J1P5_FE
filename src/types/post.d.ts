@@ -17,16 +17,18 @@ type Category =
   | "GARDEN"
   | "MUSIC";
 
+type ExpiredTime = "3일 후" | "2일 후" | "24시간 후" | "12시간 후" | "6시간 후";
+
 export interface IPostForm {
   title?: string;
   content?: string;
   price?: number;
-  category: Category;
+  category?: Category;
   latitude?: number;
   longitude?: number;
   address?: string;
   location?: string;
-  expiredTime?: string;
+  expiredTime?: ExpiredTime;
   imgUrls?: ImageInfo[];
 }
 
