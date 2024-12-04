@@ -13,9 +13,11 @@ import {
   NeighborhoodSelectionPage,
   NotificationPage,
   PermissionRequestPage,
+  PostRegisterPage,
   ProfileRegistrationPage,
   SearchPage,
   SearchResultPage,
+  SelectLocationPage,
   TransactionLocationPage,
   TransactionPage,
 } from "pages";
@@ -35,10 +37,12 @@ export const routes: RouteObject[] = [
       { path: "login", element: <LoginPage /> },
       // 프로필 등록/수정
       { path: "profile", element: <ProfileRegistrationPage /> },
+      // 중고물품 등록/수정
+      { path: "product", element: <PostRegisterPage /> },
       // 동네 선택
       {
         path: "neighborhood-selection",
-        element: <NeighborhoodSelectionPage />,
+        element: <NeighborhoodSelectionPage />
       },
       // 카테고리
       { path: "category", element: <CategoryPage /> },
@@ -46,6 +50,8 @@ export const routes: RouteObject[] = [
       { path: "search", element: <SearchPage /> },
       // 검색 결과
       { path: "search/:query", element: <SearchResultPage /> },
+      // 거래 장소 선택
+      { path: "location-selection", element: <SelectLocationPage /> },
       // 상품 상세
       { path: "product/:productId", element: <DetailPage /> },
       // 거래 장소
@@ -65,9 +71,9 @@ export const routes: RouteObject[] = [
       // 1:1 채팅
       { path: "chat/:roomId", element: <ChatRoomPage /> },
       // 시세 조회
-      { path: "market-price", element: <MarketPricePage /> },
-    ],
-  },
+      { path: "market-price", element: <MarketPricePage /> }
+    ]
+  }
 ];
 
 export const router: ReturnType<typeof createBrowserRouter> =
@@ -77,6 +83,6 @@ export const router: ReturnType<typeof createBrowserRouter> =
       v7_fetcherPersist: true,
       v7_normalizeFormMethod: true,
       v7_partialHydration: true,
-      v7_skipActionErrorRevalidation: true,
-    },
+      v7_skipActionErrorRevalidation: true
+    }
   });
