@@ -57,9 +57,9 @@ export const routes: RouteObject[] = [
       // 검색 히스토리
       { path: "search", element: <SearchPage /> },
       // 검색 결과
-      { path: "search/keyword/:query", element: <SearchResultPage /> },
+      { path: "search/keyword/:keyword", element: <SearchResultPage /> },
       // 검색 결과
-      { path: "search/category/:query", element: <SearchResultPage /> },
+      { path: "search/category/:category", element: <SearchResultPage /> },
       // 거래 장소 선택
       { path: "location-selection", element: <SelectLocationPage /> },
       // 상품 상세
