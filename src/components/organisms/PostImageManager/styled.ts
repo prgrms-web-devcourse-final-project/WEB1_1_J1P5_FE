@@ -21,17 +21,10 @@ export const PostImageManagerWrapper: ReturnType<
     }
   `}
 
-  ${UploadedImageCounterContainer} {
-    min-width: 100px;
+  ${UploadedImageCounterContainer}, ${PostImageItemWrapper} {
+    width: 106px;
+    aspect-ratio: 1 / 1;
 
-    ${({ disabled }) =>
-      disabled &&
-      `
-      filter: grayscale(1);
-    `}
-  }
-
-  ${PostImageItemWrapper} {
     ${({ disabled }) =>
       disabled &&
       `
