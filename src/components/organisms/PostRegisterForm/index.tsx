@@ -10,6 +10,7 @@ import { PostImageManager } from "components/organisms";
 import { PostRegisterFormWrapper, DivWrapper } from "./styled";
 import type { IPostForm, IImageInfo } from "types";
 import { CATEGORY_OPTIONS, EXPIRED_TIMES } from "constants/options";
+
 interface IPostRegisterFormProps {
   /** product Id */
   productId?: number;
@@ -18,7 +19,7 @@ interface IPostRegisterFormProps {
   /** Submit 이벤트 발생 시 실행할 함수 */
   onSubmit: (data: IPostForm) => void;
   /** 거래 희망 장소 클릭 시 실행할 함수 */
-  onClick: () => string;
+  onClick: (data: IPostForm) => void;
 }
 
 export const PostRegisterForm = ({
@@ -31,21 +32,26 @@ export const PostRegisterForm = ({
     postForm?.imgUrls || []
   );
 
-  const { control, handleSubmit, setValue } = useForm<IPostForm>({
+  const { control, handleSubmit, setValue, getValues } = useForm<IPostForm>({
     mode: "onBlur",
     defaultValues: {
-      title: postForm?.title || "",
-      content: postForm?.content || "",
+      title: postForm?.title,
+      content: postForm?.content,
       price: postForm?.price,
       category: postForm?.category,
       expiredTime: postForm?.expiredTime,
-      location: postForm?.location || ""
+      location: postForm?.location
     }
   });
 
   useEffect(() => {
     setValue("imgUrls", imageInfos);
   }, [imageInfos, setValue]);
+
+  const isISOFormat = (dateString: string) => {
+    const isoFormatRegex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z$/;
+    return isoFormatRegex.test(dateString);
+  };
 
   return (
     <PostRegisterFormWrapper onSubmit={handleSubmit(onSubmit)}>
@@ -56,6 +62,7 @@ export const PostRegisterForm = ({
           <PostImageManager
             imageInfos={imageInfos}
             setImageInfos={setImageInfos}
+            disabled={!!productId}
           />
         )}
       />
@@ -99,7 +106,7 @@ export const PostRegisterForm = ({
             <LabeledInput
               id="product-title"
               label="제목"
-              value={value}
+              value={value || ""}
               setValue={(value) => {
                 setValue("title", value);
               }}
@@ -125,7 +132,7 @@ export const PostRegisterForm = ({
             <LabeledTextarea
               id="product-content"
               label="설명"
-              value={value}
+              value={value || ""}
               setValue={(value) => {
                 setValue("content", value);
               }}
@@ -152,7 +159,7 @@ export const PostRegisterForm = ({
               type="number"
               id="product-price"
               label="최종 입찰가"
-              value={value?.toString()}
+              value={value?.toString() || ""}
               setValue={(value) => {
                 setValue("price", parseInt(value, 10));
               }}
@@ -177,24 +184,49 @@ export const PostRegisterForm = ({
           field: { onChange, value },
           fieldState: { invalid },
           formState
-        }) => (
-          <DivWrapper>
-            <LabeledSelect
-              id="product-expiredTime"
-              label="경매 마감 일시"
-              options={EXPIRED_TIMES}
-              value={EXPIRED_TIMES.find((option) => option.value === value)}
-              onChange={(option) => onChange(option)}
-              placeholder="경매 마감 일시를 선택해주세요."
-            />
-            {invalid && (
-              <Text
-                variant="button"
-                content={formState.errors.expiredTime?.message || ""}
+        }) => {
+          const expiredTimeDisabled = isISOFormat(postForm?.expiredTime || "");
+          return (
+            <DivWrapper>
+              <LabeledSelect
+                id="product-expiredTime"
+                label="경매 마감 일시"
+                options={
+                  expiredTimeDisabled
+                    ? [
+                        {
+                          value: postForm!.expiredTime as string,
+                          label: postForm!.expiredTime as string
+                        }
+                      ]
+                    : EXPIRED_TIMES
+                }
+                value={
+                  expiredTimeDisabled
+                    ? {
+                        value: postForm!.expiredTime as string,
+                        label: postForm!.expiredTime as string
+                      }
+                    : EXPIRED_TIMES.find((option) => option.value === value)
+                }
+                onChange={(option) => onChange(option)}
+                placeholder="경매 마감 일시를 선택해주세요."
               />
-            )}
-          </DivWrapper>
-        )}
+              {!productId && (
+                <Text
+                  variant="button"
+                  content="포스팅이 등록될 때 경매 마감 시간이 카운트됩니다."
+                />
+              )}
+              {invalid && (
+                <Text
+                  variant="button"
+                  content={formState.errors.expiredTime?.message || ""}
+                />
+              )}
+            </DivWrapper>
+          );
+        }}
       />
       <Controller
         name="location"
@@ -207,11 +239,10 @@ export const PostRegisterForm = ({
             <LabeledInput
               id="product-location"
               label="거래 희망 장소"
-              value={value}
+              value={value || ""}
               onClick={() => {
-                const clickedValue = onClick();
-                // 나중에 주스탄드로 가져와야 할 듯
-                setValue("location", clickedValue);
+                const formData = getValues();
+                onClick(formData);
               }}
               placeholder="거래 희망 장소를 입력해주세요."
             />
