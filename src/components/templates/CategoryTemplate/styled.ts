@@ -3,5 +3,9 @@ import styled from "@emotion/styled";
 export const CategoryTemplateWrapper: ReturnType<
   typeof styled.div
 > = styled.div`
+  width: 100%;
+  /* 임시로 높이 주어서 합쳐지게 구성 */
+  height: 500px;
   display: flex;
+  margin-top: 32px;
 `;
