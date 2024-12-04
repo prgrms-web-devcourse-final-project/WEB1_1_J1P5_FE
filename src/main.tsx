@@ -4,7 +4,10 @@ import App from "./App";
 import { NavermapsProvider } from "react-naver-maps";
 
 createRoot(document.getElementById("root")!).render(
-  <NavermapsProvider ncpClientId={import.meta.env.VITE_NAVER_MAP_CLIENT_ID}>
+  <NavermapsProvider
+    ncpClientId={import.meta.env.VITE_NAVER_MAP_CLIENT_ID}
+    submodules={["geocoder"]}
+  >
     <App />
   </NavermapsProvider>
 );

@@ -1,5 +1,5 @@
 export interface IUser {
-  id: string;
-  nickname: string;
-  profile: string | File | undefined;
+  id?: number;
+  nickname?: string;
+  profile?: string | File;
 }

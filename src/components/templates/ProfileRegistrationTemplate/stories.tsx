@@ -26,7 +26,7 @@ export const Default: Story = {
 export const HasUser: Story = {
   args: {
     user: {
-      id: "1",
+      id: 1,
       nickname: "ppyom",
       profile: "https://github.com/ppyom.png",
     },

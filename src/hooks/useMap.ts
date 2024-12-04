@@ -92,12 +92,7 @@ export const useMap = ({
         myMarker.setVisible(!coord && !isCenterMarkerExist);
       }
     },
-    [
-      locationErrorEvent,
-      onErrorGeolocation,
-      onSuccessGeolocation,
-      handlePermission
-    ]
+    [locationErrorEvent, handlePermission]
   );
 
   const moveToCurrentLocation = useCallback(() => {
