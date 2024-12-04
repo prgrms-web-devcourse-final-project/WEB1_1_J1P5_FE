@@ -2,36 +2,42 @@ import { useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { SelectLocationTemplate } from "components/templates";
-import { useModalStore, useSelectedLocationStore } from "stores";
+import { useFormDataStore, useModalStore } from "stores";
 import type { ILocation } from "types";
 
 export const SelectLocationPage = () => {
   const navigate = useNavigate();
-  const coord = useSelectedLocationStore((state) => state.coord);
-  const [isOpenBottomSheet, setIsOpenBottomSheet] = useState(false);
-  const { setCoord, setAddress, setLocation } = useSelectedLocationStore(
-    (state) => state.actions
-  );
+  const coord = useFormDataStore((state) => {
+    return {
+      lat: state.formData.latitude as number,
+      lng: state.formData.longitude as number
+    };
+  });
+  const { setFormData } = useFormDataStore((state) => state.actions);
   const { openModal, closeModal } = useModalStore((state) => state.actions);
+  const [isOpenBottomSheet, setIsOpenBottomSheet] = useState(false);
 
   const handleRegistrationButtonClick = useCallback(
     (place: string) => {
-      setLocation(place);
+      setFormData({
+        location: place
+      });
       setIsOpenBottomSheet(false);
       navigate("/product");
     },
-    [setLocation, navigate]
+    [setFormData, navigate]
   );
 
   const handleLocationSelect = useCallback(
     (selectedLocation: ILocation) => {
-      setCoord(selectedLocation.coord);
-      // TODO: 왜 undefined 안되지?
-      setAddress(selectedLocation.address!);
+      setFormData({
+        latitude: selectedLocation.coord?.lat,
+        longitude: selectedLocation.coord?.lng,
+        address: selectedLocation.address
+      });
       setIsOpenBottomSheet(true);
-      console.log("click");
     },
-    [setCoord, setAddress]
+    [setFormData]
   );
 
   return (
