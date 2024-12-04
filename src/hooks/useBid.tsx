@@ -4,7 +4,7 @@ import { useState } from "react";
  * 입찰 로직
  */
 export const useBid = () => {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const [price, setPrice] = useState("");
 
   const handleBid = () => {
