@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { DetailTemplate } from "components/templates";
 import { KebabIcon } from "components/atoms/Icon";
 import { useTopBarStore } from "stores";
-import { useFetchProduct } from "hooks/useFetchProduct";
+import { useFetchProduct } from "hooks";
 
 export const DetailPage = () => {
   const navigate = useNavigate();
