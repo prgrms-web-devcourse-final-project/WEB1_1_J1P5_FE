@@ -10,17 +10,35 @@ export const DetailPage = () => {
   const { productId } = useParams<{ productId: string }>();
   const { product, isLoading } = useFetchProduct(productId!);
   const { setTitle, setRightIcon } = useTopBarStore();
+  //
   const [comments] = useState([]);
 
+  /**
+   * 거래 희망 장소 클릭
+   */
   const handleLocationMapClick = () => {
     // 거래희망장소 페이지 이동
     navigate("/transaction-location");
   };
 
+  /**
+   * 댓글 작성
+   * @param message 댓글 내용
+   */
   const handleWriteComment = (message: string) => {
     // TODO 댓글 작성
     console.log(message);
   };
+
+  /**
+   * 입찰 취소
+   */
+  const handleCancelBid = () => {};
+
+  /**
+   * 조기마감
+   */
+  const handleEarlyClosing = () => {};
 
   useEffect(() => {
     setRightIcon(KebabIcon, () => {
@@ -40,36 +58,28 @@ export const DetailPage = () => {
   }
 
   return (
-    <DetailTemplate
-      seller={product.seller}
-      images={product.images}
-      title={product.title}
-      category={product.category}
-      expiredTime={product.expiredTime}
-      uploadTime={product.uploadTime}
-      content={product.content}
-      productLocation={product.productLocation}
-      onLocationClick={handleLocationMapClick}
-      bids={[
-        { title: "최소 입찰가", price: 35000 },
-        { title: "내 입찰가", price: 38000 },
-      ]}
-      buttons={[
-        {
-          title: "입찰하기",
-          onClick: () => {
-            console.log("BottomBidBar 오픈");
-          },
-        },
-        {
-          title: "취소하기",
-          onClick: () => {
-            console.log("취소 모달 오픈");
-          },
-        },
-      ]}
-      comments={comments}
-      onWriteComment={handleWriteComment}
-    />
+    <>
+      <DetailTemplate
+        seller={product.seller}
+        images={product.images}
+        title={product.title}
+        category={product.category}
+        expiredTime={product.expiredTime}
+        uploadTime={product.uploadTime}
+        content={product.content}
+        productLocation={product.productLocation}
+        onLocationClick={handleLocationMapClick}
+        comments={comments}
+        onWriteComment={handleWriteComment}
+        minimumPrice={product.minimumPrice}
+        myPrice={product.myPrice}
+        maximumPrice={product.maximumPrice}
+        isEarly={product.isEarly}
+        productId={product.productId}
+        hasBuyer={product.hasBuyer}
+        onCancel={handleCancelBid}
+        onEarlyClosing={handleEarlyClosing}
+      />
+    </>
   );
 };

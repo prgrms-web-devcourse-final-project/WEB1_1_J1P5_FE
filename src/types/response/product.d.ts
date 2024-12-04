@@ -25,6 +25,8 @@ export interface IProductDetail {
   expiredTime: string;
   isEarly: boolean;
   images: string[];
+  myPrice?: number;
+  maximumPrice?: number;
 }
 
 /**

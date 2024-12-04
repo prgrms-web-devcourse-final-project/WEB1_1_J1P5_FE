@@ -35,6 +35,7 @@ const productData: IProductDetail = {
   minimumPrice: 35000,
   hasBuyer: false,
   isEarly: false,
+  myPrice: 36000,
 };
 
 export const useFetchProduct = (productId: string) => {
