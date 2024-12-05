@@ -14,23 +14,25 @@ import {
   ButtonBoldWrapper,
 } from "./styled";
 
+export type TextVariant =
+  | "h1"
+  | "h5"
+  | "body1"
+  | "button"
+  | "title_bold"
+  | "desc_regular"
+  | "desc_bold"
+  | "explan_regular"
+  | "explan_bold"
+  | "tag_regular"
+  | "writing_bold"
+  | "btn_bold";
+
 interface ITextProps extends HTMLAttributes<HTMLParagraphElement> {
   /** Text에 들어가는 내용 */
   content: string;
   /** Text의 타입 (스타일 가이드 준수) */
-  variant?:
-    | "h1"
-    | "h5"
-    | "body1"
-    | "button"
-    | "title_bold"
-    | "desc_regular"
-    | "desc_bold"
-    | "explan_regular"
-    | "explan_bold"
-    | "tag_regular"
-    | "writing_bold"
-    | "btn_bold";
+  variant?: TextVariant;
 }
 
 const variantMap: {
