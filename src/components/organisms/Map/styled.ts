@@ -30,7 +30,10 @@ export const CenterMarkerWrapper: ReturnType<typeof styled.div> = styled.div`
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(
+    -50%,
+    -85%
+  ); // 마커라서 위치 조정 (위경도가 100% 정확하지는 않음)
   pointer-events: none;
 
   ${ImageWrapper} {
