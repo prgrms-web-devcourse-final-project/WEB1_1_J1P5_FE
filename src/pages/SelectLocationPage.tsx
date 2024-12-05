@@ -2,7 +2,8 @@ import { useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { SelectLocationTemplate } from "components/templates";
-import { useModalStore, useSelectedLocationStore } from "stores";
+import { useLocationErrorEvent } from "hooks";
+import { useSelectedLocationStore } from "stores";
 import type { ILocation } from "types";
 
 export const SelectLocationPage = () => {
@@ -12,7 +13,7 @@ export const SelectLocationPage = () => {
   const { setCoord, setAddress, setLocation } = useSelectedLocationStore(
     (state) => state.actions
   );
-  const { openModal, closeModal } = useModalStore((state) => state.actions);
+  const locationErrorEvent = useLocationErrorEvent();
 
   const handleRegistrationButtonClick = useCallback(
     (place: string) => {
@@ -38,11 +39,10 @@ export const SelectLocationPage = () => {
     <SelectLocationTemplate
       coord={coord}
       onLocationSelect={handleLocationSelect}
-      openModal={openModal}
-      closeModal={closeModal}
       isOpenBottomSheet={isOpenBottomSheet}
       closeBottomSheet={() => setIsOpenBottomSheet(false)}
       onRegistrationButtonClick={handleRegistrationButtonClick}
+      locationErrorEvent={locationErrorEvent}
     />
   );
 };
