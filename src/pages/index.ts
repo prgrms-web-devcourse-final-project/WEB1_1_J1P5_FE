@@ -18,3 +18,4 @@ export { BlockedUsersPage } from "./BlockedUsersPage";
 export { ChatListPage } from "./ChatListPage";
 export { ChatRoomPage } from "./ChatRoomPage";
 export { MarketPricePage } from "./MarketPricePage";
+export { OAuthCallbackPage } from "./OAuthCallbackPage";

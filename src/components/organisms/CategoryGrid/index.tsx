@@ -7,7 +7,7 @@ export interface ICategory {
 }
 export interface ICategoryGridWrapperProps {
   categories: ICategory[];
-  onClick: () => void;
+  onClick: (category: string) => void;
 }
 
 export const CategoryGrid = ({
@@ -15,8 +15,7 @@ export const CategoryGrid = ({
   onClick,
 }: ICategoryGridWrapperProps) => {
   const handleClick = (name: string) => {
-    console.log(name);
-    onClick();
+    onClick(name);
   };
   return (
     <CategoryGridWrapper>
