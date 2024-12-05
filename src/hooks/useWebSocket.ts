@@ -14,13 +14,22 @@ export function useWebSocket() {
     setChats: React.Dispatch<React.SetStateAction<IChatMsg[]>>
   ) => {
     if (stompClient && stompClient.connected) {
-      return stompClient.subscribe("/sub/chatroom/" + roomId, (message) => {
-        const newMsg = JSON.parse(message.body);
-        newMsg.createdAt = new Date();
-        newMsg.id = "0";
-        console.log("메시지 수신:", JSON.parse(message.body));
-        setChats((prev) => [...prev, newMsg]);
-      });
+      return stompClient.subscribe(
+        "/sub/chatroom/" + roomId,
+        (message) => {
+          const newMsg = JSON.parse(message.body);
+          newMsg.createdAt = new Date();
+          newMsg.id = "0";
+          console.log("메시지 수신:", JSON.parse(message.body));
+          setChats((prev) => [...prev, newMsg]);
+        }
+        /** TODO: 채팅 방 목록에서 userID 받아서 여기에 userId 넣어야함 
+         * 채팅방 목록에서 userID 받는 법은 기본 chatroom basic Info 에서 추가하기로 하였음. 
+        {
+          userId: "your-user-id", // 헤더에 userId 추가
+        }
+          */
+      );
     } else {
       console.error("WebSocket is not connected for subscription.");
     }
