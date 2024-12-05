@@ -86,11 +86,17 @@ export function useWebSocket() {
     console.log("Disconnected");
   };
 
+  /**
+   * TODO
+   * 파라미터에 receiverId: number, 추가
+   * chatMessage쪽에 receiverId는 receiverId, senderId: senderId, 로 재변경 필요
+   *
+   */
   const sendMessage = (roomId: string, senderId: number, content: string) => {
     if (stompClient && stompClient.connected) {
       const chatMessage = {
         roomId: roomId,
-        receiverId: senderId,
+        receiverId: senderId, //받는 사람 otheruserId
         content: content,
       };
       console.log("Sending message:", chatMessage);
