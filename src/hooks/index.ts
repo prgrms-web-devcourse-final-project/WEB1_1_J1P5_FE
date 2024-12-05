@@ -13,3 +13,4 @@ export * from "./useDetailModal";
 export * from "./useCommentKebabMenuManager";
 export * from "./useKebabMenu";
 export * from "./useCommentWriter";
+export * from "./useLocationErrorEvent";
