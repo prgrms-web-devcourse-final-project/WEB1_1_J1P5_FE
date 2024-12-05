@@ -22,7 +22,8 @@ export const TextButtonWrapper: ReturnType<
     backgroundColor?: string;
     theme: ThemeType;
   }) =>
-    backgroundColor === "transparent" ? "transparent" : theme.colors.main};
+    backgroundColor === "transparent" ? "transparent" : theme.colors.blue_main};
+
   color: ${({ theme }: { theme: ThemeType }) => theme.colors.white};
 
   border-radius: 10px;
