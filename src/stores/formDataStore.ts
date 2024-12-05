@@ -18,7 +18,7 @@ export const defaultState: State = {
   formData: {
     title: "",
     content: "",
-    price: undefined,
+    minimumPrice: undefined,
     category: undefined,
     latitude: undefined,
     longitude: undefined,
@@ -42,4 +42,3 @@ export const useFormDataStore: UseBoundStore<StoreApi<State & Actions>> =
       clear: () => set(defaultState)
     }
   }));
-
