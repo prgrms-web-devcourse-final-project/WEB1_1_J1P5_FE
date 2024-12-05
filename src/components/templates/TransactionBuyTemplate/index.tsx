@@ -2,7 +2,7 @@ import { TransactionOverview } from "components/organisms";
 import { TransactionBuyTemplateWrapper } from "./styled";
 import { IPost, PostItemType } from "components/organisms/PostList";
 import { useState } from "react";
-import { COMPLETED_TAB, SELLING_TAB } from "constants/transaction";
+import { BUYING_TAB, COMPLETED_TAB } from "constants/transaction";
 
 interface ITransactionBuyTemplateProps {
   /** 탭 메뉴 클릭 이벤트 */
@@ -19,14 +19,14 @@ export const TransactionBuyTemplate = ({
 
   const handleTabClick = (tab: string) => {
     onClick(tab);
-    const newType = tab === SELLING_TAB ? "buying" : "completed";
+    const newType = tab === BUYING_TAB ? "buying" : "completed";
     setType(newType); // 상태 업데이트
   };
 
   return (
     <TransactionBuyTemplateWrapper>
       <TransactionOverview
-        menus={[SELLING_TAB, COMPLETED_TAB]}
+        menus={[BUYING_TAB, COMPLETED_TAB]}
         onClick={handleTabClick}
         posts={posts}
         type={type}

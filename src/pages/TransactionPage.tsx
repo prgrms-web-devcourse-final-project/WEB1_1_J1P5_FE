@@ -4,7 +4,7 @@ import {
   TransactionSellTemplate,
 } from "components/templates";
 import { DEFAULT_IMG_PATH } from "constants/imgPath";
-import { COMPLETED_TAB, SELLING_TAB } from "constants/transaction";
+import { BUYING_TAB, COMPLETED_TAB, SELLING_TAB } from "constants/transaction";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { http } from "services/api";
@@ -145,10 +145,18 @@ export const TransactionPage = ({ type }: TransactionPageProps) => {
 
   /** TODO : 탭 바뀔때마다 fecth 하도록 변경 필요 */
   const onHandleTab = (tab: string) => {
-    if (tab === SELLING_TAB) {
-      setPosts(tempPosts);
-    } else if (tab === COMPLETED_TAB) {
-      setPosts([]);
+    if (type === "sell") {
+      if (tab === SELLING_TAB) {
+        setPosts(tempPosts);
+      } else if (tab === COMPLETED_TAB) {
+        setPosts([]);
+      }
+    } else if (type === "buy") {
+      if (tab === BUYING_TAB) {
+        setPosts(tempPosts);
+      } else if (tab === COMPLETED_TAB) {
+        setPosts([]);
+      }
     }
   };
 
