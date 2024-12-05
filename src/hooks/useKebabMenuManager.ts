@@ -1,25 +1,30 @@
 import { useCallback } from "react";
 import type { IMenu } from "types";
 
-export const useKebabMenuManager = () => {
+export const useKebabMenuManager = (commentId: number) => {
   const onReply = useCallback(() => {
     console.log("답글 클릭");
-  }, []);
+    console.log(commentId);
+  }, [commentId]);
 
   const onEdit = useCallback(() => {
     console.log("수정하기 클릭");
-  }, []);
+    console.log(commentId);
+  }, [commentId]);
 
   const onDelete = useCallback(() => {
     console.log("삭제하기 클릭");
-  }, []);
+    console.log(commentId);
+  }, [commentId]);
 
   const onBlock = useCallback(() => {
     console.log("차단하기 클릭");
-  }, []);
-  const onRepot = useCallback(() => {
+    console.log(commentId);
+  }, [commentId]);
+  const onReport = useCallback(() => {
     console.log("신고하기 클릭");
-  }, []);
+    console.log(commentId);
+  }, [commentId]);
   const getMenus = useCallback(
     (scenario: string): IMenu[] => {
       switch (scenario) {
@@ -35,13 +40,13 @@ export const useKebabMenuManager = () => {
           return [
             { content: "답글", onClick: onReply },
             { content: "차단하기", onClick: onBlock },
-            { content: "신고하기", onClick: onRepot },
+            { content: "신고하기", onClick: onReport },
           ];
         default:
           return [];
       }
     },
-    [onBlock, onDelete, onEdit, onReply, onRepot],
+    [onBlock, onDelete, onEdit, onReply, onReport],
   );
 
   return { getMenus };
