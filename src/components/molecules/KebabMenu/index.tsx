@@ -3,23 +3,19 @@ import { KebabMenuWrapper } from "./styled";
 import type { IMenu } from "types";
 
 interface IKebabMenuProps {
-  /** 케밥 메뉴 리스트 */
-  menus: IMenu[];
+  children: React.ReactNode;
 }
 
-export const KebabMenu = ({ menus }: IKebabMenuProps) => {
-  return (
-    <KebabMenuWrapper>
-      {menus.map((menu, idx) => {
-        return (
-          <TextButton
-            key={idx}
-            text={menu.content}
-            size="s"
-            onClick={menu.onClick}
-          ></TextButton>
-        );
-      })}
-    </KebabMenuWrapper>
-  );
+const KebabMenuRoot = ({ children }: IKebabMenuProps) => {
+  return <KebabMenuWrapper>{children}</KebabMenuWrapper>;
 };
+
+const Button = (menu: IMenu) => {
+  return <TextButton text={menu.content} size="s" onClick={menu.onClick} />;
+};
+
+export const KebabMenu: typeof KebabMenuRoot & {
+  Button: typeof Button;
+} = Object.assign(KebabMenuRoot, {
+  Button: Button,
+});
