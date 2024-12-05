@@ -10,11 +10,16 @@ export const defaultTheme = {
     white: "#ffffff",
     black: "#000000",
     red: "#ff224d",
-    main: "#344fff",
-    down: "#ffffff",
-    light: "#f0f0f0",
-    text_main: "#2d2d39",
-    text_blue: "#131b53",
+
+    grey_text_main: "#2d2d39",
+    grey_field_guide_but_deactivate: "#9b9fBc",
+    grey_field_deactivate: "#eceef3",
+    grey_text_guide: "#707192",
+    grey_button_deactivate: "#f4f6f9",
+    blue_main: "#344fff",
+    blue_down: "#2036E2",
+    blue_light: "#ebf5ff",
+    blue_text: "#131b53",
   },
   fontStyles: {
     /**제목 bold */
