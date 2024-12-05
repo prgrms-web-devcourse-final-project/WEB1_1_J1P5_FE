@@ -1,4 +1,4 @@
-import { IImageInfo, ICoord } from "types";
+import { IImageInfo, ICoord, IImages } from "types";
 
 type Category =
   | "ELECTRONIC"
@@ -22,7 +22,7 @@ type ExpiredTime = "3일 후" | "2일 후" | "24시간 후" | "12시간 후" | "
 export interface IPostForm {
   title?: string;
   content?: string;
-  price?: number;
+  minimumPrice?: number;
   category?: Category;
   latitude?: number;
   longitude?: number;
@@ -30,6 +30,24 @@ export interface IPostForm {
   location?: string;
   expiredTime?: ExpiredTime;
   imgUrls?: ImageInfo[];
+}
+
+export interface INewPostForm {
+  title: string;
+  content: string;
+  minimumPrice: number;
+  category: Category;
+  latitude: number;
+  longitude: number;
+  address: string;
+  location: string;
+  expiredTime?: string;
+  images?: File[];
+  // images?: IImgUrl[]; 레거시
+}
+
+export interface IImgUrl {
+  url: string;
 }
 
 export interface ILocation {

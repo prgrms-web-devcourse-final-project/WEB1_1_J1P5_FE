@@ -10,6 +10,7 @@ import { PostImageManager } from "components/organisms";
 import { PostRegisterFormWrapper, DivWrapper } from "./styled";
 import type { IPostForm, IImageInfo } from "types";
 import { CATEGORY_OPTIONS, EXPIRED_TIMES } from "constants/options";
+import { isISOFormat } from "utils";
 
 interface IPostRegisterFormProps {
   /** product Id */
@@ -37,7 +38,7 @@ export const PostRegisterForm = ({
     defaultValues: {
       title: postForm?.title,
       content: postForm?.content,
-      price: postForm?.price,
+      minimumPrice: postForm?.minimumPrice,
       category: postForm?.category,
       expiredTime: postForm?.expiredTime,
       location: postForm?.location
@@ -47,11 +48,6 @@ export const PostRegisterForm = ({
   useEffect(() => {
     setValue("imgUrls", imageInfos);
   }, [imageInfos, setValue]);
-
-  const isISOFormat = (dateString: string) => {
-    const isoFormatRegex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z$/;
-    return isoFormatRegex.test(dateString);
-  };
 
   return (
     <PostRegisterFormWrapper onSubmit={handleSubmit(onSubmit)}>
@@ -148,7 +144,7 @@ export const PostRegisterForm = ({
         )}
       />
       <Controller
-        name="price"
+        name="minimumPrice"
         control={control}
         rules={{
           required: "최종 입찰가는 필수 입력 항목입니다."
@@ -157,18 +153,18 @@ export const PostRegisterForm = ({
           <DivWrapper>
             <LabeledInput
               type="number"
-              id="product-price"
+              id="product-minimumPrice"
               label="최종 입찰가"
               value={value?.toString() || ""}
               setValue={(value) => {
-                setValue("price", parseInt(value, 10));
+                setValue("minimumPrice", parseInt(value, 10));
               }}
               placeholder="최종 입찰가를 입력해주세요."
             />
             {invalid && (
               <Text
                 variant="button"
-                content={formState.errors.price?.message || ""}
+                content={formState.errors.minimumPrice?.message || ""}
               />
             )}
           </DivWrapper>
