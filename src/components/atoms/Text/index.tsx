@@ -1,11 +1,36 @@
 import type { HTMLAttributes } from "react";
-import { H1Wrapper, H5Wrapper, Body1Wrapper, ButtonWrapper } from "./styled";
+import {
+  H1Wrapper,
+  H5Wrapper,
+  Body1Wrapper,
+  ButtonWrapper,
+  TitleBoldWrapper,
+  DescRegularWrapper,
+  DescBoldWrapper,
+  ExplainRegularWrapper,
+  ExplainBoldWrapper,
+  TagRegularWrapper,
+  WritingBoldWrapper,
+  ButtonBoldWrapper,
+} from "./styled";
 
 interface ITextProps extends HTMLAttributes<HTMLParagraphElement> {
   /** Text에 들어가는 내용 */
   content: string;
   /** Text의 타입 (스타일 가이드 준수) */
-  variant?: "h1" | "h5" | "body1" | "button";
+  variant?:
+    | "h1"
+    | "h5"
+    | "body1"
+    | "button"
+    | "title_bold"
+    | "desc_regular"
+    | "desc_bold"
+    | "explan_regular"
+    | "explan_bold"
+    | "tag_regular"
+    | "writing_bold"
+    | "btn_bold";
 }
 
 const variantMap: {
@@ -17,6 +42,14 @@ const variantMap: {
   h5: H5Wrapper,
   body1: Body1Wrapper,
   button: ButtonWrapper,
+  title_bold: TitleBoldWrapper,
+  desc_regular: DescRegularWrapper,
+  desc_bold: DescBoldWrapper,
+  explan_regular: ExplainRegularWrapper,
+  explan_bold: ExplainBoldWrapper,
+  tag_regular: TagRegularWrapper,
+  writing_bold: WritingBoldWrapper,
+  btn_bold: ButtonBoldWrapper,
 };
 
 export const Text = ({

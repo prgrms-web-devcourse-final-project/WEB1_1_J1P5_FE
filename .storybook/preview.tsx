@@ -2,7 +2,8 @@ import type { Preview } from "@storybook/react";
 import "../src/index.css";
 import React from "react";
 import { MemoryRouter } from "react-router-dom";
-
+import { ThemeProvider } from "@emotion/react";
+import { defaultTheme } from "../src/styles/theme"; // 테마를 임포트
 const preview: Preview = {
   parameters: {
     controls: {
@@ -18,9 +19,11 @@ const preview: Preview = {
  */
 export const decorators = [
   (Story, context) => (
-    <MemoryRouter initialEntries={context.parameters.initialEntries || ["/"]}>
-      <Story />
-    </MemoryRouter>
+    <ThemeProvider theme={defaultTheme}>
+      <MemoryRouter initialEntries={context.parameters.initialEntries || ["/"]}>
+        <Story />
+      </MemoryRouter>
+    </ThemeProvider>
   ),
 ];
 export default preview;
