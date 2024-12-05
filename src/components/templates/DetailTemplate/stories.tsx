@@ -1,3 +1,4 @@
+import { NavermapsProvider } from "react-naver-maps";
 import type { Meta, StoryObj } from "@storybook/react";
 import { DetailTemplate } from ".";
 
@@ -5,8 +6,21 @@ const meta: Meta<typeof DetailTemplate> = {
   title: "Templates/DetailTemplate",
   component: DetailTemplate,
   tags: ["autodocs"],
+  decorators: (story) => (
+    <NavermapsProvider
+      ncpClientId={import.meta.env.VITE_NAVER_MAP_CLIENT_ID}
+      submodules={["geocoder"]}
+    >
+      <div style={{ maxWidth: "375px" }}>{story()}</div>
+    </NavermapsProvider>
+  ),
+};
+
+type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {
   args: {
-    //
+    productId: 1,
     images: [
       "https://github.com/moypp.png",
       "https://github.com/ppyom.png",
@@ -28,46 +42,24 @@ const meta: Meta<typeof DetailTemplate> = {
     },
     // 거래 희망 장소
     productLocation: {
-      coordinate: {
-        lat: 37.5666805,
-        lng: 126.9784147,
-      },
+      longtitude: 126.9784147,
+      latitube: 37.5666805,
       address: "관악구 신림동",
       location: "보라매공원 CU",
     },
-    onLocationClick: () => {
-      console.log("거래 희망 장소 클릭!!");
-    },
+    minimumPrice: 35000,
+    hasBuyer: false,
+    isEarly: false,
+    myPrice: 36000,
     // 댓글
     comments: [],
     onWriteComment: (comment) => {
       console.log(comment);
     },
-    // AuctionControlBar
-    bids: [
-      { title: "최소 입찰가", price: 35000 },
-      { title: "내 입찰가", price: 38000 },
-    ],
-    buttons: [
-      {
-        title: "입찰하기",
-        onClick: () => {
-          console.log("BottomBidBar 오픈");
-        },
-      },
-      {
-        title: "취소하기",
-        onClick: () => {
-          console.log("취소 모달 오픈");
-        },
-      },
-    ],
+    onCancel: () => {},
+    onEarlyClosing: () => {},
   },
-  decorators: (story) => <div style={{ maxWidth: "375px" }}>{story()}</div>,
+  render: (args) => <DetailTemplate {...args} />,
 };
-
-type Story = StoryObj<typeof meta>;
-
-export const Default: Story = {};
 
 export default meta;

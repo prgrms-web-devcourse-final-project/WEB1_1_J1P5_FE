@@ -22,9 +22,17 @@ const testItems: IMenu[] = [
 ];
 
 export const Default: Story = {
-  args: {
-    menus: testItems,
-  },
+  render: () => (
+    <KebabMenu>
+      {testItems.map((menu, idx) => (
+        <KebabMenu.Button
+          key={idx}
+          content={menu.content}
+          onClick={menu.onClick}
+        />
+      ))}
+    </KebabMenu>
+  ),
 };
 
 export default meta;

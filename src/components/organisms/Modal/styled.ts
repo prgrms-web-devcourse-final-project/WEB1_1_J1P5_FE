@@ -65,8 +65,11 @@ export const ModalRootWrapper: ReturnType<
 > = styled.div<Pick<IModalRootProps, "open">>`
   position: fixed;
   top: 0;
-  left: 0;
-  width: 100%;
+  left: 50%;
+  translate: -50%;
+  z-index: 9999;
+  max-width: 375px;
+  width: calc(100% - 2rem);
   height: 100%;
   // 자식 요소 배치
   display: flex;

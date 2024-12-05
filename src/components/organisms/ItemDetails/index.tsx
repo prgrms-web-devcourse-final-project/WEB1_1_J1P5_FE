@@ -1,11 +1,13 @@
 import { Badge, Text } from "components/atoms";
+import { LinkIcon } from "components/atoms/Icon";
 import { getRelativeTime } from "utils";
 import {
-  CategoryAndCreatedAtWrapper,
+  CategoryWrapper,
   ItemDetailsWrapper,
   DescriptionWrapper,
   ItemDetailsHeader,
 } from "./styled";
+import { IconWithText } from "../../molecules";
 
 interface IItemDetailsProps {
   /** 상품의 제목 */
@@ -31,12 +33,14 @@ export const ItemDetails = ({
     <ItemDetailsWrapper>
       {isDoneDeal && <Badge text="거래완료" />}
       <ItemDetailsHeader>
-        <Text variant="h5" content={title} />
-        <CategoryAndCreatedAtWrapper>
-          <Text variant="button" content={category} />
-          <Text variant="button" content={"·"} />
-          <Text variant="button" content={getRelativeTime(createdAt)} />
-        </CategoryAndCreatedAtWrapper>
+        <CategoryWrapper>
+          <IconWithText>
+            <IconWithText.Content content={category} />
+            <IconWithText.Icon icon={LinkIcon} size="s" />
+          </IconWithText>
+        </CategoryWrapper>
+        <Text variant="body1" content={title} />
+        <Text variant="button" content={getRelativeTime(createdAt)} />
       </ItemDetailsHeader>
       <DescriptionWrapper>
         <Text variant="body1" content={description} />

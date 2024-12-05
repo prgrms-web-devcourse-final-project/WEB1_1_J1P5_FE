@@ -2,7 +2,7 @@ import { Text } from "components/atoms";
 import { LinkIcon } from "components/atoms/Icon";
 import { IconWithText } from "components/molecules";
 import { Map } from "components/organisms";
-import { LocationMapWrapper, TextContainer } from "./styled";
+import { LocationMapWrapper, TextContainer, TitleWrapper } from "./styled";
 import { ICoord } from "types";
 
 interface ILocationMapProps {
@@ -17,12 +17,14 @@ interface ILocationMapProps {
 export const LocationMap = ({
   coord,
   location,
-  onClick
+  onClick,
 }: ILocationMapProps) => {
   return (
     <LocationMapWrapper onClick={onClick}>
       <TextContainer>
-        <Text content="거래희망장소" />
+        <TitleWrapper>
+          <Text variant="body1" content="거래희망장소" />
+        </TitleWrapper>
         <IconWithText>
           <IconWithText.Content content={location} />
           <IconWithText.Icon icon={LinkIcon} size="s" />
@@ -32,4 +34,3 @@ export const LocationMap = ({
     </LocationMapWrapper>
   );
 };
-

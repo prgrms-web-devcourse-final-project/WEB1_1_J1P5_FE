@@ -20,6 +20,7 @@ export const RootLayoutWrapper: ReturnType<typeof styled.div> = styled.div`
   ${HeaderWrapper}, ${TopBarWrapper} {
     position: sticky;
     top: 0;
+    z-index: 9999;
   }
   ${BottomNavBarWrapper} {
     position: sticky;

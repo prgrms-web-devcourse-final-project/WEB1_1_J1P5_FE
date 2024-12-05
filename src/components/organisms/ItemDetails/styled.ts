@@ -1,11 +1,11 @@
 import styled from "@emotion/styled";
 import { Body1Wrapper } from "components/atoms/Text/styled";
 
-export const CategoryAndCreatedAtWrapper: ReturnType<typeof styled.div> =
-  styled.div`
-    display: flex;
-    gap: 0.25rem;
-  `;
+export const CategoryWrapper: ReturnType<typeof styled.div> = styled.div`
+  display: flex;
+  align-items: center;
+  color: #344fff;
+`;
 export const ItemDetailsHeader: ReturnType<typeof styled.div> = styled.div`
   display: flex;
   flex-direction: column;
