@@ -8,11 +8,10 @@ import {
   LocationMap,
   Profile,
 } from "components/organisms";
-import type { ICommentItemProps } from "components/organisms/CommentItem";
 import { DetailTemplateWrapper, ImageSliderAndTimer } from "./styled";
 import { useBid, useDetailModal } from "hooks";
 import { buttonNames, priceNames } from "constants/auctionControlBarNames";
-import type { IProductDetail } from "types";
+import type { IComment, IProductDetail } from "types";
 
 interface IBaseDetailTemplateProps extends IProductDetail {
   /** 판매자 정보 */
@@ -43,7 +42,7 @@ interface IBaseDetailTemplateProps extends IProductDetail {
   /** 거래 희망 장소 클릭 시 이벤트 */
   onLocationClick: () => void;
   /** 댓글 목록 */
-  comments: ICommentItemProps[];
+  comments: IComment[];
   /** 댓글 작성 함수 */
   onWriteComment: (message: string) => void;
   /** 최소 입찰가 */
@@ -75,7 +74,6 @@ export const DetailTemplate = ({
   onLocationClick,
   // 댓글
   comments,
-  onWriteComment,
   // 가격
   minimumPrice,
   myPrice,
@@ -113,7 +111,7 @@ export const DetailTemplate = ({
         location={location}
         onClick={onLocationClick}
       />
-      <Comment comments={comments} onWriteComment={onWriteComment} />
+      <Comment comments={comments} />
       <AuctionControlBar>
         <AuctionControlBar.BidContainer>
           <AuctionControlBar.Bid

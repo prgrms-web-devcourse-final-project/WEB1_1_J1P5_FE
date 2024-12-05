@@ -4,6 +4,7 @@ import { DetailTemplate } from "components/templates";
 import { KebabIcon } from "components/atoms/Icon";
 import { useTopBarStore } from "stores";
 import { useFetchProduct } from "hooks";
+import type { IComment } from "types";
 
 export const DetailPage = () => {
   const navigate = useNavigate();
@@ -11,7 +12,7 @@ export const DetailPage = () => {
   const { product, isLoading } = useFetchProduct(productId!);
   const { setTitle, setRightIcon } = useTopBarStore();
   //
-  const [comments] = useState([]);
+  const [comments] = useState<IComment[]>([]);
 
   /**
    * 거래 희망 장소 클릭
