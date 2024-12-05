@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { SelectLocationTemplate } from "components/templates";
@@ -7,12 +7,19 @@ import type { ILocation } from "types";
 
 export const SelectLocationPage = () => {
   const navigate = useNavigate();
-  const coord = useFormDataStore((state) => {
-    return {
-      lat: state.formData.latitude as number,
-      lng: state.formData.longitude as number
-    };
-  });
+
+  const lat = useFormDataStore((state) => state.formData.latitude);
+  const lng = useFormDataStore((state) => state.formData.longitude);
+
+  const coord = useMemo(() => {
+    return lat && lng
+      ? {
+          lat,
+          lng
+        }
+      : undefined;
+  }, [lat, lng]);
+
   const { setFormData } = useFormDataStore((state) => state.actions);
   const { openModal, closeModal } = useModalStore((state) => state.actions);
   const [isOpenBottomSheet, setIsOpenBottomSheet] = useState(false);
