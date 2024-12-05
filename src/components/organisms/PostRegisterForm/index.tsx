@@ -54,12 +54,23 @@ export const PostRegisterForm = ({
       <Controller
         name="imgUrls"
         control={control}
-        render={() => (
-          <PostImageManager
-            imageInfos={imageInfos}
-            setImageInfos={setImageInfos}
-            disabled={!!productId}
-          />
+        rules={{
+          validate: {
+            notEmpty: (value) =>
+              imageInfos.length > 0 || "이미지를 1개 이상 업로드해주세요."
+          }
+        }}
+        render={({ fieldState: { invalid, error } }) => (
+          <DivWrapper>
+            <PostImageManager
+              imageInfos={imageInfos}
+              setImageInfos={setImageInfos}
+              disabled={!!productId}
+            />
+            {invalid && (
+              <Text variant="button" content={error?.message || ""} />
+            )}
+          </DivWrapper>
         )}
       />
       <Controller
