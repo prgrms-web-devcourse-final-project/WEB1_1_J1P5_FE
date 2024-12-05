@@ -11,8 +11,9 @@ export const useReverseGeocode = () => {
           {
             coords: latlng,
             orders: [
-              navermaps.Service.OrderType.ADDR,
-              navermaps.Service.OrderType.ROAD_ADDR
+              navermaps.Service.OrderType.LEGAL_CODE
+              // navermaps.Service.OrderType.ADDR,
+              // navermaps.Service.OrderType.ROAD_ADDR
             ].join(",")
           },
           (status: any, response: any) => {
@@ -23,7 +24,6 @@ export const useReverseGeocode = () => {
             }
 
             const items = response.v2.results;
-
             const address =
               items[0].region.area1.name +
               " " +
@@ -72,4 +72,3 @@ export const useReverseGeocode = () => {
   );
   return { searchCoordinateToAddress, searchAddressToCoordinate };
 };
-
