@@ -110,9 +110,17 @@ export const useMap = ({
       if (!isCenterMarkerExist && transactionMarker) {
         transactionMarker.setPosition(position);
         if (infowindow && markerInfo) {
+          infowindow.setOptions({
+            disableAnchor: true,
+            borderWidth: 0
+          });
           infowindow.setContent(
-            '<div style="padding:8px;">' + markerInfo + "</div>"
+            '<div style=" display: flex; padding: 6px 10px; justify-content: center; align-items: center; gap: 10px; border-radius:6px; background-color:#131B53; color:#FFF;  font-size: 14px;">' +
+              markerInfo +
+              "</div>"
           );
+          console.log("getContent", infowindow.getContent());
+          console.log("getContentElement", infowindow.getContentElement());
           infowindow.open(map, transactionMarker);
         }
       }
