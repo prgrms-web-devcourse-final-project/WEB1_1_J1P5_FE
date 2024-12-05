@@ -8,7 +8,7 @@ import type { IResponse } from "types";
 
 const api: AxiosInstance = axios.create({
   baseURL: `${import.meta.env.VITE_SERVER_URL}/api/v1`,
-  withCredentials: true, // TODO 토큰 처리 방식 확정 이후 확인
+  withCredentials: true,
   timeout: 10000,
 });
 
@@ -113,12 +113,14 @@ export const http = {
   /**
    * HTTP DELETE Method
    * @param url api 엔드포인트
+   * @param data `optional` body
    * @param options `optional` AxiosRequestConfig
    */
-  delete: async <T extends IResponse>(
+  delete: async <T extends IResponse, D = undefined>(
     url: string,
+    data?: D,
     options?: AxiosRequestConfig,
   ) => {
-    return api.delete<T>(url, options).then(responseToData);
+    return api.delete<T>(url, { data, ...options }).then(responseToData);
   },
 } as const;
