@@ -19,7 +19,7 @@ export const BlockedUserItem = ({
       <Profile
         imgUrl={profile.imgUrl}
         nickname={profile.nickname}
-        location={profile.location}
+        location={profile.address}
       ></Profile>
       <TextButton text={btnText} onClick={onClick}></TextButton>
     </BlockedUserItemWrapper>
