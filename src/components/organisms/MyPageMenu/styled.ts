@@ -35,6 +35,11 @@ export const TextContainer: ReturnType<typeof styled.div> = styled.div`
 
   border-radius: 10px;
   border: 1px solid var(--grey-field-deactivate, #eceef3);
+  cursor: pointer; /* 클릭 포인터 추가 */
+
+  &:hover {
+    background-color: #eeeeee;
+  }
 
   ${IconWithTextContentWrapper} {
     color: var(--grey-main-text, #2d2d39);
