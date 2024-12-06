@@ -5,6 +5,7 @@ import {
   Body1Wrapper,
   ButtonWrapper,
   TitleBoldWrapper,
+  TitleSemiBoldWrapper,
   DescRegularWrapper,
   DescBoldWrapper,
   ExplainRegularWrapper,
@@ -21,6 +22,7 @@ export type TextVariant =
   | "body1"
   | "button"
   | "title_bold"
+  | "title_semibold"
   | "desc_regular"
   | "desc_bold"
   | "explan_regular"
@@ -47,6 +49,7 @@ const variantMap: {
   body1: Body1Wrapper,
   button: ButtonWrapper,
   title_bold: TitleBoldWrapper,
+  title_semibold: TitleSemiBoldWrapper,
   desc_regular: DescRegularWrapper,
   desc_bold: DescBoldWrapper,
   explan_regular: ExplainRegularWrapper,
@@ -60,7 +63,7 @@ const variantMap: {
 export const Text = ({
   content,
   variant = "body1",
-  onClick = () => {},
+  onClick = () => {}
 }: ITextProps) => {
   const Component = variantMap[variant];
   return <Component onClick={onClick}>{content}</Component>;

@@ -11,8 +11,9 @@ export const useReverseGeocode = () => {
           {
             coords: latlng,
             orders: [
-              navermaps.Service.OrderType.ADDR,
-              navermaps.Service.OrderType.ROAD_ADDR
+              navermaps.Service.OrderType.LEGAL_CODE
+              // navermaps.Service.OrderType.ADDR,
+              // navermaps.Service.OrderType.ROAD_ADDR
             ].join(",")
           },
           (status: any, response: any) => {
@@ -23,7 +24,8 @@ export const useReverseGeocode = () => {
             }
 
             const items = response.v2.results;
-
+            // TODO: items가 []인 부분 에러 처리 (행정 구역을 벗어난 좌표)
+            // TODO: 벗어난 후에 정상 좌표를 클릭하면 나의 현재 위치로 이동, 당연한 에러처리 안했으니까 재렌더링 되는 수밖에
             const address =
               items[0].region.area1.name +
               " " +
@@ -72,4 +74,3 @@ export const useReverseGeocode = () => {
   );
   return { searchCoordinateToAddress, searchAddressToCoordinate };
 };
-

@@ -2,28 +2,36 @@ import { useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { MyPageTemplate } from "components/templates";
 import { http } from "services/api";
+import { useHeaderStore } from "stores";
 import { IResponse } from "types";
 
 interface IProfile {
   /** 프로필 이미지 URL */
-  imgUrl: string;
+  imageUrl: string;
   /** 닉네임 */
   nickname: string;
-  /** 인증한 지역 */
-  address: string;
+  /** 인증한 읍면동 */
+  activityEmdName: string;
 }
 interface IProfileResponse extends IResponse {
   result: IProfile;
 }
 
 export const MyPage = () => {
+  const { setTitle } = useHeaderStore();
   const navigate = useNavigate();
   const [profile, setProfile] = useState<IProfile>({
-    imgUrl: "",
+    imageUrl: "",
     nickname: "",
-    address: ""
+    activityEmdName: ""
   });
 
+  useEffect(() => {
+    setTitle("마이페이지");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // TODO: react-query 사용
   const fetchProfile = useCallback(async () => {
     try {
       const response = await http.get<IProfileResponse>("/user/profile");
@@ -46,7 +54,7 @@ export const MyPage = () => {
   }, [fetchProfile]);
 
   const handleProfileEditButtonClick = useCallback(() => {
-    navigate("/profile/edit");
+    navigate("/profile");
   }, [navigate]);
 
   const handleMenuClick = useCallback(
@@ -58,9 +66,9 @@ export const MyPage = () => {
 
   return (
     <MyPageTemplate
-      imgUrl={profile.imgUrl}
+      imgUrl={profile.imageUrl}
       nickname={profile.nickname}
-      address={profile.address}
+      location={profile.activityEmdName}
       onProfileEditButtonClick={handleProfileEditButtonClick}
       onMenuClick={handleMenuClick}
     />

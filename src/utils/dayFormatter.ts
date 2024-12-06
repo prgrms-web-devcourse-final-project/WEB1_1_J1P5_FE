@@ -89,3 +89,20 @@ export const areDatesDifferent = (
   const date2 = new Date(dateStr2).toISOString().split("T")[0];
   return date1 !== date2;
 };
+
+export const getExpiredDate = (value: string): string => {
+  const now = dayjs();
+
+  if (value.includes("일")) {
+    const days = parseInt(value.replace("일 후", ""));
+    return now.add(days, "day").toISOString();
+  } else {
+    const hours = parseInt(value.replace("시간 후", ""));
+    return now.add(hours, "hour").toISOString();
+  }
+};
+
+export const isISOFormat = (dateString: string) => {
+  const isoFormatRegex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z$/;
+  return isoFormatRegex.test(dateString);
+};
