@@ -15,8 +15,8 @@ export const InputWrapper: ReturnType<
   border: 1px solid ${({ focus }) => (focus ? "#344fff" : "#ECEEF3")};
   border-radius: 10px;
   width: 100%;
-  height: 50px;
-  padding: 16px;
+  height: 3.125rem;
+  padding: 1rem;
 
   p {
     font-size: 1rem;
