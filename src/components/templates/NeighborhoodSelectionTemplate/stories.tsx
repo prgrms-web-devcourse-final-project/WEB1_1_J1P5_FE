@@ -24,11 +24,11 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   render: () => {
     const Component = () => {
-      const { neighborhoods, handleGetNearbyNeighborhood } =
+      const { neighborhoods, handleGetMyNeighborhood } =
         useNeighborhoodSelection();
 
-      const handleGetMyNeighborhood = () => {
-        handleGetNearbyNeighborhood();
+      const handleGetMyNeighborhoods = () => {
+        handleGetMyNeighborhood();
       };
 
       const handleNeighborhoodClick = (neighborhood: string) => {
@@ -39,7 +39,7 @@ export const Default: Story = {
         <NeighborhoodSelectionTemplate
           neighborhoods={neighborhoods}
           onNeighborhoodClick={handleNeighborhoodClick}
-          onFindCurrentLocationClick={handleGetMyNeighborhood}
+          onFindCurrentLocationClick={() => handleGetMyNeighborhoods()}
         />
       );
     };

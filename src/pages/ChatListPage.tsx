@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { IChatItemProps } from "components/organisms/ChatItem";
 import { ChatListTemplate } from "components/templates/ChatListTemplate";
 import {
@@ -11,6 +12,7 @@ import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { http } from "services/api";
+import { useHeaderStore } from "stores";
 import { IResponse } from "types";
 import { encryptRoomId } from "utils/security";
 
@@ -33,6 +35,14 @@ interface IChatRoomResponse extends IResponse {
 }
 
 export const ChatListPage = () => {
+  const { setTitle } = useHeaderStore();
+
+  useEffect(() => {
+    setTitle("채팅"); // 동네 이름 받아서 처리 필요
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  //setTitle("채팅");
   const [allChatItems, setAllChatItems] = useState<IChatItemProps[]>([]);
   const [currentTab, setCurrentTab] = useState<chatRoomTabMapKey>("전체");
 
@@ -131,7 +141,6 @@ export const ChatListPage = () => {
   const onHandleTab = (tab: chatRoomTabMapKey) => {
     setCurrentTab(tab);
   };
-
   return (
     <ChatListTemplate
       allChatItems={allChatItems}

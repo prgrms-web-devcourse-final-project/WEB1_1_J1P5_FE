@@ -2,16 +2,15 @@ import {
   Container as MapDiv,
   NaverMap,
   Marker,
-  InfoWindow
+  InfoWindow,
 } from "react-naver-maps";
 import { MyLocationIcon } from "components/atoms/Icon";
-import { Image, IconButton } from "components/atoms";
+import { IconButton } from "components/atoms";
 import { MapWrapper, CenterMarkerWrapper } from "./styled";
 import { useMap } from "hooks";
 import { IMapProps } from "types";
 import MYMARKER from "assets/Map/my_marker.svg";
 import DEFAULTMARKER from "assets/Map/default_marker.svg";
-import { MY_MARKER_IMG_PATH } from "constants/imgPath";
 
 export const Map = ({
   coord,
@@ -19,7 +18,7 @@ export const Map = ({
   locationErrorEvent,
   markerInfo,
   setCenterCoord,
-  setMyCoord
+  setMyCoord,
 }: IMapProps) => {
   const {
     defaultCenter,
@@ -28,20 +27,20 @@ export const Map = ({
     setInfoWindow,
     setMap,
     setMyMarker,
-    setTransactionMarker
+    setTransactionMarker,
   } = useMap({
     coord,
     isCenterMarkerExist,
     locationErrorEvent,
     markerInfo,
-    setMyCoord
+    setMyCoord,
   });
   return (
     <MapWrapper>
       <MapDiv
         style={{
           width: "100%",
-          height: "100%"
+          height: "100%",
         }}
       >
         <NaverMap
@@ -53,7 +52,7 @@ export const Map = ({
           <Marker
             icon={{
               // TODO: svg인데 왜 깨져 보이지?
-              url: MYMARKER
+              url: MYMARKER,
               // url: MY_MARKER_IMG_PATH,
               // size: new navermaps.Size(38, 38),
               // anchor: new navermaps.Point(24, 24)
@@ -87,7 +86,7 @@ export const Map = ({
               icon={{
                 url: DEFAULTMARKER,
                 size: new navermaps.Size(40, 40),
-                anchor: new navermaps.Point(20, 34)
+                anchor: new navermaps.Point(20, 34),
               }}
               ref={setTransactionMarker}
             />

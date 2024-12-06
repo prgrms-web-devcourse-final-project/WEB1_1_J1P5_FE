@@ -12,7 +12,8 @@ import {
   ExplainBoldWrapper,
   TagRegularWrapper,
   WritingBoldWrapper,
-  ButtonBoldWrapper
+  ButtonBoldWrapper,
+  BadgeRegularWrapper,
 } from "./styled";
 
 export type TextVariant =
@@ -28,7 +29,8 @@ export type TextVariant =
   | "explan_bold"
   | "tag_regular"
   | "writing_bold"
-  | "btn_bold";
+  | "btn_bold"
+  | "badge_regular";
 
 interface ITextProps extends HTMLAttributes<HTMLParagraphElement> {
   /** Text에 들어가는 내용 */
@@ -54,7 +56,8 @@ const variantMap: {
   explan_bold: ExplainBoldWrapper,
   tag_regular: TagRegularWrapper,
   writing_bold: WritingBoldWrapper,
-  btn_bold: ButtonBoldWrapper
+  btn_bold: ButtonBoldWrapper,
+  badge_regular: BadgeRegularWrapper,
 };
 
 export const Text = ({

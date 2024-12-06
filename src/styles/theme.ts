@@ -73,9 +73,16 @@ export const defaultTheme = {
     btn_bold: {
       size: "1.0625rem",
       height: "145%",
-      bold: 600
-    } as FontStyle // 인덱스 시그니처 추가,
-  } as { [key: string]: FontStyle } // 인덱스 시그니처 추가,
+      bold: 600,
+    } as FontStyle, // 인덱스 시그니처 추가,
+    /**채팅쪽 배지 */
+    badge_regular: {
+      //11px
+      size: "0.6875rem",
+      height: "145%",
+      bold: 400,
+    } as FontStyle,
+  } as { [key: string]: FontStyle }, // 인덱스 시그니처 추가,
 };
 
 // Theme 타입 정의
