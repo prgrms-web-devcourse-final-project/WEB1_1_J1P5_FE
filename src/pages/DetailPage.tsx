@@ -22,15 +22,6 @@ export const DetailPage = () => {
   };
 
   /**
-   * 댓글 작성
-   * @param message 댓글 내용
-   */
-  const handleWriteComment = (message: string) => {
-    // TODO 댓글 작성
-    console.log(message);
-  };
-
-  /**
    * 입찰 취소
    */
   const handleCancelBid = () => {};
@@ -76,7 +67,6 @@ export const DetailPage = () => {
         productLocation={product.productLocation}
         onLocationClick={handleLocationMapClick}
         comments={comments}
-        onWriteComment={handleWriteComment}
         minimumPrice={product.minimumPrice}
         myPrice={product.myPrice}
         maximumPrice={product.maximumPrice}

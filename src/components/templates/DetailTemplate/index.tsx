@@ -43,8 +43,6 @@ interface IBaseDetailTemplateProps extends IProductDetail {
   onLocationClick: () => void;
   /** 댓글 목록 */
   comments: IComment[];
-  /** 댓글 작성 함수 */
-  onWriteComment: (message: string) => void;
   /** 최소 입찰가 */
   minimumPrice: number;
   /** 내 입찰가 */
