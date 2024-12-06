@@ -48,10 +48,10 @@ export const DetailPage = () => {
   }, []);
 
   useEffect(() => {
-    if (!isLoading) {
+    if (!isLoading && product) {
       setTitle(product.title);
     }
-  }, [isLoading]);
+  }, [isLoading, product]);
 
   if (isLoading || !product) {
     // TODO 스켈레톤 UI
