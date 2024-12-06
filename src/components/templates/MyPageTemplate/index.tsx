@@ -19,6 +19,12 @@ interface IMyPageTemplateProps {
   onMenuClick: (pathname: string) => void;
 }
 
+/**
+ * TODO: 주스탄드의 profile 불러와서, nickname 메뉴에 적용
+ * @param param0
+ * @returns
+ */
+
 export const MyPageTemplate = ({
   imgUrl,
   nickname,
