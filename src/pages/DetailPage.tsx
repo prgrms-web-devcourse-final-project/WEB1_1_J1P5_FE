@@ -9,7 +9,8 @@ import type { IComment } from "types";
 export const DetailPage = () => {
   const navigate = useNavigate();
   const { productId } = useParams<{ productId: string }>();
-  const { product, isLoading } = useFetchProduct(productId!);
+  // [May]: ! 은 최소화하는게 좋을거같습니다.
+  const { product, isLoading } = useFetchProduct(productId || "");
   const { setTitle, setRightIcon } = useTopBarStore();
   //
   const [comments] = useState<IComment[]>([]);
