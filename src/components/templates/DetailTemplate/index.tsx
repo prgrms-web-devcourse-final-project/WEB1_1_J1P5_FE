@@ -1,3 +1,4 @@
+import { createPortal } from "react-dom";
 import { ImageSlider } from "components/molecules";
 import {
   AuctionBidBottomSheet,
@@ -157,15 +158,18 @@ export const DetailTemplate = ({
           )}
         </AuctionControlBar.ButtonContainer>
       </AuctionControlBar>
-      <AuctionBidBottomSheet
-        price={price}
-        setPrice={setPrice}
-        minPrice={minimumPrice}
-        beforePrice={myPrice}
-        onBid={handleBid}
-        open={open}
-        onClose={handleCloseBottomSheet}
-      />
+      {createPortal(
+        <AuctionBidBottomSheet
+          price={price}
+          setPrice={setPrice}
+          minPrice={minimumPrice}
+          beforePrice={myPrice}
+          onBid={handleBid}
+          open={open}
+          onClose={handleCloseBottomSheet}
+        />,
+        document.body,
+      )}
     </DetailTemplateWrapper>
   );
 };
