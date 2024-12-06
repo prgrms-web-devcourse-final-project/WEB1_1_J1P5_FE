@@ -1,19 +1,18 @@
-import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Suspense, useEffect } from "react";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { DetailTemplate } from "components/templates";
 import { KebabIcon } from "components/atoms/Icon";
 import { useTopBarStore } from "stores";
-import { useFetchProduct } from "hooks";
-import type { IComment } from "types";
+import { useFetchProduct, useFetchComment } from "hooks";
 
 export const DetailPage = () => {
   const navigate = useNavigate();
   const { productId } = useParams<{ productId: string }>();
-  const { product, isLoading } = useFetchProduct(productId!);
+  const { product, isProductLoading } = useFetchProduct(productId!);
+  const { comments, isCommentLoading } = useFetchComment(productId!);
   const { setTitle, setRightIcon } = useTopBarStore();
   //
-  const [comments] = useState<IComment[]>([]);
-
+  // const [comments] = useState<IComment[]>([]);
   /**
    * 거래 희망 장소 클릭
    */
@@ -48,18 +47,24 @@ export const DetailPage = () => {
   }, []);
 
   useEffect(() => {
-    if (!isLoading && product) {
+    if (!isProductLoading && product) {
       setTitle(product.title);
     }
-  }, [isLoading, product]);
+  }, [isProductLoading, product]);
 
-  if (isLoading || !product) {
+  if (isProductLoading || isCommentLoading) {
     // TODO 스켈레톤 UI
     return null;
   }
 
+  if (!product) {
+    // 에러페이지로 이동
+    return <Navigate to="/error" replace />;
+  }
+
   return (
-    <>
+    // 	TODO 로딩...
+    <Suspense fallback={null}>
       <DetailTemplate
         seller={product.seller}
         images={product.images}
@@ -81,6 +86,6 @@ export const DetailPage = () => {
         onCancel={handleCancelBid}
         onEarlyClosing={handleEarlyClosing}
       />
-    </>
+    </Suspense>
   );
 };

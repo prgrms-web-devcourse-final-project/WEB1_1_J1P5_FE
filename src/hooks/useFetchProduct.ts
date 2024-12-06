@@ -9,5 +9,5 @@ export const useFetchProduct = (productId: string) => {
     select: (data) => data.result,
   });
 
-  return { product: data, isLoading };
+  return { product: data, isProductLoading: isLoading };
 };
