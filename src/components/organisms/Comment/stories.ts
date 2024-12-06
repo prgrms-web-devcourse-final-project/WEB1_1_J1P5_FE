@@ -12,33 +12,69 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    onWriteComment: (comment) => console.log(comment),
     comments: [
       {
         commentId: 1,
-        imgUrl: DEFAULT_IMG_PATH,
-        nickname: "작성자",
+        commentMemeberDto: {
+          profileImage: DEFAULT_IMG_PATH,
+          nickname: "작성자",
+        },
         createdAt: "2024-11-29 09:40:27",
         content:
           "내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용용",
-        isMyComment: false,
+        isSeller: true,
+        isUpdatable: true,
+        replies: [],
       },
       {
         commentId: 2,
-        imgUrl: "https://github.com/ppyom.png",
-        nickname: "작성자는바로나",
+        commentMemeberDto: {
+          profileImage: "https://github.com/ppyom.png",
+          nickname: "작성자는바로나",
+        },
         createdAt: "2024-11-29 15:40:27",
         content:
           "내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용용",
-        isMyComment: true,
+        isSeller: true,
+        isUpdatable: true,
+        replies: [
+          {
+            commentId: 4,
+            commentMemeberDto: {
+              profileImage: DEFAULT_IMG_PATH,
+              nickname: "작성자",
+            },
+            createdAt: new Date().toString(),
+            content: "내용",
+            isSeller: true,
+            isUpdatable: true,
+            replies: [],
+          },
+          {
+            commentId: 5,
+            commentMemeberDto: {
+              profileImage: DEFAULT_IMG_PATH,
+              nickname: "작성자",
+            },
+            createdAt: new Date().toString(),
+            content: "내용",
+            isSeller: true,
+            isUpdatable: true,
+            replies: [],
+          },
+        ],
       },
       {
         commentId: 3,
-        imgUrl: DEFAULT_IMG_PATH,
-        nickname: "작성자",
+        commentMemeberDto: {
+          profileImage: DEFAULT_IMG_PATH,
+          nickname: "작성자",
+        },
         createdAt: new Date().toString(),
         content: "내용",
-        isMyComment: false,
+        isSeller: true,
+        isUpdatable: true,
+        replies: [],
       },
     ],
   },

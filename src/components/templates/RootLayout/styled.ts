@@ -11,7 +11,7 @@ export const PageLayoutWrapper: ReturnType<typeof styled.div> = styled.div`
 
 export const RootLayoutWrapper: ReturnType<typeof styled.div> = styled.div`
   min-height: 100vh;
-  max-width: 375px;
+  max-width: 402px;
   width: 100%;
   height: 100%;
   display: flex;
@@ -20,6 +20,7 @@ export const RootLayoutWrapper: ReturnType<typeof styled.div> = styled.div`
   ${HeaderWrapper}, ${TopBarWrapper} {
     position: sticky;
     top: 0;
+    z-index: 9999;
   }
   ${BottomNavBarWrapper} {
     position: sticky;

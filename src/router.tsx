@@ -68,8 +68,10 @@ export const routes: RouteObject[] = [
       { path: "transaction-location", element: <TransactionLocationPage /> },
       // 마이페이지
       { path: "my-page", element: <MyPage /> },
-      // 거래 내역
-      { path: "transaction", element: <TransactionPage /> },
+      // 거래 내역 (구매내역)
+      { path: "transaction/buy", element: <TransactionPage type={"buy"} /> },
+      // 거래 내역 (판매내역)
+      { path: "transaction/sell", element: <TransactionPage type={"sell"} /> },
       // 동네 인증
       { path: "neighborhood-auth", element: <NeighborhoodAuthPage /> },
       // 알림

@@ -6,6 +6,6 @@ export const AuctionTimerWrapper: ReturnType<typeof styled.div> = styled.div`
   align-items: center;
   width: 100%;
   padding: 16px 24px;
-  background-color: #ececec;
+  background-color: #344fff;
+  color: #ffffff;
 `;
-

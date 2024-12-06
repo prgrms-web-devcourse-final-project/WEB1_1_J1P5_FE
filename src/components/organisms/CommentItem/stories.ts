@@ -18,6 +18,8 @@ export const Default: Story = {
     createdAt: new Date().toString(),
     content: "내용",
     isMyComment: false,
+    parentId: null,
+    replies: [],
   },
 };
 
@@ -30,6 +32,8 @@ export const LongContent: Story = {
     content:
       "내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용용",
     isMyComment: false,
+    parentId: null,
+    replies: [],
   },
 };
 
@@ -42,6 +46,8 @@ export const MyComment: Story = {
     content:
       "내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용용",
     isMyComment: true,
+    parentId: null,
+    replies: [],
   },
 };
 export default meta;

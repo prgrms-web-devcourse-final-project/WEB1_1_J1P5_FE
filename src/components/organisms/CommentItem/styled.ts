@@ -3,6 +3,27 @@ import { IconButtonWrapper } from "components/atoms/Button/IconButton/styled";
 
 import { ImageWrapper } from "components/atoms/Image/styled";
 import { KebabMenuWrapper } from "components/molecules/KebabMenu/styled";
+import { InputWithButtonWrapper } from "components/molecules/InputWithButton/styled";
+import { InputWrapper } from "components/atoms/Input/styled";
+
+export const ReplyCommentWrapper: ReturnType<typeof styled.div> = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem 0 1rem 1rem;
+`;
+
+export const ReplyWrapper: ReturnType<typeof styled.div> = styled.div`
+  display: flex;
+  flex-direction: column;
+  background-color: #eee;
+  ${InputWithButtonWrapper} {
+    padding: 0.5rem;
+    ${InputWrapper} {
+      background-color: #ffffff;
+    }
+  }
+`;
 
 export const CommentItemWrapper: ReturnType<typeof styled.div> = styled.div`
   display: flex;
@@ -39,6 +60,12 @@ export const CommentItemWrapper: ReturnType<typeof styled.div> = styled.div`
   }
 
   ${IconButtonWrapper} {
-    height: max-content;
+    align-items: start;
   }
+`;
+
+export const CommentItemContainer: ReturnType<typeof styled.div> = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 `;

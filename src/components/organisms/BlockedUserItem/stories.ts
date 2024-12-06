@@ -1,37 +1,40 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { BlockedUserItem } from ".";
-import type { IProfile } from "types";
+import type { IBlockedUserItem } from "types";
 const meta: Meta<typeof BlockedUserItem> = {
   title: "Organisms/BlockedUserItem",
   component: BlockedUserItem,
-  tags: ["autodocs"],
+  tags: ["autodocs"]
 };
 
 type Story = StoryObj<typeof meta>;
 
-const blockedProfile: IProfile = {
+const blockedUserItem: IBlockedUserItem = {
+  memberId: 1,
   imgUrl: "https://github.com/ppyom.png",
   nickname: "11시27분",
-  location: "망원동",
-  isBlocked: true,
+  address: "망원동",
+  isBlocked: true
 };
-const unBlockedProfile: IProfile = {
+const unblockedUserItem: IBlockedUserItem = {
+  memberId: 1,
   imgUrl: "https://github.com/ppyom.png",
   nickname: "11시27분",
-  location: "망원동",
-  isBlocked: false,
+  address: "망원동",
+  isBlocked: false
 };
+
 export const DefaultState: Story = {
   args: {
-    profile: blockedProfile,
-    onClick: () => console.log("차단하기 클릭"),
-  },
+    blockedUserItem,
+    onClick: () => console.log("차단하기 클릭")
+  }
 };
 
 export const UnBlockedState: Story = {
   args: {
-    profile: unBlockedProfile,
-    onClick: () => console.log("차단해제 클릭"),
-  },
+    blockedUserItem: unblockedUserItem,
+    onClick: () => console.log("차단해제 클릭")
+  }
 };
 export default meta;

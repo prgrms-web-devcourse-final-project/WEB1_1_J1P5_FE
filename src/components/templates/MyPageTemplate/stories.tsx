@@ -12,7 +12,7 @@ const meta: Meta<typeof MyPageTemplate> = {
     nickname: {
       control: "text",
     },
-    location: {
+    address: {
       control: "text",
     },
   },
@@ -24,7 +24,7 @@ export const Default: Story = {
   args: {
     imgUrl: "https://github.com/ppyom.png",
     nickname: "nickname",
-    location: "location",
+    address: "location",
     onProfileEditButtonClick: () => console.log("프로필 수정 버튼 클릭"),
     onMenuClick: (pathname) => console.log(pathname),
   },

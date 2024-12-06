@@ -3,11 +3,9 @@ import styled from "@emotion/styled";
 export const ChatListTemplateWrapper: ReturnType<
   typeof styled.div
 > = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: column;
-  width: 100%;
-  height: calc(100vh - 2rem);
-  gap: 16px;
 
   .chat-con {
     flex: 1;
