@@ -29,7 +29,9 @@ const fetchBlockedUsers = async (): Promise<IBlockedUser[] | undefined> => {
 
 const unblockUser = async (memberId: number): Promise<boolean> => {
   try {
-    const response = await http.delete<IResponse, IBlockedUserId>(`/reports`);
+    const response = await http.delete<IResponse, IBlockedUserId>(`/reports`, {
+      memberId
+    });
     return response.success && response.code === "COMMON200";
   } catch (error) {
     console.error("Failed to fetch messages:", error);
@@ -39,13 +41,16 @@ const unblockUser = async (memberId: number): Promise<boolean> => {
 
 const blockUser = async (memberId: number): Promise<boolean> => {
   try {
-    const response = await http.post<IResponse, IBlockedUserId>(`/reports`);
+    const response = await http.post<IResponse, IBlockedUserId>(`/reports`, {
+      memberId
+    });
     return response.success && response.code === "COMMON200";
   } catch (error) {
     console.error("Failed to fetch messages:", error);
     return false;
   }
 };
+
 interface IBlockedUsersResponse extends IResponse {
   result: IBlockedUser[];
 }
