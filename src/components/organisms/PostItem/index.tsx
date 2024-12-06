@@ -84,7 +84,7 @@ interface IPostItemTitleProps {
  * @param title 제목
  */
 const PostItemTitle = ({ title }: IPostItemTitleProps) => {
-  return <Text variant="h5" content={title} />;
+  return <Text variant="title_bold" content={title} />;
 };
 
 /* -------------------------------------------------------------------
@@ -107,9 +107,9 @@ const PostItemLocationAndTime = ({
 }: IPostItemLocationAndTimeProps) => {
   return (
     <PostItemLocationAndTimeWrapper>
-      <Text variant="button" content={address} />
-      <Text variant="button" content="·" />
-      <Text variant="button" content={getRelativeTime(uploadTime)} />
+      <Text variant="tag_regular" content={address} />
+      <Text variant="tag_regular" content="·" />
+      <Text variant="tag_regular" content={getRelativeTime(uploadTime)} />
     </PostItemLocationAndTimeWrapper>
   );
 };
@@ -131,8 +131,8 @@ interface IPostItemPriceProps {
 const PostItemPrice = ({ price, title }: IPostItemPriceProps) => {
   return (
     <PostItemPriceWrapper>
-      {title && <Text variant="body1" content={`${title}`} />}
-      <Text variant="body1" content={`${price.toLocaleString()}원`} />
+      {title && <Text variant="title_bold" content={`${title}`} />}
+      <Text variant="title_bold" content={`${price.toLocaleString()}원`} />
     </PostItemPriceWrapper>
   );
 };

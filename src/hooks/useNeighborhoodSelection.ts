@@ -1,34 +1,42 @@
 import { useEffect, useState } from "react";
-import { useNavermaps } from "react-naver-maps";
-import { useReverseGeocode } from "hooks";
-import type { ICoord } from "types";
+import { useNavigate } from "react-router-dom";
+import type { IActivityArea, ICoord } from "types";
+import {
+  getActivityAreas,
+  registerActivityArea,
+  searchActivityAreas,
+} from "services/apis";
 
+/**
+ * 동네 선택 시 사용되는 훅
+ */
 export const useNeighborhoodSelection = () => {
-  const { LatLng } = useNavermaps();
-  const { searchCoordinateToAddress, searchAddressToCoordinate } =
-    useReverseGeocode();
-  const [neighborhoods, setNeighborhoods] = useState<string[]>([]);
+  const navigate = useNavigate();
+  /** 동네 목록 */
+  const [neighborhoods, setNeighborhoods] = useState<IActivityArea[]>([]);
+  /** 내 위치 위도/경도 */
   const [location, setLocation] = useState<ICoord | null>(null);
+  /** 검색어 */
+  const [term, setTerm] = useState("");
 
   /**
    * 동네 검색 함수
-   * @param query 검색어
    */
-  const handleSearchNeighborhoods = (query: string) => {
-    searchAddressToCoordinate(query)
-      .then((address) => {
-        if (address.addressElements[2].code === "") {
-          // addressElements index=2(동) 없음!! 다시 검색!!!!
-          throw new Error("동네를 검색해주세요.");
-        }
-        // 리스트에 출력
-        setNeighborhoods([address.jibunAddress]);
+  const handleSearchNeighborhoods = () => {
+    console.log(term);
+    searchActivityAreas(term)
+      .then((data) => {
+        const {
+          result: { content },
+        } = data;
+        setNeighborhoods(content);
       })
       .catch(console.error);
   };
 
   /**
    * 내 위치 동네 조회 함수
+   * @param _location `optional` 최초로 위치를 받았을 때 처리하기 위한 변수
    */
   const handleGetMyNeighborhood = (_location = location) => {
     if (!_location) {
@@ -38,13 +46,37 @@ export const useNeighborhoodSelection = () => {
       );
       return;
     }
-    const latlng = new LatLng(_location.lat, _location.lng);
-    searchCoordinateToAddress(latlng)
-      .then((address) => {
-        // 리스트에 출력
-        setNeighborhoods([address]);
+    getActivityAreas(_location.lat, _location.lng)
+      .then((data) => {
+        const {
+          result: { content },
+        } = data;
+        setNeighborhoods(content);
       })
       .catch(console.error);
+  };
+
+  /**
+   * 동네 클릭 시 실행될 함수
+   * @param neighborhood 선택된 동네
+   */
+  const handleClickNeighborhood = (neighborhood: string) => {
+    const activityArea = neighborhoods.find(
+      (n) => n.fullAddress === neighborhood,
+    );
+    const emdId = activityArea?.emdId;
+
+    if (emdId) {
+      // TODO 동네 선택 저장
+      console.log(emdId);
+      registerActivityArea(emdId)
+        .then((data) => {
+          console.log(data);
+          // 저장 이후 홈으로 이동
+          navigate("/", { replace: true });
+        })
+        .catch(console.error);
+    }
   };
 
   const onSuccessGeolocation = (position: GeolocationPosition) => {
@@ -64,6 +96,7 @@ export const useNeighborhoodSelection = () => {
   };
 
   useEffect(() => {
+    // 위치 권한 요청
     navigator.geolocation.getCurrentPosition(
       onSuccessGeolocation,
       onErrorGeolocation,
@@ -72,7 +105,10 @@ export const useNeighborhoodSelection = () => {
 
   return {
     neighborhoods,
+    term,
+    setTerm,
     handleSearchNeighborhoods,
-    handleGetNearbyNeighborhood: handleGetMyNeighborhood,
+    handleClickNeighborhood,
+    handleGetMyNeighborhood,
   };
 };

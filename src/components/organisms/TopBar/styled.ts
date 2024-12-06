@@ -22,7 +22,8 @@ export const TopBarWrapper: ReturnType<typeof styled.div> = styled.div`
   align-items: center;
   background-color: #ffffff;
   position: relative;
-  padding: 0.5rem 1rem;
+  // 19px = 1.1875rem
+  padding: 1.1875rem 1rem;
   gap: 0.5rem;
   & > ${Body1Wrapper} {
     flex: 1;

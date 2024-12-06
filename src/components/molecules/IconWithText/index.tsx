@@ -1,6 +1,7 @@
 import { IconType } from "types/icon";
 import { IconWithTextContentWrapper, IconWithTextWrapper } from "./styled";
 import { Text } from "components/atoms";
+import { TextVariant } from "components/atoms/Text";
 
 // IconWithText 기본 컴포넌트
 export interface IIconWithTextProps {
@@ -23,13 +24,22 @@ export interface IIconWithTextContentProps {
   content: string;
   /** 부가설명 내용(권한 설정 화면) */
   desc?: string;
+  /** content의 Text variant 타입 */
+  contentVariant?: TextVariant;
+  /** 부가설명의 Text variant 타입 */
+  descVariant?: TextVariant;
 }
 
-const Content = ({ content, desc }: IIconWithTextContentProps) => {
+const Content = ({
+  content,
+  desc,
+  contentVariant,
+  descVariant,
+}: IIconWithTextContentProps) => {
   return (
     <IconWithTextContentWrapper content={content}>
-      <Text content={content} variant={"body1"}></Text>
-      {desc && <Text content={desc} variant={"button"}></Text>}
+      <Text content={content} variant={contentVariant || "body1"}></Text>
+      {desc && <Text content={desc} variant={descVariant || "button"}></Text>}
     </IconWithTextContentWrapper>
   );
 };

@@ -1,6 +1,5 @@
 import styled from "@emotion/styled";
 import { IconButtonWrapper } from "components/atoms/Button/IconButton/styled";
-import { TextButtonWrapper } from "components/atoms/Button/TextButton/styled";
 import { ImageWrapper } from "components/atoms/Image/styled";
 
 export const MapWrapper: ReturnType<typeof styled.div> = styled.div`
@@ -12,16 +11,13 @@ export const MapWrapper: ReturnType<typeof styled.div> = styled.div`
 
   ${IconButtonWrapper} {
     position: absolute;
-    bottom: 32px;
-    right: 16px;
+    bottom: 2rem;
+    right: 1rem;
+    width: 50px;
+    height: 50px;
     background: #fff;
     outline: none;
-    box-shadow: 2px 2px 1px 1px rgba(0, 0, 0, 0.5);
-  }
-
-  ${TextButtonWrapper}{
-    width: 100%;
-    box-shadow: 2px 2px 1px 1px rgba(0, 0, 0, 0.5);
+    box-shadow: 0px 0px 20px rgba(19, 27, 83, 0.15);
   }
 }
 `;

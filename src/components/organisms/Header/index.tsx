@@ -27,11 +27,14 @@ export const Header = ({
     <HeaderWrapper>
       {type === "home" ? (
         <IconWithText onClick={onLocationClick}>
-          <IconWithText.Content content={title} />
+          <IconWithText.Content
+            content={title}
+            contentVariant={"writing_bold"}
+          />
           <IconWithText.Icon icon={DownIcon} />
         </IconWithText>
       ) : (
-        <Text content={title} />
+        <Text variant="title_bold" content={title} />
       )}
       <ButtonsWrapper>
         {type === "home" && (

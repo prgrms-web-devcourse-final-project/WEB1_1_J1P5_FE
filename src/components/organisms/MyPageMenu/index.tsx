@@ -1,7 +1,13 @@
 import { Text } from "components/atoms";
 import { IconWithText } from "components/molecules";
 import { MY_PAGE_MENUS } from "constants/myPageMenus";
-import { MainMenuWrapper, MyPageMenuWrapper, SubMenuWrapper } from "./styled";
+import {
+  MainMenuWrapper,
+  MyPageMenuWrapper,
+  SubMenuWrapper,
+  ColorWrapper,
+  TextContainer
+} from "./styled";
 
 interface IMyPageMenuProps {
   /** 메뉴 클릭 시 실행 될 함수 */
@@ -13,16 +19,24 @@ export const MyPageMenu = ({ onMenuClick }: IMyPageMenuProps) => {
     <MyPageMenuWrapper>
       {MY_PAGE_MENUS.map(({ title, menus }, idx) => (
         <MainMenuWrapper key={`m_root_${idx}`}>
-          <Text content={title} variant="h5" />
+          <ColorWrapper>
+            <Text content={title} variant="title_semibold" />
+          </ColorWrapper>
           <SubMenuWrapper>
-            {menus.map(({ icon, name, pathname }, i) => (
-              <IconWithText
+            {menus.map(({ icon, name, desc, pathname }, i) => (
+              <TextContainer
                 key={`m_${idx}_${i}`}
                 onClick={() => onMenuClick(pathname)}
               >
-                <IconWithText.Icon icon={icon} size="s" />
-                <IconWithText.Content content={name} />
-              </IconWithText>
+                <IconWithText>
+                  <IconWithText.Icon icon={icon} size="s" />
+                  <IconWithText.Content
+                    content={name}
+                    contentVariant="title_semibold"
+                  />
+                </IconWithText>
+                <Text content={desc} variant="explan_regular" />
+              </TextContainer>
             ))}
           </SubMenuWrapper>
         </MainMenuWrapper>
