@@ -107,3 +107,13 @@ export const ButtonBoldWrapper: ReturnType<typeof styled.p> = styled.p`
   line-height: ${({ theme }: { theme: ThemeType }) =>
     theme.fontStyles.btn_bold.height};
 `;
+
+export const BadgeRegularWrapper: ReturnType<typeof styled.p> = styled.p`
+  ${commonStyles};
+  font-size: ${({ theme }: { theme: ThemeType }) =>
+    theme.fontStyles.badge_regular.size};
+  font-weight: ${({ theme }: { theme: ThemeType }) =>
+    theme.fontStyles.badge_regular.bold};
+  line-height: ${({ theme }: { theme: ThemeType }) =>
+    theme.fontStyles.badge_regular.height};
+`;

@@ -34,7 +34,7 @@ export const Header = ({
           <IconWithText.Icon icon={DownIcon} />
         </IconWithText>
       ) : (
-        <Text content={title} />
+        <Text variant="title_bold" content={title} />
       )}
       <ButtonsWrapper>
         {type === "home" && (

@@ -1,6 +1,6 @@
-import { OverlappingImage } from "components/molecules";
+//import { OverlappingImage } from "components/molecules";
 import { ChatItemWrapper } from "./styled";
-import { Badge, Text } from "components/atoms";
+import { Badge, Image, Text } from "components/atoms";
 import { getRelativeTime } from "utils";
 
 export interface IChatItemProps {
@@ -14,7 +14,7 @@ export interface IChatItemProps {
 }
 
 export const ChatItem = ({
-  profileImgUrl,
+  //profileImgUrl,
   itemImgUrl,
   name,
   lastMsg,
@@ -23,22 +23,28 @@ export const ChatItem = ({
   onClick,
 }: IChatItemProps) => {
   const lastMsgTimeStr = getRelativeTime(lastMsgTime);
+
   return (
     <ChatItemWrapper onClick={onClick}>
       <div className="img-msg-con">
-        <OverlappingImage
+        <Image url={itemImgUrl} type="square"></Image>
+        {/* <OverlappingImage
           frontImgUrl={itemImgUrl}
           backImgUrl={profileImgUrl}
           type="square"
-        ></OverlappingImage>
+        ></OverlappingImage> */}
         <div className="msg-con">
-          <Text content={name}></Text>
-          <Text content={lastMsg}></Text>
+          <Text content={name} variant="title_bold"></Text>
+          <Text content={lastMsg} variant="explan_regular"></Text>
         </div>
       </div>
       <div className="time-cnt-con">
-        <Text content={lastMsgTimeStr}></Text>
-        {lastMsgCnt > 0 && <Badge text={lastMsgCnt.toString()}></Badge>}
+        <div className="time">
+          <Text content={lastMsgTimeStr} variant="tag_regular"></Text>
+        </div>
+        {lastMsgCnt > 0 && (
+          <Badge type="chat" text={lastMsgCnt.toString()}></Badge>
+        )}
       </div>
     </ChatItemWrapper>
   );
