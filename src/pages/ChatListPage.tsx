@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { IChatItemProps } from "components/organisms/ChatItem";
 import { ChatListTemplate } from "components/templates/ChatListTemplate";
 import {
@@ -11,6 +12,7 @@ import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { http } from "services/api";
+import { useHeaderStore } from "stores";
 import { IResponse } from "types";
 import { encryptRoomId } from "utils/security";
 
@@ -33,6 +35,14 @@ interface IChatRoomResponse extends IResponse {
 }
 
 export const ChatListPage = () => {
+  const { setTitle } = useHeaderStore();
+
+  useEffect(() => {
+    setTitle("채팅"); // 동네 이름 받아서 처리 필요
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  //setTitle("채팅");
   const [allChatItems, setAllChatItems] = useState<IChatItemProps[]>([]);
   const [currentTab, setCurrentTab] = useState<chatRoomTabMapKey>("전체");
 
@@ -132,12 +142,131 @@ export const ChatListPage = () => {
     setCurrentTab(tab);
   };
 
+  const commonArgs: {
+    profileImgUrl: string;
+    itemImgUrl: string;
+    name: string;
+    onClick: () => void;
+  } = {
+    profileImgUrl: "https://github.com/moypp.png",
+    itemImgUrl: "https://github.com/ppyom.png",
+    name: "username",
+
+    onClick: () => console.log("chatItem 클릭"),
+  };
+
+  const allChatItems2 = [
+    {
+      ...commonArgs,
+      lastMsg: "(판매) last message",
+      lastMsgCnt: 5,
+      lastMsgTime: "2024-11-26T06:24:31:22",
+    },
+    {
+      ...commonArgs,
+      lastMsg: "(구매) last message",
+      lastMsgCnt: 100,
+      lastMsgTime: "2024-11-17T06:24:31:22",
+    },
+    {
+      ...commonArgs,
+      lastMsg: "(구매) last message",
+      lastMsgCnt: 20,
+      lastMsgTime: "2024-11-17T06:24:31:22",
+    },
+    {
+      ...commonArgs,
+      lastMsg: "(판매) last message",
+      lastMsgCnt: 5,
+      lastMsgTime: "2024-11-26T06:24:31:22",
+    },
+    {
+      ...commonArgs,
+      lastMsg: "(구매) last message",
+      lastMsgCnt: 100,
+      lastMsgTime: "2024-11-17T06:24:31:22",
+    },
+    {
+      ...commonArgs,
+      lastMsg: "(구매) last message",
+      lastMsgCnt: 20,
+      lastMsgTime: "2024-11-17T06:24:31:22",
+    },
+    {
+      ...commonArgs,
+      lastMsg: "(판매) last message",
+      lastMsgCnt: 5,
+      lastMsgTime: "2024-11-26T06:24:31:22",
+    },
+    {
+      ...commonArgs,
+      lastMsg: "(구매) last message",
+      lastMsgCnt: 100,
+      lastMsgTime: "2024-11-17T06:24:31:22",
+    },
+    {
+      ...commonArgs,
+      lastMsg: "(구매) last message",
+      lastMsgCnt: 20,
+      lastMsgTime: "2024-11-17T06:24:31:22",
+    },
+    {
+      ...commonArgs,
+      lastMsg: "(판매) last message",
+      lastMsgCnt: 5,
+      lastMsgTime: "2024-11-26T06:24:31:22",
+    },
+    {
+      ...commonArgs,
+      lastMsg: "(구매) last message",
+      lastMsgCnt: 100,
+      lastMsgTime: "2024-11-17T06:24:31:22",
+    },
+    {
+      ...commonArgs,
+      lastMsg: "(구매) last message",
+      lastMsgCnt: 20,
+      lastMsgTime: "2024-11-17T06:24:31:22",
+    },
+  ];
+  const sellingChatItems = [
+    {
+      ...commonArgs,
+      lastMsg: "(판매) last message",
+      lastMsgCnt: 0,
+      lastMsgTime: "2024-11-26T06:24:31:22",
+    },
+  ];
+
+  const buyingChatItems = [
+    {
+      ...commonArgs,
+      lastMsg: "(구매) last message",
+      lastMsgCnt: 100,
+      lastMsgTime: "2024-11-26T06:24:31:22",
+    },
+    {
+      ...commonArgs,
+      lastMsg: "(구매) last message",
+      lastMsgCnt: 0,
+      lastMsgTime: "2024-11-17T06:24:31:22",
+    },
+  ];
+  const unreadChatItems = [
+    {
+      ...commonArgs,
+      lastMsg: "(구매) last message",
+      lastMsgCnt: 100,
+      lastMsgTime: "2024-11-26T06:24:31:22",
+    },
+  ];
+
   return (
     <ChatListTemplate
-      allChatItems={allChatItems}
-      sellingChatItems={allChatItems}
-      buyingChatItems={allChatItems}
-      unreadChatItems={allChatItems}
+      allChatItems={allChatItems2}
+      sellingChatItems={sellingChatItems}
+      buyingChatItems={buyingChatItems}
+      unreadChatItems={unreadChatItems}
       onClick={onHandleTab}
     ></ChatListTemplate>
   );
