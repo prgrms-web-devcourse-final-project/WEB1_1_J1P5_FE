@@ -1,15 +1,19 @@
 import {
-  BanIcon,
+  // BanIcon,
   BuyIcon,
   MyLocationIcon,
-  NotificationIcon,
+  // NotificationIcon,
   SellIcon
 } from "components/atoms/Icon";
 import type { INavMenu } from "types";
 
+interface IMyMenu extends INavMenu {
+  desc: string; // description
+}
+
 interface IMyPageMenus {
   title: string; // 대제목
-  menus: INavMenu[]; // 하위 메뉴 목록
+  menus: IMyMenu[]; // 하위 메뉴 목록
 }
 
 /**
@@ -19,8 +23,18 @@ export const MY_PAGE_MENUS: IMyPageMenus[] = [
   {
     title: "나의 거래",
     menus: [
-      { icon: SellIcon, name: "판매 내역", pathname: "/transaction/sell" },
-      { icon: BuyIcon, name: "입찰 내역", pathname: "/transaction/buy" }
+      {
+        icon: SellIcon,
+        name: "판매 내역",
+        desc: "판매 내역을 한눈에 모아보세요!",
+        pathname: "/transaction/sell"
+      },
+      {
+        icon: BuyIcon,
+        name: "입찰 내역",
+        desc: "입찰하셨던 기록을 확인해보세요!",
+        pathname: "/transaction/buy"
+      }
     ]
   },
   {
@@ -29,6 +43,7 @@ export const MY_PAGE_MENUS: IMyPageMenus[] = [
       {
         icon: MyLocationIcon,
         name: "동네 인증",
+        desc: "동네 인증을 하면 거래를 할 수 있어요!",
         pathname: "/neighborhood-auth"
       }
       // { icon: NotificationIcon, name: "알림", pathname: "/notification" },
