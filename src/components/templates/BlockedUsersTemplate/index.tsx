@@ -1,20 +1,21 @@
-import {} from "components/atoms";
-import {} from "components/molecules";
 import { BlockedUsersList } from "components/organisms";
 import { BlockedUsersTemplateWrapper } from "./styled";
 import type { IBlockedUserItem } from "types";
 
 interface IBlockedUsersTemplateProps {
-  /** BlockedUserItem 리스트 */
+  /** 유저 프로필 */
   blockedUserItems: IBlockedUserItem[];
+  /** 차단하기 버튼 클릭시 동작 */
+  onClick: (index: number) => void;
 }
 
 export const BlockedUsersTemplate = ({
-  blockedUserItems
+  blockedUserItems,
+  onClick
 }: IBlockedUsersTemplateProps) => {
   return (
     <BlockedUsersTemplateWrapper>
-      <BlockedUsersList blockedUserItems={blockedUserItems} />
+      <BlockedUsersList blockedUserItems={blockedUserItems} onClick={onClick} />
     </BlockedUsersTemplateWrapper>
   );
 };
