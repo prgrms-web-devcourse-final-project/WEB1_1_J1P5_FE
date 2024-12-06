@@ -101,7 +101,7 @@ export const PostRegisterPage = () => {
       address: formData.address!,
       location: formData.location!,
       images: formData.imgUrls!.map((img) => img.file!),
-      expiredTime: getExpiredDate(formData.expiredTime!)
+      expiredTime: getExpiredDate(formData.expiredTime as string)
     };
 
     try {
@@ -136,7 +136,7 @@ export const PostRegisterPage = () => {
 
   return (
     <PostRegisterTemplate
-      productId={productId || ""}
+      productId={productId || undefined}
       postForm={formData}
       onClick={handleClick}
       onSubmit={handleSubmit}

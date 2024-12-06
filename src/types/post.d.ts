@@ -23,12 +23,15 @@ export interface IPostForm {
   title?: string;
   content?: string;
   minimumPrice?: number;
-  category?: Category;
+  category?: { value: Category; label: Category } | Category;
   latitude?: number;
   longitude?: number;
   address?: string;
   location?: string;
-  expiredTime?: ExpiredTime;
+  expiredTime?:
+    | { value: ExpiredTime; label: ExpiredTime }
+    | ExpiredTime
+    | string;
   imgUrls?: ImageInfo[];
 }
 

@@ -192,7 +192,10 @@ export const PostRegisterForm = ({
           fieldState: { invalid },
           formState
         }) => {
-          const expiredTimeDisabled = isISOFormat(postForm?.expiredTime || "");
+          const expiredTimeDisabled = isISOFormat(
+            postForm?.expiredTime as string
+          );
+
           return (
             <DivWrapper>
               <LabeledSelect
