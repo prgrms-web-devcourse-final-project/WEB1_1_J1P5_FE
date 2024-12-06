@@ -11,8 +11,8 @@ export const MapWrapper: ReturnType<typeof styled.div> = styled.div`
 
   ${IconButtonWrapper} {
     position: absolute;
-    bottom: 32px;
-    right: 16px;
+    bottom: 2rem;
+    right: 1rem;
     width: 50px;
     height: 50px;
     background: #fff;

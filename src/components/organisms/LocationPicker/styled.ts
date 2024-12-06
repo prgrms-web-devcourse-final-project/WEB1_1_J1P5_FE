@@ -26,9 +26,8 @@ export const LocationPickerWrapper: ReturnType<typeof styled.div> = styled.div`
   }
 
   ${IconButtonWrapper} {
-    bottom: 6rem;
-    // TODO: 1rem면 왜 사라지는지?
-    right: 1.1rem;
+    // TODO: Map 컴포넌트가 더 우선순위가 높음
+    bottom: 6rem !important;
   }
 
   ${TextButtonWrapper} {
