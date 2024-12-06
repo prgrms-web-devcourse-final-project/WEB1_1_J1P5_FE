@@ -1,4 +1,4 @@
-import { Text } from "components/atoms/Text";
+// import { Text } from "components/atoms/Text";
 import { TextButtonWrapper } from "./styled";
 
 export interface ITextButtonProps {
@@ -15,7 +15,7 @@ export const TextButton = ({
   text = "",
   size = "m",
   backgroundColor = "default",
-  onClick = () => {},
+  onClick = () => {}
 }: ITextButtonProps) => {
   return (
     <TextButtonWrapper
@@ -24,7 +24,8 @@ export const TextButton = ({
       backgroundColor={backgroundColor}
       onClick={onClick}
     >
-      <Text content={text} variant="btn_bold"></Text>
+      {text}
+      {/* <Text content={text} variant="btn_bold"></Text> */}
     </TextButtonWrapper>
   );
 };

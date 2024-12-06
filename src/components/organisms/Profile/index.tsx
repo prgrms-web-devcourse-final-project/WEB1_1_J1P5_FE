@@ -1,5 +1,12 @@
 import { Image, Text } from "components/atoms";
-import { ProfileWrapper, ImageWrapper, TextWrapper } from "./styled";
+import { LinkIcon } from "components/atoms/Icon";
+import { IconWithText } from "components/molecules";
+import {
+  ProfileWrapper,
+  ImageWrapper,
+  TextWrapper,
+  TextGuideColor
+} from "./styled";
 
 interface IProfileProps {
   /** 프로필 이미지 URL */
@@ -17,10 +24,18 @@ export const Profile = ({ imgUrl, nickname, location }: IProfileProps) => {
         <Image type="round" url={imgUrl} />
       </ImageWrapper>
       <TextWrapper>
-        <Text content={nickname} variant="h5" />
-        <Text content={location} variant="body1" />
+        <IconWithText>
+          <IconWithText.Content
+            content={nickname}
+            contentVariant="title_bold"
+          />
+          {/* TODO: 아이콘 굵기 얇게 수정 */}
+          <IconWithText.Icon icon={LinkIcon} size="s" />
+        </IconWithText>
+        <TextGuideColor>
+          <Text content={location} variant="explan_regular" />
+        </TextGuideColor>
       </TextWrapper>
     </ProfileWrapper>
   );
 };
-

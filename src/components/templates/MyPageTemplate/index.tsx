@@ -1,6 +1,10 @@
 import { TextButton } from "components/atoms";
 import { Profile, MyPageMenu } from "components/organisms";
-import { MyPageTemplateWrapper } from "./styled";
+import {
+  MyPageTemplateWrapper,
+  ProfileContainer,
+  BackGroundWrapper
+} from "./styled";
 
 interface IMyPageTemplateProps {
   /** 프로필 이미지 URL */
@@ -24,8 +28,12 @@ export const MyPageTemplate = ({
 }: IMyPageTemplateProps) => {
   return (
     <MyPageTemplateWrapper>
-      <Profile imgUrl={imgUrl} nickname={nickname} location={location} />
-      <TextButton text="프로필 수정" onClick={onProfileEditButtonClick} />
+      <BackGroundWrapper>
+        <ProfileContainer>
+          <Profile imgUrl={imgUrl} nickname={nickname} location={location} />
+          <TextButton text="프로필 편집" onClick={onProfileEditButtonClick} />
+        </ProfileContainer>
+      </BackGroundWrapper>
       <MyPageMenu onMenuClick={onMenuClick} />
     </MyPageTemplateWrapper>
   );
