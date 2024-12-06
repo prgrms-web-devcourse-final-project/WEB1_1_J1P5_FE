@@ -3,7 +3,7 @@ import {
   BuyIcon,
   MyLocationIcon,
   NotificationIcon,
-  SellIcon,
+  SellIcon
 } from "components/atoms/Icon";
 import type { INavMenu } from "types";
 
@@ -19,16 +19,20 @@ export const MY_PAGE_MENUS: IMyPageMenus[] = [
   {
     title: "나의 거래",
     menus: [
-      { icon: SellIcon, name: "판매 내역", pathname: "/sell" },
-      { icon: BuyIcon, name: "입찰 내역", pathname: "/buy" },
-    ],
+      { icon: SellIcon, name: "판매 내역", pathname: "/transaction/sell" },
+      { icon: BuyIcon, name: "입찰 내역", pathname: "/transaction/buy" }
+    ]
   },
   {
     title: "기타",
     menus: [
-      { icon: MyLocationIcon, name: "동네 인증", pathname: "/my-location" },
-      { icon: NotificationIcon, name: "알림", pathname: "/notification" },
-      { icon: BanIcon, name: "차단 사용자 관리", pathname: "/ban" },
-    ],
-  },
+      {
+        icon: MyLocationIcon,
+        name: "동네 인증",
+        pathname: "/neighborhood-auth"
+      }
+      // { icon: NotificationIcon, name: "알림", pathname: "/notification" },
+      // { icon: BanIcon, name: "차단 사용자 관리", pathname: "/blocked" }
+    ]
+  }
 ];
