@@ -38,6 +38,15 @@ export const TitleBoldWrapper: ReturnType<typeof styled.p> = styled.p`
   line-height: ${({ theme }: { theme: ThemeType }) =>
     theme.fontStyles.title_bold.height};
 `;
+export const TitleSemiBoldWrapper: ReturnType<typeof styled.p> = styled.p`
+  ${commonStyles};
+  font-size: ${({ theme }: { theme: ThemeType }) =>
+    theme.fontStyles.title_semibold.size};
+  font-weight: ${({ theme }: { theme: ThemeType }) =>
+    theme.fontStyles.title_semibold.bold};
+  line-height: ${({ theme }: { theme: ThemeType }) =>
+    theme.fontStyles.title_semibold.height};
+`;
 
 export const DescRegularWrapper: ReturnType<typeof styled.p> = styled.p`
   ${commonStyles};
