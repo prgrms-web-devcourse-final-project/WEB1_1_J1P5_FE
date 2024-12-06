@@ -4,7 +4,7 @@ import type { IPostForm } from "types";
 
 interface IPostRegisterTemplateProps {
   /** product Id */
-  productId?: string;
+  productId?: number;
   /** 글 등록할 때 필요한 form 데이터 */
   postForm?: IPostForm;
   /** Submit 이벤트 발생 시 실행할 함수 */

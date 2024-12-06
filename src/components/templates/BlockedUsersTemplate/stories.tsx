@@ -11,20 +11,6 @@ const meta: Meta<typeof BlockedUsersTemplate> = {
 
 type Story = StoryObj<typeof meta>;
 
-/** 공통 프로필 생성 함수 */
-const createProfile = (
-  isBlocked: boolean,
-  memberId = 1,
-  nickname = "11시27분",
-  address = "망원동"
-): IBlockedUserItem => ({
-  memberId,
-  imgUrl: "https://github.com/ppyom.png",
-  nickname,
-  address,
-  isBlocked
-});
-
 /**  공통 유저 아이템 생성 함수 */
 const createUserItem = (isBlocked: boolean): IBlockedUserItem => ({
   memberId: 1,
