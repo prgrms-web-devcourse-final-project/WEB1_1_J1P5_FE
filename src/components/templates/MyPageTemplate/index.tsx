@@ -31,7 +31,11 @@ export const MyPageTemplate = ({
       <BackGroundWrapper>
         <ProfileContainer>
           <Profile imgUrl={imgUrl} nickname={nickname} location={location} />
-          <TextButton text="프로필 편집" onClick={onProfileEditButtonClick} />
+          <TextButton
+            text="프로필 편집"
+            onClick={onProfileEditButtonClick}
+            variant="explan_regular"
+          />
         </ProfileContainer>
       </BackGroundWrapper>
       <MyPageMenu onMenuClick={onMenuClick} />

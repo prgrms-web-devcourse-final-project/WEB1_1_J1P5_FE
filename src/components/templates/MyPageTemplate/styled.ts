@@ -7,10 +7,9 @@ import {
 
 export const MyPageTemplateWrapper: ReturnType<typeof styled.div> = styled.div`
   display: flex;
+  width: 100%;
   flex-direction: column;
   gap: 1rem;
-
-  width: 100%;
 
   ${ImageWrapper} {
     width: 80px;
@@ -37,24 +36,16 @@ export const MyPageTemplateWrapper: ReturnType<typeof styled.div> = styled.div`
     overflow: hidden;
     color: #707192;
     text-overflow: ellipsis;
-
-    /* 가이드/regular */
-    font-size: 13px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 145%; /* 18.85px */
-    letter-spacing: -0.325px;
   }
 
   ${ProfileWrapper} {
-    // border: 1px solid red;
     background: var(--white, #fff);
   }
 `;
 
 export const ProfileContainer: ReturnType<typeof styled.div> = styled.div`
   display: flex;
-  width: 370px;
+  width: 100%;
   flex-direction: column;
   align-items: flex-start;
 `;
