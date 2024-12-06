@@ -278,7 +278,7 @@ export const ChatRoomPage = () => {
       <TopSheet post={post}></TopSheet>
       <ChatRoomTemplate
         post={post}
-        chatBubbles={chatBubbles}
+        chatBubbles={chatGroups}
         onWriteMessage={handleInput}
         scrollContainerRef={scrollContainerRef}
       />
