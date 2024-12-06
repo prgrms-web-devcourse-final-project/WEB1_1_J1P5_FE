@@ -6,6 +6,7 @@ import { type Context, createContext, useContext, useState } from "react";
 
 import { IChatItemProps } from "components/organisms/ChatItem";
 import { chatRoomTabMapKey } from "constants/Chat";
+import { EmptyTemplate } from "components/templates";
 
 interface IChatOverviewRootProps {
   children: React.ReactNode;
@@ -103,7 +104,11 @@ const Panel = ({ index, chatItems }: IPanelProps) => {
   return (
     isActive && (
       <PanelWrapper>
-        <ChatList chatItems={chatItems} />
+        {chatItems.length === 0 ? (
+          <EmptyTemplate type={"chat"}></EmptyTemplate>
+        ) : (
+          <ChatList chatItems={chatItems} />
+        )}
       </PanelWrapper>
     )
   );
