@@ -1,4 +1,4 @@
-import { IconButton, Image, Text, TextButton } from "components/atoms";
+import { Image, Text, TextButton } from "components/atoms";
 import { getRelativeTime } from "utils";
 import { useRemainingTimer } from "hooks";
 import type { IconType } from "types";
@@ -182,16 +182,18 @@ interface IPostItemButtonContainerProps {
 const PostItemButtonContainer = ({
   buttonText,
   onTextButtonClick,
-  icon,
-  onIconButtonClick,
-}: IPostItemButtonContainerProps) => {
+}: //icon,
+//onIconButtonClick,
+IPostItemButtonContainerProps) => {
   const handleStopPropagation = (event: React.MouseEvent<HTMLDivElement>) => {
     event.stopPropagation();
   };
   return (
     <PostItemButtonContainerWrapper onClick={handleStopPropagation}>
       <TextButton text={buttonText} onClick={onTextButtonClick} />
-      {icon && <IconButton size="m" icon={icon} onClick={onIconButtonClick} />}
+
+      {/* 채팅방 물품 정보 오른쪽 아이콘 버튼 임시 삭제(디자인시안에 존재 X) 
+      {icon && <IconButton size="m" icon={icon} onClick={onIconButtonClick} />} */}
     </PostItemButtonContainerWrapper>
   );
 };

@@ -64,6 +64,9 @@ export const ChatRoomPage = () => {
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
   const { connect, disconnect, sendMessage, isConnected } = useWebSocket();
   const [isMsgSended, setIsMsgSended] = useState<boolean>(false);
+
+  const [loading, setLoading] = useState(true); // 로딩 상태
+
   /** 백엔드 IChatRoom 타입을 프론트 IChatItemProps 으로 변환 함수
    * @param chatRoom : IChatRoom
    * @returns IChatItemProps
@@ -171,9 +174,13 @@ export const ChatRoomPage = () => {
     const fetchChatMessages = async () => {
       await fetchMessages();
     };
-    fetchChatMessages().catch((error) => {
-      console.error("Error fetchting Chat Message:", error);
-    });
+    fetchChatMessages()
+      .catch((error) => {
+        console.error("Error fetchting Chat Message:", error);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -262,6 +269,9 @@ export const ChatRoomPage = () => {
     }
   }, [chatGroups]); // 데이터가 fetch된 이후에만 실행
 
+  if (loading) {
+    return <div>Loading...</div>; // 로딩 중 메시지
+  }
   return post ? (
     <ChatRoomTemplate
       post={post}
@@ -270,6 +280,6 @@ export const ChatRoomPage = () => {
       scrollContainerRef={scrollContainerRef}
     />
   ) : (
-    <div>Loading...</div> // 로딩 화면 또는 다른 메시지 표시
+    <div>정보를 불러오는데 실패했습니다.</div> // fetch 실패한 에러 페이지
   );
 };

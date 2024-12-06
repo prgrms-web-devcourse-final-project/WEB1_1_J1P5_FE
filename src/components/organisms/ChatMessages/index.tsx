@@ -47,6 +47,7 @@ export const ChatMessages = ({
           setValue={setMessage}
           placeholder="메시지를 입력하세요."
           buttonText="전송"
+          isIcon={true}
           onButtonClick={handleSendButtonClick}
         />
       </WriteBoxWrapper>
