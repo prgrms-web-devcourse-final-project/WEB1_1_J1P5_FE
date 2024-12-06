@@ -55,8 +55,8 @@ export const PostList = ({ posts, type }: IPostListProps) => {
         <PostItem.Image imgUrl={imgUrl} size={"default"} />
         <PostItem.Container>
           <PostItem.Title title={title} />
-          <PostItem.LocationAndTime address={address} uploadTime={uploadTime} />
           <PostItem.Price price={price} />
+          <PostItem.LocationAndTime address={address} uploadTime={uploadTime} />
         </PostItem.Container>
       </PostItem>
     );
