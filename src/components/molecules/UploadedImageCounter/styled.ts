@@ -8,10 +8,16 @@ export const ImageUploadWrapper: ReturnType<typeof styled.div> = styled.div`
   height: 100%;
 `;
 
-export const UploadedImageCounterContainer: ReturnType<typeof styled.div> =
-  styled.div`
-    background-color: #d9d9d9;
-    text-align: center;
-    padding: 1rem;
-    position: relative;
-  `;
+export const UploadedImageCounterContainer: ReturnType<
+  typeof styled.div
+> = styled.div`
+  background-color: #d9d9d9;
+  text-align: center;
+  padding: 1rem;
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;

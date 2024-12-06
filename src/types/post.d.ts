@@ -1,16 +1,53 @@
-import { IImageInfo, ICoord } from "types";
+import { IImageInfo, ICoord, IImages } from "types";
+
+type Category =
+  | "ELECTRONIC"
+  | "FURNITURE"
+  | "CLOTHING"
+  | "FOOD"
+  | "BEAUTY"
+  | "SPORTS"
+  | "TOYS"
+  | "BOOKS"
+  | "AUTOMOTIVE"
+  | "JEWELRY"
+  | "HOME_APPLIANCES"
+  | "PET_SUPPLIES"
+  | "OFFICE_SUPPLIES"
+  | "GARDEN"
+  | "MUSIC";
+
+type ExpiredTime = "3일 후" | "2일 후" | "24시간 후" | "12시간 후" | "6시간 후";
 
 export interface IPostForm {
+  title?: string;
+  content?: string;
+  minimumPrice?: number;
+  category?: Category;
+  latitude?: number;
+  longitude?: number;
+  address?: string;
+  location?: string;
+  expiredTime?: ExpiredTime;
+  imgUrls?: ImageInfo[];
+}
+
+export interface INewPostForm {
   title: string;
   content: string;
-  price: number;
-  category: string; // 나중에 리터럴로 취급
-  // latitude: number;
-  // longitude: number;
-  // address: number; // 시군구
+  minimumPrice: number;
+  category: Category;
+  latitude: number;
+  longitude: number;
+  address: string;
   location: string;
-  expiredTime: string;
-  imgUrls: ImageInfo[];
+  expiredTime?: string;
+  images?: File[];
+  // images?: IImgUrl[]; 레거시
+}
+
+export interface IImgUrl {
+  url: string;
 }
 
 export interface ILocation {
