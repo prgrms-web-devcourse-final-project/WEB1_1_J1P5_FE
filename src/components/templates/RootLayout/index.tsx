@@ -91,9 +91,11 @@ export const RootLayout = () => {
       <PageLayoutWrapper>
         <Outlet />
       </PageLayoutWrapper>
-      {["/", "/market-price", "/chat", "/my-page"].includes(pathname) && (
+      {["/", "/market-price", "/my-page"].includes(pathname) ||
+      _pathname === "/chat" ||
+      _pathname === "/chat/" ? (
         <BottomNavBar />
-      )}
+      ) : null}
     </RootLayoutWrapper>
   );
 };

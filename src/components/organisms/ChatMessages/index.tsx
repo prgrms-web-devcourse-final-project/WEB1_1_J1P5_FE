@@ -6,6 +6,8 @@ import {
   ChatMessagesWrapper,
   WriteBoxWrapper,
 } from "./styled";
+import ChatDay from "../ChatDay/ChatDay";
+import { areDatesDifferent } from "utils";
 
 interface IComponentProps {
   /** ChatBubble 목록 */
@@ -36,9 +38,27 @@ export const ChatMessages = ({
   return (
     <ChatMessagesWrapper>
       <ChatBubblesWrapper>
-        {chatBubbles.map((bubble, idx) => (
-          <ChatBubble key={`chat_bubble_${idx}`} {...bubble} />
-        ))}
+        {chatBubbles.map((bubble, idx) => {
+          /** 채팅 메시지 받았을 때 날짜 바뀐 부분 표시하기 위한 로직 */
+          const currentCreatedAt = bubble.chats[0].createdAt; // string으로 가정
+          const previousCreatedAt =
+            idx > 0 ? chatBubbles[idx - 1].chats[0].createdAt : null;
+
+          return (
+            <>
+              {idx === 0 ||
+                (previousCreatedAt &&
+                  areDatesDifferent(currentCreatedAt, previousCreatedAt) && (
+                    <div className="chat-date">
+                      <ChatDay
+                        date={new Date(currentCreatedAt).toLocaleDateString()}
+                      />
+                    </div>
+                  ))}
+              <ChatBubble key={`chat_bubble_${idx}`} {...bubble} />
+            </>
+          );
+        })}
       </ChatBubblesWrapper>
       <div ref={scrollContainerRef}></div>
       <WriteBoxWrapper>
@@ -47,6 +67,7 @@ export const ChatMessages = ({
           setValue={setMessage}
           placeholder="메시지를 입력하세요."
           buttonText="전송"
+          isIcon={true}
           onButtonClick={handleSendButtonClick}
         />
       </WriteBoxWrapper>

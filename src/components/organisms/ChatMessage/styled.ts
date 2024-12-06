@@ -1,9 +1,10 @@
 import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 import type { IChatMessageProps } from ".";
+import { ThemeType } from "styles/theme";
 
 export const MessageWrapper: ReturnType<typeof styled.div> = styled.div`
-  background-color: #d9d9d9;
+  background-color: ${({ theme }: { theme: ThemeType }) => theme.colors.white};
   padding: 0.5rem;
   border-radius: 0.5rem;
   max-width: 70%;
@@ -22,11 +23,12 @@ export const ChatMessageWrapper: ReturnType<
   flex-direction: ${({ isMe }) => (isMe ? "row-reverse" : "row")};
   align-items: end;
   gap: 0.25rem;
-  ${({ isMe }) =>
+  ${({ isMe, theme }) =>
     isMe &&
     css`
       ${MessageWrapper} {
-        background-color: #a9a9a9;
+        background-color: ${theme.colors.blue_text};
+        color: ${theme.colors.white};
       }
       ${MessageInfoWrapper} {
         align-items: end;

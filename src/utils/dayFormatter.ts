@@ -65,6 +65,31 @@ export const getTime = (date: Date | string): string => {
   return dayjs(date).format("A HH:mm");
 };
 
+/**
+ * 입력받은 시간을 "YYYY년MM월DD일(dd) 형태로 바꾸는 함수"
+ * @param date Date | string
+ * @returns string
+ */
+export const formatDate = (dateStr: Date | string) => {
+  const formatted = dayjs(dateStr, "YYYY-MM-DD").format("YYYY년MM월DD일(dd)");
+  return formatted;
+};
+
+/**
+ * 두 개의 날짜 문자열을 입력받아, 두 날짜가 같은 날인지 확인
+ * @param dateStr1
+ * @param dateStr2
+ * @returns
+ */
+export const areDatesDifferent = (
+  dateStr1: string,
+  dateStr2: string
+): boolean => {
+  const date1 = new Date(dateStr1).toISOString().split("T")[0];
+  const date2 = new Date(dateStr2).toISOString().split("T")[0];
+  return date1 !== date2;
+};
+
 export const getExpiredDate = (value: string): string => {
   const now = dayjs();
 

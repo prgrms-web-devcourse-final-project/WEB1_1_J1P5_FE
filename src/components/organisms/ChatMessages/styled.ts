@@ -1,25 +1,55 @@
 import styled from "@emotion/styled";
+import { IconButtonWrapper } from "components/atoms/Button/IconButton/styled";
 import { InputWrapper } from "components/atoms/Input/styled";
+import { InputWithButtonWrapper } from "components/molecules/InputWithButton/styled";
+import { ThemeType } from "styles/theme";
 
 export const ChatBubblesWrapper: ReturnType<typeof styled.div> = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;
   width: 100%;
+
+  .chat-date {
+    display: flex;
+    justify-content: center;
+  }
 `;
 
 export const WriteBoxWrapper: ReturnType<typeof styled.div> = styled.div`
   padding: 1rem;
-  background-color: #eeeeee;
-  position: fixed;
+  background-color: ${({ theme }: { theme: ThemeType }) => theme.colors.white};
+  position: absolute;
   bottom: 0;
   width: 100%;
-  max-width: 375px;
 
-  /* bottom Nav Bar 빠질떄까지 임시 */
-  margin-bottom: 50px;
+  ${InputWithButtonWrapper} {
+  }
+
   ${InputWrapper} {
     flex: 1;
+    padding: 0.9375rem;
+    background-color: ${({ theme }: { theme: ThemeType }) =>
+      theme.colors.grey_button_deactivate};
+    border: none;
+    input {
+      background-color: ${({ theme }: { theme: ThemeType }) =>
+        theme.colors.grey_button_deactivate};
+      font-size: ${({ theme }: { theme: ThemeType }) =>
+        theme.fontStyles.explan_bold.size};
+      font-weight: ${({ theme }: { theme: ThemeType }) =>
+        theme.fontStyles.explan_bold.bold};
+      line-height: ${({ theme }: { theme: ThemeType }) =>
+        theme.fontStyles.explan_bold.height};
+    }
+  }
+
+  ${IconButtonWrapper} {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 10px;
+    background-color: ${({ theme }: { theme: ThemeType }) =>
+      theme.colors.blue_text};
   }
 `;
 
