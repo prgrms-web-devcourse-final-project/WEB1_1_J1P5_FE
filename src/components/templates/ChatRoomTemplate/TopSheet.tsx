@@ -9,13 +9,19 @@ import { PostItemRootWrapper } from "components/organisms/PostItem/styled";
 
 export const TopSheetWrapper = styled.div``;
 const TopSheetContainer = styled.div`
-  position: absolute;
+  position: fixed;
   width: 100%;
-  height: ${({ isOpen }: { isOpen: boolean }) => (isOpen ? "9.72rem" : "0")};
-  background-color: ${({ theme }: { theme: ThemeType }) => theme.colors.white};
-  overflow: hidden;
-  transition: height 0.3s ease; /* 부드러운 애니메이션 */
+  max-width: 402px;
+  left: 50%;
+  transform: translate(-50%);
 
+  height: ${({ isOpen }: { isOpen: boolean }) => (isOpen ? "11.25rem" : "0")};
+  overflow: hidden;
+  //overflow: ${({ isOpen }) => (isOpen ? "visible" : "hidden")}; /* 변경 */
+  z-index: 1000;
+  background-color: ${({ theme }: { theme: ThemeType }) => theme.colors.white};
+
+  transition: height 0.3s ease; /* 부드러운 애니메이션 */
   ${TextButtonWrapper} {
     margin: 0;
   }
@@ -26,8 +32,11 @@ const TopSheetContainer = styled.div`
 `;
 
 const ToggleButton = styled.button<{ isOpen: boolean }>`
-  position: absolute;
+  position: fixed;
   width: 100%;
+  max-width: 402px;
+  left: 50%;
+  transform: translate(-50%);
   height: 2.25rem;
   display: flex;
   flex-direction: column;
@@ -37,7 +46,7 @@ const ToggleButton = styled.button<{ isOpen: boolean }>`
   gap: 5px;
   border-radius: 0 0 0.625rem 0.625rem;
 
-  top: ${({ isOpen }) => (isOpen ? "9.72rem" : "0px")};
+  top: ${({ isOpen }) => (isOpen ? "15.625rem" : "4.375rem")};
   background-color: ${({ theme }: { theme: ThemeType }) => theme.colors.white};
   border: none;
 
@@ -58,12 +67,11 @@ interface TopSheetProps {
   post: IPost;
 }
 export const TopSheet = ({ post }: TopSheetProps) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
 
   const toggleSheet = () => {
     setIsOpen((prev) => !prev);
   };
-
   return (
     <TopSheetWrapper>
       <ToggleButton onClick={toggleSheet} isOpen={isOpen}>

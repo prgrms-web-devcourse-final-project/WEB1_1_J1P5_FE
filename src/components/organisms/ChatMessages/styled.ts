@@ -9,6 +9,11 @@ export const ChatBubblesWrapper: ReturnType<typeof styled.div> = styled.div`
   flex-direction: column;
   gap: 1rem;
   width: 100%;
+
+  .chat-date {
+    display: flex;
+    justify-content: center;
+  }
 `;
 
 export const WriteBoxWrapper: ReturnType<typeof styled.div> = styled.div`

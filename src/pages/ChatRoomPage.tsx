@@ -1,5 +1,6 @@
 import { IPost } from "components/organisms/PostList";
 import { ChatRoomTemplate } from "components/templates/ChatRoomTemplate";
+import { TopSheet } from "components/templates/ChatRoomTemplate/TopSheet";
 import { DEFAULT_IMG_PATH } from "constants/imgPath";
 import { useChatGroups } from "hooks/useChatGroups";
 import { useWebSocket } from "hooks/useWebSocket";
@@ -273,12 +274,15 @@ export const ChatRoomPage = () => {
     return <div>Loading...</div>; // 로딩 중 메시지
   }
   return post ? (
-    <ChatRoomTemplate
-      post={post}
-      chatBubbles={chatGroups}
-      onWriteMessage={handleInput}
-      scrollContainerRef={scrollContainerRef}
-    />
+    <>
+      <TopSheet post={post}></TopSheet>
+      <ChatRoomTemplate
+        post={post}
+        chatBubbles={chatBubbles}
+        onWriteMessage={handleInput}
+        scrollContainerRef={scrollContainerRef}
+      />
+    </>
   ) : (
     <div>정보를 불러오는데 실패했습니다.</div> // fetch 실패한 에러 페이지
   );
