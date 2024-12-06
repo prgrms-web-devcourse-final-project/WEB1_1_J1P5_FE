@@ -1,7 +1,8 @@
-import { ChatMessages, PostList } from "components/organisms";
+import { ChatMessages } from "components/organisms";
 import { ChatRoomTemplateWrapper } from "./styled";
 import { IPost } from "components/organisms/PostList";
 import { IChatBubbleProps } from "components/organisms/ChatBubble";
+import { TopSheet } from "./TopSheet";
 
 export interface IChatRoomTemplateProps {
   /** 상품 정보 목록 */
@@ -22,7 +23,11 @@ export const ChatRoomTemplate = ({
 }: IChatRoomTemplateProps) => {
   return (
     <ChatRoomTemplateWrapper>
-      <PostList posts={[post]} type={"chat"}></PostList>
+      <TopSheet post={post}></TopSheet>
+      {/* 임시 주석 처리
+       <div> 
+        <PostList posts={[post]} type={"chat"}></PostList>
+      </div> */}
       <ChatMessages
         chatBubbles={chatBubbles}
         onWriteMessage={onWriteMessage}
