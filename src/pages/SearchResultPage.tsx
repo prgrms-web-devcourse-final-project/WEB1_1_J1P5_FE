@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { useSearchTopBar } from "hooks";
 import { useNavigate, useParams } from "react-router-dom";
-import { IResponse } from "types";
+import { ICategory, IResponse } from "types";
 import { http } from "services/api";
 import { IPost } from "components/organisms/PostList";
 import { SearchResultsTemplate } from "components/templates";
+import { CATEGORIES } from "constants/categories";
 
 interface ISearchPost {
   myLocation: string;
@@ -72,7 +73,6 @@ export const SearchResultPage = () => {
    * @returns void
    */
   const fetchPosts = async (url: string) => {
-    console.log(url);
     try {
       const response = await http.get<ISearchPostResponse>(url);
       if (response.success && response.code === "COMMON200") {
@@ -92,7 +92,14 @@ export const SearchResultPage = () => {
   }>();
   const { setSearchTerm } = useSearchTopBar();
   useEffect(() => {
-    const searchValue = category || keyword || "";
+    let categoryText: ICategory = { code: "", name: "" };
+    if (category) {
+      categoryText = CATEGORIES.find((item) => item.code === category) || {
+        code: "",
+        name: "",
+      };
+    }
+    const searchValue = keyword || categoryText.name;
 
     setSearchTerm(searchValue);
 

@@ -5,7 +5,8 @@ export const BottomNavBarWrapper: ReturnType<typeof styled.div> = styled.div`
   display: flex;
   justify-content: space-between;
   background-color: #ffffff;
-  padding: 0.25rem 0;
+  height: 74px;
+  padding-top: 20px;
   ${NavBarItemWrapper} {
     flex: 1;
   }
