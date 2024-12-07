@@ -5,7 +5,8 @@ export type OAuthProvider = "NAVER" | "KAKAO";
 export interface IAuth {
   nickname: string | null;
   profileUrl: string | null;
-  activityAreaId: number | null;
+  emdId: number | null;
+  emdName: string | null;
 }
 
 export interface IAuthResponse extends IResponse {

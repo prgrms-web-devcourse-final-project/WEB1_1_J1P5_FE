@@ -2,5 +2,6 @@ export interface IUser {
   id?: number;
   nickname?: string;
   profile?: string | File;
-  location?: number;
+  emdId?: number;
+  emdName?: string;
 }

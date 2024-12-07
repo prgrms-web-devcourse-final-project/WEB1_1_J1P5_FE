@@ -5,14 +5,14 @@ import type { IUser } from "types";
 const localStorageKey = "meerket--login" as const;
 
 interface UserState {
-  user?: IUser;
+  user: IUser | null; // @rushstack/ no-new-null
   setUser: (user: IUser) => void;
 }
 
 export const useUserStore: UseBoundStore<StoreApi<UserState>> = create(
   persist<UserState>(
     (set) => ({
-      user: undefined,
+      user: null,
       setUser: (user) => set({ user }),
     }),
     {

@@ -33,13 +33,14 @@ export const OAuthCallbackPage = () => {
           setUser({
             profile: result.profileUrl || undefined,
             nickname: result.nickname || undefined,
-            location: result.activityAreaId || undefined,
+            emdId: result.emdId || undefined,
+            emdName: result.emdName || undefined,
           });
 
           navigate(
             !result.nickname
               ? "/profile"
-              : !result.activityAreaId
+              : !result.emdName
                 ? "/neighborhood-selection"
                 : "/",
             { replace: true },
