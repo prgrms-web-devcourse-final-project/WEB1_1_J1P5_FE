@@ -86,7 +86,7 @@ export const CommentItem = ({
    * 차단하기 메뉴 클릭
    */
   const handleBlockClick = () => {
-    // 차단하기
+    // TODO 차단하기
     handleClose();
   };
 
@@ -94,7 +94,7 @@ export const CommentItem = ({
    * 신고하기 메뉴 클릭
    */
   const handleReportClick = () => {
-    // 신고하기
+    // TODO 신고하기
     handleClose();
   };
 
