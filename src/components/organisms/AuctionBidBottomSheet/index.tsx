@@ -1,6 +1,5 @@
 import React from "react";
-import { Text, TextButton } from "components/atoms";
-import { LabeledInput } from "components/molecules";
+import { Input, Text, TextButton } from "components/atoms";
 import type { IModalBottomSheetProps } from "components/molecules/ModalBottomSheet";
 
 import { AuctionBidBottomSheetWrapper } from "./styled";
@@ -25,7 +24,7 @@ export const AuctionBidBottomSheet = ({
   setPrice,
   beforePrice,
   minPrice,
-  onBid
+  onBid,
 }: IAuctionBidBottomSheetProps) => {
   const placeholder = beforePrice
     ? `내 입찰가 ${beforePrice.toLocaleString()}`
@@ -33,16 +32,18 @@ export const AuctionBidBottomSheet = ({
 
   return (
     <AuctionBidBottomSheetWrapper open={open} onClose={onClose}>
-      <LabeledInput
-        id={"AuctionBid"}
-        label="희망 입찰가"
-        placeholder={placeholder}
+      <Text variant="title_bold" content="희망 입찰가" />
+      <Input
+        type="number"
         value={price}
         setValue={setPrice}
+        placeholder={placeholder}
       />
-      <Text content={`최소 입찰가 ${minPrice.toLocaleString()}`} />
+      <Text
+        variant="desc_regular"
+        content={`최소 입찰가 ${minPrice.toLocaleString()}`}
+      />
       <TextButton text="입찰하기" onClick={onBid} />
     </AuctionBidBottomSheetWrapper>
   );
 };
-

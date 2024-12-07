@@ -6,5 +6,12 @@ import type { IProductDetailResponse } from "types";
  * @param productId 아이디
  */
 export const getProduct = async (productId: string) => {
-  return http.get<IProductDetailResponse>(`products/${productId}`);
+  return http.get<IProductDetailResponse>(`/products/${productId}`);
+};
+
+/**
+ * 조기 마감
+ */
+export const earlyClose = async (productId: string) => {
+  return http.post(`/products/${productId}/early-close`);
 };

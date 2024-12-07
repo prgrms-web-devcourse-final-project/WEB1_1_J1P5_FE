@@ -13,7 +13,7 @@ export const AuctionTimer = ({ targetDate }: IAuctionTimerProps) => {
   return (
     <AuctionTimerWrapper>
       <Text
-        variant="button"
+        variant="title_bold"
         content={
           timeRemaining !== "over"
             ? `경매 종료까지 ${timeRemaining} 남았어요!`

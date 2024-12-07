@@ -1,5 +1,9 @@
 import styled from "@emotion/styled";
 import { TextButtonWrapper } from "components/atoms/Button/TextButton/styled";
+import {
+  DescRegularWrapper,
+  WritingBoldWrapper,
+} from "components/atoms/Text/styled";
 
 export const AuctionControlBarRootWrapper: ReturnType<typeof styled.div> =
   styled.div`
@@ -18,6 +22,7 @@ export const ButtonContainerWrapper: ReturnType<typeof styled.div> = styled.div`
   display: flex;
   gap: 8px;
   ${TextButtonWrapper} {
+    margin: 0;
     flex: 1;
   }
 `;
@@ -27,6 +32,12 @@ export const BidWrapper: ReturnType<typeof styled.div> = styled.div`
   text-align: center;
   display: flex;
   flex-direction: column;
+  ${DescRegularWrapper} {
+    color: ${({ theme }) => theme.colors.grey_text_guide};
+  }
+  ${WritingBoldWrapper} {
+    color: ${({ theme }) => theme.colors.grey_text_main};
+  }
 `;
 
 export const BidContainerWrapper: ReturnType<typeof styled.div> = styled.div`

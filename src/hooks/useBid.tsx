@@ -1,16 +1,54 @@
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { bidding, cancelBidding, editBidding } from "services/apis";
+import { useFetchBidding } from "hooks";
 
 /**
  * 입찰 로직
  */
-export const useBid = () => {
+export const useBid = (productId: number) => {
+  const { biddingList, isLoading } = useFetchBidding();
+  const myPrice = useMemo(() => {
+    return (
+      (!isLoading && biddingList.find((b) => b.productId === productId)) || null
+    );
+  }, [isLoading]);
   const [open, setOpen] = useState(false);
   const [price, setPrice] = useState("");
 
   const handleBid = () => {
     // 입찰 버튼 클릭
-    console.log(price);
+    console.log(Number(price.replace(",", "")));
+    if (!myPrice) {
+      // 현재 입찰중이 아닌 경우
+      bidding({ productId, price: Number(price.replace(",", "")) })
+        .then((data) => {
+          console.log(data);
+        })
+        .catch(console.error);
+    } else {
+      // 현재 입찰중인 경우
+      editBidding({
+        productId,
+        price: Number(price.replace(",", "")),
+        auctionId: myPrice.auctionId,
+      })
+        .then((data) => {
+          console.log(data);
+        })
+        .catch(console.error);
+    }
   };
+
+  const handleCancel = () => {
+    if (myPrice) {
+      cancelBidding(myPrice.auctionId)
+        .then((data) => {
+          console.log(data);
+        })
+        .catch(console.error);
+    }
+  };
+
   const handleOpenBottomSheet = () => {
     setOpen(true);
   };
@@ -19,12 +57,18 @@ export const useBid = () => {
     setOpen(false);
   };
 
+  useEffect(() => {
+    console.log(myPrice);
+  }, []);
+
   return {
     open,
     price,
+    myPrice,
     setPrice,
     handleOpenBottomSheet,
     handleCloseBottomSheet,
     handleBid,
+    handleCancel,
   };
 };

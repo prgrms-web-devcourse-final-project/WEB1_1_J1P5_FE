@@ -9,7 +9,6 @@ import {
   chatRoomTabMapValue,
 } from "constants/Chat";
 import { DEFAULT_IMG_PATH } from "constants/imgPath";
-import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { http } from "services/api";
