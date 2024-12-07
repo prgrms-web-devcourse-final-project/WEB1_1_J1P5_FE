@@ -50,7 +50,7 @@ const submitNewProduct = async (newProduct: INewPostForm): Promise<void> => {
 };
 
 const updateProduct = async (
-  productId: string,
+  productId: number,
   updatedProduct: INewPostForm
 ): Promise<void> => {
   try {
@@ -73,7 +73,7 @@ export const PostRegisterPage = () => {
   const navigate = useNavigate();
 
   const queryParams = new URLSearchParams(location.search);
-  const productId = queryParams.get("productId");
+  const productId = Number(queryParams.get("productId"));
   const { formData } = useFormDataStore((state) => state);
   const { setFormData, clear } = useFormDataStore((state) => state.actions);
 
@@ -101,7 +101,7 @@ export const PostRegisterPage = () => {
       address: formData.address!,
       location: formData.location!,
       images: formData.imgUrls!.map((img) => img.file!),
-      expiredTime: getExpiredDate(formData.expiredTime!)
+      expiredTime: getExpiredDate(formData.expiredTime as string)
     };
 
     try {
@@ -136,7 +136,7 @@ export const PostRegisterPage = () => {
 
   return (
     <PostRegisterTemplate
-      productId={productId || ""}
+      productId={productId || undefined}
       postForm={formData}
       onClick={handleClick}
       onSubmit={handleSubmit}

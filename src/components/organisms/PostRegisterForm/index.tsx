@@ -14,7 +14,7 @@ import { isISOFormat } from "utils";
 
 interface IPostRegisterFormProps {
   /** product Id */
-  productId?: string;
+  productId?: number;
   /** 글 등록할 때 필요한 form 데이터 */
   postForm?: IPostForm;
   /** Submit 이벤트 발생 시 실행할 함수 */
@@ -56,7 +56,7 @@ export const PostRegisterForm = ({
         control={control}
         rules={{
           validate: {
-            notEmpty: (value) =>
+            notEmpty: () =>
               imageInfos.length > 0 || "이미지를 1개 이상 업로드해주세요."
           }
         }}
@@ -192,7 +192,10 @@ export const PostRegisterForm = ({
           fieldState: { invalid },
           formState
         }) => {
-          const expiredTimeDisabled = isISOFormat(postForm?.expiredTime || "");
+          const expiredTimeDisabled = isISOFormat(
+            postForm?.expiredTime as string
+          );
+
           return (
             <DivWrapper>
               <LabeledSelect
