@@ -27,8 +27,8 @@ export const MyPageIcon = ({ size = "m", color }: IIconProps) => {
             fill="white"
           />
           <path
-            fill-rule="evenodd"
-            clip-rule="evenodd"
+            fillRule="evenodd"
+            clipRule="evenodd"
             d="M19.2985 10.9099C19.2985 8.62056 17.3659 6.75 15.0004 6.75C12.6349 6.75 10.7022 8.62056 10.7022 10.9099C10.7022 13.1993 12.6349 15.0699 15.0004 15.0699C17.3658 15.0699 19.2985 13.1993 19.2985 10.9099Z"
             fill="white"
           />
