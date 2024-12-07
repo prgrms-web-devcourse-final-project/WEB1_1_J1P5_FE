@@ -46,14 +46,13 @@ export function useWebSocket() {
     }
 
     stompClient = new Client({
-      brokerURL: `ws://${import.meta.env.tfinder.store}/ws`, // WebSocket 서버 URL
+      brokerURL: `wss://${import.meta.env.VITE_WEBSOCKET_URL}/ws`, // WebSocket 서버 URL
       debug: function (str: string) {
         console.log(str);
       },
       onConnect: () => {
         console.log("연결 완료");
         setIsConnected(true); // 상태 업데이트
-
         // 구독 실행 및 반환 값 확인
         const subscription = subscribeToChatRoom(roomId, userId, setChats);
 
@@ -93,12 +92,18 @@ export function useWebSocket() {
    * chatMessage쪽에 receiverId는 receiverId, senderId: senderId, 로 재변경 필요
    *
    */
-  const sendMessage = (roomId: string, senderId: number, content: string) => {
+  const sendMessage = (
+    roomId: string,
+    content: string,
+    senderId: number, // 나
+    receiverId: number // 받는 사람
+  ) => {
     if (stompClient && stompClient.connected) {
       const chatMessage = {
         roomId: roomId,
-        receiverId: senderId, //받는 사람 otheruserId
+        receiverId: receiverId, //받는 사람 otheruserId
         content: content,
+        senderId: senderId,
       };
       console.log("Sending message:", chatMessage);
       stompClient.publish({

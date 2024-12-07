@@ -102,7 +102,7 @@ export const ChatListPage = () => {
     queryKey: ["chatItems", currentTab], // 쿼리 키
     queryFn: fetchMessages, // 쿼리 함수
     refetchInterval: 1000 * 10, // 10초에 한번 호출(현재 채팅방 목록을 갱신할 수 있는 백엔드적 방법X)
-    staleTime: 1000 * 10 * 3,
+    staleTime: 0,
   });
 
   //TODO : O(2N) 번 연산이 매번 들어가는 부분이기 때문에 이후 성능 개선 필요

@@ -1,3 +1,5 @@
+import { useQuery } from "@tanstack/react-query";
+import { Loading } from "components/molecules/Loading";
 import { IPost } from "components/organisms/PostList";
 import { HomeTemplate } from "components/templates";
 import { useEffect, useState } from "react";
@@ -26,15 +28,9 @@ interface IHomePostResponse extends IResponse {
 export const HomePage = () => {
   const { user } = useUserStore();
   const { setTitle } = useHeaderStore();
-  const [posts, setPosts] = useState<IPost[]>([]);
   const HOME_API_URL = `/products`;
   const HOME_NAVIGATE_URL = "/product";
   const navigate = useNavigate();
-
-  useEffect(() => {
-    setTitle(user?.emdName || ""); // 동네 이름 받아서 처리 필요
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   /** 백엔드 IHomePost 타입을 프론트 IPost 으로 변환 함수
    * @param homePost : IHomePost
@@ -78,27 +74,27 @@ export const HomePage = () => {
    * @returns void
    */
   const fetchPosts = async () => {
-    try {
-      const response = await http.get<IHomePostResponse>(HOME_API_URL);
-      if (response.success && response.code === "COMMON200") {
-        // 백엔드 타입 프론트엔드 타입으로 변환
-        const posts = response.result.content.map(createHomePostItem);
-        setPosts(posts);
-      }
-    } catch (error) {
-      console.error("Failed to fetch messages:", error);
+    const response = await http.get<IHomePostResponse>(HOME_API_URL);
+    if (response.success && response.code === "COMMON200") {
+      return response.result.content.map(createHomePostItem);
     }
+    throw new Error("Failed to fetch home posts");
   };
-  /** 최초 접속시 post리스트 fetch 해오는 함수
+
+  /** React Query로 데이터 패칭 */
+  const { data, isLoading } = useQuery({
+    queryKey: ["homePosts", HOME_API_URL],
+    queryFn: fetchPosts,
+    staleTime: 0,
+    refetchOnWindowFocus: false, // 화면 포커스 시 리페치 비활성화
+    retry: 3, // 실패 시 최대 3회 재시도
+  });
+
+  /** 헤더에 동네 이름 받아서 출력
    * @returns void
    */
   useEffect(() => {
-    const fetchHomePosts = async () => {
-      await fetchPosts();
-    };
-    fetchHomePosts().catch((error) => {
-      console.error("Error fetchting Home Post:", error);
-    });
+    setTitle(user?.emdName || "");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -108,8 +104,15 @@ export const HomePage = () => {
   const onHandleRegisterButton = () => {
     navigate(HOME_NAVIGATE_URL);
   };
+  const loadingMsg = "사용자 주변 게시글\n불러오는 중...";
 
+  if (isLoading) {
+    return <Loading message={loadingMsg} />;
+  }
   return (
-    <HomeTemplate posts={posts} onClick={onHandleRegisterButton}></HomeTemplate>
+    <HomeTemplate
+      posts={data || []}
+      onClick={onHandleRegisterButton}
+    ></HomeTemplate>
   );
 };

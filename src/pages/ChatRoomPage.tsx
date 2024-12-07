@@ -260,7 +260,7 @@ export const ChatRoomPage = () => {
   }, [lastMsgTime]);
 
   const handleInput = (message: string) => {
-    sendMessage(decrtyptRoomId, otherUserId, message);
+    sendMessage(decrtyptRoomId, message, Number(userId!), otherUserId);
     setIsMsgSended(true);
   };
 
