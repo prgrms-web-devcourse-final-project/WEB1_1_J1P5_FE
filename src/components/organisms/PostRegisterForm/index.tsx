@@ -68,7 +68,9 @@ export const PostRegisterForm = ({
               disabled={!!productId}
             />
             {invalid && (
-              <Text variant="button" content={error?.message || ""} />
+              <div style={{ color: "#FF2E4D" }}>
+                <Text variant="explan_regular" content={error?.message || ""} />{" "}
+              </div>
             )}
           </DivWrapper>
         )}
@@ -94,10 +96,12 @@ export const PostRegisterForm = ({
               placeholder="카테고리를 검색해보세요!"
             />
             {invalid && (
-              <Text
-                variant="button"
-                content={formState.errors.category?.message || ""}
-              />
+              <div style={{ color: "#FF2E4D" }}>
+                <Text
+                  variant="explan_regular"
+                  content={formState.errors.category?.message || ""}
+                />
+              </div>
             )}
           </DivWrapper>
         )}
@@ -120,10 +124,12 @@ export const PostRegisterForm = ({
               placeholder="제목을 입력해주세요."
             />
             {invalid && (
-              <Text
-                variant="button"
-                content={formState.errors.title?.message || ""}
-              />
+              <div style={{ color: "#FF2E4D" }}>
+                <Text
+                  variant="explan_regular"
+                  content={formState.errors.title?.message || ""}
+                />
+              </div>
             )}
           </DivWrapper>
         )}
@@ -143,13 +149,17 @@ export const PostRegisterForm = ({
               setValue={(value) => {
                 setValue("content", value);
               }}
-              placeholder="이 상품은 어떤 특징을 가지고 있나요? 상세한 설명을 입력해주세요."
+              placeholder={
+                "이 상품은 어떤 특징을 가지고 있나요? \n상세한 설명을 입력해주세요."
+              }
             />
             {invalid && (
-              <Text
-                variant="button"
-                content={formState.errors.content?.message || ""}
-              />
+              <div style={{ color: "#FF2E4D" }}>
+                <Text
+                  variant="explan_regular"
+                  content={formState.errors.content?.message || ""}
+                />
+              </div>
             )}
           </DivWrapper>
         )}
@@ -173,10 +183,12 @@ export const PostRegisterForm = ({
               placeholder="최종 입찰가를 입력해주세요."
             />
             {invalid && (
-              <Text
-                variant="button"
-                content={formState.errors.minimumPrice?.message || ""}
-              />
+              <div style={{ color: "#FF2E4D" }}>
+                <Text
+                  variant="explan_regular"
+                  content={formState.errors.minimumPrice?.message || ""}
+                />
+              </div>
             )}
           </DivWrapper>
         )}
@@ -223,16 +235,20 @@ export const PostRegisterForm = ({
                 placeholder="경매 마감 일시를 선택해주세요."
               />
               {!productId && (
-                <Text
-                  variant="button"
-                  content="포스팅이 등록될 때 경매 마감 시간이 카운트됩니다."
-                />
+                <div style={{ color: "#707192" }}>
+                  <Text
+                    variant="explan_regular"
+                    content="포스팅이 등록될 때 경매 마감 시간이 카운트됩니다."
+                  />
+                </div>
               )}
               {invalid && (
-                <Text
-                  variant="button"
-                  content={formState.errors.expiredTime?.message || ""}
-                />
+                <div style={{ color: "#FF2E4D" }}>
+                  <Text
+                    variant="explan_regular"
+                    content={formState.errors.expiredTime?.message || ""}
+                  />
+                </div>
               )}
             </DivWrapper>
           );
@@ -257,10 +273,12 @@ export const PostRegisterForm = ({
               placeholder="거래 희망 장소를 입력해주세요."
             />
             {invalid && (
-              <Text
-                variant="button"
-                content={formState.errors.location?.message || ""}
-              />
+              <div style={{ color: "#FF2E4D" }}>
+                <Text
+                  variant="explan_regular"
+                  content={formState.errors.location?.message || ""}
+                />
+              </div>
             )}
           </DivWrapper>
         )}
