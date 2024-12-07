@@ -1,7 +1,7 @@
 import { PostRegisterTemplate } from "components/templates";
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useFormDataStore } from "stores";
+import { useFormDataStore, useTopBarStore } from "stores";
 import type {
   IPostForm,
   Category,
@@ -11,6 +11,7 @@ import type {
 } from "types";
 import { getExpiredDate } from "utils";
 import { http } from "services/api";
+import { useFetchProduct } from "hooks";
 
 interface IProductsResponse extends IResponse {
   /**
@@ -19,12 +20,12 @@ interface IProductsResponse extends IResponse {
   // eslint-disable-next-line @typescript-eslint/no-empty-object-type
   result: {};
 }
+
 // newProduct 객체를 POST 요청으로 전송하는 함수
-// TODO: result로 productID 받아올 필요가 있음
 const submitNewProduct = async (newProduct: INewPostForm): Promise<void> => {
   try {
     const requestBody = new FormData();
-    const jsonRequstData = JSON.stringify({
+    const jsonRequestData = JSON.stringify({
       title: newProduct.title,
       content: newProduct.content,
       minimumPrice: newProduct.minimumPrice,
@@ -36,7 +37,7 @@ const submitNewProduct = async (newProduct: INewPostForm): Promise<void> => {
       expiredTime: newProduct.expiredTime
     });
 
-    const request = new Blob([jsonRequstData], { type: "application/json" });
+    const request = new Blob([jsonRequestData], { type: "application/json" });
     requestBody.append("request", request);
     newProduct.images!.forEach((img) => {
       requestBody.append("images", img);
@@ -79,15 +80,42 @@ const updateProduct = async (
 export const PostRegisterPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const { setTitle } = useTopBarStore();
 
   const queryParams = new URLSearchParams(location.search);
   const productId = Number(queryParams.get("productId"));
+
   const { formData } = useFormDataStore((state) => state);
   const lat = useFormDataStore((state) => state.formData.latitude);
   const lng = useFormDataStore((state) => state.formData.longitude);
   const address = useFormDataStore((state) => state.formData.address);
 
   const { setFormData, clear } = useFormDataStore((state) => state.actions);
+
+  useEffect(() => {
+    if (productId) {
+      // TODO: productId가 있을 때만 불러와야 하는데, eslint를 disable하지 않고 처리하는 방법 찾기
+      // eslint-disable-next-line react-hooks/rules-of-hooks
+      const { product } = useFetchProduct(productId.toString());
+      if (product) {
+        setFormData({
+          title: product.title,
+          content: product.content,
+          minimumPrice: product.minimumPrice.toLocaleString(),
+          category: product.category as Category,
+          // TODO: 백엔드에서 이름 고치면 수정하기
+          // latitude: product.productLocation.latitude,
+          // longitude: product.productLocation.longitude,
+          latitude: product.productLocation.latitube,
+          longitude: product.productLocation.longtitude,
+          address: product.productLocation.address,
+          location: product.productLocation.location,
+          imgUrls: product.images.map((img) => ({ url: img, file: null })),
+          expiredTime: product.expiredTime
+        });
+      }
+    }
+  }, [productId, setFormData]);
 
   const handleSubmit = useCallback(
     async (formData: IPostForm) => {
@@ -121,10 +149,12 @@ export const PostRegisterPage = () => {
         console.log(newProduct);
         if (!productId) {
           await submitNewProduct(newProduct);
+          navigate(`/`);
         } else {
           await updateProduct(productId, newProduct);
+          navigate(`/product/${productId}`);
         }
-        navigate(`/`);
+
         clear();
       } catch (error) {
         console.error("Failed to submit new product:", error);
@@ -148,6 +178,10 @@ export const PostRegisterPage = () => {
     },
     [navigate, setFormData]
   );
+
+  useEffect(() => {
+    setTitle("내 물건 판매하기");
+  }, [setTitle]);
 
   return (
     <PostRegisterTemplate
