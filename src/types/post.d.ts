@@ -21,7 +21,7 @@ type ExpiredTime = "3일 후" | "2일 후" | "24시간 후" | "12시간 후" | "
 export interface IPostForm {
   title?: string;
   content?: string;
-  minimumPrice?: number;
+  minimumPrice?: string;
   category?: { value: Category; label: Category } | Category;
   latitude?: number;
   longitude?: number;

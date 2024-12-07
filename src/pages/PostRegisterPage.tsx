@@ -99,7 +99,7 @@ export const PostRegisterPage = () => {
       const newProduct: INewPostForm = {
         title: formData.title!,
         content: formData.content!,
-        minimumPrice: formData.minimumPrice!,
+        minimumPrice: Number(formData.minimumPrice!),
         category: formData.category!,
         latitude: lat!,
         longitude: lng!,
