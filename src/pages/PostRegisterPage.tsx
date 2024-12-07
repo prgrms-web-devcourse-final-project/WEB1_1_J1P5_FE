@@ -1,7 +1,7 @@
 import { PostRegisterTemplate } from "components/templates";
 import { useCallback, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useFormDataStore } from "stores";
+import { useFormDataStore, useTopBarStore } from "stores";
 import type {
   IPostForm,
   Category,
@@ -80,6 +80,7 @@ const updateProduct = async (
 export const PostRegisterPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const { setTitle } = useTopBarStore();
 
   const queryParams = new URLSearchParams(location.search);
   const productId = Number(queryParams.get("productId"));
@@ -177,6 +178,10 @@ export const PostRegisterPage = () => {
     },
     [navigate, setFormData]
   );
+
+  useEffect(() => {
+    setTitle("내 물건 판매하기");
+  }, [setTitle]);
 
   return (
     <PostRegisterTemplate

@@ -1,13 +1,14 @@
-import { useState, useCallback, useMemo } from "react";
+import { useState, useCallback, useMemo, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { SelectLocationTemplate } from "components/templates";
 import { useLocationErrorEvent } from "hooks";
-import { useFormDataStore } from "stores";
+import { useFormDataStore, useTopBarStore } from "stores";
 import type { ILocation } from "types";
 
 export const SelectLocationPage = () => {
   const navigate = useNavigate();
+  const { setTitle } = useTopBarStore();
 
   const lat = useFormDataStore((state) => state.formData.latitude);
   const lng = useFormDataStore((state) => state.formData.longitude);
@@ -24,7 +25,6 @@ export const SelectLocationPage = () => {
   const { setFormData } = useFormDataStore((state) => state.actions);
   const [isOpenBottomSheet, setIsOpenBottomSheet] = useState(false);
   const locationErrorEvent = useLocationErrorEvent();
-
 
   const handleRegistrationButtonClick = useCallback(
     (place: string) => {
@@ -48,6 +48,10 @@ export const SelectLocationPage = () => {
     },
     [setFormData]
   );
+
+  useEffect(() => {
+    setTitle("");
+  }, [setTitle]);
 
   return (
     <SelectLocationTemplate
