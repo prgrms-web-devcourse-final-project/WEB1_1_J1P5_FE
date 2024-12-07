@@ -1,6 +1,7 @@
 // components/atoms/Icon
 export { AntennaIcon } from "./AntennaIcon";
 export { BackIcon } from "./BackIcon";
+export { CameraIcon } from "./CameraIcon";
 export { NextIcon } from "./NextIcon";
 export { LocationIcon } from "./LocationIcon";
 export { SearchIcon } from "./SearchIcon";
