@@ -75,48 +75,55 @@ export const PostRegisterPage = () => {
   const queryParams = new URLSearchParams(location.search);
   const productId = Number(queryParams.get("productId"));
   const { formData } = useFormDataStore((state) => state);
+  const lat = useFormDataStore((state) => state.formData.latitude);
+  const lng = useFormDataStore((state) => state.formData.longitude);
+  const address = useFormDataStore((state) => state.formData.address);
+
   const { setFormData, clear } = useFormDataStore((state) => state.actions);
 
-  const handleSubmit = async (formData: IPostForm) => {
-    // TODO: 이미지가 없는 경우 처리
+  const handleSubmit = useCallback(
+    async (formData: IPostForm) => {
+      // TODO: 이미지가 없는 경우 처리
 
-    if (formData.category && typeof formData.category === "object") {
-      formData.category = formData.category.value as Category;
-    }
-    if (
-      !productId &&
-      formData.expiredTime &&
-      typeof formData.expiredTime === "object"
-    ) {
-      formData.expiredTime = formData.expiredTime.value as ExpiredTime;
-    }
-
-    const newProduct: INewPostForm = {
-      title: formData.title!,
-      content: formData.content!,
-      minimumPrice: formData.minimumPrice!,
-      category: formData.category!,
-      latitude: formData.latitude!,
-      longitude: formData.longitude!,
-      address: formData.address!,
-      location: formData.location!,
-      images: formData.imgUrls!.map((img) => img.file!),
-      expiredTime: getExpiredDate(formData.expiredTime as string)
-    };
-
-    try {
-      console.log(newProduct);
-      if (!productId) {
-        await submitNewProduct(newProduct);
-      } else {
-        await updateProduct(productId, newProduct);
+      if (formData.category && typeof formData.category === "object") {
+        formData.category = formData.category.value as Category;
       }
-      navigate(`/`);
-      clear();
-    } catch (error) {
-      console.error("Failed to submit new product:", error);
-    }
-  };
+      if (
+        !productId &&
+        formData.expiredTime &&
+        typeof formData.expiredTime === "object"
+      ) {
+        formData.expiredTime = formData.expiredTime.value as ExpiredTime;
+      }
+
+      const newProduct: INewPostForm = {
+        title: formData.title!,
+        content: formData.content!,
+        minimumPrice: formData.minimumPrice!,
+        category: formData.category!,
+        latitude: lat!,
+        longitude: lng!,
+        address: address!,
+        location: formData.location!,
+        images: formData.imgUrls!.map((img) => img.file!),
+        expiredTime: getExpiredDate(formData.expiredTime as string)
+      };
+
+      try {
+        console.log(newProduct);
+        if (!productId) {
+          await submitNewProduct(newProduct);
+        } else {
+          await updateProduct(productId, newProduct);
+        }
+        navigate(`/`);
+        clear();
+      } catch (error) {
+        console.error("Failed to submit new product:", error);
+      }
+    },
+    [lat, lng, address, clear, navigate, productId]
+  );
 
   const handleClick = useCallback(
     (formData: IPostForm) => {
