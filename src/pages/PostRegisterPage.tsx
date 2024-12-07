@@ -23,22 +23,30 @@ interface IProductsResponse extends IResponse {
 // TODO: result로 productID 받아올 필요가 있음
 const submitNewProduct = async (newProduct: INewPostForm): Promise<void> => {
   try {
-    const newFormData = new FormData();
-    Object.keys(newProduct).forEach((key) => {
-      const value = newProduct[key as keyof INewPostForm];
-      if (key === "images" && Array.isArray(value)) {
-        value.forEach((img) => {
-          newFormData.append("images", img);
-        });
-      } else {
-        newFormData.append(key, String(value));
-      }
+    const requestBody = new FormData();
+    const jsonRequstData = JSON.stringify({
+      title: newProduct.title,
+      content: newProduct.content,
+      minimumPrice: newProduct.minimumPrice,
+      category: newProduct.category,
+      latitude: newProduct.latitude,
+      longitude: newProduct.longitude,
+      address: newProduct.address,
+      location: newProduct.location,
+      expiredTime: newProduct.expiredTime
     });
 
-    await http.post<IProductsResponse, typeof newFormData>(
+    const request = new Blob([jsonRequstData], { type: "application/json" });
+    requestBody.append("request", request);
+    newProduct.images!.forEach((img) => {
+      requestBody.append("images", img);
+    });
+
+    await http.post<IProductsResponse, typeof requestBody>(
       "/products",
-      newFormData,
+      requestBody,
       {
+        withCredentials: true,
         headers: {
           "Content-Type": "multipart/form-data"
         }
@@ -75,48 +83,55 @@ export const PostRegisterPage = () => {
   const queryParams = new URLSearchParams(location.search);
   const productId = Number(queryParams.get("productId"));
   const { formData } = useFormDataStore((state) => state);
+  const lat = useFormDataStore((state) => state.formData.latitude);
+  const lng = useFormDataStore((state) => state.formData.longitude);
+  const address = useFormDataStore((state) => state.formData.address);
+
   const { setFormData, clear } = useFormDataStore((state) => state.actions);
 
-  const handleSubmit = async (formData: IPostForm) => {
-    // TODO: 이미지가 없는 경우 처리
+  const handleSubmit = useCallback(
+    async (formData: IPostForm) => {
+      // TODO: 이미지가 없는 경우 처리
 
-    if (formData.category && typeof formData.category === "object") {
-      formData.category = formData.category.value as Category;
-    }
-    if (
-      !productId &&
-      formData.expiredTime &&
-      typeof formData.expiredTime === "object"
-    ) {
-      formData.expiredTime = formData.expiredTime.value as ExpiredTime;
-    }
-
-    const newProduct: INewPostForm = {
-      title: formData.title!,
-      content: formData.content!,
-      minimumPrice: formData.minimumPrice!,
-      category: formData.category!,
-      latitude: formData.latitude!,
-      longitude: formData.longitude!,
-      address: formData.address!,
-      location: formData.location!,
-      images: formData.imgUrls!.map((img) => img.file!),
-      expiredTime: getExpiredDate(formData.expiredTime as string)
-    };
-
-    try {
-      console.log(newProduct);
-      if (!productId) {
-        await submitNewProduct(newProduct);
-      } else {
-        await updateProduct(productId, newProduct);
+      if (formData.category && typeof formData.category === "object") {
+        formData.category = formData.category.value as Category;
       }
-      navigate(`/`);
-      clear();
-    } catch (error) {
-      console.error("Failed to submit new product:", error);
-    }
-  };
+      if (
+        !productId &&
+        formData.expiredTime &&
+        typeof formData.expiredTime === "object"
+      ) {
+        formData.expiredTime = formData.expiredTime.value as ExpiredTime;
+      }
+
+      const newProduct: INewPostForm = {
+        title: formData.title!,
+        content: formData.content!,
+        minimumPrice: Number(formData.minimumPrice!),
+        category: formData.category!,
+        latitude: lat!,
+        longitude: lng!,
+        address: address!,
+        location: formData.location!,
+        images: formData.imgUrls!.map((img) => img.file!),
+        expiredTime: getExpiredDate(formData.expiredTime as string)
+      };
+
+      try {
+        console.log(newProduct);
+        if (!productId) {
+          await submitNewProduct(newProduct);
+        } else {
+          await updateProduct(productId, newProduct);
+        }
+        navigate(`/`);
+        clear();
+      } catch (error) {
+        console.error("Failed to submit new product:", error);
+      }
+    },
+    [lat, lng, address, clear, navigate, productId]
+  );
 
   const handleClick = useCallback(
     (formData: IPostForm) => {
