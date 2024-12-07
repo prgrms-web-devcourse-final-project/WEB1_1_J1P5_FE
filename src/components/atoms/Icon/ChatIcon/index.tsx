@@ -22,16 +22,16 @@ export const ChatIcon = ({ size = "m", color }: IIconProps) => {
           <path
             d="M9.37447 15.1057V15M14.9989 15.1057V15M20.6234 15.1057V15M26.2479 15C26.2479 16.6172 25.9067 18.1547 25.2923 19.5445L26.25 26.2489L20.5049 24.8125C18.8774 25.7279 16.9991 26.25 14.9989 26.25C8.78632 26.25 3.75 21.2132 3.75 15C3.75 8.7868 8.78632 3.75 14.9989 3.75C21.2115 3.75 26.2479 8.7868 26.2479 15Z"
             stroke="#344FFF"
-            stroke-width="1.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
           />
           <path
             d="M9.37451 15.1057V15M14.999 15.1057V15M20.6234 15.1057V15"
             stroke="white"
-            stroke-width="1.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
           />
         </svg>
       ) : (
@@ -45,9 +45,9 @@ export const ChatIcon = ({ size = "m", color }: IIconProps) => {
           <path
             d="M9.37447 15.1057V15M14.9989 15.1057V15M20.6234 15.1057V15M26.2479 15C26.2479 16.6172 25.9067 18.1547 25.2923 19.5445L26.25 26.2489L20.5049 24.8125C18.8774 25.7279 16.9991 26.25 14.9989 26.25C8.78632 26.25 3.75 21.2132 3.75 15C3.75 8.7868 8.78632 3.75 14.9989 3.75C21.2115 3.75 26.2479 8.7868 26.2479 15Z"
             stroke="#9B9FBC"
-            stroke-width="1.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
           />
         </svg>
       )}
