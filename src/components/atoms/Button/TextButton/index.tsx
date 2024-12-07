@@ -8,7 +8,7 @@ export interface ITextButtonProps {
   /** 버튼 사이즈 (default: m) */
   size?: "s" | "m" | "l";
   /** 버튼 배경색: (default | transparent) */
-  backgroundColor?: "default" | "transparent";
+  backgroundColor?: "default" | "red" | "grey" | "transparent";
   /** onClick 이벤트*/
   onClick?: () => void;
   /** Text variant 타입 */
@@ -19,7 +19,7 @@ export const TextButton = ({
   size = "m",
   backgroundColor = "default",
   onClick = () => {},
-  variant = "btn_bold"
+  variant = "btn_bold",
 }: ITextButtonProps) => {
   return (
     <TextButtonWrapper
