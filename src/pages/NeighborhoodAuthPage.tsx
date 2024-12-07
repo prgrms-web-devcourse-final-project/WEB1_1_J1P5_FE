@@ -4,7 +4,7 @@ import { NeighborhoodAuthTemplate } from "components/templates";
 import { useLocationErrorEvent } from "hooks";
 import { ILocation, IResponse } from "types";
 import { http } from "services/api";
-import { useActivityAreaStore, useTopBarStore } from "stores";
+import { useUserStore, useTopBarStore } from "stores";
 import { useNavigate } from "react-router-dom";
 
 interface IUserLocationPost {
@@ -21,11 +21,7 @@ export interface ILocationResponse extends IResponse {
 export const NeighborhoodAuthPage = () => {
   const navigate = useNavigate();
   const { setTitle } = useTopBarStore();
-  const activityArea = useActivityAreaStore((state) => state.activityArea);
-  const activityAreaId = useActivityAreaStore((state) => state.activityAreaId);
-
-  // TODO: nickname 주스탄드로 가져와야 함 or 프로필 패치
-  const nickname = "알비노 라쿤";
+  const user = useUserStore((state) => state.user);
 
   useEffect(() => {
     setTitle("동네 인증");
@@ -40,7 +36,7 @@ export const NeighborhoodAuthPage = () => {
       const locationPost: IUserLocationPost = {
         latitude: location.coord!.lat,
         longitude: location.coord!.lng,
-        emdId: activityAreaId
+        emdId: user?.emdId || 0
       };
       try {
         await http.post<ILocationResponse, IUserLocationPost>(
@@ -56,7 +52,7 @@ export const NeighborhoodAuthPage = () => {
         console.error("Failed to submit user location:", error);
       }
     },
-    [activityAreaId, navigate]
+    [user, navigate]
   );
 
   const locationErrorEvent = useLocationErrorEvent();
@@ -70,8 +66,8 @@ export const NeighborhoodAuthPage = () => {
 
   return (
     <NeighborhoodAuthTemplate
-      nickname={nickname}
-      myAddress={activityArea}
+      nickname={user?.nickname || "닉네임을 불러올 수 없어요"}
+      myAddress={user?.emdName || ""}
       onSubmitButtonClick={handleSubmitButtonClick}
       locationErrorEvent={locationErrorEvent}
     />
