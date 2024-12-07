@@ -1,9 +1,11 @@
 import { Suspense, useEffect } from "react";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { DetailTemplate } from "components/templates";
+import { KebabMenu } from "components/molecules";
 import { KebabIcon } from "components/atoms/Icon";
 import { useTopBarStore } from "stores";
-import { useFetchProduct, useFetchComment } from "hooks";
+import { useFetchProduct, useFetchComment, useKebabMenu } from "hooks";
+import { KebabWrapper } from "./styled";
 
 export const DetailPage = () => {
   const navigate = useNavigate();
@@ -11,8 +13,8 @@ export const DetailPage = () => {
   const { product, isProductLoading } = useFetchProduct(productId!);
   const { comments, isCommentLoading } = useFetchComment(productId!);
   const { setTitle, setRightIcon } = useTopBarStore();
-  //
-  // const [comments] = useState<IComment[]>([]);
+  const { open, handleOpen, menuRef } = useKebabMenu();
+
   /**
    * 거래 희망 장소 클릭
    */
@@ -22,18 +24,58 @@ export const DetailPage = () => {
   };
 
   /**
-   * 입찰 취소
+   * (구매자) 차단
    */
-  const handleCancelBid = () => {};
+  const handleBlock = () => {
+    // TODO 차단
+  };
 
   /**
-   * 조기마감
+   * (구매자) 신고
    */
-  const handleEarlyClosing = () => {};
+  const handleReport = () => {
+    // TODO 신고
+  };
+
+  /**
+   * (구매자) 입찰 취소
+   */
+  const handleCancelBid = () => {
+    // TODO 입찰 취소
+  };
+
+  /**
+   * (판매자) 조기마감
+   */
+  const handleEarlyClosing = () => {
+    // TODO 조기마감
+  };
+
+  /**
+   * (판매자) 수정하기
+   */
+  const handleEdit = () => {
+    if (product && !product.hasBuyer) {
+      // 수정 페이지로 이동
+      navigate(`/product?${productId!}`);
+      return;
+    }
+  };
+
+  /**
+   * (판매자) 삭제하기
+   */
+  const handleDelete = () => {
+    if (product && !product.hasBuyer) {
+      // TODO 삭제 처리
+      navigate("/", { replace: true });
+      return;
+    }
+  };
 
   useEffect(() => {
     setRightIcon(KebabIcon, () => {
-      console.log("케밥 클릭");
+      handleOpen();
     });
   }, []);
 
@@ -75,7 +117,26 @@ export const DetailPage = () => {
         hasBuyer={product.hasBuyer}
         onCancel={handleCancelBid}
         onEarlyClosing={handleEarlyClosing}
+        isSeller={product.isSeller}
       />
+      {open && (
+        <KebabWrapper ref={menuRef}>
+          <KebabMenu>
+            {product.isSeller && (
+              <>
+                <KebabMenu.Button content="수정하기" onClick={handleEdit} />
+                <KebabMenu.Button content="삭제하기" onClick={handleDelete} />
+              </>
+            )}
+            {!product.isSeller && (
+              <>
+                <KebabMenu.Button content="차단하기" onClick={handleBlock} />
+                <KebabMenu.Button content="신고하기" onClick={handleReport} />
+              </>
+            )}
+          </KebabMenu>
+        </KebabWrapper>
+      )}
     </Suspense>
   );
 };
