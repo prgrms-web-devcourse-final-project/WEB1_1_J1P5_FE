@@ -166,9 +166,9 @@ export const PostRegisterForm = ({
               type="number"
               id="product-minimumPrice"
               label="최종 입찰가"
-              value={value?.toString() || ""}
+              value={value || ""}
               setValue={(value) => {
-                setValue("minimumPrice", parseInt(value, 10));
+                setValue("minimumPrice", value);
               }}
               placeholder="최종 입찰가를 입력해주세요."
             />

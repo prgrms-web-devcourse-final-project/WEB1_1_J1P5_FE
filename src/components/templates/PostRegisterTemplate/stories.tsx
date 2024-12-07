@@ -43,7 +43,7 @@ export const HasProduct: Story = {
       category: "디지털/가전" as Category,
       title: "1번 product입니다.",
       content: "상태 너무 좋습니다. 강추합니다.",
-      minimumPrice: 30000,
+      minimumPrice: "30000",
       expiredTime: "3일 후",
       location: "보라매공원 CU 옆 떡볶이집",
       imgUrls: [
