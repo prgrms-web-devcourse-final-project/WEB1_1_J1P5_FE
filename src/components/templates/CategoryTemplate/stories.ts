@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { CategoryTemplate } from ".";
 import { ICategory } from "components/organisms/CategoryGrid";
+import { CATEGORIES } from "constants/categories";
 
 const meta: Meta<typeof CategoryTemplate> = {
   title: "Templates/CategoryTemplate",
@@ -10,10 +11,12 @@ const meta: Meta<typeof CategoryTemplate> = {
 
 type Story = StoryObj<typeof meta>;
 
-const categories: ICategory[] = Array.from({ length: 30 }, (_, idx) => ({
-  title: `Category ${idx + 1}`, // title을 Category 1, Category 2, ...로 설정
-  imgUrl: `/Default_Img.png`, // imgUrl을 Default_Img_1.png, Default_Img_2.png, ...로 설정
+const categories: ICategory[] = CATEGORIES.map((category) => ({
+  title: category.name,
+  imgUrl: `/Default_Img.png`,
+  serverType: category.code,
 }));
+
 export const Default: Story = {
   args: {
     categories: categories,

@@ -1,9 +1,11 @@
 import { RoundImageWithText } from "components/molecules";
 import { CategoryGridWrapper, CategoryItemWrapper } from "./styled";
+import { Category } from "types";
 
 export interface ICategory {
   title: string;
   imgUrl: string;
+  serverType: Category;
 }
 export interface ICategoryGridWrapperProps {
   categories: ICategory[];
@@ -26,7 +28,7 @@ export const CategoryGrid = ({
               imgUrl={category.imgUrl}
               title={category.title}
               onClick={() => {
-                handleClick(category.title);
+                handleClick(category.serverType);
               }}
             ></RoundImageWithText>
           </CategoryItemWrapper>

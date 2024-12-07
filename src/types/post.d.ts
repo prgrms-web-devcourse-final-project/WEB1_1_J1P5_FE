@@ -1,6 +1,6 @@
 import { IImageInfo, ICoord, IImages } from "types";
 
-type Category =
+export type Category =
   | "ELECTRONIC"
   | "FURNITURE"
   | "CLOTHING"
@@ -16,7 +16,6 @@ type Category =
   | "OFFICE_SUPPLIES"
   | "GARDEN"
   | "MUSIC";
-
 type ExpiredTime = "3일 후" | "2일 후" | "24시간 후" | "12시간 후" | "6시간 후";
 
 export interface IPostForm {

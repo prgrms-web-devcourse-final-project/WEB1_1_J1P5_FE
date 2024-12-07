@@ -7,5 +7,5 @@ export const CategoryTemplateWrapper: ReturnType<
   /* 임시로 높이 주어서 합쳐지게 구성 */
   height: 500px;
   display: flex;
-  margin-top: 32px;
+  margin: 1rem 1rem 0 1rem;
 `;
