@@ -8,6 +8,6 @@ export const KebabWrapper: ReturnType<typeof styled.div> = styled.div`
     right: 0;
     z-index: 99999;
     width: max-content;
-    transform: translate(-1rem, -1.25rem);
+    transform: translate(-1rem, -3rem);
   }
 `;
