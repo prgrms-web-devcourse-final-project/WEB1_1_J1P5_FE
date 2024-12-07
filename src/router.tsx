@@ -81,7 +81,7 @@ export const routes: RouteObject[] = [
       // 채팅방 목록
       { path: "chat", element: <ChatListPage /> },
       // 1:1 채팅
-      { path: "chat/:roomId", element: <ChatRoomPage /> },
+      { path: "chat/:roomId/:userId", element: <ChatRoomPage /> },
       // 시세 조회
       { path: "market-price", element: <MarketPricePage /> },
     ],
