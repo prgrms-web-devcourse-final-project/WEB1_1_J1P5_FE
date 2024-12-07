@@ -1,5 +1,5 @@
 import { Text } from "components/atoms";
-import { IconWithText, TextDividerList } from "components/molecules";
+import { IconWithText } from "components/molecules";
 import { NeighborhoodSelectionListWrapper } from "./styled";
 import { LocationIcon } from "components/atoms/Icon";
 
