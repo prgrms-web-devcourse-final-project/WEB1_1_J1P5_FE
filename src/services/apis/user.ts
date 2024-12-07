@@ -1,5 +1,13 @@
 import axios from "axios";
-import type { IUserProfileData } from "types";
+import type { IUserProfileData, IUserProfileResponse } from "types";
+import { http } from "services/api";
+
+/**
+ * 유저 정보 조회
+ */
+export const getUserProfile = async () => {
+  return http.get<IUserProfileResponse>("/users/profile");
+};
 
 /**
  * 유저 프로필 등록 / 수정
@@ -28,7 +36,7 @@ export const registerAndEditProfile = async ({
       formData,
       {
         withCredentials: true,
-      }
+      },
     );
     console.log("Response:", res.data); // 요청 성공 시 응답 데이터 출력
     return res.data; // 요청 성공 시 응답 데이터 반환

@@ -6,7 +6,7 @@ const localStorageKey = "meerket--login" as const;
 
 interface UserState {
   user: IUser | null; // @rushstack/ no-new-null
-  setUser: (user: IUser) => void;
+  setUser: (user: IUser | null) => void;
 }
 
 export const useUserStore: UseBoundStore<StoreApi<UserState>> = create(
