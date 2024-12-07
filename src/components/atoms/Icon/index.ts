@@ -20,3 +20,4 @@ export { MyPageIcon } from "./MyPageIcon";
 export { DownIcon } from "./DownIcon";
 export { NoIcon } from "./NoIcon";
 export { SendIcon } from "./SendIcon";
+export { ReplyIcon } from "./ReplyIcon";
