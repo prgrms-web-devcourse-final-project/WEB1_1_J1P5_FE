@@ -59,6 +59,7 @@ interface IBaseDetailTemplateProps extends Omit<IProductDetail, ""> {
 }
 
 export const DetailTemplate = ({
+  productId,
   // 이미지 슬라이더
   images,
   // AuctionTimer
@@ -94,7 +95,7 @@ export const DetailTemplate = ({
     handleOpenBottomSheet,
     handleCloseBottomSheet,
     handleBid,
-  } = useBid();
+  } = useBid(productId);
 
   return (
     <DetailTemplateWrapper>
