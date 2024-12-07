@@ -3,7 +3,7 @@ import {
   Navigate,
   useNavigate,
   useParams,
-  useSearchParams,
+  useSearchParams
 } from "react-router-dom";
 import { oauthLogin } from "services/apis";
 import { useUserStore } from "stores";
@@ -14,8 +14,8 @@ const response = {
   result: {
     nickname: undefined,
     profile: undefined,
-    anything: "123123",
-  },
+    anything: "123123"
+  }
 } as const;
 
 export const OAuthCallbackPage = () => {
@@ -25,6 +25,7 @@ export const OAuthCallbackPage = () => {
   const { setUser } = useUserStore();
   const [searchParams] = useSearchParams();
   const code = searchParams.get("code");
+  // const { setActivityArea } = useActivityAreaStore(state => state.actions);
 
   useEffect(() => {
     if (code) {
@@ -35,6 +36,12 @@ export const OAuthCallbackPage = () => {
           // const { result } = data;
           const { result } = response;
           setUser({ ...result });
+
+          /**
+           * TODO: 지금 따로 스토어를 만들었는데, user랑 합칠 지 논의 필요
+           * 임시로 필요한 로직을 추가
+           */
+          // setActivityArea(result.activityAreaId, result.activityArea);
           navigate(!result.nickname ? "/profile" : "/", { replace: true });
         })
         .catch(console.error);

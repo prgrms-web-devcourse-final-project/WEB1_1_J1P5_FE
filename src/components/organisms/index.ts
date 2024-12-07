@@ -37,3 +37,4 @@ export { SearchHistory } from "./SearchHistory";
 export { SearchHistoryItem } from "./SearchHistoryItem";
 export { TopBar } from "./TopBar";
 export { TransactionOverview } from "./TransactionOverview";
+export { UserLocationBottomSheet } from "./UserLocationBottomSheet";
