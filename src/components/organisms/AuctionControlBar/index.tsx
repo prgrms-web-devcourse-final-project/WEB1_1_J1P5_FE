@@ -33,8 +33,8 @@ export interface IBidProps {
 const Bid = ({ title, price }: IBidProps) => {
   return (
     <BidWrapper>
-      <Text content={title} variant="body1" />
-      <Text content={`${price.toLocaleString()}원`} variant="body1" />
+      <Text variant="desc_regular" content={title} />
+      <Text variant="writing_bold" content={`${price.toLocaleString()}원`} />
     </BidWrapper>
   );
 };
