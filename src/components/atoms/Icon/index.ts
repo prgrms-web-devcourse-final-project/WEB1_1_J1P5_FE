@@ -1,4 +1,5 @@
 // components/atoms/Icon
+export { AntennaIcon } from "./AntennaIcon";
 export { BackIcon } from "./BackIcon";
 export { NextIcon } from "./NextIcon";
 export { LocationIcon } from "./LocationIcon";
