@@ -34,7 +34,7 @@ export const UserLocationBottomSheet = ({
         {/* // TODO: 선택하신 동네는 나의 동네 선택에서 설정한 동네를 말하는 것 같아서 추후 수정 필요 */}
         <div style={{ display: "flex", alignItems: "center" }}>
           <Text variant="explan_regular" content="선택하신 동네는&nbsp;" />
-          <Text variant="explan_bold" content={`${address}`} />
+          <Text variant="explan_bold" content={`${myAddress}`} />
           <Text variant="explan_regular" content="이에요." />
         </div>
         <div
@@ -50,7 +50,7 @@ export const UserLocationBottomSheet = ({
             <div style={{ color: "#344FFF" }}>
               <Text variant="writing_bold" content={`${address}`} />
             </div>
-            <Text variant="writing_bold" content="이에요." />
+            <Text variant="writing_bold" content="이에요!" />
           </div>
         </div>
       </div>
