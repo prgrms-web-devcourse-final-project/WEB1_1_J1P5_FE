@@ -1,5 +1,6 @@
 import { Badge, Text } from "components/atoms";
 import { LinkIcon } from "components/atoms/Icon";
+import { IconWithText } from "components/molecules";
 import { getRelativeTime } from "utils";
 import {
   CategoryWrapper,
@@ -7,7 +8,7 @@ import {
   DescriptionWrapper,
   ItemDetailsHeader,
 } from "./styled";
-import { IconWithText } from "../../molecules";
+import { CATEGORIES } from "constants/categories";
 
 interface IItemDetailsProps {
   /** 상품의 제목 */
@@ -35,15 +36,18 @@ export const ItemDetails = ({
       <ItemDetailsHeader>
         <CategoryWrapper>
           <IconWithText>
-            <IconWithText.Content content={category} />
+            <IconWithText.Content
+              contentVariant="title_bold"
+              content={CATEGORIES.find((c) => c.code === category)?.name || ""}
+            />
             <IconWithText.Icon icon={LinkIcon} size="s" />
           </IconWithText>
         </CategoryWrapper>
-        <Text variant="body1" content={title} />
-        <Text variant="button" content={getRelativeTime(createdAt)} />
+        <Text variant="title_bold" content={title} />
+        <Text variant="desc_regular" content={getRelativeTime(createdAt)} />
       </ItemDetailsHeader>
       <DescriptionWrapper>
-        <Text variant="body1" content={description} />
+        <Text variant="desc_regular" content={description} />
       </DescriptionWrapper>
     </ItemDetailsWrapper>
   );

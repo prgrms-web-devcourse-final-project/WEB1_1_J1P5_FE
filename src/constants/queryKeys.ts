@@ -1,5 +1,8 @@
 const PRODUCT = "product" as const;
 const COMMENT = "comment" as const;
+const AUCTION = "auction" as const;
+const PURCHASES = "purchases" as const;
+const BIDDING = "bidding" as const;
 
 export const queries = {
   product: {
@@ -8,5 +11,10 @@ export const queries = {
   },
   comment: {
     DEFAULT: (productId: string) => [COMMENT, productId],
+  },
+  auction: {
+    DEFAULT: [AUCTION],
+    purchases: [AUCTION, PURCHASES],
+    bidding: [AUCTION, BIDDING],
   },
 } as const;

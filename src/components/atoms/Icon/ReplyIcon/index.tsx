@@ -16,9 +16,9 @@ export const ReplyIcon = ({ size = "m" }: IIconProps) => {
         <path
           d="M15.086 19.8L20.4 14.4859M20.4 14.4859L15.086 9.17193M20.4 14.4859H7.60003C5.39089 14.4859 3.60003 12.6951 3.60003 10.4859V4.19995"
           stroke="currentColor"
-          stroke-width="1.5"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         />
       </svg>
     </IconWrapper>
