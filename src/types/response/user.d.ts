@@ -4,7 +4,11 @@ import type { IResponse } from "types";
  * Profile Response
  */
 export interface IUserProfileResponse extends IResponse {
-  result: null;
+  result: {
+    activityEmdName: string | null;
+    imageUrl: string | null;
+    nickname: string | null;
+  };
 }
 
 /**

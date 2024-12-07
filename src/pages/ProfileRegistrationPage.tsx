@@ -33,7 +33,7 @@ export const ProfileRegistrationPage = () => {
         // const { result } = data;
         // setUser(result);
 
-        navigate(!user?.emdId ? "/neighborhood-selection" : "/my-page", {
+        navigate("/my-page", {
           replace: true,
         });
       })

@@ -2,16 +2,19 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import type { IActivityArea, ICoord } from "types";
 import {
+  editActivityArea,
   getActivityAreas,
   registerActivityArea,
   searchActivityAreas,
 } from "services/apis";
+import { useUserStore } from "../stores";
 
 /**
  * 동네 선택 시 사용되는 훅
  */
 export const useNeighborhoodSelection = () => {
   const navigate = useNavigate();
+  const { user } = useUserStore();
   /** 동네 목록 */
   const [neighborhoods, setNeighborhoods] = useState<IActivityArea[]>([]);
   /** 내 위치 위도/경도 */
@@ -67,9 +70,8 @@ export const useNeighborhoodSelection = () => {
     const emdId = activityArea?.emdId;
 
     if (emdId) {
-      // TODO 동네 선택 저장
       console.log(emdId);
-      registerActivityArea(emdId)
+      (!user ? registerActivityArea : editActivityArea)(emdId)
         .then((data) => {
           console.log(data);
           // 저장 이후 홈으로 이동

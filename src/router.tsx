@@ -22,7 +22,9 @@ import {
   TransactionLocationPage,
   TransactionPage,
 } from "pages";
+import { AuthGuard } from "pages/guards";
 import { RootLayout } from "components/templates";
+import { LoginGuard } from "./pages/guards/LoginGuard";
 
 export const routes: RouteObject[] = [
   {
@@ -30,60 +32,79 @@ export const routes: RouteObject[] = [
     element: <RootLayout />,
     errorElement: <>404</>,
     children: [
-      // home
-      { index: true, element: <HomePage /> },
       // 권한 요청
       { path: "permission-request", element: <PermissionRequestPage /> },
       // 로그인
       {
         path: "login",
-        element: <LoginPage />,
+        element: (
+          <LoginGuard>
+            <LoginPage />
+          </LoginGuard>
+        ),
         children: [
           // OAuth callback 페이지
           { path: "callback/:provider", element: <OAuthCallbackPage /> },
         ],
       },
-      // 프로필 등록/수정
-      { path: "profile", element: <ProfileRegistrationPage /> },
-      // 중고물품 등록/수정
-      { path: "product", element: <PostRegisterPage /> },
-      // 동네 선택
+      // Required Login
       {
-        path: "neighborhood-selection",
-        element: <NeighborhoodSelectionPage />,
+        element: <AuthGuard />,
+        children: [
+          // home
+          { index: true, element: <HomePage /> },
+          // 프로필 등록/수정
+          { path: "profile", element: <ProfileRegistrationPage /> },
+          // 중고물품 등록/수정
+          { path: "product", element: <PostRegisterPage /> },
+          // 동네 선택
+          {
+            path: "neighborhood-selection",
+            element: <NeighborhoodSelectionPage />,
+          },
+          // 카테고리
+          { path: "category", element: <CategoryPage /> },
+          // 검색 히스토리
+          { path: "search", element: <SearchPage /> },
+          // 검색 결과
+          { path: "search/keyword/:keyword", element: <SearchResultPage /> },
+          // 검색 결과
+          { path: "search/category/:category", element: <SearchResultPage /> },
+          // 거래 장소 선택
+          { path: "location-selection", element: <SelectLocationPage /> },
+          // 상품 상세
+          { path: "product/:productId", element: <DetailPage /> },
+          // 거래 장소
+          {
+            path: "transaction-location",
+            element: <TransactionLocationPage />,
+          },
+          // 마이페이지
+          { path: "my-page", element: <MyPage /> },
+          // 거래 내역 (구매내역)
+          {
+            path: "transaction/buy",
+            element: <TransactionPage type={"buy"} />,
+          },
+          // 거래 내역 (판매내역)
+          {
+            path: "transaction/sell",
+            element: <TransactionPage type={"sell"} />,
+          },
+          // 동네 인증
+          { path: "neighborhood-auth", element: <NeighborhoodAuthPage /> },
+          // 알림
+          { path: "notification", element: <NotificationPage /> },
+          // 차단
+          { path: "blocked", element: <BlockedUsersPage /> },
+          // 채팅방 목록
+          { path: "chat", element: <ChatListPage /> },
+          // 1:1 채팅
+          { path: "chat/:roomId/:userId", element: <ChatRoomPage /> },
+          // 시세 조회
+          { path: "market-price", element: <MarketPricePage /> },
+        ],
       },
-      // 카테고리
-      { path: "category", element: <CategoryPage /> },
-      // 검색 히스토리
-      { path: "search", element: <SearchPage /> },
-      // 검색 결과
-      { path: "search/keyword/:keyword", element: <SearchResultPage /> },
-      // 검색 결과
-      { path: "search/category/:category", element: <SearchResultPage /> },
-      // 거래 장소 선택
-      { path: "location-selection", element: <SelectLocationPage /> },
-      // 상품 상세
-      { path: "product/:productId", element: <DetailPage /> },
-      // 거래 장소
-      { path: "transaction-location", element: <TransactionLocationPage /> },
-      // 마이페이지
-      { path: "my-page", element: <MyPage /> },
-      // 거래 내역 (구매내역)
-      { path: "transaction/buy", element: <TransactionPage type={"buy"} /> },
-      // 거래 내역 (판매내역)
-      { path: "transaction/sell", element: <TransactionPage type={"sell"} /> },
-      // 동네 인증
-      { path: "neighborhood-auth", element: <NeighborhoodAuthPage /> },
-      // 알림
-      { path: "notification", element: <NotificationPage /> },
-      // 차단
-      { path: "blocked", element: <BlockedUsersPage /> },
-      // 채팅방 목록
-      { path: "chat", element: <ChatListPage /> },
-      // 1:1 채팅
-      { path: "chat/:roomId/:userId", element: <ChatRoomPage /> },
-      // 시세 조회
-      { path: "market-price", element: <MarketPricePage /> },
     ],
   },
 ];
