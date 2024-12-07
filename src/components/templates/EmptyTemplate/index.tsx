@@ -12,7 +12,8 @@ export interface IEmptyTemplateProps {
     | "selling"
     | "buying"
     | "completed"
-    | "blockedUser";
+    | "blockedUser"
+    | "marketPrice";
 }
 
 export const EmptyTemplate = ({ type = "default" }: IEmptyTemplateProps) => {
@@ -27,6 +28,8 @@ export const EmptyTemplate = ({ type = "default" }: IEmptyTemplateProps) => {
     buying: "구매중인 목록이 존재하지 않아요\n 다시 홈으로 이동할까요?",
     completed: "거래완료된 목록이 존재하지 않아요\n 다시 홈으로 이동할까요?",
     blockedUser: "차단한 사용자가 없어요",
+    marketPrice:
+      "아직 개발중인 기능이예요. ㅠㅠ\n 정식 출시때는 포함이 될거예요!",
   };
   const urls = {
     chat: "/",
@@ -37,6 +40,7 @@ export const EmptyTemplate = ({ type = "default" }: IEmptyTemplateProps) => {
     buying: "/",
     completed: "/",
     blockedUser: "/",
+    marketPrice: "/",
   };
   const buttnTexts = {
     chat: "메인으로 돌아가기",
@@ -47,6 +51,7 @@ export const EmptyTemplate = ({ type = "default" }: IEmptyTemplateProps) => {
     buying: "메인으로 돌아가기",
     completed: "메인으로 돌아가기",
     blockedUser: "/",
+    marketPrice: "메인으로 돌아가기",
   };
   const msg = messages[type] || messages.default; // 기본 메시지 설정
   const redirectUrl = urls[type] || urls.default; // 기본 URL 설정

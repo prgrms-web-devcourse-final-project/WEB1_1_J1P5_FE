@@ -1,3 +1,5 @@
+import { MarketPriceTemplate } from "components/templates";
+
 export const MarketPricePage = () => {
-  return <>MarketPricePage</>;
+  return <MarketPriceTemplate posts={[]}></MarketPriceTemplate>;
 };

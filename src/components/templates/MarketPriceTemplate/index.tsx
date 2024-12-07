@@ -11,7 +11,7 @@ export const MarketPriceTemplate = ({ posts }: IMarketPriceTemplateProps) => {
     <MarketPriceTemplateWrapper>
       <div className="post-con">
         {posts.length === 0 ? (
-          <EmptyTemplate type={"default"}></EmptyTemplate>
+          <EmptyTemplate type={"marketPrice"}></EmptyTemplate>
         ) : (
           <PostList posts={posts} type={"default"}></PostList>
         )}
