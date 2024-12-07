@@ -51,7 +51,7 @@ interface IChatRoomNewMsgResponse extends IResponse {
   result: IChatMsg[];
 }
 export const ChatRoomPage = () => {
-  const { roomId } = useParams(); // URL에서 roomId 가져오기
+  const { roomId, userId } = useParams(); // URL에서 roomId 가져오기
   const decrtyptRoomId = roomId ? decryptRoomId(roomId) : "";
 
   const chatRoomEnterurl = `/chats/enter/${decrtyptRoomId}`;
@@ -194,8 +194,8 @@ export const ChatRoomPage = () => {
   useEffect(() => {
     /** 웹 소켓 연결 */
     const connectToWebSocket = async () => {
-      if (decrtyptRoomId) {
-        await connect(decrtyptRoomId, setChats);
+      if (decrtyptRoomId && userId) {
+        await connect(decrtyptRoomId, userId, setChats);
       }
     };
 

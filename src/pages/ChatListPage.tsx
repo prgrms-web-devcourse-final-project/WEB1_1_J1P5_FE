@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useQuery } from "@tanstack/react-query";
+import { Loading } from "components/molecules/Loading";
 import { IChatItemProps } from "components/organisms/ChatItem";
 import { ChatListTemplate } from "components/templates/ChatListTemplate";
 import {
@@ -18,6 +19,7 @@ import { encryptRoomId } from "utils/security";
 
 /** 백엔드 타입 */
 interface IChatRoom {
+  userId: string;
   roomId: string;
   productId: number;
 
@@ -59,7 +61,7 @@ export const ChatListPage = () => {
     name: chatRoom.otherNickname,
     onClick: () => {
       const encryptedRoomId = encryptRoomId(chatRoom.roomId);
-      navigate(`/chat/${encryptedRoomId}`);
+      navigate(`/chat/${encryptedRoomId}/${chatRoom.userId}`);
     },
   });
 
@@ -92,6 +94,7 @@ export const ChatListPage = () => {
       return [];
     } catch (error) {
       console.error("Failed to fetch messages:", error);
+      return [];
     }
   };
 
@@ -108,8 +111,11 @@ export const ChatListPage = () => {
   const onHandleTab = (tab: chatRoomTabMapKey) => {
     setCurrentTab(tab);
   };
-  //TODO : 이후 로딩 부분 추가 필요
-  console.log(isLoading);
+  const loadingMsg = "채팅 방 목록\n불러오는 중...";
+
+  if (isLoading) {
+    return <Loading message={loadingMsg} />;
+  }
   return (
     <ChatListTemplate
       allChatItems={allChatItems}
