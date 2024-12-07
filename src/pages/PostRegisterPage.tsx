@@ -46,6 +46,7 @@ const submitNewProduct = async (newProduct: INewPostForm): Promise<void> => {
       "/products",
       requestBody,
       {
+        withCredentials: true,
         headers: {
           "Content-Type": "multipart/form-data"
         }
