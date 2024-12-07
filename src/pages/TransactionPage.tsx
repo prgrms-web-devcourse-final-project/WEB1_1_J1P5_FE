@@ -8,6 +8,7 @@ import { BUYING_TAB, COMPLETED_TAB, SELLING_TAB } from "constants/transaction";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { http } from "services/api";
+import { useTopBarStore } from "stores";
 import { IResponse } from "types";
 
 interface TransactionPageProps {
@@ -42,6 +43,7 @@ interface ITransactionPageResponse extends IResponse {
 }
 
 export const TransactionPage = ({ type }: TransactionPageProps) => {
+  const { clear, setTitle } = useTopBarStore();
   const [posts, setPosts] = useState<IPost[]>([]);
   /** TODO: 백엔드 API에 따라 변경 필요 */
   const TRANSACTION_API_URL = `/transaction/${type}`;
@@ -114,6 +116,8 @@ export const TransactionPage = ({ type }: TransactionPageProps) => {
    * @returns void
    */
   useEffect(() => {
+    clear();
+    setTitle(type === "sell" ? "판매 내역" : "입찰 내역");
     const fetchTransactionPosts = async () => {
       await fetchPosts();
     };

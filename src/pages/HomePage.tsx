@@ -3,7 +3,7 @@ import { HomeTemplate } from "components/templates";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { http } from "services/api";
-import { useHeaderStore } from "stores";
+import { useHeaderStore, useUserStore } from "stores";
 import { IResponse } from "types";
 interface IHomePost {
   myLocation: string;
@@ -24,6 +24,7 @@ interface IHomePostResponse extends IResponse {
   };
 }
 export const HomePage = () => {
+  const { user } = useUserStore();
   const { setTitle } = useHeaderStore();
   const [posts, setPosts] = useState<IPost[]>([]);
   const HOME_API_URL = `/products`;
@@ -31,7 +32,7 @@ export const HomePage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    setTitle("신림동"); // 동네 이름 받아서 처리 필요
+    setTitle(user?.emdName || ""); // 동네 이름 받아서 처리 필요
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
