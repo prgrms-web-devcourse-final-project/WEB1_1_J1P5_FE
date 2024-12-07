@@ -2,44 +2,26 @@ import { http } from "services/api";
 import type { IUserProfileData, IUserProfileResponse } from "types";
 
 /**
- * 유저 프로필 등록
- * @param nickname
- * @param profile
+ * 유저 프로필 등록 / 수정
+ * @param name 유저가 입력한 닉네임
+ * @param image 유저의 프로필사진
  */
-export const registerProfile = async ({
-  nickname,
-  profile,
+export const registerAndEditProfile = async ({
+  name,
+  image,
 }: IUserProfileData) => {
-  return http.post<IUserProfileResponse, IUserProfileData>(
-    "/user/profile",
-    {
-      nickname,
-      profile,
-    },
-    {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    },
-  );
-};
+  const formData = new FormData();
 
-/**
- * 유저 프로필 수정
- * @param nickname
- * @param profile
- */
-export const editProfile = async ({ nickname, profile }: IUserProfileData) => {
-  return http.patch<IUserProfileResponse, IUserProfileData>(
-    "/user/profile",
-    {
-      nickname,
-      profile,
+  formData.append("request", JSON.stringify(name));
+  if (image) {
+    formData.append("image", image);
+  }
+  console.log(formData);
+  console.log(Array.from(formData.keys()));
+
+  return http.post<IUserProfileResponse, FormData>("/users/profile", formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
     },
-    {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    },
-  );
+  });
 };

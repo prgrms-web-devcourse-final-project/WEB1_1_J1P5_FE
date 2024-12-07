@@ -3,20 +3,11 @@ import {
   Navigate,
   useNavigate,
   useParams,
-  useSearchParams
+  useSearchParams,
 } from "react-router-dom";
 import { oauthLogin } from "services/apis";
 import { useUserStore } from "stores";
 import type { OAuthProvider } from "types";
-
-// 임시
-const response = {
-  result: {
-    nickname: undefined,
-    profile: undefined,
-    anything: "123123"
-  }
-} as const;
 
 export const OAuthCallbackPage = () => {
   // TODO 직접 접근 막기
@@ -31,18 +22,29 @@ export const OAuthCallbackPage = () => {
     if (code) {
       oauthLogin({ code, provider: provider!.toUpperCase() as OAuthProvider })
         .then((data) => {
-          // TODO result 확정 이후 수정 필요
-          console.log(data);
-          // const { result } = data;
-          const { result } = response;
-          setUser({ ...result });
+          const { result } = data;
 
           /**
            * TODO: 지금 따로 스토어를 만들었는데, user랑 합칠 지 논의 필요
            * 임시로 필요한 로직을 추가
            */
           // setActivityArea(result.activityAreaId, result.activityArea);
-          navigate(!result.nickname ? "/profile" : "/", { replace: true });
+
+          setUser({
+            profile: result.profileUrl || undefined,
+            nickname: result.nickname || undefined,
+            emdId: result.emdId || undefined,
+            emdName: result.emdName || undefined,
+          });
+
+          navigate(
+            !result.nickname
+              ? "/profile"
+              : !result.emdName
+                ? "/neighborhood-selection"
+                : "/",
+            { replace: true },
+          );
         })
         .catch(console.error);
     }

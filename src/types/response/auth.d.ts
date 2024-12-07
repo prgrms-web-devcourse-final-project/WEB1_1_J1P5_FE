@@ -2,9 +2,15 @@ import type { IResponse } from "types";
 
 export type OAuthProvider = "NAVER" | "KAKAO";
 
+export interface IAuth {
+  nickname: string | null;
+  profileUrl: string | null;
+  emdId: number | null;
+  emdName: string | null;
+}
+
 export interface IAuthResponse extends IResponse {
-  // TODO result 확정 이후 수정 필요
-  result: {};
+  result: IAuth;
 }
 
 export interface IAuthData {
