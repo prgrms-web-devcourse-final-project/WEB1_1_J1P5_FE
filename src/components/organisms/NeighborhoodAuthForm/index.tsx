@@ -1,9 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
-import { Text, TextButton } from "components/atoms";
-import {
-  NeighborhoodAuthFormWrapper,
-  LocationConfirmationContainer
-} from "./styled";
+import { TextButton } from "components/atoms";
+import { NeighborhoodAuthFormWrapper } from "./styled";
 import { Map } from "components/organisms";
 import { ICoord, ILocation } from "types";
 import { useReverseGeocode } from "hooks";
