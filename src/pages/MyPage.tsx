@@ -23,7 +23,7 @@ export const MyPage = () => {
   const [profile, setProfile] = useState<IProfile>({
     imageUrl: "",
     nickname: "",
-    activityEmdName: ""
+    activityEmdName: "",
   });
 
   useEffect(() => {
@@ -34,7 +34,7 @@ export const MyPage = () => {
   // TODO: react-query 사용
   const fetchProfile = useCallback(async () => {
     try {
-      const response = await http.get<IProfileResponse>("/user/profile");
+      const response = await http.get<IProfileResponse>("/users/profile");
       if (response.success && response.code === "COMMON200") {
         setProfile(response.result);
       } else {
