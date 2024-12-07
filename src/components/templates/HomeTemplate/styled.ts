@@ -14,6 +14,6 @@ export const HomeTemplateWrapper: ReturnType<typeof styled.div> = styled.div`
 
   ${TextButtonWrapper} {
     position: sticky;
-    bottom: 4.625rem;
+    bottom: 5.25rem;
   }
 `;

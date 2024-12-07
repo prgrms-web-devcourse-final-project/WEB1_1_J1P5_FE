@@ -6,9 +6,10 @@ export const EmptyTemplateWrapper: ReturnType<typeof styled.div> = styled.div`
   flex-direction: column;
   justify-content: space-between;
   white-space: break-spaces;
+  text-align: center;
 
   height: 100%;
-  padding: 5rem 0 1rem 0;
+  padding: 5rem 0 0.625rem 0;
 
   .text-con {
     display: flex;
