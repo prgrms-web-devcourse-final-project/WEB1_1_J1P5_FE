@@ -41,6 +41,7 @@ export const ModalButtonContainerWrapper: ReturnType<
   gap: 0.25rem;
   ${TextButtonWrapper} {
     flex: ${({ direction }) => (direction === "horizontal" ? "1" : "auto")};
+    margin: 0;
   }
 `;
 
@@ -49,7 +50,7 @@ export const ModalContainerWrapper: ReturnType<typeof styled.div> = styled.div`
   width: calc(100% - 2rem); // 100% - 양 옆 1rem(16px)씩
   max-width: 500px;
   background-color: white;
-  border-radius: 0.5rem;
+  border-radius: 1rem;
   position: relative;
 `;
 
@@ -68,7 +69,8 @@ export const ModalRootWrapper: ReturnType<
   left: 50%;
   translate: -50%;
   z-index: 9999;
-  max-width: 375px;
+  max-width: 400px;
+  // max-width: 375px;
   width: calc(100% - 2rem);
   height: 100%;
   // 자식 요소 배치
