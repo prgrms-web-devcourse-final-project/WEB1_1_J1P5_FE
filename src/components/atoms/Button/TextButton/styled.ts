@@ -22,9 +22,24 @@ export const TextButtonWrapper: ReturnType<
     backgroundColor?: string;
     theme: ThemeType;
   }) =>
-    backgroundColor === "transparent" ? "transparent" : theme.colors.blue_main};
+    backgroundColor === "transparent"
+      ? "transparent"
+      : backgroundColor === "red"
+        ? theme.colors.red
+        : backgroundColor === "grey"
+          ? theme.colors.grey_field_deactivate
+          : theme.colors.blue_main};
 
-  color: ${({ theme }: { theme: ThemeType }) => theme.colors.white};
+  color: ${({
+    backgroundColor = "default",
+    theme,
+  }: {
+    backgroundColor?: string;
+    theme: ThemeType;
+  }) =>
+    backgroundColor === "grey"
+      ? theme.colors.grey_text_guide
+      : theme.colors.white};
 
   border-radius: 10px;
   padding: 0;
