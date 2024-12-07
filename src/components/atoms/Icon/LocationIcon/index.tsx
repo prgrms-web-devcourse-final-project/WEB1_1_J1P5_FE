@@ -7,7 +7,7 @@ import { FiMapPin } from "react-icons/fi";
 export const LocationIcon = ({ size = "m" }: IIconProps) => {
   return (
     <IconWrapper size={size}>
-      <FiMapPin />
+      <FiMapPin color="#9b9fBc" />
     </IconWrapper>
   );
 };

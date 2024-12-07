@@ -1,4 +1,5 @@
 import { IPost } from "components/organisms/PostList";
+import { EmptyTemplate } from "components/templates";
 import { ChatRoomTemplate } from "components/templates/ChatRoomTemplate";
 import { TopSheet } from "components/templates/ChatRoomTemplate/TopSheet";
 import { DEFAULT_IMG_PATH } from "constants/imgPath";
@@ -284,6 +285,8 @@ export const ChatRoomPage = () => {
       />
     </>
   ) : (
-    <div>정보를 불러오는데 실패했습니다.</div> // fetch 실패한 에러 페이지
+    <div style={{ width: "100%" }}>
+      <EmptyTemplate type={"chatRoom"}></EmptyTemplate>
+    </div>
   );
 };

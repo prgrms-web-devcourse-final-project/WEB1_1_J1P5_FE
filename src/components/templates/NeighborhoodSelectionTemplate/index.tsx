@@ -19,15 +19,15 @@ export const NeighborhoodSelectionTemplate = ({
 }: INeighborhoodSelectionTemplateProps) => {
   return (
     <NeighborhoodSelectionTemplateWrapper>
+      <NeighborhoodSelectionList
+        neighborhoods={neighborhoods.map(
+          (neighborhood) => neighborhood.fullAddress
+        )}
+        onClick={onNeighborhoodClick}
+      />
       <TextButton
         text="현재 위치로 찾기"
         onClick={onFindCurrentLocationClick}
-      />
-      <NeighborhoodSelectionList
-        neighborhoods={neighborhoods.map(
-          (neighborhood) => neighborhood.fullAddress,
-        )}
-        onClick={onNeighborhoodClick}
       />
     </NeighborhoodSelectionTemplateWrapper>
   );

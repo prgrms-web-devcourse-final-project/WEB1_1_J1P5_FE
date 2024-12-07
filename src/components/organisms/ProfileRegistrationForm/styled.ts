@@ -16,23 +16,25 @@ export const ProfileImageWrapper: ReturnType<typeof styled.div> = styled.div`
   }
 `;
 
-export const ProfileRegistrationFormWrapper: ReturnType<typeof styled.form> =
-  styled.form`
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    gap: 2rem;
-    ${LabeledInputWrapper} {
-      flex: 1;
-      justify-content: start;
-      width: 100%;
-      ${InputWrapper} {
-        width: 100%;
-      }
-    }
-    ${TextButtonWrapper} {
+export const ProfileRegistrationFormWrapper: ReturnType<
+  typeof styled.form
+> = styled.form`
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+  ${LabeledInputWrapper} {
+    flex: 1;
+    justify-content: start;
+    width: 100%;
+    ${InputWrapper} {
       width: 100%;
     }
-  `;
+  }
+  ${TextButtonWrapper} {
+    width: 100%;
+    height: 3.375rem;
+  }
+`;

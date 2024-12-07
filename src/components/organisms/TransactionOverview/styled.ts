@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { TabMenuWrapper } from "components/molecules/TabMenu/styled";
 
 export const TransactionOverviewWrapper: ReturnType<
   typeof styled.div
@@ -6,4 +7,9 @@ export const TransactionOverviewWrapper: ReturnType<
   display: flex;
   flex-direction: column;
   gap: 40px;
+
+  ${TabMenuWrapper} {
+    width: max-content;
+    margin: 0 1rem;
+  }
 `;

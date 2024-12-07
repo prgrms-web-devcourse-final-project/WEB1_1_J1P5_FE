@@ -1,6 +1,7 @@
 import { Text } from "components/atoms";
-import { TextDividerList } from "components/molecules";
+import { IconWithText } from "components/molecules";
 import { NeighborhoodSelectionListWrapper } from "./styled";
+import { LocationIcon } from "components/atoms/Icon";
 
 interface INeighborhoodSelectionListrops {
   /** 동네 리스트 */
@@ -15,11 +16,25 @@ export const NeighborhoodSelectionList = ({
 }: INeighborhoodSelectionListrops) => {
   return (
     <NeighborhoodSelectionListWrapper>
-      <Text content={"근처동네"} variant={"h5"}></Text>
-      <TextDividerList
-        items={neighborhoods}
-        onClick={onClick}
-      ></TextDividerList>
+      <Text content={"근처동네"} variant={"title_bold"}></Text>
+
+      {neighborhoods.map((neighborhood, idx) => {
+        return (
+          <IconWithText key={idx} onClick={() => onClick(neighborhood)}>
+            <IconWithText.Icon icon={LocationIcon} size={"s"} />
+            <IconWithText.Content
+              content={neighborhood}
+              contentVariant={"title_semibold"}
+            />
+          </IconWithText>
+        );
+      })}
+
+      {/* 
+      // <TextDividerList
+      //   items={neighborhoods}
+      //   onClick={onClick}
+      // ></TextDividerList> */}
     </NeighborhoodSelectionListWrapper>
   );
 };
