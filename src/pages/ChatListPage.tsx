@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
+import { useQuery } from "@tanstack/react-query";
 import { IChatItemProps } from "components/organisms/ChatItem";
 import { ChatListTemplate } from "components/templates/ChatListTemplate";
 import {
@@ -36,19 +37,14 @@ interface IChatRoomResponse extends IResponse {
 
 export const ChatListPage = () => {
   const { setTitle } = useHeaderStore();
-
+  //헤더 세팅
   useEffect(() => {
     setTitle("채팅"); // 동네 이름 받아서 처리 필요
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  //setTitle("채팅");
-  const [allChatItems, setAllChatItems] = useState<IChatItemProps[]>([]);
   const [currentTab, setCurrentTab] = useState<chatRoomTabMapKey>("전체");
 
-  const [firstFetchTime, setFirstFetchTime] = useState<dayjs.Dayjs | null>(
-    null
-  );
   const navigate = useNavigate();
 
   /** 백엔드 IChatRoom 타입을 프론트 IChatItemProps 으로 변환 함수
@@ -92,55 +88,29 @@ export const ChatListPage = () => {
       >(CHAT_URL, { type });
       if (response.success && response.code === "COMMON200") {
         // 백엔드 타입 프론트엔드 타입으로 변환
-        const chatItems = response.result.map(createChatItem);
-        //TODO : O(2N) 번 연산이 매번 들어가는 부분이기 때문에 이후 성능 개선 필요
-        setAllChatItems(filterChatItems(chatItems));
+        return response.result.map(createChatItem);
       }
+      return [];
     } catch (error) {
       console.error("Failed to fetch messages:", error);
     }
   };
 
-  useEffect(() => {
-    let timerId: NodeJS.Timeout;
+  const { data: chatItems = [], isLoading } = useQuery({
+    queryKey: ["chatItems", currentTab], // 쿼리 키
+    queryFn: fetchMessages, // 쿼리 함수
+    refetchInterval: 1000 * 10, // 10초에 한번 호출(현재 채팅방 목록을 갱신할 수 있는 백엔드적 방법X)
+    staleTime: 1000 * 10 * 3,
+  });
 
-    const fetchMessagesAndSetTimer = async () => {
-      await fetchMessages();
-
-      const now = dayjs();
-
-      if (!firstFetchTime) {
-        // 첫 fetch 시간 저장
-        setFirstFetchTime(now);
-        // 10초 후에 다시 호출
-        timerId = setTimeout(fetchMessagesAndSetTimer, 10 * 1000);
-      } else {
-        // 첫 fetch로부터 30분이 지났는지 확인
-        const thirtyMinutesLater = firstFetchTime.add(30, "second");
-
-        if (now.isAfter(thirtyMinutesLater)) {
-          // 30분이 지난 경우 30분마다 호출
-          timerId = setTimeout(fetchMessagesAndSetTimer, 30 * 60 * 1000);
-        } else {
-          // 30분이 지나지 않은 경우 10초마다 호출
-          timerId = setTimeout(fetchMessagesAndSetTimer, 10 * 1000);
-        }
-      }
-    };
-
-    // 첫 fetch 호출
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
-    fetchMessagesAndSetTimer();
-
-    return () => {
-      clearTimeout(timerId); // 컴포넌트 언마운트 시 타이머 해제
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [CHAT_URL, currentTab, firstFetchTime]); // 필요한 의존성 추가
+  //TODO : O(2N) 번 연산이 매번 들어가는 부분이기 때문에 이후 성능 개선 필요
+  const allChatItems = filterChatItems(chatItems);
 
   const onHandleTab = (tab: chatRoomTabMapKey) => {
     setCurrentTab(tab);
   };
+  //TODO : 이후 로딩 부분 추가 필요
+  console.log(isLoading);
   return (
     <ChatListTemplate
       allChatItems={allChatItems}
