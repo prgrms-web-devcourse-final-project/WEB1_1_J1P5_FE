@@ -23,21 +23,28 @@ interface IProductsResponse extends IResponse {
 // TODO: result로 productID 받아올 필요가 있음
 const submitNewProduct = async (newProduct: INewPostForm): Promise<void> => {
   try {
-    const newFormData = new FormData();
-    Object.keys(newProduct).forEach((key) => {
-      const value = newProduct[key as keyof INewPostForm];
-      if (key === "images" && Array.isArray(value)) {
-        value.forEach((img) => {
-          newFormData.append("images", img);
-        });
-      } else {
-        newFormData.append(key, String(value));
-      }
+    const requestBody = new FormData();
+    const jsonRequstData = JSON.stringify({
+      title: newProduct.title,
+      content: newProduct.content,
+      minimumPrice: newProduct.minimumPrice,
+      category: newProduct.category,
+      latitude: newProduct.latitude,
+      longitude: newProduct.longitude,
+      address: newProduct.address,
+      location: newProduct.location,
+      expiredTime: newProduct.expiredTime
     });
 
-    await http.post<IProductsResponse, typeof newFormData>(
+    const request = new Blob([jsonRequstData], { type: "application/json" });
+    requestBody.append("request", request);
+    newProduct.images!.forEach((img) => {
+      requestBody.append("images", img);
+    });
+
+    await http.post<IProductsResponse, typeof requestBody>(
       "/products",
-      newFormData,
+      requestBody,
       {
         headers: {
           "Content-Type": "multipart/form-data"
