@@ -1,11 +1,19 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { CommentItem } from ".";
 import { DEFAULT_IMG_PATH } from "constants/imgPath";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 const meta: Meta<typeof CommentItem> = {
   title: "Organisms/CommentItem",
   component: CommentItem,
   tags: ["autodocs"],
+  decorators: (story) => {
+    return (
+      <QueryClientProvider client={new QueryClient()}>
+        {story()}
+      </QueryClientProvider>
+    );
+  },
 };
 
 type Story = StoryObj<typeof meta>;

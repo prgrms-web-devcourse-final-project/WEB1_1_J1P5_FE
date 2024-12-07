@@ -1,13 +1,18 @@
 import { IconButton, Image, Text } from "components/atoms";
-import { KebabIcon } from "components/atoms/Icon";
+import { KebabIcon, ReplyIcon } from "components/atoms/Icon";
 import { InputWithButton, KebabMenu } from "components/molecules";
 import { getRelativeTime } from "utils";
 import { useCommentWriter, useKebabMenu } from "hooks";
 import {
+  CommentContentWrapper,
   CommentItemContainer,
   CommentItemWrapper,
+  KebabWrapper,
+  ReplyCommentContainer,
   ReplyCommentWrapper,
-  ReplyWrapper,
+  ReplyContainer,
+  CommentHeaderContainer,
+  WriterInformationWrapper,
 } from "./styled";
 import type { IComment, IWriteCommentData } from "types";
 import { useUserStore } from "stores";
@@ -86,7 +91,7 @@ export const CommentItem = ({
    * 차단하기 메뉴 클릭
    */
   const handleBlockClick = () => {
-    // 차단하기
+    // TODO 차단하기
     handleClose();
   };
 
@@ -94,21 +99,71 @@ export const CommentItem = ({
    * 신고하기 메뉴 클릭
    */
   const handleReportClick = () => {
-    // 신고하기
+    // TODO 신고하기
     handleClose();
   };
 
   return (
     <CommentItemContainer>
       <CommentItemWrapper key={commentId}>
-        <Image url={imgUrl} type="round" />
-        <div className="content-con">
-          <div className="writer-create-con">
-            <Text content={nickname} />
-            <span className="separator">|</span>
-            <Text content={time} />
-          </div>
-          {!editMode && <Text content={content} />}
+        <CommentHeaderContainer className="content-con">
+          <Image url={imgUrl} type="round" />
+          <WriterInformationWrapper>
+            <Text variant="title_bold" content={nickname} />
+            <Text variant="desc_regular" content={time} />
+          </WriterInformationWrapper>
+          {!editMode && (
+            /**
+             * 케밥 메뉴 => TODO 이후 분리 작업 필요
+             */
+            <>
+              <IconButton
+                backgroundColor="transparent"
+                size="s"
+                icon={KebabIcon}
+                onClick={handleOpen}
+              />
+              <KebabWrapper ref={menuRef}>
+                {open && (
+                  <KebabMenu>
+                    {!parentId && (
+                      <KebabMenu.Button
+                        content="답글"
+                        onClick={handleReplyClick}
+                      />
+                    )}
+                    {isMyComment && (
+                      <>
+                        <KebabMenu.Button
+                          content="수정하기"
+                          onClick={handleEditClick}
+                        />
+                        <KebabMenu.Button
+                          content="삭제하기"
+                          onClick={handleDeleteClick}
+                        />
+                      </>
+                    )}
+                    {!isMyComment && (
+                      <>
+                        <KebabMenu.Button
+                          content="차단하기"
+                          onClick={handleBlockClick}
+                        />
+                        <KebabMenu.Button
+                          content="신고하기"
+                          onClick={handleReportClick}
+                        />
+                      </>
+                    )}
+                  </KebabMenu>
+                )}
+              </KebabWrapper>
+            </>
+          )}
+        </CommentHeaderContainer>
+        <CommentContentWrapper>
+          {!editMode && <Text variant="desc_regular" content={content} />}
           {editMode && (
             <InputWithButton
               value={thisComment}
@@ -117,60 +172,12 @@ export const CommentItem = ({
               onButtonClick={() => handleEditComment(commentId)}
             />
           )}
-        </div>
-        {!editMode && (
-          /**
-           * 케밥 메뉴 => TODO 이후 분리 작업 필요
-           */
-          <>
-            <IconButton
-              backgroundColor="transparent"
-              icon={KebabIcon}
-              onClick={handleOpen}
-            />
-            <div ref={menuRef}>
-              {open && (
-                <KebabMenu>
-                  {!parentId && (
-                    <KebabMenu.Button
-                      content="답글"
-                      onClick={handleReplyClick}
-                    />
-                  )}
-                  {isMyComment && (
-                    <>
-                      <KebabMenu.Button
-                        content="수정하기"
-                        onClick={handleEditClick}
-                      />
-                      <KebabMenu.Button
-                        content="삭제하기"
-                        onClick={handleDeleteClick}
-                      />
-                    </>
-                  )}
-                  {!isMyComment && (
-                    <>
-                      <KebabMenu.Button
-                        content="차단하기"
-                        onClick={handleBlockClick}
-                      />
-                      <KebabMenu.Button
-                        content="신고하기"
-                        onClick={handleReportClick}
-                      />
-                    </>
-                  )}
-                </KebabMenu>
-              )}
-            </div>
-          </>
-        )}
+        </CommentContentWrapper>
       </CommentItemWrapper>
       {parentId === null && (
-        <ReplyWrapper>
+        <ReplyContainer>
           {replies.length !== 0 && (
-            <ReplyCommentWrapper>
+            <ReplyCommentContainer>
               {replies.map(
                 (
                   {
@@ -184,20 +191,22 @@ export const CommentItem = ({
                   },
                   idx,
                 ) => (
-                  <CommentItem
-                    key={`comment_${idx}_${childId}`}
-                    commentId={childId}
-                    createdAt={createdAt}
-                    nickname={nickname}
-                    content={content}
-                    imgUrl={profileImage}
-                    isMyComment={nickname === user?.nickname}
-                    replies={replies}
-                    parentId={commentId}
-                  />
+                  <ReplyCommentWrapper key={`comment_${idx}_${childId}`}>
+                    <ReplyIcon />
+                    <CommentItem
+                      commentId={childId}
+                      createdAt={createdAt}
+                      nickname={nickname}
+                      content={content}
+                      imgUrl={profileImage}
+                      isMyComment={nickname === user?.nickname}
+                      replies={replies}
+                      parentId={commentId}
+                    />
+                  </ReplyCommentWrapper>
                 ),
               )}
-            </ReplyCommentWrapper>
+            </ReplyCommentContainer>
           )}
           {replyMode && (
             /**
@@ -206,12 +215,13 @@ export const CommentItem = ({
             <InputWithButton
               value={comment}
               setValue={setComment}
-              placeholder="내용을 입력하세요."
+              placeholder="답글을 입력해주세요."
               buttonText="작성"
               onButtonClick={() => handleWriteButtonClick(commentId)}
+              variant="explan_bold"
             />
           )}
-        </ReplyWrapper>
+        </ReplyContainer>
       )}
     </CommentItemContainer>
   );
