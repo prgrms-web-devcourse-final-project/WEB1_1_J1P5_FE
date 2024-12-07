@@ -11,6 +11,6 @@ export interface IUserProfileResponse extends IResponse {
  * Profile 등록 / 수정 Request Body
  */
 export interface IUserProfileData {
-  nickname: string;
-  profile?: File | string;
+  name: string | null;
+  image?: File | string | null;
 }
