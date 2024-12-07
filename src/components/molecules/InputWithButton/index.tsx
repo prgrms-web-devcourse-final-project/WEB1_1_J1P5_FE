@@ -2,6 +2,7 @@ import { IconButton, Input, TextButton } from "components/atoms";
 import { InputWithButtonWrapper } from "./styled";
 import { IconType } from "types";
 import { SendIcon } from "components/atoms/Icon";
+import type { ComponentProps } from "react";
 
 interface IInputWithButtonProps {
   /** Input 컴포넌트의 value */
@@ -16,6 +17,7 @@ interface IInputWithButtonProps {
   placeholder?: string;
   isIcon?: boolean;
   icon?: IconType;
+  variant?: ComponentProps<typeof TextButton>["variant"];
 }
 
 export const InputWithButton = ({
@@ -26,6 +28,7 @@ export const InputWithButton = ({
   placeholder = "",
   isIcon = false,
   icon,
+  variant,
 }: IInputWithButtonProps) => {
   return (
     <InputWithButtonWrapper>
@@ -41,7 +44,11 @@ export const InputWithButton = ({
           onClick={onButtonClick}
         ></IconButton>
       ) : (
-        <TextButton text={buttonText} onClick={onButtonClick} />
+        <TextButton
+          variant={variant}
+          text={buttonText}
+          onClick={onButtonClick}
+        />
       )}
     </InputWithButtonWrapper>
   );
