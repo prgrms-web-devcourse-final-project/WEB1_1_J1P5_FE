@@ -11,6 +11,7 @@ export const TextareaWrapper: ReturnType<
   border-radius: 10px;
   width: 100%;
 
+  // TODO: 스크롤이 아니라 쓰는 방법 높이가 늘어나도록 수정
   textarea {
     background: transparent;
     border: none;
@@ -45,5 +46,15 @@ export const TextareaWrapper: ReturnType<
       background-clip: padding-box;
       border: 2px solid transparent;
     }
+
+    // TODO: 왜인지 모르겠지만, 폰트가 이상함
+    font-family: "Pretendard-Regular" !important;
+    /* 가이드/regular */
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 145%; /* 18.85px */
+    letter-spacing: -0.325px;
+    white-space: pre-line;
   }
 `;
