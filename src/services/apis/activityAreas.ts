@@ -30,6 +30,13 @@ export const registerActivityArea = async (
   );
 };
 
+export const editActivityArea = async (emdId: IActivityAreaData["emdId"]) => {
+  return http.patch<IActivityAreaResponse, IActivityAreaData>(
+    "/activity-areas",
+    { emdId },
+  );
+};
+
 export const removeActivityArea = async (emdId: IActivityAreaData["emdId"]) => {
   return http.delete<IActivityAreaResponse, IActivityAreaData>(
     "/activity-areas",
