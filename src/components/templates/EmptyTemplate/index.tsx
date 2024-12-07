@@ -13,7 +13,8 @@ export interface IEmptyTemplateProps {
     | "buying"
     | "completed"
     | "blockedUser"
-    | "marketPrice";
+    | "marketPrice"
+    | "chatRoom";
 }
 
 export const EmptyTemplate = ({ type = "default" }: IEmptyTemplateProps) => {
@@ -30,6 +31,7 @@ export const EmptyTemplate = ({ type = "default" }: IEmptyTemplateProps) => {
     blockedUser: "차단한 사용자가 없어요",
     marketPrice:
       "아직 개발중인 기능이예요. ㅠㅠ\n 정식 출시때는 포함이 될거예요!",
+    chatRoom: "채팅 내역을 불러오는데 실패했어요",
   };
   const urls = {
     chat: "/",
@@ -41,6 +43,7 @@ export const EmptyTemplate = ({ type = "default" }: IEmptyTemplateProps) => {
     completed: "/",
     blockedUser: "/",
     marketPrice: "/",
+    chatRoom: "/chat",
   };
   const buttnTexts = {
     chat: "메인으로 돌아가기",
@@ -52,6 +55,7 @@ export const EmptyTemplate = ({ type = "default" }: IEmptyTemplateProps) => {
     completed: "메인으로 돌아가기",
     blockedUser: "/",
     marketPrice: "메인으로 돌아가기",
+    chatRoom: "채팅방 목록으로 돌아가기",
   };
   const msg = messages[type] || messages.default; // 기본 메시지 설정
   const redirectUrl = urls[type] || urls.default; // 기본 URL 설정
