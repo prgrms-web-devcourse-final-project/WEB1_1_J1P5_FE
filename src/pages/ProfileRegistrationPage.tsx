@@ -2,14 +2,15 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { ProfileRegistrationTemplate } from "components/templates";
 import { useTopBarStore, useUserStore } from "stores";
-import { registerAndEditProfile } from "services/apis";
+
 import type { IUser, IUserProfileData } from "types";
+import { registerAndEditProfile } from "services/apis/user";
 
 export const ProfileRegistrationPage = () => {
   const navigate = useNavigate();
   const { user } = useUserStore();
   const { clear, setTitle } = useTopBarStore();
-
+  console.log(user);
   const handleProfileRegistration = (data: IUser) => {
     console.log(user);
     console.log(data);
@@ -44,7 +45,11 @@ export const ProfileRegistrationPage = () => {
 
   useEffect(() => {
     clear();
-    setTitle("프로필 등록");
+    if (user === null || user?.nickname === null) {
+      setTitle("프로필 등록");
+    } else {
+      setTitle("프로필 수정");
+    }
   }, []);
 
   return (
