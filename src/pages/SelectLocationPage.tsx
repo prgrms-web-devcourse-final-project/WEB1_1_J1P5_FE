@@ -9,9 +9,12 @@ import type { ILocation } from "types";
 export const SelectLocationPage = () => {
   const navigate = useNavigate();
   const { setTitle } = useTopBarStore();
-
   const lat = useFormDataStore((state) => state.formData.latitude);
   const lng = useFormDataStore((state) => state.formData.longitude);
+  const { setFormData } = useFormDataStore((state) => state.actions);
+  const [isOpenBottomSheet, setIsOpenBottomSheet] = useState(false);
+  const locationErrorEvent = useLocationErrorEvent();
+  const [isError, setIsError] = useState<boolean>(false);
 
   const coord = useMemo(() => {
     return lat && lng
@@ -22,12 +25,12 @@ export const SelectLocationPage = () => {
       : undefined;
   }, [lat, lng]);
 
-  const { setFormData } = useFormDataStore((state) => state.actions);
-  const [isOpenBottomSheet, setIsOpenBottomSheet] = useState(false);
-  const locationErrorEvent = useLocationErrorEvent();
-
   const handleRegistrationButtonClick = useCallback(
     (place: string) => {
+      if (!place) {
+        setIsError(true);
+        return;
+      }
       setFormData({
         location: place
       });
@@ -61,6 +64,7 @@ export const SelectLocationPage = () => {
       closeBottomSheet={() => setIsOpenBottomSheet(false)}
       onRegistrationButtonClick={handleRegistrationButtonClick}
       locationErrorEvent={locationErrorEvent}
+      isError={isError}
     />
   );
 };

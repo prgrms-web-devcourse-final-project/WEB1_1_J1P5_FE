@@ -9,6 +9,8 @@ interface ILocationInputBottomSheetProps extends IModalBottomSheetProps {
   setPlace: (value: string) => void;
   /** 거래 장소 등록 버튼 클릭 시 실행될 함수 */
   onRegistrationButtonClick: () => void;
+  /** 에러 발생 여부 (Input이 비었을 경우 true) */
+  isError: boolean;
 }
 
 export const LocationInputBottomSheet = ({
@@ -16,7 +18,8 @@ export const LocationInputBottomSheet = ({
   onClose,
   place,
   setPlace,
-  onRegistrationButtonClick
+  onRegistrationButtonClick,
+  isError
 }: ILocationInputBottomSheetProps) => {
   return (
     <LocationInputBottomSheetWrapper open={open} onClose={onClose}>
@@ -24,7 +27,6 @@ export const LocationInputBottomSheet = ({
         style={{
           display: "flex",
           flexDirection: "column",
-          alignItems: "center",
           gap: "10px",
           width: "100%"
         }}
@@ -38,7 +40,13 @@ export const LocationInputBottomSheet = ({
           setValue={setPlace}
           placeholder="예) 미금역 8번 출구 앞, 역전우동 앞"
         />
+        {isError && (
+          <div style={{ color: "#FF2E4D" }}>
+            <Text variant="explan_regular" content="장소를 입력해주세요!" />
+          </div>
+        )}
       </div>
+
       <TextButton text="거래 장소 등록" onClick={onRegistrationButtonClick} />
     </LocationInputBottomSheetWrapper>
   );
