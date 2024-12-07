@@ -14,3 +14,4 @@ export * from "./useCommentKebabMenuManager";
 export * from "./useKebabMenu";
 export * from "./useCommentWriter";
 export * from "./useLocationErrorEvent";
+export * from "./useFetchComment";

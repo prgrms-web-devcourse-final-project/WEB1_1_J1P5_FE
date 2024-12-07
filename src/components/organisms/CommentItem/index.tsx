@@ -78,7 +78,7 @@ export const CommentItem = ({
    * 삭제하기 메뉴 클릭
    */
   const handleDeleteClick = () => {
-    handleDeleteComment();
+    handleDeleteComment(commentId);
     handleClose();
   };
 
@@ -114,7 +114,7 @@ export const CommentItem = ({
               value={thisComment}
               setValue={setThisComment}
               buttonText="저장"
-              onButtonClick={() => handleEditComment()}
+              onButtonClick={() => handleEditComment(commentId)}
             />
           )}
         </div>

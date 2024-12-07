@@ -27,24 +27,24 @@ export const writeComment = async (
   postData: IWriteCommentData,
 ) => {
   return http.post<ICommentResponse, IWriteCommentData>(
-    `/product/comments/${productId}`,
+    `/products/comments/${productId}`,
     postData,
   );
 };
 
 export const editComment = async (
-  commentId: string,
+  commentId: number,
   requestData: IEditCommentData,
 ) => {
-  return http.patch(`/product/comments/${commentId}`, requestData);
+  return http.patch(`/products/comments/${commentId}`, requestData);
 };
 
 export const removeComment = async (
-  commentId: string,
+  commentId: number,
   requestData: IDeleteCommentData,
 ) => {
   return http.delete<ICommentResponse, IDeleteCommentData>(
-    `/product/comments/${commentId}`,
+    `/products/comments/${commentId}`,
     requestData,
   );
 };
