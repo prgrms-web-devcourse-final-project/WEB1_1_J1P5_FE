@@ -1,13 +1,25 @@
 import { ICategory } from "components/organisms/CategoryGrid";
 import { CategoryTemplate } from "components/templates";
+import { CATEGORIES } from "constants/categories";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTopBarStore } from "stores";
 
 export const CategoryPage = () => {
+  const { clear, setTitle } = useTopBarStore();
+
   const navigate = useNavigate();
-  const categories: ICategory[] = Array.from({ length: 24 }, (_, idx) => ({
-    title: `Category${idx + 1}`, // title을 Category 1, Category 2, ...로 설정
-    imgUrl: `/Default_Img.png`, // imgUrl을 Default_Img_1.png, Default_Img_2.png, ...로 설정
+
+  const categories: ICategory[] = CATEGORIES.map((category) => ({
+    title: category.name,
+    imgUrl: `/categorys/${category.code}.png`,
+    serverType: category.code,
   }));
+
+  useEffect(() => {
+    clear();
+    setTitle("카테고리");
+  }, []);
   const handleCategoryButton = (category: string) => {
     navigate(`/search/category/${category}`);
   };

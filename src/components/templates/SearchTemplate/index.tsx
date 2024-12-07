@@ -22,15 +22,13 @@ export const SearchTemplate = ({
   onDeleteButtonClick,
   onHistoryItemClick,
 }: ISearchTemplateprops) => {
-  const categoryBtnText = "카테고리";
+  const categoryBtnText = "카테고리로 검색하기";
   return (
     <SearchTemplateWrapper>
-      <div className="btn-con">
-        <TextButton
-          text={categoryBtnText}
-          onClick={onCategoryBtnClick}
-        ></TextButton>
-      </div>
+      <TextButton
+        text={categoryBtnText}
+        onClick={onCategoryBtnClick}
+      ></TextButton>
       {searchTerms.length !== 0 && (
         <SearchHistory
           searchTerms={searchTerms}

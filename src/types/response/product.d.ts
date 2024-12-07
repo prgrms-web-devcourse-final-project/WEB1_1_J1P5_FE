@@ -27,6 +27,7 @@ export interface IProductDetail {
   images: string[];
   myPrice?: number;
   maximumPrice?: number;
+  isSeller: boolean;
 }
 
 /**

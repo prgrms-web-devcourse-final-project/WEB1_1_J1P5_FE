@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { useSearchTopBar } from "hooks";
 import { useNavigate, useParams } from "react-router-dom";
-import { IResponse } from "types";
+import { ICategory, IResponse } from "types";
 import { http } from "services/api";
 import { IPost } from "components/organisms/PostList";
 import { SearchResultsTemplate } from "components/templates";
+import { CATEGORIES } from "constants/categories";
 
 interface ISearchPost {
   myLocation: string;
@@ -26,7 +27,8 @@ interface ISearchPostResponse extends IResponse {
 }
 export const SearchResultPage = () => {
   /** 2. 키워드 검색결과 관련 변수 및 함수   */
-  const SEARCH_API_URL = `/products`;
+  const SEARCH_KEYWORD_API_URL = `/products/keywords`;
+  const SEARCH_CATEGORY_API_URL = `/products/categories`;
   const SEARCH_NAVIGATE_URL = "/product";
   const navigate = useNavigate();
   const [posts, setPosts] = useState<IPost[]>([]);
@@ -92,15 +94,22 @@ export const SearchResultPage = () => {
   }>();
   const { setSearchTerm } = useSearchTopBar();
   useEffect(() => {
-    const searchValue = category || keyword || "";
+    let categoryText: ICategory = { code: "", name: "" };
+    if (category) {
+      categoryText = CATEGORIES.find((item) => item.code === category) || {
+        code: "",
+        name: "",
+      };
+    }
+    const searchValue = keyword || categoryText.name;
 
     setSearchTerm(searchValue);
 
     const fetchSearchPosts = async () => {
       // URL 결정
       const url = category
-        ? SEARCH_API_URL + `?category=${category}`
-        : SEARCH_API_URL + `?keyword=${keyword}`;
+        ? SEARCH_CATEGORY_API_URL + `?category=${category}`
+        : SEARCH_KEYWORD_API_URL + `?keyword=${keyword}`;
       await fetchPosts(url);
     };
     fetchSearchPosts().catch((error) => {

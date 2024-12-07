@@ -1,3 +1,4 @@
+import { createPortal } from "react-dom";
 import { ImageSlider } from "components/molecules";
 import {
   AuctionBidBottomSheet,
@@ -13,7 +14,7 @@ import { useBid, useDetailModal } from "hooks";
 import { buttonNames, priceNames } from "constants/auctionControlBarNames";
 import type { IComment, IProductDetail } from "types";
 
-interface IBaseDetailTemplateProps extends IProductDetail {
+interface IBaseDetailTemplateProps extends Omit<IProductDetail, ""> {
   /** 판매자 정보 */
   seller: {
     id: number;
@@ -43,8 +44,6 @@ interface IBaseDetailTemplateProps extends IProductDetail {
   onLocationClick: () => void;
   /** 댓글 목록 */
   comments: IComment[];
-  /** 댓글 작성 함수 */
-  onWriteComment: (message: string) => void;
   /** 최소 입찰가 */
   minimumPrice: number;
   /** 내 입찰가 */
@@ -55,6 +54,8 @@ interface IBaseDetailTemplateProps extends IProductDetail {
   onCancel: () => void;
   /** 조기마감 */
   onEarlyClosing: () => void;
+  /** 판매자인지 여부 */
+  isSeller: boolean;
 }
 
 export const DetailTemplate = ({
@@ -82,6 +83,8 @@ export const DetailTemplate = ({
   // hasBuyer,
   onCancel,
   onEarlyClosing,
+  // 판매자 여부
+  isSeller,
 }: IBaseDetailTemplateProps) => {
   const modal = useDetailModal();
   const {
@@ -121,7 +124,7 @@ export const DetailTemplate = ({
           {myPrice && (
             <AuctionControlBar.Bid title={priceNames.myPrice} price={myPrice} />
           )}
-          {maximumPrice && (
+          {isSeller && maximumPrice && (
             <AuctionControlBar.Bid
               title={priceNames.maximumPrice}
               price={maximumPrice}
@@ -129,7 +132,7 @@ export const DetailTemplate = ({
           )}
         </AuctionControlBar.BidContainer>
         <AuctionControlBar.ButtonContainer>
-          {!maximumPrice && !myPrice && (
+          {!isSeller && !myPrice && (
             <AuctionControlBar.Button
               text={buttonNames.bid}
               onClick={handleOpenBottomSheet}
@@ -151,7 +154,7 @@ export const DetailTemplate = ({
               />
             </>
           )}
-          {maximumPrice && (
+          {isSeller && maximumPrice && (
             <AuctionControlBar.Button
               text={buttonNames.early}
               onClick={() => modal.earlyClosing(onEarlyClosing)}
@@ -159,15 +162,18 @@ export const DetailTemplate = ({
           )}
         </AuctionControlBar.ButtonContainer>
       </AuctionControlBar>
-      <AuctionBidBottomSheet
-        price={price}
-        setPrice={setPrice}
-        minPrice={minimumPrice}
-        beforePrice={myPrice}
-        onBid={handleBid}
-        open={open}
-        onClose={handleCloseBottomSheet}
-      />
+      {createPortal(
+        <AuctionBidBottomSheet
+          price={price}
+          setPrice={setPrice}
+          minPrice={minimumPrice}
+          beforePrice={myPrice}
+          onBid={handleBid}
+          open={open}
+          onClose={handleCloseBottomSheet}
+        />,
+        document.body,
+      )}
     </DetailTemplateWrapper>
   );
 };

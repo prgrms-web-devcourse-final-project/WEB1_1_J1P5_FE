@@ -15,7 +15,7 @@ interface ITabItemProps {
 export const TabItem = ({ state, title, onClick }: ITabItemProps) => {
   return (
     <TabItemWrapper state={state} onClick={onClick}>
-      <Text content={title} variant="h5" />
+      <Text content={title} variant="explan_bold" />
       <TabIndicator isActive={state === "active"} />
     </TabItemWrapper>
   );

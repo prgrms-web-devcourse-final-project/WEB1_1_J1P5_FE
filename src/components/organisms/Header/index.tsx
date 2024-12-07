@@ -34,7 +34,7 @@ export const Header = ({
           <IconWithText.Icon icon={DownIcon} />
         </IconWithText>
       ) : (
-        <Text content={title} />
+        <Text variant="title_bold" content={title} />
       )}
       <ButtonsWrapper>
         {type === "home" && (
@@ -44,11 +44,12 @@ export const Header = ({
             backgroundColor="transparent"
           />
         )}
-        <IconButton
+        {/* 알림 쪽 아이콘 일괄 삭제*/}
+        {/* <IconButton
           icon={NotificationIcon}
           onClick={onNotificationClick}
           backgroundColor="transparent"
-        />
+        /> */}
       </ButtonsWrapper>
     </HeaderWrapper>
   );

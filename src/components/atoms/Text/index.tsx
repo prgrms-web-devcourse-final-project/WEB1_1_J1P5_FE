@@ -5,6 +5,7 @@ import {
   Body1Wrapper,
   ButtonWrapper,
   TitleBoldWrapper,
+  TitleSemiBoldWrapper,
   DescRegularWrapper,
   DescBoldWrapper,
   ExplainRegularWrapper,
@@ -12,6 +13,7 @@ import {
   TagRegularWrapper,
   WritingBoldWrapper,
   ButtonBoldWrapper,
+  BadgeRegularWrapper,
 } from "./styled";
 
 export type TextVariant =
@@ -20,13 +22,15 @@ export type TextVariant =
   | "body1"
   | "button"
   | "title_bold"
+  | "title_semibold"
   | "desc_regular"
   | "desc_bold"
   | "explan_regular"
   | "explan_bold"
   | "tag_regular"
   | "writing_bold"
-  | "btn_bold";
+  | "btn_bold"
+  | "badge_regular";
 
 interface ITextProps extends HTMLAttributes<HTMLParagraphElement> {
   /** Text에 들어가는 내용 */
@@ -45,6 +49,7 @@ const variantMap: {
   body1: Body1Wrapper,
   button: ButtonWrapper,
   title_bold: TitleBoldWrapper,
+  title_semibold: TitleSemiBoldWrapper,
   desc_regular: DescRegularWrapper,
   desc_bold: DescBoldWrapper,
   explan_regular: ExplainRegularWrapper,
@@ -52,12 +57,13 @@ const variantMap: {
   tag_regular: TagRegularWrapper,
   writing_bold: WritingBoldWrapper,
   btn_bold: ButtonBoldWrapper,
+  badge_regular: BadgeRegularWrapper,
 };
 
 export const Text = ({
   content,
   variant = "body1",
-  onClick = () => {},
+  onClick = () => {}
 }: ITextProps) => {
   const Component = variantMap[variant];
   return <Component onClick={onClick}>{content}</Component>;

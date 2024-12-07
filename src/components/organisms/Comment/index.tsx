@@ -21,7 +21,17 @@ export const Comment = ({ comments }: ICommentProps) => {
 
   return (
     <CommentWrapper>
-      <Text variant="h5" content="문의사항" />
+      <Text variant="title_bold" content="문의사항" />
+      <CommentWriteBoxWrapper>
+        <InputWithButton
+          value={comment}
+          setValue={setComment}
+          placeholder="댓글을 입력해주세요."
+          buttonText="작성"
+          onButtonClick={() => handleWriteButtonClick(null)}
+          variant="explan_bold"
+        />
+      </CommentWriteBoxWrapper>
       <CommentListWrapper>
         {comments.map(
           (
@@ -50,15 +60,6 @@ export const Comment = ({ comments }: ICommentProps) => {
           ),
         )}
       </CommentListWrapper>
-      <CommentWriteBoxWrapper>
-        <InputWithButton
-          value={comment}
-          setValue={setComment}
-          placeholder="댓글을 입력하세요."
-          buttonText="작성"
-          onButtonClick={() => handleWriteButtonClick(null)}
-        />
-      </CommentWriteBoxWrapper>
     </CommentWrapper>
   );
 };

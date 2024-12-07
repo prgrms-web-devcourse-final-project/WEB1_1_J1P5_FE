@@ -1,5 +1,7 @@
 import { IPost } from "components/organisms/PostList";
+import { EmptyTemplate } from "components/templates";
 import { ChatRoomTemplate } from "components/templates/ChatRoomTemplate";
+import { TopSheet } from "components/templates/ChatRoomTemplate/TopSheet";
 import { DEFAULT_IMG_PATH } from "constants/imgPath";
 import { useChatGroups } from "hooks/useChatGroups";
 import { useWebSocket } from "hooks/useWebSocket";
@@ -64,6 +66,9 @@ export const ChatRoomPage = () => {
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
   const { connect, disconnect, sendMessage, isConnected } = useWebSocket();
   const [isMsgSended, setIsMsgSended] = useState<boolean>(false);
+
+  const [loading, setLoading] = useState(true); // 로딩 상태
+
   /** 백엔드 IChatRoom 타입을 프론트 IChatItemProps 으로 변환 함수
    * @param chatRoom : IChatRoom
    * @returns IChatItemProps
@@ -171,9 +176,13 @@ export const ChatRoomPage = () => {
     const fetchChatMessages = async () => {
       await fetchMessages();
     };
-    fetchChatMessages().catch((error) => {
-      console.error("Error fetchting Chat Message:", error);
-    });
+    fetchChatMessages()
+      .catch((error) => {
+        console.error("Error fetchting Chat Message:", error);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -262,14 +271,22 @@ export const ChatRoomPage = () => {
     }
   }, [chatGroups]); // 데이터가 fetch된 이후에만 실행
 
+  if (loading) {
+    return <div>Loading...</div>; // 로딩 중 메시지
+  }
   return post ? (
-    <ChatRoomTemplate
-      post={post}
-      chatBubbles={chatGroups}
-      onWriteMessage={handleInput}
-      scrollContainerRef={scrollContainerRef}
-    />
+    <>
+      <TopSheet post={post}></TopSheet>
+      <ChatRoomTemplate
+        post={post}
+        chatBubbles={chatGroups}
+        onWriteMessage={handleInput}
+        scrollContainerRef={scrollContainerRef}
+      />
+    </>
   ) : (
-    <div>Loading...</div> // 로딩 화면 또는 다른 메시지 표시
+    <div style={{ width: "100%" }}>
+      <EmptyTemplate type={"chatRoom"}></EmptyTemplate>
+    </div>
   );
 };

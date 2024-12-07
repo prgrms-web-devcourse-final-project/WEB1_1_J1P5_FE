@@ -72,7 +72,7 @@ export const PostList = ({ posts, type }: IPostListProps) => {
   }: IPost) => {
     return (
       <PostItem key={productId} onClick={onClick}>
-        <PostItem.Image imgUrl={imgUrl} size={"mini"} />
+        <PostItem.Image imgUrl={imgUrl} />
         <PostItem.Container>
           <PostItem.Title title={title} />
           <PostItem.Price price={price} />

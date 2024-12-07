@@ -1,5 +1,5 @@
 // types.ts
 export interface ICategory {
-  code: string;
+  code: Category;
   name: string;
 }

@@ -11,7 +11,15 @@ const KebabMenuRoot = ({ children }: IKebabMenuProps) => {
 };
 
 const Button = (menu: IMenu) => {
-  return <TextButton text={menu.content} size="s" onClick={menu.onClick} />;
+  return (
+    <TextButton
+      text={menu.content}
+      size="s"
+      variant="explan_bold"
+      onClick={menu.onClick}
+      backgroundColor="transparent"
+    />
+  );
 };
 
 export const KebabMenu: typeof KebabMenuRoot & {

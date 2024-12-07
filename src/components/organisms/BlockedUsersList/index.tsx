@@ -3,12 +3,15 @@ import { BlockedUsersListWrapper } from "./styled";
 import type { IBlockedUserItem } from "types";
 
 interface IBlockedUsersListProps {
-  /** BlockedUserItem 리스트 */
+  /** 유저 프로필 */
   blockedUserItems: IBlockedUserItem[];
+  /** 차단하기 버튼 클릭시 동작 */
+  onClick: (index: number) => void;
 }
 
 export const BlockedUsersList = ({
   blockedUserItems,
+  onClick
 }: IBlockedUsersListProps) => {
   return (
     <BlockedUsersListWrapper>
@@ -16,8 +19,8 @@ export const BlockedUsersList = ({
         return (
           <BlockedUserItem
             key={idx}
-            profile={blockedUserItem.profile}
-            onClick={() => blockedUserItem.onClick(idx)}
+            blockedUserItem={blockedUserItem}
+            onClick={() => onClick(idx)}
           ></BlockedUserItem>
         );
       })}

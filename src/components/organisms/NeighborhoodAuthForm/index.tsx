@@ -1,14 +1,17 @@
 import { useCallback, useEffect, useState } from "react";
-import { Text, TextButton } from "components/atoms";
-import {
-  NeighborhoodAuthFormWrapper,
-  LocationConfirmationContainer
-} from "./styled";
+import { TextButton } from "components/atoms";
+import { NeighborhoodAuthFormWrapper } from "./styled";
 import { Map } from "components/organisms";
 import { ICoord, ILocation } from "types";
 import { useReverseGeocode } from "hooks";
+import { createPortal } from "react-dom";
+import { UserLocationBottomSheet } from "components/organisms";
 
 interface INeighborhoodAuthFormProps {
+  /** 유저 닉네임 */
+  nickname: string;
+  /** 나의 동네로 설정된 address */
+  myAddress: string;
   /** 동네 인증 버튼 클릭 이벤트 */
   onSubmitButtonClick?: (location: ILocation) => void;
   /** 위치 권한 가져오기 실패 시 모달을 실행할 함수 */
@@ -16,6 +19,8 @@ interface INeighborhoodAuthFormProps {
 }
 
 export const NeighborhoodAuthForm = ({
+  nickname,
+  myAddress,
   onSubmitButtonClick,
   locationErrorEvent
 }: INeighborhoodAuthFormProps) => {
@@ -24,6 +29,8 @@ export const NeighborhoodAuthForm = ({
     coord: undefined,
     address: ""
   });
+  const [isOpenBottomSheet, setIsOpenBottomSheet] = useState(false);
+
   const { searchCoordinateToAddress } = useReverseGeocode();
 
   useEffect(() => {
@@ -44,16 +51,20 @@ export const NeighborhoodAuthForm = ({
     }
   }, [myCoord, searchCoordinateToAddress]);
 
-  const handleButtonClick = useCallback(() => {
+  const handleCheckButtonClick = useCallback(() => {
     if (location.address) {
-      onSubmitButtonClick?.(location);
+      setIsOpenBottomSheet(true);
     }
+  }, [location]);
+
+  const handleSubmitButtonClick = useCallback(() => {
+    onSubmitButtonClick?.(location);
   }, [onSubmitButtonClick, location]);
 
   return (
     <NeighborhoodAuthFormWrapper>
       <Map setMyCoord={setMyCoord} locationErrorEvent={locationErrorEvent} />
-      <LocationConfirmationContainer>
+      {/* <LocationConfirmationContainer>
         <Text
           content={
             location.address
@@ -61,10 +72,24 @@ export const NeighborhoodAuthForm = ({
               : "현재 위치정보를 가져올 수 없어요. 잠시 후 다시 시도해주세요"
           }
         />
-        {location.address && (
-          <TextButton text={"동네인증 완료하기"} onClick={handleButtonClick} />
-        )}
-      </LocationConfirmationContainer>
+      </LocationConfirmationContainer> */}
+      {location.address && (
+        <TextButton
+          text={"현재 위치가 맞아요!"}
+          onClick={handleCheckButtonClick}
+        />
+      )}
+      {createPortal(
+        <UserLocationBottomSheet
+          open={isOpenBottomSheet}
+          onClose={() => setIsOpenBottomSheet(false)}
+          nickname={nickname}
+          myAddress={myAddress}
+          address={location.address}
+          onSubmitButtonClick={handleSubmitButtonClick}
+        />,
+        document.body
+      )}
     </NeighborhoodAuthFormWrapper>
   );
 };

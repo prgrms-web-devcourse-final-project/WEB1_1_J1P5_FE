@@ -10,7 +10,7 @@ interface IPostRegisterTemplateProps {
   /** Submit 이벤트 발생 시 실행할 함수 */
   onSubmit: (data: IPostForm) => void;
   /** 거래 희망 장소 클릭 시 실행할 함수 */
-  onClick: () => string;
+  onClick: (data: IPostForm) => void;
 }
 
 export const PostRegisterTemplate = ({
@@ -30,4 +30,3 @@ export const PostRegisterTemplate = ({
     </PostRegisterTemplateWrapper>
   );
 };
-

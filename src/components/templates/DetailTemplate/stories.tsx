@@ -53,9 +53,6 @@ export const Default: Story = {
     myPrice: 36000,
     // 댓글
     comments: [],
-    onWriteComment: (comment) => {
-      console.log(comment);
-    },
     onCancel: () => {},
     onEarlyClosing: () => {},
   },
