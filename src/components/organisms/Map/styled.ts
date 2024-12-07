@@ -18,6 +18,7 @@ export const MapWrapper: ReturnType<typeof styled.div> = styled.div`
     background: #fff;
     outline: none;
     box-shadow: 0px 0px 20px rgba(19, 27, 83, 0.15);
+    color: #344FFF;
   }
 }
 `;
