@@ -10,7 +10,9 @@ export const PostImageManagerWrapper: ReturnType<
 > = styled.div<PostImageManagerWrapperProps>`
   display: flex;
   flex-wrap: nowrap;
-  overflow-x: auto;
+  gap: 8px;
+  overflow-x: hidden;
+  overflow-y: hidden;
   width: 100%;
 
   ${({ disabled }) =>
@@ -23,7 +25,9 @@ export const PostImageManagerWrapper: ReturnType<
 
   ${UploadedImageCounterContainer}, ${PostImageItemWrapper} {
     width: 106px;
+    height: 106px;
     aspect-ratio: 1 / 1;
+    border-radius: 10px;
 
     ${({ disabled }) =>
       disabled &&
@@ -31,8 +35,16 @@ export const PostImageManagerWrapper: ReturnType<
       filter: grayscale(1);
     `}
   }
+  img {
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+    user-drag: none;
+  }
 `;
 
 export const PostImageListWrapper: ReturnType<typeof styled.div> = styled.div`
   display: flex;
+  gap: 8px;
 `;

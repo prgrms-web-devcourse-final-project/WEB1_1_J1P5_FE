@@ -14,7 +14,7 @@ interface IPostImageItemProps {
 export const PostImageItem = ({
   imgUrl,
   isThumbnail,
-  onClick,
+  onClick
 }: IPostImageItemProps) => {
   return (
     <PostImageItemWrapper>

@@ -23,20 +23,21 @@ const meta: Meta<typeof LocationInputBottomSheet> = {
             place={place}
             setPlace={setPlace}
             onRegistrationButtonClick={handleRegistrationButtonClick}
+            isError={place === ""}
           />
         </>
       );
     };
     return <Component />;
-  },
+  }
 };
 
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    open: true,
-  },
+    open: true
+  }
 };
 
 export default meta;

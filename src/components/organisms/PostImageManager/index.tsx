@@ -1,4 +1,4 @@
-import { Fragment, useCallback } from "react";
+import { Fragment, useCallback, useRef } from "react";
 import { UploadedImageCounter } from "components/molecules";
 import { PostImageItem } from "components/organisms";
 
@@ -20,6 +20,32 @@ export const PostImageManager = ({
   setImageInfos,
   disabled = false
 }: IPostImageManagerProps) => {
+  // TODO: 임시로 넣은 gpt의 가로 스크롤 이벤트 코드 나중에 수정 필요 (코드 이해 및 애니메이션 추가)
+  const wrapperRef = useRef<HTMLDivElement>(null);
+  let isDragging = false;
+  let startX: number;
+  let scrollLeft: number;
+
+  const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+    isDragging = true;
+    startX = e.pageX - wrapperRef.current!.offsetLeft;
+    scrollLeft = wrapperRef.current!.scrollLeft;
+    wrapperRef.current!.style.cursor = "grabbing";
+  };
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!isDragging) return;
+    e.preventDefault();
+    const x = e.pageX - wrapperRef.current!.offsetLeft;
+    const walk = (x - startX) * 1;
+    wrapperRef.current!.scrollLeft = scrollLeft - walk;
+  };
+
+  const handleMouseUp = () => {
+    isDragging = false;
+    wrapperRef.current!.style.cursor = "grab";
+  };
+
   const onChange = useCallback(
     async (file: File) => {
       if (disabled) return;
@@ -67,7 +93,14 @@ export const PostImageManager = ({
   );
 
   return (
-    <PostImageManagerWrapper disabled={disabled}>
+    <PostImageManagerWrapper
+      ref={wrapperRef}
+      disabled={disabled}
+      onMouseDown={handleMouseDown}
+      onMouseMove={handleMouseMove}
+      onMouseUp={handleMouseUp}
+      onMouseLeave={handleMouseUp}
+    >
       <UploadedImageCounter
         text="사진 등록"
         currentCount={imageInfos.length}

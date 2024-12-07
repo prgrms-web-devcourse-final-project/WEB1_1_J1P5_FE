@@ -17,6 +17,8 @@ interface ISelectLocationTemplateProps {
   onRegistrationButtonClick: (place: string) => void;
   /** 위치 권한 가져오기 실패 시 모달을 실행할 함수 */
   locationErrorEvent: (message: string) => void;
+  /** 에러 발생 여부 (Input이 비었을 경우 true) */
+  isError: boolean;
 }
 
 export const SelectLocationTemplate = ({
@@ -25,8 +27,10 @@ export const SelectLocationTemplate = ({
   isOpenBottomSheet,
   closeBottomSheet,
   onRegistrationButtonClick,
-  locationErrorEvent
+  locationErrorEvent,
+  isError
 }: ISelectLocationTemplateProps) => {
+  // TODO: 템플릿은 스켈레톤이기 때문에 페이지로 useState를 빼는 게 나을까?
   const [place, setPlace] = useState("");
 
   const memoizedLocationPicker = useMemo(
@@ -50,6 +54,7 @@ export const SelectLocationTemplate = ({
           place={place}
           setPlace={setPlace}
           onRegistrationButtonClick={() => onRegistrationButtonClick(place)}
+          isError={isError}
         />,
         document.body
       )}

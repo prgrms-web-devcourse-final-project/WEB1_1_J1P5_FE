@@ -1,4 +1,5 @@
 import { ImageUpload, Text } from "components/atoms";
+import { CameraIcon } from "components/atoms/Icon";
 import { ImageUploadWrapper, UploadedImageCounterContainer } from "./styled";
 
 interface IUploadedImageCounter {
@@ -16,12 +17,28 @@ export const UploadedImageCounter = ({
   text,
   currentCount,
   onChange,
-  totalCount = 10,
+  totalCount = 10
 }: IUploadedImageCounter) => {
   return (
     <UploadedImageCounterContainer>
-      <Text content={text} />
-      <Text content={`${currentCount}/${totalCount}`} />
+      <CameraIcon size="l" />
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center"
+        }}
+      >
+        <div style={{ color: "#707192" }}>
+          <Text content={text} variant="explan_bold" />
+        </div>
+        <div style={{ color: "#9B9FBC" }}>
+          <Text
+            content={`${currentCount}/${totalCount}`}
+            variant="explan_regular"
+          />
+        </div>
+      </div>
       <ImageUploadWrapper>
         <ImageUpload onFileChange={onChange} />
       </ImageUploadWrapper>
