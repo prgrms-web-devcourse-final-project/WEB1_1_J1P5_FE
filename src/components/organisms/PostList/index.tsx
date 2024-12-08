@@ -131,7 +131,7 @@ export const PostList = ({ posts, type }: IPostListProps) => {
             <Text
               color={"#344fff"}
               variant="explan_bold"
-              content={price.toLocaleString() + "원"}
+              content={maxPrice.toLocaleString() + "원"}
             ></Text>
           </div>
         </PostItem.Container>
