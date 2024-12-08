@@ -4,7 +4,11 @@ import { DetailTemplate } from "components/templates";
 import { KebabMenu } from "components/molecules";
 import { KebabIcon } from "components/atoms/Icon";
 import { Loading } from "components/molecules/Loading";
-import { useSelectedLocationStore, useTopBarStore } from "stores";
+import {
+  useFormDataStore,
+  useSelectedLocationStore,
+  useTopBarStore,
+} from "stores";
 import {
   useFetchProduct,
   useFetchComment,
@@ -14,6 +18,7 @@ import {
 } from "hooks";
 import { KebabWrapper } from "./styled";
 import { earlyClose } from "services/apis";
+import type { Category } from "../../types";
 
 export const DetailPage = () => {
   const navigate = useNavigate();
@@ -24,6 +29,10 @@ export const DetailPage = () => {
   const {
     actions: { setCoord, setLocation, setAddress },
   } = useSelectedLocationStore();
+  // TODO
+  const {
+    actions: { setFormData },
+  } = useFormDataStore();
   const { open, handleOpen, handleClose, menuRef } = useKebabMenu();
   const { handleCancel } = useBid(parseInt(productId!));
   const { todo } = useDetailModal();
@@ -87,6 +96,18 @@ export const DetailPage = () => {
     if (product && !product.hasBuyer) {
       // 수정 페이지로 이동
       // TODO 확인 필요
+      setFormData({
+        title: product.title,
+        content: product.content,
+        minimumPrice: product.minimumPrice.toLocaleString(),
+        category: product.category as Category,
+        latitude: product.productLocation.latitube,
+        longitude: product.productLocation.longitude,
+        address: product.productLocation.address,
+        location: product.productLocation.location,
+        imgUrls: product.images.map((img) => ({ url: img, file: null })),
+        expiredTime: product.expiredTime,
+      });
       navigate(`/product?productId=${productId!}`);
       return;
     }
