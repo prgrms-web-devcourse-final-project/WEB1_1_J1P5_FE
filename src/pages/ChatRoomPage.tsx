@@ -4,11 +4,12 @@ import { EmptyTemplate } from "components/templates";
 import { ChatRoomTemplate } from "components/templates/ChatRoomTemplate";
 import { TopSheet } from "components/templates/ChatRoomTemplate/TopSheet";
 import { DEFAULT_IMG_PATH } from "constants/imgPath";
+import { useModalForm } from "hooks";
 import { useChatGroups } from "hooks/useChatGroups";
 import { useWebSocket } from "hooks/useWebSocket";
 import { throttle } from "lodash";
 import { useEffect, useRef, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { http } from "services/api";
 import { useTopBarStore } from "stores";
 import { IResponse } from "types";
@@ -54,6 +55,8 @@ interface IChatRoomNewMsgResponse extends IResponse {
 }
 export const ChatRoomPage = () => {
   const { clear, setTitle } = useTopBarStore();
+  const { todo } = useModalForm();
+  const navigate = useNavigate();
   const { roomId, userId } = useParams(); // URL에서 roomId 가져오기
   const decrtyptRoomId = roomId ? decryptRoomId(roomId) : "";
 
@@ -88,11 +91,12 @@ export const ChatRoomPage = () => {
     address: "",
     uploadTime: "",
     expiredTime: "",
+    isSeller: chatRoomBasicInfo.isSeller,
     onClick: () => {
-      console.log("onClick");
+      navigate(`/product/${chatRoomBasicInfo.productId}`);
     },
     onTextButtonClick: () => {
-      console.log("onTextButtonClick");
+      todo();
     },
     onIconButtonClick: () => {
       console.log("onIconButtonClick");
