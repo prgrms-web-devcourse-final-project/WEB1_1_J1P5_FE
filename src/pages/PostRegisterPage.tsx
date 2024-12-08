@@ -1,11 +1,12 @@
+import { Toast } from "components/atoms";
 import { PostRegisterTemplate } from "components/templates";
-import { useCallback, useEffect, useMemo } from "react";
+import { useCallback, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useFormDataStore, useTopBarStore } from "stores";
 import type { Category, ExpiredTime, IProductForm, IProductPost } from "types";
 import { getExpiredDate } from "utils";
 import { registerProduct, editProduct } from "services/apis/product";
-import { useFetchProduct } from "hooks";
+// import { useFetchProduct } from "hooks";
 
 export const PostRegisterPage = () => {
   const location = useLocation();
@@ -18,48 +19,31 @@ export const PostRegisterPage = () => {
   const lat = useFormDataStore((state) => state.formData.latitude);
   const lng = useFormDataStore((state) => state.formData.longitude);
   const address = useFormDataStore((state) => state.formData.address);
-  const { setFormData, isFormDataEmpty, clear } = useFormDataStore(
-    (state) => state.actions
-  );
-  const { product, isProductLoading } = useFetchProduct(
-    productId?.toString() || ""
-  );
-
-  // console.log(product);
-
-  // {
-  //   title: product.title,
-  //   content: product.content,
-  //   minimumPrice: product.minimumPrice.toLocaleString(),
-  //   category: product.category as Category,
-  //   latitude: product.productLocation.latitude,
-  //   longitude: product.productLocation.longitude,
-  //   address: product.productLocation.address,
-  //   location: product.productLocation.location,
-  //   imgUrls: product.images.map((img) => ({ url: img, file: null })),
-  //   expiredTime: product.expiredTime,
-  // }
+  const { setFormData, clear } = useFormDataStore((state) => state.actions);
+  // const { product, isProductLoading } = useFetchProduct(
+  //   productId?.toString() || ""
+  // );
 
   // 1. 데이터를 fetch해서 받아온다
   // 2. 받아온 데이터를 formdata에 넣어준다
   // 3. 변경된 formdata를 감지하고, 템플릿에 넣어준다.
 
-  useEffect(() => {
-    if (productId && product && isFormDataEmpty()) {
-      setFormData({
-        title: product.title,
-        content: product.content,
-        minimumPrice: product.minimumPrice.toLocaleString(),
-        category: product.category as Category,
-        latitude: product.productLocation.latitude,
-        longitude: product.productLocation.longitude,
-        address: product.productLocation.address,
-        location: product.productLocation.location,
-        imgUrls: product.images.map((img) => ({ url: img, file: null })),
-        expiredTime: product.expiredTime,
-      });
-    }
-  }, [product, setFormData]);
+  // useEffect(() => {
+  //   if (productId && product && isFormDataEmpty()) {
+  //     setFormData({
+  //       title: product.title,
+  //       content: product.content,
+  //       minimumPrice: product.minimumPrice.toLocaleString(),
+  //       category: product.category as Category,
+  //       latitude: product.productLocation.latitude,
+  //       longitude: product.productLocation.longitude,
+  //       address: product.productLocation.address,
+  //       location: product.productLocation.location,
+  //       imgUrls: product.images.map((img) => ({ url: img, file: null })),
+  //       expiredTime: product.expiredTime,
+  //     });
+  //   }
+  // }, [product, setFormData]);
 
   useEffect(() => {
     const unsubscribe = useFormDataStore.subscribe((state) => {
@@ -100,6 +84,7 @@ export const PostRegisterPage = () => {
         if (!productId) {
           await registerProduct(newProduct);
           navigate(`/`);
+          Toast.show("물품이 등록되었어요!");
         } else {
           const updatedProduct = { ...newProduct };
           delete updatedProduct.images;
@@ -107,6 +92,7 @@ export const PostRegisterPage = () => {
 
           await editProduct(productId, updatedProduct);
           navigate(`/product/${productId}`);
+          Toast.show("물품이 수정되었어요!");
         }
 
         clear();
