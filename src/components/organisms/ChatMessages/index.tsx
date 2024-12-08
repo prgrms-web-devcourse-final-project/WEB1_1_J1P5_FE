@@ -43,20 +43,20 @@ export const ChatMessages = ({
           const currentCreatedAt = bubble.chats[0].createdAt; // string으로 가정
           const previousCreatedAt =
             idx > 0 ? chatBubbles[idx - 1].chats[0].createdAt : null;
-
+          if (idx === 0) console.log(currentCreatedAt);
           return (
-            <>
-              {idx === 0 ||
+            <div key={`chat_bubble_${idx}`}>
+              {(idx === 0 ||
                 (previousCreatedAt &&
-                  areDatesDifferent(currentCreatedAt, previousCreatedAt) && (
-                    <div className="chat-date">
-                      <ChatDay
-                        date={new Date(currentCreatedAt).toLocaleDateString()}
-                      />
-                    </div>
-                  ))}
-              <ChatBubble key={`chat_bubble_${idx}`} {...bubble} />
-            </>
+                  areDatesDifferent(currentCreatedAt, previousCreatedAt))) && (
+                <div className="chat-date">
+                  <ChatDay
+                    date={new Date(currentCreatedAt).toLocaleDateString()}
+                  />
+                </div>
+              )}
+              <ChatBubble {...bubble} />
+            </div>
           );
         })}
       </ChatBubblesWrapper>
