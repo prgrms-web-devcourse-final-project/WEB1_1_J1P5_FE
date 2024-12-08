@@ -116,7 +116,7 @@ export const CommentItem = ({
 
   return (
     <CommentItemContainer>
-      {status === "ACTIVE" && (
+      {status !== "DELETED" && (
         <CommentItemWrapper key={commentId}>
           <CommentHeaderContainer className="content-con">
             <Image url={imgUrl} type="round" />

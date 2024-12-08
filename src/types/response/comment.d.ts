@@ -1,6 +1,6 @@
 import type { IResponse } from "types";
 
-export type CommentStatus = "ACTIVE" | "DELETED";
+export type CommentStatus = "ACTIVE" | "UPDATED" | "DELETED";
 
 export interface IComment {
   commentId: number;
