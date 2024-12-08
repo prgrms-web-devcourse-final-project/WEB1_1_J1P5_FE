@@ -21,11 +21,8 @@ export interface ILocationResponse extends IResponse {
 export const NeighborhoodAuthPage = () => {
   const navigate = useNavigate();
   const { setTitle } = useTopBarStore();
-  const user = useUserStore((state) => state.user);
-
-  useEffect(() => {
-    setTitle("동네 인증");
-  }, [setTitle]);
+  const { user } = useUserStore();
+  const locationErrorEvent = useLocationErrorEvent();
 
   /**
    * 사용자의 위치 정보를 서버에 전송하는 함수
@@ -36,7 +33,7 @@ export const NeighborhoodAuthPage = () => {
       const locationPost: IUserLocationPost = {
         latitude: location.coord!.lat,
         longitude: location.coord!.lng,
-        emdId: user?.emdId || 0
+        emdId: user!.emdId as number
       };
       try {
         await http.post<ILocationResponse, IUserLocationPost>(
@@ -55,14 +52,16 @@ export const NeighborhoodAuthPage = () => {
     [user, navigate]
   );
 
-  const locationErrorEvent = useLocationErrorEvent();
-
   const handleSubmitButtonClick = useCallback(
     async (location: ILocation) => {
       await submitUserLocation(location);
     },
     [submitUserLocation]
   );
+
+  useEffect(() => {
+    setTitle("동네 인증");
+  }, []);
 
   return (
     <NeighborhoodAuthTemplate
