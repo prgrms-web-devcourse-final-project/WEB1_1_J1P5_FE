@@ -18,12 +18,12 @@ export const TopSheetWrapper = styled.div``;
 const TopSheetContainer = styled.div`
   position: fixed;
   width: 100%;
-  max-width: 402px;
+  max-width: ${({ theme }: { theme: ThemeType }) => theme.sizes.max_width};
   left: 50%;
   transform: translate(-50%);
 
   height: ${({ isOpen, isSeller }: TopSheetWrapperProps) =>
-    isSeller ? (isOpen ? "11.25rem" : "0") : isOpen ? "7.624375rem" : "0"};
+    isSeller ? (isOpen ? "11.25rem" : "0") : isOpen ? "7.6243751rem" : "0"};
   overflow: hidden;
   //overflow: ${({ isOpen }) => (isOpen ? "visible" : "hidden")}; /* 변경 */
   z-index: 1000;
@@ -42,7 +42,7 @@ const TopSheetContainer = styled.div`
 const ToggleButton = styled.button<TopSheetWrapperProps>`
   position: fixed;
   width: 100%;
-  max-width: 402px;
+  max-width: ${({ theme }: { theme: ThemeType }) => theme.sizes.max_width};
   left: 50%;
   transform: translate(-50%);
   height: 2.25rem;

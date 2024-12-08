@@ -29,6 +29,6 @@ export const TextWithImageWrapper: ReturnType<
   }
 
   ${ImageWrapper} {
-    max-width: 80px;
+    max-width: 5rem;
   }
 `;
