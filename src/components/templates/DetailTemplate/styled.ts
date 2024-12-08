@@ -3,6 +3,11 @@ import { AuctionControlBarRootWrapper } from "components/organisms/AuctionContro
 import { LocationMapWrapper } from "components/organisms/LocationMap/styled";
 import { MapWrapper } from "components/organisms/Map/styled";
 import { CommentWrapper } from "components/organisms/Comment/styled";
+import {
+  ImageWrapper,
+  ProfileWrapper,
+  TextWrapper,
+} from "components/organisms/Profile/styled";
 
 export const ImageSliderAndTimer: ReturnType<typeof styled.div> = styled.div`
   //
@@ -32,5 +37,14 @@ export const DetailTemplateWrapper: ReturnType<typeof styled.div> = styled.div`
     bottom: 10px;
     z-index: 9999;
     margin: 0 1rem;
+  }
+  ${ProfileWrapper} {
+    gap: ${12 / 16}rem;
+    ${TextWrapper} {
+      width: 100%;
+    }
+    ${ImageWrapper} {
+      width: 80px;
+    }
   }
 `;

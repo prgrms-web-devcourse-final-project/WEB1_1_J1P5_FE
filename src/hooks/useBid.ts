@@ -15,8 +15,10 @@ export const useBid = (productId: number) => {
   const [open, setOpen] = useState(false);
   const [price, setPrice] = useState("");
 
+  /**
+   * 입찰 버튼 클릭
+   */
   const handleBid = () => {
-    // 입찰 버튼 클릭
     console.log(Number(price.replace(",", "")));
     if (!myPrice) {
       // 현재 입찰중이 아닌 경우
@@ -39,6 +41,9 @@ export const useBid = (productId: number) => {
     }
   };
 
+  /**
+   * 입찰 취소
+   */
   const handleCancel = () => {
     if (myPrice) {
       cancelBidding(myPrice.auctionId)

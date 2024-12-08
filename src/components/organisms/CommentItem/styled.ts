@@ -17,6 +17,7 @@ export const KebabWrapper: ReturnType<typeof styled.div> = styled.div`
     position: absolute;
     top: 0.5rem;
     right: 0.5rem;
+    z-index: 99999;
   }
 `;
 

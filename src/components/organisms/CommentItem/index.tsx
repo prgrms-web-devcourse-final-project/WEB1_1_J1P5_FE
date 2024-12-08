@@ -2,7 +2,7 @@ import { IconButton, Image, Text } from "components/atoms";
 import { KebabIcon, ReplyIcon } from "components/atoms/Icon";
 import { InputWithButton, KebabMenu } from "components/molecules";
 import { getRelativeTime } from "utils";
-import { useCommentWriter, useKebabMenu } from "hooks";
+import { useCommentWriter, useDetailModal, useKebabMenu } from "hooks";
 import {
   CommentContentWrapper,
   CommentItemContainer,
@@ -62,6 +62,7 @@ export const CommentItem = ({
     handleDeleteComment,
   } = useCommentWriter(content);
   const time = getRelativeTime(createdAt);
+  const { todo } = useDetailModal();
 
   /**
    * 답글 메뉴 클릭
@@ -92,6 +93,7 @@ export const CommentItem = ({
    */
   const handleBlockClick = () => {
     // TODO 차단하기
+    todo();
     handleClose();
   };
 
@@ -100,6 +102,7 @@ export const CommentItem = ({
    */
   const handleReportClick = () => {
     // TODO 신고하기
+    todo();
     handleClose();
   };
 
@@ -182,7 +185,7 @@ export const CommentItem = ({
                 (
                   {
                     commentId: childId,
-                    commentMemeberDto: { profileImage, nickname },
+                    commentMemeberDto: { profileIamge, nickname },
                     createdAt,
                     content,
                     replies,
@@ -198,7 +201,7 @@ export const CommentItem = ({
                       createdAt={createdAt}
                       nickname={nickname}
                       content={content}
-                      imgUrl={profileImage}
+                      imgUrl={profileIamge}
                       isMyComment={nickname === user?.nickname}
                       replies={replies}
                       parentId={commentId}
