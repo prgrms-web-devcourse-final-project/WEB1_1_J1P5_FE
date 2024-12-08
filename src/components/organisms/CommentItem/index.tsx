@@ -1,4 +1,4 @@
-import { Badge, IconButton, Image, Text } from "components/atoms";
+import { Badge, IconButton, Image, Text, Toast } from "components/atoms";
 import { KebabIcon, ReplyIcon } from "components/atoms/Icon";
 import { InputWithButton, KebabMenu } from "components/molecules";
 import { getRelativeTime } from "utils";
@@ -40,6 +40,8 @@ export interface ICommentItemProps {
   status: CommentStatus;
   /** 판매자인지 여부 */
   isSeller: boolean;
+  /** 현재 구매자가 있는 상태인지 여부 */
+  hasBuyer?: boolean;
 }
 
 export const CommentItem = ({
@@ -53,6 +55,7 @@ export const CommentItem = ({
   parentId,
   status,
   isSeller,
+  hasBuyer,
 }: ICommentItemProps) => {
   const { user } = useUserStore();
   const { menuRef, open, handleOpen, handleClose } = useKebabMenu();
@@ -84,7 +87,12 @@ export const CommentItem = ({
    * 수정하기 메뉴 클릭
    */
   const handleEditClick = () => {
-    setEditMode(true);
+    if (!hasBuyer) {
+      setEditMode(true);
+    } else {
+      // TODO 입찰자가 있어 댓글 수정이 어렵습니다.
+      Toast.show("입찰자가 있어 댓글 수정이 어렵습니다.", 2000);
+    }
     handleClose();
   };
 
@@ -92,7 +100,12 @@ export const CommentItem = ({
    * 삭제하기 메뉴 클릭
    */
   const handleDeleteClick = () => {
-    handleDeleteComment(commentId);
+    if (!hasBuyer) {
+      handleDeleteComment(commentId);
+    } else {
+      // TODO 입찰자가 있어 댓글 삭제가 어렵습니다.
+      Toast.show("입찰자가 있어 댓글 삭제가 어렵습니다.", 2000);
+    }
     handleClose();
   };
 
@@ -222,6 +235,7 @@ export const CommentItem = ({
                       parentId={commentId}
                       status={status}
                       isSeller={isSeller}
+                      hasBuyer={hasBuyer}
                     />
                   </ReplyCommentWrapper>
                 ),

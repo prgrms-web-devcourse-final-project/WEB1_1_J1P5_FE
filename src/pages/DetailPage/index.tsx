@@ -18,7 +18,8 @@ import {
 } from "hooks";
 import { KebabWrapper } from "./styled";
 import { earlyClose } from "services/apis";
-import type { Category } from "../../types";
+import type { Category } from "types";
+import { Toast } from "../../components/atoms";
 
 export const DetailPage = () => {
   const navigate = useNavigate();
@@ -74,6 +75,7 @@ export const DetailPage = () => {
    * (구매자) 입찰 취소
    */
   const handleCancelBid = () => {
+    // TODO 조기마감 적용된 경우 처리
     if (product?.myAuctionId) {
       handleCancel(product.myAuctionId);
     }
@@ -83,7 +85,7 @@ export const DetailPage = () => {
    * (판매자) 조기마감
    */
   const handleEarlyClosing = () => {
-    // TODO 조기마감 (판매자 확인 필요)
+    // TODO 조기마감
     if (product?.isSeller) {
       earlyClose(productId!).then(console.log).catch(console.error);
     }
@@ -93,7 +95,16 @@ export const DetailPage = () => {
    * (판매자) 수정하기
    */
   const handleEdit = () => {
-    if (product && !product.hasBuyer) {
+    if (!product) {
+      return;
+    }
+    if (product.hasBuyer) {
+      // TODO 구매자 있는 게시글은 수정할 수 없습니다. 모달
+      Toast.show("구매자가 있는 게시물은 수정할 수 없습니다.", 2000);
+      handleClose();
+      return;
+    }
+    if (!product.hasBuyer) {
       // 수정 페이지로 이동
       // TODO 확인 필요
       setFormData({
@@ -117,7 +128,16 @@ export const DetailPage = () => {
    * (판매자) 삭제하기
    */
   const handleDelete = () => {
-    if (product && !product.hasBuyer) {
+    if (!product) {
+      return;
+    }
+    if (product.hasBuyer) {
+      // TODO 구매자 있는 게시글은 삭제할 수 없습니다. 모달
+      Toast.show("구매자가 있는 게시물은 삭제할 수 없습니다.", 2000);
+      handleClose();
+      return;
+    }
+    if (!product.hasBuyer) {
       // TODO 삭제 처리
       navigate("/", { replace: true });
       return;
@@ -145,7 +165,7 @@ export const DetailPage = () => {
 
   if (!product) {
     // 에러페이지로 이동
-    return <Navigate to='/error' replace />;
+    return <Navigate to="/error" replace />;
   }
 
   return (
@@ -177,14 +197,14 @@ export const DetailPage = () => {
           <KebabMenu>
             {product.isSeller && (
               <>
-                <KebabMenu.Button content='수정하기' onClick={handleEdit} />
-                <KebabMenu.Button content='삭제하기' onClick={handleDelete} />
+                <KebabMenu.Button content="수정하기" onClick={handleEdit} />
+                <KebabMenu.Button content="삭제하기" onClick={handleDelete} />
               </>
             )}
             {!product.isSeller && (
               <>
-                <KebabMenu.Button content='차단하기' onClick={handleBlock} />
-                <KebabMenu.Button content='신고하기' onClick={handleReport} />
+                <KebabMenu.Button content="차단하기" onClick={handleBlock} />
+                <KebabMenu.Button content="신고하기" onClick={handleReport} />
               </>
             )}
           </KebabMenu>

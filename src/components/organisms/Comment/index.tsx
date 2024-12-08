@@ -13,9 +13,11 @@ import { useCommentWriter } from "hooks";
 interface ICommentProps {
   /** 작성된 Comment 목록 */
   comments: IComment[];
+  /** 구매자가 있는지 여부 */
+  hasBuyer?: boolean;
 }
 
-export const Comment = ({ comments }: ICommentProps) => {
+export const Comment = ({ comments, hasBuyer }: ICommentProps) => {
   const { user } = useUserStore();
   const { comment, setComment, handleWriteButtonClick } = useCommentWriter();
 
@@ -59,6 +61,7 @@ export const Comment = ({ comments }: ICommentProps) => {
               parentId={null}
               status={status}
               isSeller={isSeller}
+              hasBuyer={hasBuyer}
             />
           ),
         )}

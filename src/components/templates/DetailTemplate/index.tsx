@@ -84,11 +84,12 @@ export const DetailTemplate = ({
   myPrice,
   myAuctionId,
   isEarly,
-  // hasBuyer,
   onCancel,
   onEarlyClosing,
   // 판매자 여부
   isSeller,
+  // 구매자 있는지 여부
+  hasBuyer,
 }: IBaseDetailTemplateProps) => {
   const modal = useDetailModal();
   const {
@@ -119,7 +120,7 @@ export const DetailTemplate = ({
         location={location}
         onClick={onLocationClick}
       />
-      <Comment comments={comments} />
+      <Comment hasBuyer={hasBuyer} comments={comments} />
       <AuctionControlBar>
         <AuctionControlBar.BidContainer>
           {(!isSeller || !maximumPrice) && (
