@@ -36,7 +36,12 @@ interface IChatRoomBasic {
   isSeller: boolean;
   /** 현재 채팅 가능 상태인지(상대방이 채팅방에서 안나갔는지) */
   isChatAvailable: boolean;
+  /** 게시글 판매 동네*/
+  sellerAddress: string;
+  /** 게시글 등록 날짜 */
+  productCreatedAt: string;
 }
+
 export interface IChatMsg {
   /** 채팅 ObjectId 문자열 / 추후 안읽은 메시지 개수 관리를 위해 */
   id: string;
@@ -88,8 +93,8 @@ export const ChatRoomPage = () => {
     title: chatRoomBasicInfo.productTitle,
     maxPrice: chatRoomBasicInfo.price,
     price: 0,
-    address: "",
-    uploadTime: "",
+    address: chatRoomBasicInfo.sellerAddress,
+    uploadTime: chatRoomBasicInfo.productCreatedAt,
     expiredTime: "",
     isSeller: chatRoomBasicInfo.isSeller,
     onClick: () => {

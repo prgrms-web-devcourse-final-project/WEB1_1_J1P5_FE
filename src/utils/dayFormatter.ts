@@ -106,3 +106,12 @@ export const isISOFormat = (dateString: string) => {
   const isoFormatRegex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z$/;
   return isoFormatRegex.test(dateString);
 };
+
+/**
+ * 날짜를 'YYYY-MM-DD HH:mm' 형식으로 변환하는 함수
+ * @param date - 변환할 날짜 (Date 객체, 문자열, 숫자 등 Day.js에서 지원하는 입력 타입)
+ * @returns 'YYYY-MM-DD HH:mm' 형식의 문자열
+ */
+export const formatToDateTime = (date: Date | string | number): string => {
+  return dayjs(date).format("YYYY-MM-DD HH:mm");
+};
