@@ -182,7 +182,7 @@ export const CommentItem = ({
                 (
                   {
                     commentId: childId,
-                    commentMemeberDto: { profileImage, nickname },
+                    commentMemeberDto: { profileIamge, nickname },
                     createdAt,
                     content,
                     replies,
@@ -198,7 +198,7 @@ export const CommentItem = ({
                       createdAt={createdAt}
                       nickname={nickname}
                       content={content}
-                      imgUrl={profileImage}
+                      imgUrl={profileIamge}
                       isMyComment={nickname === user?.nickname}
                       replies={replies}
                       parentId={commentId}

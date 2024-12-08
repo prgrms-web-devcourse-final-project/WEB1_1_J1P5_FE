@@ -37,7 +37,7 @@ export const Comment = ({ comments }: ICommentProps) => {
           (
             {
               commentId,
-              commentMemeberDto: { profileImage, nickname },
+              commentMemeberDto: { profileIamge, nickname },
               createdAt,
               content,
               replies,
@@ -52,7 +52,7 @@ export const Comment = ({ comments }: ICommentProps) => {
               createdAt={createdAt}
               nickname={nickname}
               content={content}
-              imgUrl={profileImage}
+              imgUrl={profileIamge}
               isMyComment={nickname === user?.nickname}
               replies={replies}
               parentId={null}
