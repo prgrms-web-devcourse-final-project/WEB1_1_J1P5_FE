@@ -86,7 +86,8 @@ export const DetailPage = () => {
   const handleEdit = () => {
     if (product && !product.hasBuyer) {
       // 수정 페이지로 이동
-      navigate(`/product?${productId!}`);
+      // TODO 확인 필요
+      navigate(`/product?productId=${productId!}`);
       return;
     }
   };
