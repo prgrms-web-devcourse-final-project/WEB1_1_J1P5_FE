@@ -46,7 +46,7 @@ const ToggleButton = styled.button<{ isOpen: boolean }>`
   gap: 5px;
   border-radius: 0 0 0.625rem 0.625rem;
 
-  top: ${({ isOpen }) => (isOpen ? "15.625rem" : "4.375rem")};
+  top: ${({ isOpen }) => (isOpen ? "15.7725rem" : "4.77375rem")};
   background-color: ${({ theme }: { theme: ThemeType }) => theme.colors.white};
   border: none;
 

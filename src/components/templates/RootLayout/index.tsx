@@ -71,6 +71,7 @@ export const RootLayout = () => {
         "/my-page",
         "/login",
         "/permission-request",
+        "/chat",
       ].includes(pathname) && (
         <TopBar>
           <TopBar.BackIcon onBackIconClick={onBackClick} />
