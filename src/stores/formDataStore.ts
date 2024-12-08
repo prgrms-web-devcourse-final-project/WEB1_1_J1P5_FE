@@ -4,6 +4,7 @@ import { produce } from "immer";
 import type { IProductForm } from "types";
 
 interface State {
+  productId?: number;
   formData: IProductForm;
 }
 
@@ -16,6 +17,7 @@ interface Actions {
 }
 
 export const defaultState: State = {
+  productId: undefined,
   formData: {
     title: "",
     content: "",
@@ -34,6 +36,10 @@ export const useFormDataStore: UseBoundStore<StoreApi<State & Actions>> =
   create<State & Actions>((set, get) => ({
     ...defaultState,
     actions: {
+      setProductId: (id: number) =>
+        set(() => ({
+          productId: id,
+        })),
       setFormData: (data) =>
         set(
           produce((state: State) => {

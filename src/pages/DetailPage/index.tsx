@@ -31,7 +31,7 @@ export const DetailPage = () => {
   } = useSelectedLocationStore();
   // TODO
   const {
-    actions: { setFormData },
+    actions: { setFormData, setProductId },
   } = useFormDataStore();
   const { open, handleOpen, handleClose, menuRef } = useKebabMenu();
   const { handleCancel } = useBid(parseInt(productId!));
@@ -96,6 +96,7 @@ export const DetailPage = () => {
     if (product && !product.hasBuyer) {
       // 수정 페이지로 이동
       // TODO 확인 필요
+      setProductId(productId!);
       setFormData({
         title: product.title,
         content: product.content,

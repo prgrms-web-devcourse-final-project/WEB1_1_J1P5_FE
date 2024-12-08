@@ -3,7 +3,7 @@ import { http } from "services/api";
 import type {
   IProductDetailResponse,
   IProductPost,
-  IProductResponse
+  IProductResponse,
 } from "types";
 
 /**
@@ -39,7 +39,7 @@ export const registerProduct = async (
     longitude: newProduct.longitude,
     address: newProduct.address,
     location: newProduct.location,
-    expiredTime: newProduct.expiredTime
+    expiredTime: newProduct.expiredTime,
   });
 
   const request = new Blob([jsonRequestData], { type: "application/json" });
@@ -54,7 +54,7 @@ export const registerProduct = async (
       `${import.meta.env.VITE_SERVER_URL}/api/v1/products`,
       requestBody,
       {
-        withCredentials: true
+        withCredentials: true,
       }
     );
     console.log("Response:", res.data); // 요청 성공 시 응답 데이터 출력
@@ -91,6 +91,7 @@ export const editProduct = async (
   productId: number,
   updatedProduct: Omit<IProductPost, "images" | "expiredTime">
 ) => {
+  console.log("updatedProduct", updatedProduct);
   return http.patch<IProductResponse, typeof updatedProduct>(
     `/products/${productId}`,
     updatedProduct

@@ -216,11 +216,10 @@ export const PostRegisterForm = ({
           fieldState: { invalid },
           formState,
         }) => {
-          console.log("expiredTime", postForm?.expiredTime);
           const expiredTimeDisabled = isISOFormat(
             postForm?.expiredTime as string
           );
-          
+
           const formattedTime = expiredTimeDisabled
             ? formatToDateTime(postForm?.expiredTime as string)
             : "";
