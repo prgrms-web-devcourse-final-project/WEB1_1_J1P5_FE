@@ -75,7 +75,10 @@ export const useNeighborhoodSelection = () => {
         .then((data) => {
           console.log(data);
           // 동네 선택 시 user에 저장
-          setUser({ ...user, emdName: neighborhood.split(" ").pop() });
+          setUser({
+            emdName: neighborhood.split(" ").pop(),
+            emdId: emdId,
+          });
           // 저장 이후 홈으로 이동
           navigate("/", { replace: true });
         })
