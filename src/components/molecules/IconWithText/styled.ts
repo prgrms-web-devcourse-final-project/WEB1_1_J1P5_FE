@@ -8,7 +8,7 @@ export const IconWithTextWrapper: ReturnType<
   justify-content: flex-start;
   align-items: center;
   gap: 8px;
-  cursor: pointer;
+  //cursor: pointer;
 `;
 
 export const IconWithTextContentWrapper: ReturnType<
