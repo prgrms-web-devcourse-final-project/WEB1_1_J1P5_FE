@@ -26,7 +26,13 @@ export const useBid = (productId: number) => {
   /**
    * 입찰 버튼 클릭
    */
-  const handleBid = (minimumPrice: number, myAuctionId?: number) => {
+  const handleBid = (
+    minimumPrice: number,
+    myAuctionId?: number,
+    isEarly?: boolean,
+  ) => {
+    // TODO 조기종료 시 처리 필요
+    console.log(isEarly);
     // 1. 가격 체크
     const priceValue = Number(price.replace(/,/g, ""));
     if (priceValue < minimumPrice) {
@@ -72,7 +78,9 @@ export const useBid = (productId: number) => {
   /**
    * 입찰 취소
    */
-  const handleCancel = (myAuctionId: number) => {
+  const handleCancel = (myAuctionId: number, isEarly: boolean) => {
+    // TODO 조기마감 적용된 상태라면 처리
+    console.log(isEarly);
     if (myAuctionId) {
       cancelBidding(myAuctionId)
         .then((data) => {

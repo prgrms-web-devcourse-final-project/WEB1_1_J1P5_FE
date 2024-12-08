@@ -1,5 +1,7 @@
 import type { IResponse } from "types";
 
+export type CommentStatus = "ACTIVE" | "UPDATED" | "DELETED";
+
 export interface IComment {
   commentId: number;
   commentMemeberDto: {
@@ -11,6 +13,7 @@ export interface IComment {
   isUpdatable: boolean;
   createdAt: string;
   replies: IComment[];
+  status: CommentStatus;
 }
 
 export interface ICommentResponse extends IResponse {
