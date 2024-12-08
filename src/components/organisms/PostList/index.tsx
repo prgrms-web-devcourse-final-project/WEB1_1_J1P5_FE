@@ -1,6 +1,7 @@
 import { PostListWrapper } from "./styled";
 import { PostItem } from "../PostItem";
 import { DownIcon } from "components/atoms/Icon";
+import { Text } from "components/atoms";
 
 export interface IPost {
   /** 게시글 ID */
@@ -135,12 +136,12 @@ export const PostList = ({ posts, type }: IPostListProps) => {
     imgUrl,
     title,
     price,
-    address,
-    uploadTime,
+    //address,
+    //uploadTime,
     expiredTime,
-    maxPrice,
-    onTextButtonClick,
-    onIconButtonClick,
+    //maxPrice,
+    //onTextButtonClick,
+    //onIconButtonClick,
     onClick,
   }: IPost) => {
     return (
@@ -148,17 +149,32 @@ export const PostList = ({ posts, type }: IPostListProps) => {
         <PostItem.Image imgUrl={imgUrl} size={"default"} />
         <PostItem.Container>
           <PostItem.Title title={title} />
-          <PostItem.LocationAndTime address={address} uploadTime={uploadTime} />
-          <PostItem.Price price={price} />
-          <PostItem.RemainingTime expiredTime={expiredTime} />
-          <PostItem.Price title={"최고 입찰가"} price={maxPrice} />
+          {/* <PostItem.LocationAndTime address={address} uploadTime={uploadTime} /> */}
+          <div className="sell-remain-con">
+            <PostItem.RemainingTime expiredTime={expiredTime} />
+          </div>
+          <div className="sell-price-con">
+            <PostItem.Price
+              title={"원가 ·"}
+              price={price}
+              variant="tag_regular"
+            />
+          </div>
+          <div className="sell-max-price-con">
+            <Text variant="explan_bold" content={"현재 입찰가"}></Text>
+            <Text
+              color={"#344fff"}
+              variant="explan_bold"
+              content={price.toLocaleString() + "원"}
+            ></Text>
+          </div>
         </PostItem.Container>
-        <PostItem.ButtonContainer
+        {/* <PostItem.ButtonContainer
           buttonText={"끌어올리기"}
           onTextButtonClick={onTextButtonClick}
           icon={DownIcon}
           onIconButtonClick={onIconButtonClick}
-        />
+        /> */}
       </PostItem>
     );
   };

@@ -37,6 +37,8 @@ interface ITextProps extends HTMLAttributes<HTMLParagraphElement> {
   content: string;
   /** Text의 타입 (스타일 가이드 준수) */
   variant?: TextVariant;
+  /** Text의 색깔 */
+  color?: string;
 }
 
 const variantMap: {
@@ -63,8 +65,13 @@ const variantMap: {
 export const Text = ({
   content,
   variant = "body1",
-  onClick = () => {}
+  onClick = () => {},
+  color,
 }: ITextProps) => {
   const Component = variantMap[variant];
-  return <Component onClick={onClick}>{content}</Component>;
+  return (
+    <Component onClick={onClick} color={color}>
+      {content}
+    </Component>
+  );
 };
