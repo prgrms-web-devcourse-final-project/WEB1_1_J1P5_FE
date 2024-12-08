@@ -7,6 +7,7 @@ import { useTopBarStore } from "stores";
 import { useFetchProduct, useFetchComment, useKebabMenu, useBid } from "hooks";
 import { KebabWrapper } from "./styled";
 import { earlyClose } from "services/apis";
+import { Loading } from "components/molecules/Loading";
 
 export const DetailPage = () => {
   const navigate = useNavigate();
@@ -92,7 +93,7 @@ export const DetailPage = () => {
 
   if (isProductLoading || isCommentLoading) {
     // TODO 스켈레톤 UI
-    return null;
+    return <Loading />;
   }
 
   if (!product) {
