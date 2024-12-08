@@ -25,6 +25,8 @@ export interface IPost {
   onTextButtonClick: () => void;
   /** 아이콘 버튼 클릭 이벤트 */
   onIconButtonClick: () => void;
+  /** 판매자 여부 */
+  isSeller?: boolean;
 }
 export type PostItemType =
   | "completed"
@@ -69,6 +71,7 @@ export const PostList = ({ posts, type }: IPostListProps) => {
     onClick,
     onTextButtonClick,
     onIconButtonClick,
+    isSeller,
   }: IPost) => {
     return (
       <PostItem key={productId} onClick={onClick}>
@@ -77,12 +80,14 @@ export const PostList = ({ posts, type }: IPostListProps) => {
           <PostItem.Title title={title} />
           <PostItem.Price price={price} />
         </PostItem.Container>
-        <PostItem.ButtonContainer
-          buttonText={"거래 완료"}
-          onTextButtonClick={onTextButtonClick}
-          icon={DownIcon}
-          onIconButtonClick={onIconButtonClick}
-        />
+        {isSeller && (
+          <PostItem.ButtonContainer
+            buttonText={"거래 완료"}
+            onTextButtonClick={onTextButtonClick}
+            icon={DownIcon}
+            onIconButtonClick={onIconButtonClick}
+          />
+        )}
       </PostItem>
     );
   };

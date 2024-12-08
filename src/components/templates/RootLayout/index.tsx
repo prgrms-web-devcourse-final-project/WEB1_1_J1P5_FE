@@ -68,10 +68,10 @@ export const RootLayout = () => {
       {![
         "/",
         "/market-price",
-        "/chat",
         "/my-page",
         "/login",
         "/permission-request",
+        "/chat",
       ].includes(pathname) && (
         <TopBar>
           <TopBar.BackIcon onBackIconClick={onBackClick} />
@@ -91,11 +91,9 @@ export const RootLayout = () => {
       <PageLayoutWrapper>
         <Outlet />
       </PageLayoutWrapper>
-      {["/", "/market-price", "/my-page"].includes(pathname) ||
-      _pathname === "/chat" ||
-      _pathname === "/chat/" ? (
+      {["/", "/market-price", "/chat", "/my-page"].includes(pathname) && (
         <BottomNavBar />
-      ) : null}
+      )}
     </RootLayoutWrapper>
   );
 };

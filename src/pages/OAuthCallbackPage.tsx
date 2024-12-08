@@ -3,7 +3,7 @@ import {
   Navigate,
   useNavigate,
   useParams,
-  useSearchParams,
+  useSearchParams
 } from "react-router-dom";
 import { oauthLogin } from "services/apis";
 import { useUserStore } from "stores";
@@ -34,6 +34,7 @@ export const OAuthCallbackPage = () => {
             profile: result.profileUrl || undefined,
             nickname: result.nickname || undefined,
             emdName: result.emdName || undefined,
+            emdId: result.emdId || undefined
           });
 
           navigate("/", { replace: true });

@@ -1,57 +1,13 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { MyPageTemplate } from "components/templates";
-import { http } from "services/api";
-import { useHeaderStore } from "stores";
-import { IResponse } from "types";
-
-interface IProfile {
-  /** 프로필 이미지 URL */
-  imageUrl: string;
-  /** 닉네임 */
-  nickname: string;
-  /** 인증한 읍면동 */
-  activityEmdName: string;
-}
-interface IProfileResponse extends IResponse {
-  result: IProfile;
-}
+import { useHeaderStore, useUserStore } from "stores";
+import { getUserProfile } from "services/apis";
 
 export const MyPage = () => {
   const { setTitle } = useHeaderStore();
   const navigate = useNavigate();
-  const [profile, setProfile] = useState<IProfile>({
-    imageUrl: "",
-    nickname: "",
-    activityEmdName: "",
-  });
-
-  useEffect(() => {
-    setTitle("마이페이지");
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  // TODO: react-query 사용
-  const fetchProfile = useCallback(async () => {
-    try {
-      const response = await http.get<IProfileResponse>("/users/profile");
-      if (response.success && response.code === "COMMON200") {
-        setProfile(response.result);
-      } else {
-        console.error("Failed to fetch profile: Invalid response code");
-      }
-    } catch (error) {
-      console.error("Failed to fetch profile:", error);
-    }
-  }, []);
-
-  useEffect(() => {
-    /**
-     * fetchProfile에서 에러 catch하는데 여기서 또 할 필요가 없음
-     */
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
-    fetchProfile();
-  }, [fetchProfile]);
+  const { user, setUser } = useUserStore();
 
   const handleProfileEditButtonClick = useCallback(() => {
     navigate("/profile");
@@ -64,11 +20,27 @@ export const MyPage = () => {
     [navigate]
   );
 
+  useEffect(() => {
+    setTitle("마이페이지");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    getUserProfile()
+      .then(({ result }) => {
+        setUser({
+          nickname: result.nickname || undefined,
+          profile: result.imageUrl || undefined,
+          emdName: result.activityEmdName || undefined
+        });
+      })
+      .catch(() => {
+        setUser(null);
+      });
+  }, []);
+
   return (
     <MyPageTemplate
-      imgUrl={profile.imageUrl}
-      nickname={profile.nickname}
-      location={profile.activityEmdName}
+      imgUrl={user!.profile as string}
+      nickname={user!.nickname as string}
+      location={user!.emdName as string}
       onProfileEditButtonClick={handleProfileEditButtonClick}
       onMenuClick={handleMenuClick}
     />

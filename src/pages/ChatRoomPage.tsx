@@ -1,14 +1,17 @@
+import { Loading } from "components/molecules/Loading";
 import { IPost } from "components/organisms/PostList";
 import { EmptyTemplate } from "components/templates";
 import { ChatRoomTemplate } from "components/templates/ChatRoomTemplate";
 import { TopSheet } from "components/templates/ChatRoomTemplate/TopSheet";
 import { DEFAULT_IMG_PATH } from "constants/imgPath";
+import { useModalForm } from "hooks";
 import { useChatGroups } from "hooks/useChatGroups";
 import { useWebSocket } from "hooks/useWebSocket";
 import { throttle } from "lodash";
 import { useEffect, useRef, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { http } from "services/api";
+import { useTopBarStore } from "stores";
 import { IResponse } from "types";
 import { decryptRoomId } from "utils/security";
 
@@ -51,6 +54,9 @@ interface IChatRoomNewMsgResponse extends IResponse {
   result: IChatMsg[];
 }
 export const ChatRoomPage = () => {
+  const { clear, setTitle } = useTopBarStore();
+  const { todo } = useModalForm();
+  const navigate = useNavigate();
   const { roomId, userId } = useParams(); // URL에서 roomId 가져오기
   const decrtyptRoomId = roomId ? decryptRoomId(roomId) : "";
 
@@ -58,6 +64,7 @@ export const ChatRoomPage = () => {
   const chatRoomNewMessagesurl = `/chats/messages`;
   const [post, setPost] = useState<IPost>();
   const [otherUserId, setOtherUserId] = useState<number>(-1);
+  const [otherNickname, setOtherNickname] = useState<string>("");
   const [imgUrl, setImgUrl] = useState<string>(DEFAULT_IMG_PATH);
   const [chats, setChats] = useState<IChatMsg[]>([]);
   const [lastMsgTime, setLastMsgTime] = useState<string>("");
@@ -84,11 +91,12 @@ export const ChatRoomPage = () => {
     address: "",
     uploadTime: "",
     expiredTime: "",
+    isSeller: chatRoomBasicInfo.isSeller,
     onClick: () => {
-      console.log("onClick");
+      navigate(`/product/${chatRoomBasicInfo.productId}`);
     },
     onTextButtonClick: () => {
-      console.log("onTextButtonClick");
+      todo();
     },
     onIconButtonClick: () => {
       console.log("onIconButtonClick");
@@ -117,6 +125,7 @@ export const ChatRoomPage = () => {
       const response = await http.post<IChatRoomPageResponse>(chatRoomEnterurl);
       if (response.success && response.code === "COMMON200") {
         setOtherUserId(response.result.chatRoomBasicInfo.otherUserId);
+        setOtherNickname(response.result.chatRoomBasicInfo.otherNickname);
         // 백엔드 타입 프론트엔드 타입으로 변환
         const createdPost = createChatRoomBasicInfo(
           response.result.chatRoomBasicInfo
@@ -173,6 +182,7 @@ export const ChatRoomPage = () => {
    * 1. fetchChatMessages 호출
    */
   useEffect(() => {
+    clear();
     const fetchChatMessages = async () => {
       await fetchMessages();
     };
@@ -185,6 +195,11 @@ export const ChatRoomPage = () => {
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    setTitle(otherNickname);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [otherNickname]);
 
   /**
    * 2. connectToWebSocket 호출(웹소켓 연결)
@@ -271,8 +286,9 @@ export const ChatRoomPage = () => {
     }
   }, [chatGroups]); // 데이터가 fetch된 이후에만 실행
 
+  const chatLoadingMsg = "채팅 글\n불러 오는 중";
   if (loading) {
-    return <div>Loading...</div>; // 로딩 중 메시지
+    return <Loading message={chatLoadingMsg}></Loading>; // 로딩 중 메시지
   }
   return post ? (
     <>

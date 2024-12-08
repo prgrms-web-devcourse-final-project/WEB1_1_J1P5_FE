@@ -61,7 +61,7 @@ export const ChatListPage = () => {
     name: chatRoom.otherNickname,
     onClick: () => {
       const encryptedRoomId = encryptRoomId(chatRoom.roomId);
-      navigate(`/chat/${encryptedRoomId}/${chatRoom.userId}`);
+      navigate(`/chatroom/${encryptedRoomId}/${chatRoom.userId}`);
     },
   });
 
@@ -113,7 +113,7 @@ export const ChatListPage = () => {
   };
   const loadingMsg = "채팅 방 목록\n불러오는 중...";
 
-  if (isLoading) {
+  if (!chatItems && isLoading) {
     return <Loading message={loadingMsg} />;
   }
   return (

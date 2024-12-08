@@ -7,15 +7,23 @@ import { Text } from "components/atoms";
 import { TextButtonWrapper } from "components/atoms/Button/TextButton/styled";
 import { PostItemRootWrapper } from "components/organisms/PostItem/styled";
 
+/** 시간이 촉박해서 임시로 제작한 TopSheet 입니다. 현재는 채팅쪽에서만 사용할 수 있습니다.  */
+
+interface TopSheetWrapperProps {
+  isSeller: boolean;
+  isOpen: boolean;
+}
+
 export const TopSheetWrapper = styled.div``;
 const TopSheetContainer = styled.div`
   position: fixed;
   width: 100%;
-  max-width: 402px;
+  max-width: ${({ theme }: { theme: ThemeType }) => theme.sizes.max_width};
   left: 50%;
   transform: translate(-50%);
 
-  height: ${({ isOpen }: { isOpen: boolean }) => (isOpen ? "11.25rem" : "0")};
+  height: ${({ isOpen, isSeller }: TopSheetWrapperProps) =>
+    isSeller ? (isOpen ? "11.25rem" : "0") : isOpen ? "7.6243751rem" : "0"};
   overflow: hidden;
   //overflow: ${({ isOpen }) => (isOpen ? "visible" : "hidden")}; /* 변경 */
   z-index: 1000;
@@ -27,14 +35,14 @@ const TopSheetContainer = styled.div`
   }
 
   ${PostItemRootWrapper} {
-    padding-bottom: 0;
+    padding-bottom: ${({ isSeller }) => (isSeller ? "0" : "1rem")};
   }
 `;
 
-const ToggleButton = styled.button<{ isOpen: boolean }>`
+const ToggleButton = styled.button<TopSheetWrapperProps>`
   position: fixed;
   width: 100%;
-  max-width: 402px;
+  max-width: ${({ theme }: { theme: ThemeType }) => theme.sizes.max_width};
   left: 50%;
   transform: translate(-50%);
   height: 2.25rem;
@@ -46,7 +54,14 @@ const ToggleButton = styled.button<{ isOpen: boolean }>`
   gap: 5px;
   border-radius: 0 0 0.625rem 0.625rem;
 
-  top: ${({ isOpen }) => (isOpen ? "15.625rem" : "4.375rem")};
+  top: ${({ isOpen, isSeller }) =>
+    isSeller
+      ? isOpen
+        ? "15.7725rem"
+        : "4.77375rem"
+      : isOpen
+      ? "12.398125rem"
+      : "4.77375rem"};
   background-color: ${({ theme }: { theme: ThemeType }) => theme.colors.white};
   border: none;
 
@@ -68,17 +83,20 @@ interface TopSheetProps {
 }
 export const TopSheet = ({ post }: TopSheetProps) => {
   const [isOpen, setIsOpen] = useState(true);
-
   const toggleSheet = () => {
     setIsOpen((prev) => !prev);
   };
   return (
     <TopSheetWrapper>
-      <ToggleButton onClick={toggleSheet} isOpen={isOpen}>
+      <ToggleButton
+        onClick={toggleSheet}
+        isOpen={isOpen}
+        isSeller={post.isSeller || false}
+      >
         {isOpen ? "" : <Text content={post.title} variant="tag_regular"></Text>}
         <div className="btn-bar"></div>
       </ToggleButton>
-      <TopSheetContainer isOpen={isOpen}>
+      <TopSheetContainer isOpen={isOpen} isSeller={post.isSeller || false}>
         <PostList posts={[post]} type={"chat"}></PostList>
       </TopSheetContainer>
     </TopSheetWrapper>
