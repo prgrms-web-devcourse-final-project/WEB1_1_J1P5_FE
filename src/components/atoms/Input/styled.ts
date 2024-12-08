@@ -28,7 +28,10 @@ export const InputWrapper: ReturnType<
     border: none;
     outline: none;
     width: 100%;
-    height: 50px;
+
+    font-size: 1rem;
+    line-height: 140%;
+
     color: #2d2d39;
     box-sizing: border-box;
     padding: 0px;
@@ -43,15 +46,5 @@ export const InputWrapper: ReturnType<
       props.onClick &&
       `cursor: pointer;
       `}
-  }
-
-  input,
-  p {
-    /* 가이드/regular */
-    font-size: 13px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 145%; /* 18.85px */
-    letter-spacing: -0.325px;
   }
 `;

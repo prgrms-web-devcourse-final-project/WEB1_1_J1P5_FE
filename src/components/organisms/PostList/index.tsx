@@ -73,6 +73,8 @@ export const PostList = ({ posts, type }: IPostListProps) => {
     onTextButtonClick,
     onIconButtonClick,
     isSeller,
+    address,
+    uploadTime,
   }: IPost) => {
     return (
       <PostItem key={productId} onClick={onClick}>
@@ -80,6 +82,13 @@ export const PostList = ({ posts, type }: IPostListProps) => {
         <PostItem.Container>
           <PostItem.Title title={title} />
           <PostItem.Price price={price} />
+          <div className="location-con">
+            <PostItem.LocationAndTime
+              type="2"
+              address={address}
+              uploadTime={uploadTime}
+            />
+          </div>
         </PostItem.Container>
         {isSeller && (
           <PostItem.ButtonContainer

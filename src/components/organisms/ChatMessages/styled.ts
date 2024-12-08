@@ -17,12 +17,14 @@ export const ChatBubblesWrapper: ReturnType<typeof styled.div> = styled.div`
 `;
 
 export const WriteBoxWrapper: ReturnType<typeof styled.div> = styled.div`
+  position: fixed;
   padding: 1rem;
   background-color: ${({ theme }: { theme: ThemeType }) => theme.colors.white};
-  position: absolute;
-  bottom: 0;
+  max-width: ${({ theme }: { theme: ThemeType }) => theme.sizes.max_width};
   width: 100%;
-
+  left: 50%;
+  transform: translate(-50%);
+  bottom: 0;
   ${InputWithButtonWrapper} {
   }
 

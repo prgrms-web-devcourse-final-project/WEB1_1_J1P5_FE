@@ -1,5 +1,5 @@
 import { Image, Text, TextButton } from "components/atoms";
-import { getRelativeTime } from "utils";
+import { formatToDateTime, getRelativeTime } from "utils";
 import { useRemainingTimer } from "hooks";
 import type { IconType } from "types";
 import {
@@ -95,6 +95,7 @@ const PostItemTitle = ({ title }: IPostItemTitleProps) => {
 interface IPostItemLocationAndTimeProps {
   address: string;
   uploadTime: string;
+  type?: string;
 }
 
 /**
@@ -105,12 +106,18 @@ interface IPostItemLocationAndTimeProps {
 const PostItemLocationAndTime = ({
   address,
   uploadTime,
+  type = "default",
 }: IPostItemLocationAndTimeProps) => {
+  const time =
+    type === "default"
+      ? getRelativeTime(uploadTime)
+      : formatToDateTime(uploadTime);
+  console.log("time : ", uploadTime);
   return (
     <PostItemLocationAndTimeWrapper>
       <Text variant="tag_regular" content={address} />
       <Text variant="tag_regular" content="·" />
-      <Text variant="tag_regular" content={getRelativeTime(uploadTime)} />
+      <Text variant="tag_regular" content={time} />
     </PostItemLocationAndTimeWrapper>
   );
 };
