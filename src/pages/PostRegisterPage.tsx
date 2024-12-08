@@ -20,6 +20,7 @@ export const PostRegisterPage = () => {
   const lng = useFormDataStore((state) => state.formData.longitude);
   const address = useFormDataStore((state) => state.formData.address);
   const { setFormData, clear } = useFormDataStore((state) => state.actions);
+
   // const { product, isProductLoading } = useFetchProduct(
   //   productId?.toString() || ""
   // );
@@ -44,15 +45,6 @@ export const PostRegisterPage = () => {
   //     });
   //   }
   // }, [product, setFormData]);
-
-  useEffect(() => {
-    const unsubscribe = useFormDataStore.subscribe((state) => {
-      const newFormData = state.formData;
-      console.log("formData", newFormData);
-    });
-
-    return () => unsubscribe();
-  }, []);
 
   const handleSubmit = useCallback(
     async (formData: IProductForm) => {
@@ -94,7 +86,6 @@ export const PostRegisterPage = () => {
           navigate(`/product/${productId}`);
           Toast.show("물품이 수정되었어요!");
         }
-
         clear();
       } catch (error) {
         console.error("Failed to submit new product:", error);
@@ -124,28 +115,6 @@ export const PostRegisterPage = () => {
   }, [setTitle]);
 
   return (
-    // <PostRegisterTemplate
-    //   productId={productId || undefined}
-    //   postForm={
-    //     product
-    //       ? {
-    //           title: product.title,
-    //           content: product.content,
-    //           minimumPrice: product.minimumPrice.toLocaleString(),
-    //           category: product.category as Category,
-    //           latitude: product.productLocation.latitude,
-    //           longitude: product.productLocation.longitude,
-    //           address: product.productLocation.address,
-    //           location: product.productLocation.location,
-    //           imgUrls: product.images.map((img) => ({ url: img, file: null })),
-    //           expiredTime: product.expiredTime,
-    //         }
-    //       : formData
-    //   }
-    //   onClick={handleClick}
-    //   onSubmit={handleSubmit}
-    // />
-
     <PostRegisterTemplate
       productId={productId || undefined}
       postForm={formData}
