@@ -47,4 +47,7 @@ export const DetailTemplateWrapper: ReturnType<typeof styled.div> = styled.div`
       width: 80px;
     }
   }
+  ${CommentWrapper} {
+    padding-bottom: 2rem;
+  }
 `;
