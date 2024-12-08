@@ -71,7 +71,7 @@ export const useNeighborhoodSelection = () => {
 
     if (emdId) {
       console.log(emdId);
-      (!user ? registerActivityArea : editActivityArea)(emdId)
+      (!user?.emdName ? registerActivityArea : editActivityArea)(emdId)
         .then((data) => {
           console.log(data);
           // 저장 이후 홈으로 이동
