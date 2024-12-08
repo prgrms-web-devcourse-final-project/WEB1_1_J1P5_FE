@@ -123,10 +123,6 @@ export const PostRegisterPage = () => {
     setTitle("내 물건 판매하기");
   }, [setTitle]);
 
-  if (isProductLoading) {
-    return null;
-  }
-
   return (
     // <PostRegisterTemplate
     //   productId={productId || undefined}
