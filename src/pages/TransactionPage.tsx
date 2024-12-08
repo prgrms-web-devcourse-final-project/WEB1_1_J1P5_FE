@@ -66,7 +66,7 @@ export const TransactionPage = ({ type }: TransactionPageProps) => {
     expiredTime: `2024-12-29 ${11 + index}:00:00`,
     maxPrice: 30000,
     onTextButtonClick: () => {
-      console.log("Text Button 클릭");
+      todo();
     },
     onIconButtonClick: () => {
       console.log("Icon Button 클릭");
