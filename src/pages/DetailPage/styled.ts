@@ -7,14 +7,9 @@ export const KebabWrapper: ReturnType<typeof styled.div> = styled.div`
   right: 0;
   transform-origin: right;
   // 100vw 전체 width, 100% 현재 요소 width
-  translate: calc(-1 * ((100vw - 375px) / 2));
-  @media only screen and (max-width: 375px) {
+  translate: calc(-1 * ((100vw - ${({ theme }) => theme.sizes.max_width}) / 2));
+  @media only screen and (max-width: ${({ theme }) => theme.sizes.max_width}) {
     right: 1rem;
     translate: 0;
   }
-`;
-
-export const DetailPageWrapper: ReturnType<typeof styled.div> = styled.div`
-  position: relative;
-  width: 100%;
 `;
