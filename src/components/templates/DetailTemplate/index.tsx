@@ -177,12 +177,15 @@ export const DetailTemplate = ({
         </AuctionControlBar.ButtonContainer>
       </AuctionControlBar>
       {createPortal(
+        // TODO 조기마감 진행중인 상태를 어디에서 보여줄지??
         <AuctionBidBottomSheet
           price={price}
           setPrice={setPrice}
-          minPrice={minimumPrice}
+          minPrice={isEarly ? myPrice || minimumPrice : minimumPrice}
           beforePrice={myPrice || undefined}
-          onBid={() => handleBid(minimumPrice, myAuctionId || undefined)}
+          onBid={() =>
+            handleBid(minimumPrice, myAuctionId || undefined, isEarly)
+          }
           open={open}
           onClose={handleCloseBottomSheet}
         />,

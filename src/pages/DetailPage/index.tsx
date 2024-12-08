@@ -79,9 +79,12 @@ export const DetailPage = () => {
    * (구매자) 입찰 취소
    */
   const handleCancelBid = () => {
+    if (!product) {
+      return;
+    }
     // TODO 조기마감 적용된 경우 처리
     if (product?.myAuctionId) {
-      handleCancel(product.myAuctionId);
+      handleCancel(product.myAuctionId, product.isEarly);
     }
   };
 
