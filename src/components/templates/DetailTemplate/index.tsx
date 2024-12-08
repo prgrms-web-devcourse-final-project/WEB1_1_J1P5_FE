@@ -13,6 +13,7 @@ import { DetailTemplateWrapper, ImageSliderAndTimer } from "./styled";
 import { useBid, useDetailModal } from "hooks";
 import { buttonNames, priceNames } from "constants/auctionControlBarNames";
 import type { IComment, IProductDetail } from "types";
+import { LOGO_PATH } from "../../../constants/imgPath";
 
 interface IBaseDetailTemplateProps extends Omit<IProductDetail, ""> {
   /** 판매자 정보 */
@@ -109,7 +110,8 @@ export const DetailTemplate = ({
         createdAt={uploadTime}
         description={content}
       />
-      <Profile imgUrl={image} nickname={name} location={address} />
+      {/* TODO 프로필 사진 없는 경우 Logo 사진 */}
+      <Profile imgUrl={image || LOGO_PATH} nickname={name} location={address} />
       <LocationMap
         coord={{ lat: latitube, lng: longtitude }}
         location={location}
