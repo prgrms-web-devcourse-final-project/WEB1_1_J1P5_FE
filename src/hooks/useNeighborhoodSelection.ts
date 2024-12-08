@@ -14,7 +14,7 @@ import { useUserStore } from "../stores";
  */
 export const useNeighborhoodSelection = () => {
   const navigate = useNavigate();
-  const { user } = useUserStore();
+  const { user, setUser } = useUserStore();
   /** 동네 목록 */
   const [neighborhoods, setNeighborhoods] = useState<IActivityArea[]>([]);
   /** 내 위치 위도/경도 */
@@ -74,6 +74,8 @@ export const useNeighborhoodSelection = () => {
       (!user?.emdName ? registerActivityArea : editActivityArea)(emdId)
         .then((data) => {
           console.log(data);
+          // 동네 선택 시 user에 저장
+          setUser({ ...user, emdName: neighborhood.split(" ").pop() });
           // 저장 이후 홈으로 이동
           navigate("/", { replace: true });
         })
