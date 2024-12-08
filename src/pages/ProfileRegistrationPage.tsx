@@ -8,7 +8,7 @@ import { registerAndEditProfile } from "services/apis/user";
 
 export const ProfileRegistrationPage = () => {
   const navigate = useNavigate();
-  const { user } = useUserStore();
+  const { user, setUser } = useUserStore();
   const { clear, setTitle } = useTopBarStore();
   console.log(user);
   const handleProfileRegistration = (data: IUser) => {
@@ -32,6 +32,9 @@ export const ProfileRegistrationPage = () => {
         // 저장 완료 내역을 클라이언트에도 적용
         // const { result } = data;
         // setUser(result);
+
+        // profile 제외 닉네임은 저장가능해서 일단 저장
+        setUser({ ...user, nickname: nickname });
 
         navigate("/my-page", {
           replace: true,
