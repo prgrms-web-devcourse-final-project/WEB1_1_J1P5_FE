@@ -1,16 +1,16 @@
 import { PostRegisterForm } from "components/organisms";
 import { PostRegisterTemplateWrapper } from "./styled";
-import type { IPostForm } from "types";
+import type { IProductForm } from "types";
 
 interface IPostRegisterTemplateProps {
   /** product Id */
   productId?: number;
   /** 글 등록할 때 필요한 form 데이터 */
-  postForm?: IPostForm;
+  postForm?: IProductForm;
   /** Submit 이벤트 발생 시 실행할 함수 */
-  onSubmit: (data: IPostForm) => void;
+  onSubmit: (data: IProductForm) => void;
   /** 거래 희망 장소 클릭 시 실행할 함수 */
-  onClick: (data: IPostForm) => void;
+  onClick: (data: IProductForm) => void;
 }
 
 export const PostRegisterTemplate = ({

@@ -1,15 +1,15 @@
 import { create, type StoreApi, type UseBoundStore } from "zustand";
 import { produce } from "immer";
 
-import type { IPostForm } from "types";
+import type { IProductForm } from "types";
 
 interface State {
-  formData: IPostForm;
+  formData: IProductForm;
 }
 
 interface Actions {
   actions: {
-    setFormData: (data: Partial<IPostForm>) => void;
+    setFormData: (data: Partial<IProductForm>) => void;
     clear: () => void;
   };
 }
