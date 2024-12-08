@@ -61,7 +61,7 @@ export const ChatListPage = () => {
     name: chatRoom.otherNickname,
     onClick: () => {
       const encryptedRoomId = encryptRoomId(chatRoom.roomId);
-      navigate(`/chat/${encryptedRoomId}/${chatRoom.userId}`);
+      navigate(`/chatroom/${encryptedRoomId}/${chatRoom.userId}`);
     },
   });
 
