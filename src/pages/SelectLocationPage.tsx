@@ -11,6 +11,7 @@ export const SelectLocationPage = () => {
   const { setTitle } = useTopBarStore();
   const lat = useFormDataStore((state) => state.formData.latitude);
   const lng = useFormDataStore((state) => state.formData.longitude);
+  const location = useFormDataStore((state) => state.formData.location);
   const { setFormData } = useFormDataStore((state) => state.actions);
   const [isOpenBottomSheet, setIsOpenBottomSheet] = useState(false);
   const locationErrorEvent = useLocationErrorEvent();
@@ -59,6 +60,7 @@ export const SelectLocationPage = () => {
   return (
     <SelectLocationTemplate
       coord={coord}
+      location={location}
       onLocationSelect={handleLocationSelect}
       isOpenBottomSheet={isOpenBottomSheet}
       closeBottomSheet={() => setIsOpenBottomSheet(false)}
