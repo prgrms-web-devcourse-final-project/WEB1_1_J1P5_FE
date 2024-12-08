@@ -8,6 +8,7 @@ import {
   TitleBoldWrapper,
 } from "components/atoms/Text/styled";
 import { IconWrapper } from "components/atoms/Icon/styled";
+import { BadgeWrapper } from "components/atoms/Badge/styled";
 
 /**
  * 케밥메뉴
@@ -52,6 +53,21 @@ export const WriterInformationWrapper: ReturnType<typeof styled.div> =
     flex-direction: column;
   `;
 
+export const WriterBadgeWrapper: ReturnType<typeof styled.div> = styled.div`
+  display: flex;
+  align-items: center;
+  gap: ${6 / 16}rem;
+  ${BadgeWrapper} {
+    font-size: ${({ theme }) => theme.fontStyles.tag_regular.size};
+    line-height: ${({ theme }) => theme.fontStyles.tag_regular.height};
+    font-weight: ${({ theme }) => theme.fontStyles.tag_regular.bold};
+    color: ${({ theme }) => theme.colors.blue_text};
+    background-color: ${({ theme }) => theme.colors.grey_field_deactivate};
+    border-radius: ${4 / 16}rem;
+    padding: ${3 / 16}rem ${6 / 16}rem;
+  }
+`;
+
 /**
  * 댓글 내용
  */
@@ -69,6 +85,9 @@ export const CommentItemWrapper: ReturnType<typeof styled.div> = styled.div`
   gap: ${10 / 16}rem;
   position: relative;
   padding-left: 1rem;
+  &.deleted {
+    color: ${({ theme }) => theme.colors.grey_field_guide_but_deactivate};
+  }
 `;
 
 /**

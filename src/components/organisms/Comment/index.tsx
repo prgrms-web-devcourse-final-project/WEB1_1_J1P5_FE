@@ -42,7 +42,8 @@ export const Comment = ({ comments }: ICommentProps) => {
               content,
               replies,
               // isUpdatable,
-              // isSeller,
+              isSeller,
+              status,
             },
             idx,
           ) => (
@@ -56,6 +57,8 @@ export const Comment = ({ comments }: ICommentProps) => {
               isMyComment={nickname === user?.nickname}
               replies={replies}
               parentId={null}
+              status={status}
+              isSeller={isSeller}
             />
           ),
         )}

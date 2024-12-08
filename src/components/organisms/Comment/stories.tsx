@@ -33,6 +33,7 @@ export const Default: Story = {
         isSeller: true,
         isUpdatable: true,
         replies: [],
+        status: "ACTIVE",
       },
       {
         commentId: 2,
@@ -45,6 +46,7 @@ export const Default: Story = {
           "내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용용",
         isSeller: true,
         isUpdatable: true,
+        status: "DELETED",
         replies: [
           {
             commentId: 4,
@@ -57,6 +59,7 @@ export const Default: Story = {
             isSeller: true,
             isUpdatable: true,
             replies: [],
+            status: "DELETED",
           },
           {
             commentId: 5,
@@ -69,6 +72,7 @@ export const Default: Story = {
             isSeller: true,
             isUpdatable: true,
             replies: [],
+            status: "ACTIVE",
           },
         ],
       },
@@ -83,6 +87,7 @@ export const Default: Story = {
         isSeller: true,
         isUpdatable: true,
         replies: [],
+        status: "ACTIVE",
       },
     ],
   },
