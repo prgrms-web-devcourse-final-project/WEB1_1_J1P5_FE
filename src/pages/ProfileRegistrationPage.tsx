@@ -42,15 +42,17 @@ export const ProfileRegistrationPage = () => {
         });
       })
       .catch((error) => {
-        // 아마도 닉네임 중복확인??
-        Toast.show("이미 존재하는 닉네임이에요!", 2000);
+        // 닉네임 중복 확인
+        if (error.response.data.code === "USER409") {
+          Toast.show("이미 존재하는 닉네임이에요!", 2000);
+        }
         console.error(error);
       });
   };
 
   useEffect(() => {
     clear();
-    if (user === null || user?.nickname === null) {
+    if (user === null || !user?.nickname) {
       setTitle("프로필 등록");
     } else {
       setTitle("프로필 수정");
