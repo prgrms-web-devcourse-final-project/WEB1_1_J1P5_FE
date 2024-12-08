@@ -2,7 +2,8 @@ import styled from "@emotion/styled";
 
 export const ToastManagerWrapper: ReturnType<typeof styled.div> = styled.div`
   position: fixed;
-  bottom: 16px;
+  // TODO: 토스트 어디서부터 등장할지 위치 논의 필요
+  bottom: 80px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 1500;
@@ -10,7 +11,7 @@ export const ToastManagerWrapper: ReturnType<typeof styled.div> = styled.div`
 
 export const ToastItemWrapper: ReturnType<typeof styled.div> = styled.div`
   position: relative;
-  display: inline-flex;
+  display: flex;
   padding: 12px 18px;
   justify-content: center;
   align-items: center;
@@ -33,12 +34,13 @@ export const ToastItemWrapper: ReturnType<typeof styled.div> = styled.div`
     margin-bottom: 8px;
   }
 
+  // TODO: 애니메이션을 수정해야하나 고민
   @keyframes move {
     0% {
       margin-bottom: 0;
     }
     100% {
-      margin-bottom: 54px;
+      margin-bottom: 12px;
     }
   }
 
