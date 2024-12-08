@@ -25,7 +25,7 @@ export const DetailPage = () => {
     actions: { setCoord, setLocation, setAddress },
   } = useSelectedLocationStore();
   const { open, handleOpen, handleClose, menuRef } = useKebabMenu();
-  const { handleCancel, myPrice } = useBid(parseInt(productId!));
+  const { handleCancel } = useBid(parseInt(productId!));
   const { todo } = useDetailModal();
 
   /**
@@ -35,7 +35,7 @@ export const DetailPage = () => {
     if (product) {
       setCoord({
         lat: product.productLocation.latitube,
-        lng: product.productLocation.longtitude,
+        lng: product.productLocation.longitude,
       });
       setLocation(product.productLocation.location);
       setAddress(product.productLocation.address);
@@ -65,7 +65,9 @@ export const DetailPage = () => {
    * (구매자) 입찰 취소
    */
   const handleCancelBid = () => {
-    handleCancel();
+    if (product?.myAuctionId) {
+      handleCancel(product.myAuctionId);
+    }
   };
 
   /**
@@ -138,7 +140,7 @@ export const DetailPage = () => {
         onLocationClick={handleLocationMapClick}
         comments={comments}
         minimumPrice={product.minimumPrice}
-        myPrice={myPrice?.bidPrice}
+        myPrice={product.myPrice}
         maximumPrice={product.winningPrice}
         isEarly={product.isEarly}
         productId={product.productId}
@@ -146,6 +148,7 @@ export const DetailPage = () => {
         onCancel={handleCancelBid}
         onEarlyClosing={handleEarlyClosing}
         isSeller={product.isSeller}
+        myAuctionId={product.myAuctionId}
       />
       {open && (
         <KebabWrapper ref={menuRef}>

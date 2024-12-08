@@ -10,7 +10,7 @@ export interface IProductDetail {
     image: string;
   };
   productLocation: {
-    longtitude: number;
+    longitude: number;
     latitube: number;
     address: string;
     location: string;
@@ -25,8 +25,9 @@ export interface IProductDetail {
   expiredTime: string;
   isEarly: boolean;
   images: string[];
-  myPrice?: number;
-  winningPrice?: number;
+  myAuctionId: number | null;
+  myPrice: number | null;
+  winningPrice: number | null;
   isSeller: boolean;
 }
 
