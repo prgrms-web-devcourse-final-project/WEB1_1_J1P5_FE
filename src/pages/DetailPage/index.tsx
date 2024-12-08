@@ -4,7 +4,7 @@ import { DetailTemplate } from "components/templates";
 import { KebabMenu } from "components/molecules";
 import { KebabIcon } from "components/atoms/Icon";
 import { Loading } from "components/molecules/Loading";
-import { useTopBarStore } from "stores";
+import { useSelectedLocationStore, useTopBarStore } from "stores";
 import {
   useFetchProduct,
   useFetchComment,
@@ -20,7 +20,10 @@ export const DetailPage = () => {
   const { productId } = useParams<{ productId: string }>();
   const { product, isProductLoading } = useFetchProduct(productId!);
   const { comments, isCommentLoading } = useFetchComment(productId!);
-  const { setTitle, setRightIcon } = useTopBarStore();
+  const { clear, setTitle, setRightIcon } = useTopBarStore();
+  const {
+    actions: { setCoord, setLocation, setAddress },
+  } = useSelectedLocationStore();
   const { open, handleOpen, handleClose, menuRef } = useKebabMenu();
   const { handleCancel, myPrice } = useBid(parseInt(productId!));
   const { todo } = useDetailModal();
@@ -29,7 +32,14 @@ export const DetailPage = () => {
    * 거래 희망 장소 클릭
    */
   const handleLocationMapClick = () => {
-    // 거래희망장소 페이지 이동
+    if (product) {
+      setCoord({
+        lat: product.productLocation.latitube,
+        lng: product.productLocation.longtitude,
+      });
+      setLocation(product.productLocation.location);
+      setAddress(product.productLocation.address);
+    }
     navigate("/transaction-location");
   };
 
@@ -94,6 +104,9 @@ export const DetailPage = () => {
     setRightIcon(KebabIcon, () => {
       handleOpen();
     });
+    return () => {
+      clear();
+    };
   }, []);
 
   useEffect(() => {
