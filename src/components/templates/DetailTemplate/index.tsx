@@ -13,8 +13,10 @@ import { DetailTemplateWrapper, ImageSliderAndTimer } from "./styled";
 import { useBid, useDetailModal } from "hooks";
 import { buttonNames, priceNames } from "constants/auctionControlBarNames";
 import type { IComment, IProductDetail } from "types";
+import { LOGO_PATH } from "constants/imgPath";
 
-interface IBaseDetailTemplateProps extends Omit<IProductDetail, ""> {
+interface IBaseDetailTemplateProps
+  extends Omit<IProductDetail, "winningPrice"> {
   /** 판매자 정보 */
   seller: {
     id: number;
@@ -35,7 +37,7 @@ interface IBaseDetailTemplateProps extends Omit<IProductDetail, ""> {
   uploadTime: string;
   /** 거래 희망 장소 */
   productLocation: {
-    longtitude: number;
+    longitude: number;
     latitube: number;
     address: string;
     location: string;
@@ -47,9 +49,9 @@ interface IBaseDetailTemplateProps extends Omit<IProductDetail, ""> {
   /** 최소 입찰가 */
   minimumPrice: number;
   /** 내 입찰가 */
-  myPrice?: number;
+  myPrice: IProductDetail["myPrice"];
   /** 최고 입찰가 */
-  maximumPrice?: number;
+  maximumPrice: IProductDetail["winningPrice"];
   /** 입찰 취소 */
   onCancel: () => void;
   /** 조기마감 */
@@ -72,14 +74,15 @@ export const DetailTemplate = ({
   // 판매자 정보
   seller: { name, image },
   // 거래 희망 장소
-  productLocation: { longtitude, latitube, address, location },
+  productLocation: { longitude, latitube, address, location },
   onLocationClick,
   // 댓글
   comments,
   // 가격
   minimumPrice,
-  myPrice,
   maximumPrice,
+  myPrice,
+  myAuctionId,
   isEarly,
   // hasBuyer,
   onCancel,
@@ -109,9 +112,10 @@ export const DetailTemplate = ({
         createdAt={uploadTime}
         description={content}
       />
-      <Profile imgUrl={image} nickname={name} location={address} />
+      {/* TODO 프로필 사진 없는 경우 Logo 사진 */}
+      <Profile imgUrl={image || LOGO_PATH} nickname={name} location={address} />
       <LocationMap
-        coord={{ lat: latitube, lng: longtitude }}
+        coord={{ lat: latitube, lng: longitude }}
         location={location}
         onClick={onLocationClick}
       />
@@ -173,8 +177,8 @@ export const DetailTemplate = ({
           price={price}
           setPrice={setPrice}
           minPrice={minimumPrice}
-          beforePrice={myPrice}
-          onBid={handleBid}
+          beforePrice={myPrice || undefined}
+          onBid={() => handleBid(minimumPrice, myAuctionId || undefined)}
           open={open}
           onClose={handleCloseBottomSheet}
         />,

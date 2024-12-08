@@ -6,7 +6,7 @@ export const ToastManagerWrapper: ReturnType<typeof styled.div> = styled.div`
   bottom: 80px;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 1500;
+  z-index: 999999;
 `;
 
 export const ToastItemWrapper: ReturnType<typeof styled.div> = styled.div`

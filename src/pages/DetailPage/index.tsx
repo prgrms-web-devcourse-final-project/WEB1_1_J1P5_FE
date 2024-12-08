@@ -4,7 +4,11 @@ import { DetailTemplate } from "components/templates";
 import { KebabMenu } from "components/molecules";
 import { KebabIcon } from "components/atoms/Icon";
 import { Loading } from "components/molecules/Loading";
-import { useSelectedLocationStore, useTopBarStore } from "stores";
+import {
+  useFormDataStore,
+  useSelectedLocationStore,
+  useTopBarStore,
+} from "stores";
 import {
   useFetchProduct,
   useFetchComment,
@@ -14,6 +18,7 @@ import {
 } from "hooks";
 import { KebabWrapper } from "./styled";
 import { earlyClose } from "services/apis";
+import type { Category } from "../../types";
 
 export const DetailPage = () => {
   const navigate = useNavigate();
@@ -24,8 +29,12 @@ export const DetailPage = () => {
   const {
     actions: { setCoord, setLocation, setAddress },
   } = useSelectedLocationStore();
+  // TODO
+  const {
+    actions: { setFormData },
+  } = useFormDataStore();
   const { open, handleOpen, handleClose, menuRef } = useKebabMenu();
-  const { handleCancel, myPrice } = useBid(parseInt(productId!));
+  const { handleCancel } = useBid(parseInt(productId!));
   const { todo } = useDetailModal();
 
   /**
@@ -35,7 +44,7 @@ export const DetailPage = () => {
     if (product) {
       setCoord({
         lat: product.productLocation.latitube,
-        lng: product.productLocation.longtitude,
+        lng: product.productLocation.longitude,
       });
       setLocation(product.productLocation.location);
       setAddress(product.productLocation.address);
@@ -65,7 +74,9 @@ export const DetailPage = () => {
    * (구매자) 입찰 취소
    */
   const handleCancelBid = () => {
-    handleCancel();
+    if (product?.myAuctionId) {
+      handleCancel(product.myAuctionId);
+    }
   };
 
   /**
@@ -84,7 +95,20 @@ export const DetailPage = () => {
   const handleEdit = () => {
     if (product && !product.hasBuyer) {
       // 수정 페이지로 이동
-      navigate(`/product?${productId!}`);
+      // TODO 확인 필요
+      setFormData({
+        title: product.title,
+        content: product.content,
+        minimumPrice: product.minimumPrice.toLocaleString(),
+        category: product.category as Category,
+        latitude: product.productLocation.latitube,
+        longitude: product.productLocation.longitude,
+        address: product.productLocation.address,
+        location: product.productLocation.location,
+        imgUrls: product.images.map((img) => ({ url: img, file: null })),
+        expiredTime: product.expiredTime,
+      });
+      navigate(`/product?productId=${productId!}`);
       return;
     }
   };
@@ -138,7 +162,7 @@ export const DetailPage = () => {
         onLocationClick={handleLocationMapClick}
         comments={comments}
         minimumPrice={product.minimumPrice}
-        myPrice={myPrice?.bidPrice}
+        myPrice={product.myPrice}
         maximumPrice={product.winningPrice}
         isEarly={product.isEarly}
         productId={product.productId}
@@ -146,6 +170,7 @@ export const DetailPage = () => {
         onCancel={handleCancelBid}
         onEarlyClosing={handleEarlyClosing}
         isSeller={product.isSeller}
+        myAuctionId={product.myAuctionId}
       />
       {open && (
         <KebabWrapper ref={menuRef}>
