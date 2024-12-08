@@ -1,6 +1,17 @@
 import axios from "axios";
-import type { IUserProfileData, IUserProfileResponse } from "types";
+import type {
+  ISessionUserResponse,
+  IUserProfileData,
+  IUserProfileResponse,
+} from "types";
 import { http } from "services/api";
+
+/**
+ * 유저 세션 정보 조회
+ */
+export const getUserSession = async () => {
+  return http.get<ISessionUserResponse>("/users/session");
+};
 
 /**
  * 유저 정보 조회

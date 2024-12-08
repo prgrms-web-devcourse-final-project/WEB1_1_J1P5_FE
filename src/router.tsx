@@ -22,9 +22,8 @@ import {
   TransactionLocationPage,
   TransactionPage,
 } from "pages";
-import { AuthGuard } from "pages/guards";
+import { AuthGuard, LoginGuard, RequiredGuard } from "pages/guards";
 import { RootLayout } from "components/templates";
-import { LoginGuard } from "./pages/guards/LoginGuard";
 
 export const routes: RouteObject[] = [
   {
@@ -47,21 +46,27 @@ export const routes: RouteObject[] = [
           { path: "callback/:provider", element: <OAuthCallbackPage /> },
         ],
       },
-      // Required Login
+      // 필수로 입력받아야 하는 페이지들 (로그인 필수)
       {
-        element: <AuthGuard />,
+        element: <RequiredGuard />,
         children: [
-          // home
-          { index: true, element: <HomePage /> },
           // 프로필 등록/수정
           { path: "profile", element: <ProfileRegistrationPage /> },
-          // 중고물품 등록/수정
-          { path: "product", element: <PostRegisterPage /> },
           // 동네 선택
           {
             path: "neighborhood-selection",
             element: <NeighborhoodSelectionPage />,
           },
+        ],
+      },
+      // 로그인 이후 프로필/동네 등록 이후 확인 가능한 페이지들 (로그인 필수 / 권한 필수)
+      {
+        element: <AuthGuard />,
+        children: [
+          // home
+          { index: true, element: <HomePage /> },
+          // 중고물품 등록/수정
+          { path: "product", element: <PostRegisterPage /> },
           // 카테고리
           { path: "category", element: <CategoryPage /> },
           // 검색 히스토리

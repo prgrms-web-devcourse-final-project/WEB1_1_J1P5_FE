@@ -19,10 +19,9 @@ export const useBid = (productId: number) => {
    * 입찰 버튼 클릭
    */
   const handleBid = () => {
-    console.log(Number(price.replace(",", "")));
     if (!myPrice) {
       // 현재 입찰중이 아닌 경우
-      bidding({ productId, price: Number(price.replace(",", "")) })
+      bidding({ productId, price: Number(price.replace(/,/g, "")) })
         .then((data) => {
           console.log(data);
         })
@@ -31,7 +30,7 @@ export const useBid = (productId: number) => {
       // 현재 입찰중인 경우
       editBidding({
         productId,
-        price: Number(price.replace(",", "")),
+        price: Number(price.replace(/,/g, "")),
         auctionId: myPrice.auctionId,
       })
         .then((data) => {

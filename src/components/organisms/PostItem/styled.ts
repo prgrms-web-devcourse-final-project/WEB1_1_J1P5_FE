@@ -31,14 +31,14 @@ export const PostItemLocationAndTimeWrapper: ReturnType<
 
 export const PostItemPriceWrapper: ReturnType<typeof styled.div> = styled.div`
   display: flex;
-  gap: 1rem;
+  gap: 0.25rem;
 `;
 
 export const PostItemRemainingTimeWrapper: ReturnType<
   typeof styled.div
 > = styled.div`
   display: flex;
-  gap: 1rem;
+  gap: 0.25rem;
 `;
 
 export const PostItemButtonContainerWrapper: ReturnType<

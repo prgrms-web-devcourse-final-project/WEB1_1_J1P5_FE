@@ -34,39 +34,43 @@ export const ProfileRegistrationForm = ({
   return (
     <ProfileRegistrationFormWrapper onSubmit={handleSubmit(onSubmit)}>
       <Controller
-        name="profile"
+        name='profile'
         control={control}
         render={({ field: { value } }) => (
           <ProfileImageWrapper>
             <Image
-              type="round"
+              type='round'
               url={getProfileImageURL(value) || ProfileUpload}
-              alt="유저 프로필 사진"
+              alt='유저 프로필 사진'
             />
             <ImageUpload onFileChange={(file) => setValue("profile", file)} />
           </ProfileImageWrapper>
         )}
       />
       <Controller
-        name="nickname"
+        name='nickname'
         control={control}
         rules={{
           required: "닉네임은 필수 입력 항목입니다.",
+          maxLength: {
+            value: 14,
+            message: "닉네임은 15자리 미만으로 입력해주세요.",
+          },
         }}
         render={({ field: { value }, fieldState: { invalid }, formState }) => (
           <>
             <LabeledInput
-              id="profile-nickname"
-              label="닉네임"
+              id='profile-nickname'
+              label='닉네임'
               value={value || ""}
               setValue={(value) => {
                 setValue("nickname", value);
               }}
-              placeholder="닉네임을 입력해주세요."
+              placeholder='닉네임을 입력해주세요.'
             />
             {invalid && (
               <Text
-                variant="button"
+                variant='button'
                 content={formState.errors.nickname?.message || ""}
               />
             )}
@@ -74,7 +78,7 @@ export const ProfileRegistrationForm = ({
         )}
       />
       <TextButton
-        size="l"
+        size='l'
         text={`${!user ? "등록" : "수정"} 완료`}
         onClick={() => handleSubmit(onSubmit)}
       />
