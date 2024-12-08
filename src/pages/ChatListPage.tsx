@@ -113,7 +113,7 @@ export const ChatListPage = () => {
   };
   const loadingMsg = "채팅 방 목록\n불러오는 중...";
 
-  if (isLoading) {
+  if (!chatItems && isLoading) {
     return <Loading message={loadingMsg} />;
   }
   return (

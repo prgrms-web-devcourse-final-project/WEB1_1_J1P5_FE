@@ -10,4 +10,6 @@ export const ChatRoomTemplateWrapper: ReturnType<
   position: relative;
   background-color: ${({ theme }: { theme: ThemeType }) =>
     theme.colors.grey_button_deactivate};
+
+  padding-top: 3rem;
 `;
