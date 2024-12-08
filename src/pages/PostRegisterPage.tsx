@@ -1,5 +1,5 @@
 import { PostRegisterTemplate } from "components/templates";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useFormDataStore, useTopBarStore } from "stores";
 import type { Category, ExpiredTime, IProductForm, IProductPost } from "types";
@@ -14,37 +14,61 @@ export const PostRegisterPage = () => {
 
   const queryParams = new URLSearchParams(location.search);
   const productId = Number(queryParams.get("productId"));
-
-  const { formData } = useFormDataStore((state) => state);
+  const formData = useFormDataStore((state) => state.formData);
   const lat = useFormDataStore((state) => state.formData.latitude);
   const lng = useFormDataStore((state) => state.formData.longitude);
   const address = useFormDataStore((state) => state.formData.address);
-  const { setFormData, clear } = useFormDataStore((state) => state.actions);
+  const { setFormData, isFormDataEmpty, clear } = useFormDataStore(
+    (state) => state.actions
+  );
+  const { product, isProductLoading } = useFetchProduct(
+    productId?.toString() || ""
+  );
+
+  // console.log(product);
+
+  // {
+  //   title: product.title,
+  //   content: product.content,
+  //   minimumPrice: product.minimumPrice.toLocaleString(),
+  //   category: product.category as Category,
+  //   latitude: product.productLocation.latitude,
+  //   longitude: product.productLocation.longitude,
+  //   address: product.productLocation.address,
+  //   location: product.productLocation.location,
+  //   imgUrls: product.images.map((img) => ({ url: img, file: null })),
+  //   expiredTime: product.expiredTime,
+  // }
+
+  // 1. 데이터를 fetch해서 받아온다
+  // 2. 받아온 데이터를 formdata에 넣어준다
+  // 3. 변경된 formdata를 감지하고, 템플릿에 넣어준다.
 
   useEffect(() => {
-    if (productId) {
-      // TODO: productId가 있을 때만 불러와야 하는데, eslint를 disable하지 않고 처리하는 방법 찾기
-      // eslint-disable-next-line react-hooks/rules-of-hooks
-      const { product } = useFetchProduct(productId.toString());
-      if (product) {
-        setFormData({
-          title: product.title,
-          content: product.content,
-          minimumPrice: product.minimumPrice.toLocaleString(),
-          category: product.category as Category,
-          // TODO: 백엔드에서 이름 고치면 수정하기
-          // latitude: product.productLocation.latitude,
-          // longitude: product.productLocation.longitude,
-          latitude: product.productLocation.latitube,
-          longitude: product.productLocation.longtitude,
-          address: product.productLocation.address,
-          location: product.productLocation.location,
-          imgUrls: product.images.map((img) => ({ url: img, file: null })),
-          expiredTime: product.expiredTime
-        });
-      }
+    if (productId && product && isFormDataEmpty()) {
+      setFormData({
+        title: product.title,
+        content: product.content,
+        minimumPrice: product.minimumPrice.toLocaleString(),
+        category: product.category as Category,
+        latitude: product.productLocation.latitude,
+        longitude: product.productLocation.longitude,
+        address: product.productLocation.address,
+        location: product.productLocation.location,
+        imgUrls: product.images.map((img) => ({ url: img, file: null })),
+        expiredTime: product.expiredTime,
+      });
     }
-  }, [productId, setFormData]);
+  }, [product, setFormData]);
+
+  useEffect(() => {
+    const unsubscribe = useFormDataStore.subscribe((state) => {
+      const newFormData = state.formData;
+      console.log("formData", newFormData);
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   const handleSubmit = useCallback(
     async (formData: IProductForm) => {
@@ -69,7 +93,7 @@ export const PostRegisterPage = () => {
         address: address!,
         location: formData.location!,
         images: formData.imgUrls!.map((img) => img.file!),
-        expiredTime: getExpiredDate(formData.expiredTime as string)
+        expiredTime: getExpiredDate(formData.expiredTime as string),
       };
 
       try {
@@ -113,7 +137,33 @@ export const PostRegisterPage = () => {
     setTitle("내 물건 판매하기");
   }, [setTitle]);
 
+  if (isProductLoading) {
+    return null;
+  }
+
   return (
+    // <PostRegisterTemplate
+    //   productId={productId || undefined}
+    //   postForm={
+    //     product
+    //       ? {
+    //           title: product.title,
+    //           content: product.content,
+    //           minimumPrice: product.minimumPrice.toLocaleString(),
+    //           category: product.category as Category,
+    //           latitude: product.productLocation.latitude,
+    //           longitude: product.productLocation.longitude,
+    //           address: product.productLocation.address,
+    //           location: product.productLocation.location,
+    //           imgUrls: product.images.map((img) => ({ url: img, file: null })),
+    //           expiredTime: product.expiredTime,
+    //         }
+    //       : formData
+    //   }
+    //   onClick={handleClick}
+    //   onSubmit={handleSubmit}
+    // />
+
     <PostRegisterTemplate
       productId={productId || undefined}
       postForm={formData}

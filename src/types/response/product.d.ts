@@ -10,8 +10,8 @@ export interface IProductDetail {
     image: string;
   };
   productLocation: {
-    longtitude: number;
-    latitube: number;
+    longitude: number;
+    latitude: number;
     address: string;
     location: string;
   };

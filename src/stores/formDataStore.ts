@@ -10,6 +10,7 @@ interface State {
 interface Actions {
   actions: {
     setFormData: (data: Partial<IProductForm>) => void;
+    isFormDataEmpty: () => boolean;
     clear: () => void;
   };
 }
@@ -25,12 +26,12 @@ export const defaultState: State = {
     address: "",
     location: "",
     expiredTime: undefined,
-    imgUrls: []
-  }
+    imgUrls: [],
+  },
 };
 
 export const useFormDataStore: UseBoundStore<StoreApi<State & Actions>> =
-  create<State & Actions>((set) => ({
+  create<State & Actions>((set, get) => ({
     ...defaultState,
     actions: {
       setFormData: (data) =>
@@ -39,6 +40,12 @@ export const useFormDataStore: UseBoundStore<StoreApi<State & Actions>> =
             Object.assign(state.formData, data);
           })
         ),
-      clear: () => set(defaultState)
-    }
+      isFormDataEmpty: () => {
+        const { formData } = get();
+        return Object.values(formData).every(
+          (value) => value === undefined || value === null || value === ""
+        );
+      },
+      clear: () => set(defaultState),
+    },
   }));

@@ -18,7 +18,7 @@ interface IPostImageManagerProps {
 export const PostImageManager = ({
   imageInfos,
   setImageInfos,
-  disabled = false
+  disabled = false,
 }: IPostImageManagerProps) => {
   // TODO: 임시로 넣은 gpt의 가로 스크롤 이벤트 코드 나중에 수정 필요 (코드 이해 및 애니메이션 추가)
   const wrapperRef = useRef<HTMLDivElement>(null);
@@ -55,7 +55,7 @@ export const PostImageManager = ({
         const base64Url = e.target?.result as string;
         const newImgData: IImageInfo = {
           base64Url,
-          file: resizedFile as File // 변환 파일
+          file: resizedFile as File, // 변환 파일
         };
         setImageInfos((prev) => [...prev, newImgData]);
       };
@@ -102,7 +102,7 @@ export const PostImageManager = ({
       onMouseLeave={handleMouseUp}
     >
       <UploadedImageCounter
-        text="사진 등록"
+        text='사진 등록'
         currentCount={imageInfos.length}
         onChange={onChange}
       />
@@ -110,7 +110,7 @@ export const PostImageManager = ({
         {imageInfos.map((info, index) => (
           <Fragment key={index}>
             <PostImageItem
-              imgUrl={info.base64Url as string}
+              imgUrl={info.url || (info.base64Url as string)}
               isThumbnail={index === 0}
               onClick={() => handleRemoveImage(index)}
             />
