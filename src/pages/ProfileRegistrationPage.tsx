@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { Toast } from "components/atoms";
 import { ProfileRegistrationTemplate } from "components/templates";
 import { useTopBarStore, useUserStore } from "stores";
 
@@ -42,6 +43,7 @@ export const ProfileRegistrationPage = () => {
       })
       .catch((error) => {
         // 아마도 닉네임 중복확인??
+        Toast.show("이미 존재하는 닉네임이에요!", 2000);
         console.error(error);
       });
   };
