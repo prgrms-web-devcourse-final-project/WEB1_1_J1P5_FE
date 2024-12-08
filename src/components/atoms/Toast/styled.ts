@@ -10,7 +10,7 @@ export const ToastManagerWrapper: ReturnType<typeof styled.div> = styled.div`
 
 export const ToastItemWrapper: ReturnType<typeof styled.div> = styled.div`
   position: relative;
-  display: inline-flex;
+  display: flex;
   padding: 12px 18px;
   justify-content: center;
   align-items: center;
@@ -38,7 +38,7 @@ export const ToastItemWrapper: ReturnType<typeof styled.div> = styled.div`
       margin-bottom: 0;
     }
     100% {
-      margin-bottom: 54px;
+      margin-bottom: 64px;
     }
   }
 
