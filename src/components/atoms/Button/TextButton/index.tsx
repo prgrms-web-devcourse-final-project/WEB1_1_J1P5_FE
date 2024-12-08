@@ -13,6 +13,8 @@ export interface ITextButtonProps {
   onClick?: () => void;
   /** Text variant 타입 */
   variant?: TextVariant;
+  /** 버튼 disabled */
+  disabled?: boolean;
 }
 export const TextButton = ({
   text = "",
@@ -20,6 +22,7 @@ export const TextButton = ({
   backgroundColor = "default",
   onClick = () => {},
   variant = "btn_bold",
+  disabled = false,
 }: ITextButtonProps) => {
   return (
     <TextButtonWrapper
@@ -27,6 +30,7 @@ export const TextButton = ({
       size={size}
       backgroundColor={backgroundColor}
       onClick={onClick}
+      disabled={disabled}
     >
       <Text content={text} variant={variant}></Text>
     </TextButtonWrapper>

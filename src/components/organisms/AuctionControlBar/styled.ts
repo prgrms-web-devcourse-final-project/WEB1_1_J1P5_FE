@@ -24,6 +24,12 @@ export const ButtonContainerWrapper: ReturnType<typeof styled.div> = styled.div`
   ${TextButtonWrapper} {
     margin: 0;
     flex: 1;
+    &:disabled {
+      cursor: default;
+      background-color: ${({ theme }) =>
+        theme.colors.grey_field_guide_but_deactivate};
+      color: ${({ theme }) => theme.colors.blue_text};
+    }
   }
 `;
 

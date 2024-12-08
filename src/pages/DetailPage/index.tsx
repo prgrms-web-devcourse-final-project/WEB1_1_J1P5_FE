@@ -6,6 +6,7 @@ import { KebabIcon } from "components/atoms/Icon";
 import { Loading } from "components/molecules/Loading";
 import {
   useFormDataStore,
+  useModalStore,
   useSelectedLocationStore,
   useTopBarStore,
 } from "stores";
@@ -17,15 +18,18 @@ import {
   useDetailModal,
 } from "hooks";
 import { KebabWrapper } from "./styled";
-import { earlyClose } from "services/apis";
+import { deleteProduct, earlyClose } from "services/apis";
 import type { Category } from "types";
-import { Toast } from "../../components/atoms";
+import { Toast } from "components/atoms";
 
 export const DetailPage = () => {
   const navigate = useNavigate();
   const { productId } = useParams<{ productId: string }>();
   const { product, isProductLoading } = useFetchProduct(productId!);
   const { comments, isCommentLoading } = useFetchComment(productId!);
+  const {
+    actions: { closeModal },
+  } = useModalStore();
   const { clear, setTitle, setRightIcon } = useTopBarStore();
   const {
     actions: { setCoord, setLocation, setAddress },
@@ -87,7 +91,13 @@ export const DetailPage = () => {
   const handleEarlyClosing = () => {
     // TODO 조기마감
     if (product?.isSeller) {
-      earlyClose(productId!).then(console.log).catch(console.error);
+      earlyClose(productId!)
+        .then((data) => {
+          console.log(data);
+          Toast.show("조기 종료가 적용되었습니다.", 2000);
+          closeModal();
+        })
+        .catch(console.error);
     }
   };
 
@@ -138,8 +148,13 @@ export const DetailPage = () => {
       return;
     }
     if (!product.hasBuyer) {
-      // TODO 삭제 처리
-      navigate("/", { replace: true });
+      // TODO 삭제 처리 (내일 확인 ㅠ)
+      deleteProduct(productId!)
+        .then((data) => {
+          console.log(data);
+          navigate("/", { replace: true });
+        })
+        .catch(console.error);
       return;
     }
   };

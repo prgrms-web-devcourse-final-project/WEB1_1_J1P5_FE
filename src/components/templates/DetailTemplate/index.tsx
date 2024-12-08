@@ -167,8 +167,11 @@ export const DetailTemplate = ({
             <AuctionControlBar.Button
               backgroundColor="red"
               variant="btn_bold"
-              text={buttonNames.early}
+              text={
+                isEarly ? "경매 조기종료가 진행중입니다." : buttonNames.early
+              }
               onClick={() => modal.earlyClosing(onEarlyClosing)}
+              disabled={isEarly}
             />
           )}
         </AuctionControlBar.ButtonContainer>

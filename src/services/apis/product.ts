@@ -3,7 +3,7 @@ import { http } from "services/api";
 import type {
   IProductDetailResponse,
   IProductPost,
-  IProductResponse
+  IProductResponse,
 } from "types";
 
 /**
@@ -27,7 +27,7 @@ export const earlyClose = async (productId: string) => {
  * @returns
  */
 export const registerProduct = async (
-  newProduct: IProductPost
+  newProduct: IProductPost,
 ): Promise<void> => {
   const requestBody = new FormData();
   const jsonRequestData = JSON.stringify({
@@ -39,7 +39,7 @@ export const registerProduct = async (
     longitude: newProduct.longitude,
     address: newProduct.address,
     location: newProduct.location,
-    expiredTime: newProduct.expiredTime
+    expiredTime: newProduct.expiredTime,
   });
 
   const request = new Blob([jsonRequestData], { type: "application/json" });
@@ -54,8 +54,8 @@ export const registerProduct = async (
       `${import.meta.env.VITE_SERVER_URL}/api/v1/products`,
       requestBody,
       {
-        withCredentials: true
-      }
+        withCredentials: true,
+      },
     );
     console.log("Response:", res.data); // 요청 성공 시 응답 데이터 출력
     return res.data; // 요청 성공 시 응답 데이터 반환
@@ -89,10 +89,18 @@ export const registerProduct = async (
  */
 export const editProduct = async (
   productId: number,
-  updatedProduct: Omit<IProductPost, "images" | "expiredTime">
+  updatedProduct: Omit<IProductPost, "images" | "expiredTime">,
 ) => {
   return http.patch<IProductResponse, typeof updatedProduct>(
     `/products/${productId}`,
-    updatedProduct
+    updatedProduct,
   );
+};
+
+/**
+ * 중고 제품 게시글 삭제하기
+ * @param productId 삭제할 제품 id
+ */
+export const deleteProduct = async (productId: string) => {
+  return http.delete<IProductResponse>(`/products/${productId}`);
 };
