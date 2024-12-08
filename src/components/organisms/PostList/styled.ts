@@ -5,22 +5,29 @@ export const PostListWrapper: ReturnType<typeof styled.div> = styled.div`
   display: flex;
   flex-direction: column;
 
-  .sell-price-con {
+  .price-con {
     p {
       color: ${({ theme }: { theme: ThemeType }) =>
         theme.colors.grey_text_guide};
     }
   }
-  .sell-remain-con {
+  .remain-con {
     p {
       color: ${({ theme }: { theme: ThemeType }) =>
         theme.colors.grey_text_guide};
     }
   }
 
-  .sell-max-price-con {
+  .max-price-con {
     display: flex;
     justify-content: flex-end;
     gap: 0.25rem;
+  }
+
+  .location-con {
+    p {
+      color: ${({ theme }: { theme: ThemeType }) =>
+        theme.colors.grey_text_guide};
+    }
   }
 `;
