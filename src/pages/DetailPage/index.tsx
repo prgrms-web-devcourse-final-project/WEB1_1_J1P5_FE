@@ -3,6 +3,7 @@ import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { DetailTemplate } from "components/templates";
 import { KebabMenu } from "components/molecules";
 import { KebabIcon } from "components/atoms/Icon";
+import { Loading } from "components/molecules/Loading";
 import { useTopBarStore } from "stores";
 import {
   useFetchProduct,
@@ -13,7 +14,6 @@ import {
 } from "hooks";
 import { KebabWrapper } from "./styled";
 import { earlyClose } from "services/apis";
-import { Loading } from "components/molecules/Loading";
 
 export const DetailPage = () => {
   const navigate = useNavigate();
@@ -103,7 +103,6 @@ export const DetailPage = () => {
   }, [isProductLoading, product]);
 
   if (isProductLoading || isCommentLoading) {
-    // TODO 스켈레톤 UI
     return <Loading />;
   }
 
@@ -113,7 +112,6 @@ export const DetailPage = () => {
   }
 
   return (
-    // 	TODO 로딩...
     <Suspense fallback={null}>
       <DetailTemplate
         seller={product.seller}
