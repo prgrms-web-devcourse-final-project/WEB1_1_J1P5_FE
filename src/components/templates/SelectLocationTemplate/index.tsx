@@ -7,6 +7,8 @@ import { ICoord, ILocation } from "types";
 interface ISelectLocationTemplateProps {
   /** 거래희망장소 좌표 (위도, 경도) */
   coord?: ICoord;
+  /** 거래희망장소명 */
+  location?: string;
   /** 거래희망장소 선택 완료 버튼 클릭 이벤트 */
   onLocationSelect: (selectedLocation: ILocation) => void;
   /** 바텀 시트 open 여부 */
@@ -23,6 +25,7 @@ interface ISelectLocationTemplateProps {
 
 export const SelectLocationTemplate = ({
   coord,
+  location,
   onLocationSelect,
   isOpenBottomSheet,
   closeBottomSheet,
@@ -31,7 +34,7 @@ export const SelectLocationTemplate = ({
   isError
 }: ISelectLocationTemplateProps) => {
   // TODO: 템플릿은 스켈레톤이기 때문에 페이지로 useState를 빼는 게 나을까?
-  const [place, setPlace] = useState("");
+  const [place, setPlace] = useState(location || "");
 
   const memoizedLocationPicker = useMemo(
     () => (

@@ -145,7 +145,7 @@ export const DetailPage = () => {
 
   if (!product) {
     // 에러페이지로 이동
-    return <Navigate to="/error" replace />;
+    return <Navigate to='/error' replace />;
   }
 
   return (
@@ -177,14 +177,14 @@ export const DetailPage = () => {
           <KebabMenu>
             {product.isSeller && (
               <>
-                <KebabMenu.Button content="수정하기" onClick={handleEdit} />
-                <KebabMenu.Button content="삭제하기" onClick={handleDelete} />
+                <KebabMenu.Button content='수정하기' onClick={handleEdit} />
+                <KebabMenu.Button content='삭제하기' onClick={handleDelete} />
               </>
             )}
             {!product.isSeller && (
               <>
-                <KebabMenu.Button content="차단하기" onClick={handleBlock} />
-                <KebabMenu.Button content="신고하기" onClick={handleReport} />
+                <KebabMenu.Button content='차단하기' onClick={handleBlock} />
+                <KebabMenu.Button content='신고하기' onClick={handleReport} />
               </>
             )}
           </KebabMenu>
