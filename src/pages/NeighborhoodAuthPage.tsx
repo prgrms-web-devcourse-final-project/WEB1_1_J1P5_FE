@@ -37,7 +37,7 @@ export const NeighborhoodAuthPage = () => {
       };
       try {
         await http.post<ILocationResponse, IUserLocationPost>(
-          "/user/location",
+          "/area-auth",
           locationPost
         );
         // TODO: navigate("/my-page") 중복 제거 필요
