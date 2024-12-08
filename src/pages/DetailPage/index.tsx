@@ -95,7 +95,20 @@ export const DetailPage = () => {
   const handleEdit = () => {
     if (product && !product.hasBuyer) {
       // 수정 페이지로 이동
-      navigate(`/product?${productId!}`);
+      // TODO 확인 필요
+      setFormData({
+        title: product.title,
+        content: product.content,
+        minimumPrice: product.minimumPrice.toLocaleString(),
+        category: product.category as Category,
+        latitude: product.productLocation.latitube,
+        longitude: product.productLocation.longitude,
+        address: product.productLocation.address,
+        location: product.productLocation.location,
+        imgUrls: product.images.map((img) => ({ url: img, file: null })),
+        expiredTime: product.expiredTime,
+      });
+      navigate(`/product?productId=${productId!}`);
       return;
     }
   };
