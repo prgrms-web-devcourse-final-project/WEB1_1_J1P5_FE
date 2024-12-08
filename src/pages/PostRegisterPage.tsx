@@ -2,80 +2,10 @@ import { PostRegisterTemplate } from "components/templates";
 import { useCallback, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useFormDataStore, useTopBarStore } from "stores";
-import type {
-  IPostForm,
-  Category,
-  ExpiredTime,
-  INewPostForm,
-  IResponse
-} from "types";
+import type { Category, ExpiredTime, IProductForm, IProductPost } from "types";
 import { getExpiredDate } from "utils";
-import { http } from "services/api";
+import { registerProduct, editProduct } from "services/apis/product";
 import { useFetchProduct } from "hooks";
-
-interface IProductsResponse extends IResponse {
-  /**
-   * 현재 result 타입이 빈 객체인데, productID를 받아올 필요가 있음
-   */
-  // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-  result: {};
-}
-
-// newProduct 객체를 POST 요청으로 전송하는 함수
-const submitNewProduct = async (newProduct: INewPostForm): Promise<void> => {
-  try {
-    const requestBody = new FormData();
-    const jsonRequestData = JSON.stringify({
-      title: newProduct.title,
-      content: newProduct.content,
-      minimumPrice: newProduct.minimumPrice,
-      category: newProduct.category,
-      latitude: newProduct.latitude,
-      longitude: newProduct.longitude,
-      address: newProduct.address,
-      location: newProduct.location,
-      expiredTime: newProduct.expiredTime
-    });
-
-    const request = new Blob([jsonRequestData], { type: "application/json" });
-    requestBody.append("request", request);
-    newProduct.images!.forEach((img) => {
-      requestBody.append("images", img);
-    });
-
-    await http.post<IProductsResponse, typeof requestBody>(
-      "/products",
-      requestBody,
-      {
-        withCredentials: true,
-        headers: {
-          "Content-Type": "multipart/form-data"
-        }
-      }
-    );
-  } catch (error) {
-    console.error("Failed to submit new product:", error);
-  }
-};
-
-const updateProduct = async (
-  productId: number,
-  updatedProduct: INewPostForm
-): Promise<void> => {
-  try {
-    const productToUpdate = { ...updatedProduct, productId };
-
-    delete productToUpdate.images;
-    delete productToUpdate.expiredTime;
-
-    await http.patch<IProductsResponse, typeof productToUpdate>(
-      `/products/${productId}`,
-      productToUpdate
-    );
-  } catch (error) {
-    console.error("Failed to update product:", error);
-  }
-};
 
 export const PostRegisterPage = () => {
   const location = useLocation();
@@ -89,7 +19,6 @@ export const PostRegisterPage = () => {
   const lat = useFormDataStore((state) => state.formData.latitude);
   const lng = useFormDataStore((state) => state.formData.longitude);
   const address = useFormDataStore((state) => state.formData.address);
-
   const { setFormData, clear } = useFormDataStore((state) => state.actions);
 
   useEffect(() => {
@@ -118,9 +47,7 @@ export const PostRegisterPage = () => {
   }, [productId, setFormData]);
 
   const handleSubmit = useCallback(
-    async (formData: IPostForm) => {
-      // TODO: 이미지가 없는 경우 처리
-
+    async (formData: IProductForm) => {
       if (formData.category && typeof formData.category === "object") {
         formData.category = formData.category.value as Category;
       }
@@ -132,10 +59,10 @@ export const PostRegisterPage = () => {
         formData.expiredTime = formData.expiredTime.value as ExpiredTime;
       }
 
-      const newProduct: INewPostForm = {
+      const newProduct: IProductPost = {
         title: formData.title!,
         content: formData.content!,
-        minimumPrice: Number(formData.minimumPrice!),
+        minimumPrice: Number(formData.minimumPrice!.replace(/,/g, "")),
         category: formData.category!,
         latitude: lat!,
         longitude: lng!,
@@ -146,12 +73,15 @@ export const PostRegisterPage = () => {
       };
 
       try {
-        console.log(newProduct);
         if (!productId) {
-          await submitNewProduct(newProduct);
+          await registerProduct(newProduct);
           navigate(`/`);
         } else {
-          await updateProduct(productId, newProduct);
+          const updatedProduct = { ...newProduct };
+          delete updatedProduct.images;
+          delete updatedProduct.expiredTime;
+
+          await editProduct(productId, updatedProduct);
           navigate(`/product/${productId}`);
         }
 
@@ -164,7 +94,7 @@ export const PostRegisterPage = () => {
   );
 
   const handleClick = useCallback(
-    (formData: IPostForm) => {
+    (formData: IProductForm) => {
       console.log(formData);
       if (formData.category && typeof formData.category === "object") {
         formData.category = formData.category.value as Category;
