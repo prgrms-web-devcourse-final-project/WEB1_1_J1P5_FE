@@ -10,7 +10,7 @@ import { useUserStore, useTopBarStore } from "stores";
 
 export const NeighborhoodAuthPage = () => {
   const navigate = useNavigate();
-  const { setTitle } = useTopBarStore();
+  const { clear, setTitle } = useTopBarStore();
   const { user } = useUserStore();
   const locationErrorEvent = useLocationErrorEvent();
 
@@ -23,7 +23,7 @@ export const NeighborhoodAuthPage = () => {
       const areaAuthPost: IAreaAuthPost = {
         latitude: location.coord!.lat,
         longitude: location.coord!.lng,
-        emdId: user!.emdId as number
+        emdId: user!.emdId as number,
       };
 
       try {
@@ -40,6 +40,7 @@ export const NeighborhoodAuthPage = () => {
   );
 
   useEffect(() => {
+    clear();
     setTitle("동네 인증");
   }, []);
 

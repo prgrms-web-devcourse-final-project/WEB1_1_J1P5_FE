@@ -6,10 +6,10 @@ import { IconButtonWrapper } from "components/atoms/Button/IconButton/styled";
 
 const CommonIconWrapper: ReturnType<typeof styled.div> = styled.div``;
 export const TopBarBackIconWrapper: typeof CommonIconWrapper = styled(
-  CommonIconWrapper,
+  CommonIconWrapper
 )``;
 export const TopBarIconWrapper: typeof CommonIconWrapper = styled(
-  CommonIconWrapper,
+  CommonIconWrapper
 )`
   ${IconButtonWrapper}:has(${NoIconWrapper}) {
     cursor: default;
@@ -32,8 +32,8 @@ export const TopBarWrapper: ReturnType<typeof styled.div> = styled.div`
   }
   & > ${InputWrapper} {
     flex: 1;
-    height: auto;
-    padding: 0.5rem 1rem;
+    height: 19/16rem;
+    padding: 15.5/16rem 1rem;
     background-color: #eee;
   }
   &:has(${InputWrapper}) ${TopBarIconWrapper} {
