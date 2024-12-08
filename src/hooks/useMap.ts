@@ -7,10 +7,11 @@ export const useMap = ({
   isCenterMarkerExist,
   setMyCoord,
   markerInfo,
-  locationErrorEvent
+  locationErrorEvent,
 }: IMapProps) => {
   const navermaps = useNavermaps();
   const defaultCenter = new navermaps.LatLng(37.5666805, 126.9784147);
+  // [Should] any 타입 사용을 최소화하는것을 목표로 해보세요
   const [map, setMap] = useState<any>(null);
   const [myMarker, setMyMarker] = useState<any>(null);
   const [transactionMarker, setTransactionMarker] = useState<any>(null);
@@ -106,7 +107,7 @@ export const useMap = ({
         if (infowindow && markerInfo) {
           infowindow.setOptions({
             disableAnchor: true,
-            borderWidth: 0
+            borderWidth: 0,
           });
           infowindow.setContent(
             '<div style=" display: flex; padding: 6px 10px; justify-content: center; align-items: center; gap: 10px; border-radius:6px; background-color:#131B53; color:#FFF;  font-size: 14px;">' +
@@ -144,6 +145,6 @@ export const useMap = ({
     setMap,
     setMyMarker,
     setTransactionMarker,
-    transactionMarker
+    transactionMarker,
   };
 };
