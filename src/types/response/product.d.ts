@@ -36,3 +36,20 @@ export interface IProductDetail {
 export interface IProductDetailResponse extends IResponse {
   result: IProductDetail | null;
 }
+
+export interface IProductPost {
+  title: string;
+  content: string;
+  minimumPrice: number;
+  category: Category;
+  latitude: number;
+  longitude: number;
+  address: string;
+  location: string;
+  expiredTime?: string;
+  images?: File[];
+}
+
+export interface IProductResponse extends IResponse {
+  result: null;
+}

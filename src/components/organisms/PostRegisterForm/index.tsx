@@ -8,7 +8,7 @@ import {
 } from "components/molecules";
 import { PostImageManager } from "components/organisms";
 import { PostRegisterFormWrapper, DivWrapper } from "./styled";
-import type { IPostForm, IImageInfo } from "types";
+import type { IProductForm, IImageInfo } from "types";
 import { CATEGORY_OPTIONS, EXPIRED_TIMES } from "constants/options";
 import { isISOFormat } from "utils";
 
@@ -16,11 +16,11 @@ interface IPostRegisterFormProps {
   /** product Id */
   productId?: number;
   /** 글 등록할 때 필요한 form 데이터 */
-  postForm?: IPostForm;
+  postForm?: IProductForm;
   /** Submit 이벤트 발생 시 실행할 함수 */
-  onSubmit: (data: IPostForm) => void;
+  onSubmit: (data: IProductForm) => void;
   /** 거래 희망 장소 클릭 시 실행할 함수 */
-  onClick: (data: IPostForm) => void;
+  onClick: (data: IProductForm) => void;
 }
 
 export const PostRegisterForm = ({
@@ -33,7 +33,7 @@ export const PostRegisterForm = ({
     postForm?.imgUrls || []
   );
 
-  const { control, handleSubmit, setValue, getValues } = useForm<IPostForm>({
+  const { control, handleSubmit, setValue, getValues } = useForm<IProductForm>({
     mode: "onBlur",
     defaultValues: {
       title: postForm?.title,
@@ -178,6 +178,7 @@ export const PostRegisterForm = ({
               label="최종 입찰가"
               value={value || ""}
               setValue={(value) => {
+                console.log("price", value);
                 setValue("minimumPrice", value);
               }}
               placeholder="최종 입찰가를 입력해주세요."
