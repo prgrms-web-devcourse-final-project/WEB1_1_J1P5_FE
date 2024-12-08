@@ -77,20 +77,6 @@ export const CommentContentWrapper: ReturnType<typeof styled.div> = styled.div`
 `;
 
 /**
- * 댓글
- */
-export const CommentItemWrapper: ReturnType<typeof styled.div> = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: ${10 / 16}rem;
-  position: relative;
-  padding-left: 1rem;
-  &.deleted {
-    color: ${({ theme }) => theme.colors.grey_field_guide_but_deactivate};
-  }
-`;
-
-/**
  * 답글
  */
 export const ReplyCommentWrapper: ReturnType<typeof styled.div> = styled.div`
@@ -119,6 +105,20 @@ export const ReplyCommentContainer: ReturnType<typeof styled.div> = styled.div`
 export const ReplyContainer: ReturnType<typeof styled.div> = styled.div`
   display: flex;
   flex-direction: column;
+`;
+
+/**
+ * 댓글
+ */
+export const CommentItemWrapper: ReturnType<typeof styled.div> = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: ${10 / 16}rem;
+  position: relative;
+  padding-left: 1rem;
+  &.deleted {
+    color: ${({ theme }) => theme.colors.grey_field_guide_but_deactivate};
+  }
 `;
 
 /**
