@@ -1,22 +1,12 @@
 import { useCallback, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
 import { Toast } from "components/atoms";
 import { NeighborhoodAuthTemplate } from "components/templates";
 import { useLocationErrorEvent } from "hooks";
-import { ILocation, IResponse } from "types";
-import { http } from "services/api";
+import { ILocation, IAreaAuthPost } from "types";
+import { registerAreaAuth } from "services/apis/areaAuth";
 import { useUserStore, useTopBarStore } from "stores";
-import { useNavigate } from "react-router-dom";
-
-interface IUserLocationPost {
-  latitude: number;
-  longitude: number;
-  emdId: number;
-}
-
-export interface ILocationResponse extends IResponse {
-  // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-  result: {};
-}
 
 export const NeighborhoodAuthPage = () => {
   const navigate = useNavigate();
@@ -25,38 +15,28 @@ export const NeighborhoodAuthPage = () => {
   const locationErrorEvent = useLocationErrorEvent();
 
   /**
-   * 사용자의 위치 정보를 서버에 전송하는 함수
-   * @param location 사용자의 위치 정보
+   * 유저의 위치 정보를 서버에 전송하는 함수
+   * @param location 유저의 위치 정보
    */
-  const submitUserLocation = useCallback(
-    async (location: ILocation): Promise<void> => {
-      const locationPost: IUserLocationPost = {
+  const handleSubmitButtonClick = useCallback(
+    async (location: ILocation) => {
+      const areaAuthPost: IAreaAuthPost = {
         latitude: location.coord!.lat,
         longitude: location.coord!.lng,
         emdId: user!.emdId as number
       };
+
       try {
-        await http.post<ILocationResponse, IUserLocationPost>(
-          "/area-auth",
-          locationPost
-        );
-        // TODO: navigate("/my-page") 중복 제거 필요
-        navigate("/my-page");
+        await registerAreaAuth(areaAuthPost);
         Toast.show("동네 인증이 완료되었습니다.", 2000);
       } catch (error) {
-        navigate("/my-page");
         Toast.show("동네 인증에 실패했습니다. 다시 시도해주세요.", 2000);
         console.error("Failed to submit user location:", error);
+      } finally {
+        navigate("/my-page");
       }
     },
     [user, navigate]
-  );
-
-  const handleSubmitButtonClick = useCallback(
-    async (location: ILocation) => {
-      await submitUserLocation(location);
-    },
-    [submitUserLocation]
   );
 
   useEffect(() => {
@@ -65,7 +45,8 @@ export const NeighborhoodAuthPage = () => {
 
   return (
     <NeighborhoodAuthTemplate
-      nickname={user?.nickname || "닉네임을 불러올 수 없어요"}
+      // TODO: 값이 없을 때 어떤 값을 띄워야 하는지
+      nickname={user?.nickname || ""}
       myAddress={user?.emdName || ""}
       onSubmitButtonClick={handleSubmitButtonClick}
       locationErrorEvent={locationErrorEvent}
