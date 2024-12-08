@@ -3,8 +3,15 @@ import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { DetailTemplate } from "components/templates";
 import { KebabMenu } from "components/molecules";
 import { KebabIcon } from "components/atoms/Icon";
+import { Loading } from "components/molecules/Loading";
 import { useTopBarStore } from "stores";
-import { useFetchProduct, useFetchComment, useKebabMenu, useBid } from "hooks";
+import {
+  useFetchProduct,
+  useFetchComment,
+  useKebabMenu,
+  useBid,
+  useDetailModal,
+} from "hooks";
 import { KebabWrapper } from "./styled";
 import { earlyClose } from "services/apis";
 
@@ -14,8 +21,9 @@ export const DetailPage = () => {
   const { product, isProductLoading } = useFetchProduct(productId!);
   const { comments, isCommentLoading } = useFetchComment(productId!);
   const { setTitle, setRightIcon } = useTopBarStore();
-  const { open, handleOpen, menuRef } = useKebabMenu();
+  const { open, handleOpen, handleClose, menuRef } = useKebabMenu();
   const { handleCancel, myPrice } = useBid(parseInt(productId!));
+  const { todo } = useDetailModal();
 
   /**
    * 거래 희망 장소 클릭
@@ -30,6 +38,8 @@ export const DetailPage = () => {
    */
   const handleBlock = () => {
     // TODO 차단
+    todo();
+    handleClose();
   };
 
   /**
@@ -37,6 +47,8 @@ export const DetailPage = () => {
    */
   const handleReport = () => {
     // TODO 신고
+    todo();
+    handleClose();
   };
 
   /**
@@ -91,8 +103,7 @@ export const DetailPage = () => {
   }, [isProductLoading, product]);
 
   if (isProductLoading || isCommentLoading) {
-    // TODO 스켈레톤 UI
-    return null;
+    return <Loading />;
   }
 
   if (!product) {
@@ -101,7 +112,6 @@ export const DetailPage = () => {
   }
 
   return (
-    // 	TODO 로딩...
     <Suspense fallback={null}>
       <DetailTemplate
         seller={product.seller}

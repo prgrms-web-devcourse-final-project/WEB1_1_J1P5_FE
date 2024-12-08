@@ -24,7 +24,7 @@ export const Default: Story = {
       {
         commentId: 1,
         commentMemeberDto: {
-          profileImage: DEFAULT_IMG_PATH,
+          profileIamge: DEFAULT_IMG_PATH,
           nickname: "작성자",
         },
         createdAt: "2024-11-29 09:40:27",
@@ -37,7 +37,7 @@ export const Default: Story = {
       {
         commentId: 2,
         commentMemeberDto: {
-          profileImage: "https://github.com/ppyom.png",
+          profileIamge: "https://github.com/ppyom.png",
           nickname: "작성자는바로나",
         },
         createdAt: "2024-11-29 15:40:27",
@@ -49,7 +49,7 @@ export const Default: Story = {
           {
             commentId: 4,
             commentMemeberDto: {
-              profileImage: DEFAULT_IMG_PATH,
+              profileIamge: DEFAULT_IMG_PATH,
               nickname: "작성자",
             },
             createdAt: new Date().toString(),
@@ -61,7 +61,7 @@ export const Default: Story = {
           {
             commentId: 5,
             commentMemeberDto: {
-              profileImage: DEFAULT_IMG_PATH,
+              profileIamge: DEFAULT_IMG_PATH,
               nickname: "작성자",
             },
             createdAt: new Date().toString(),
@@ -75,7 +75,7 @@ export const Default: Story = {
       {
         commentId: 3,
         commentMemeberDto: {
-          profileImage: DEFAULT_IMG_PATH,
+          profileIamge: DEFAULT_IMG_PATH,
           nickname: "작성자",
         },
         createdAt: new Date().toString(),

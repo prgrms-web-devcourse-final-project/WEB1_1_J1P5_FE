@@ -4,9 +4,9 @@ import { useModalStore } from "stores";
 import { modalMessage } from "constants/modalMessage";
 
 /**
- * 상세페이지에서 사용되는 모달
+ * 기본 모달 형태를 불러서 사용할 수 있는 훅 (alert / confirm)
  */
-export const useDetailModal = () => {
+export const useModalForm = () => {
   const {
     actions: { openModal, closeModal },
   } = useModalStore();
@@ -54,25 +54,28 @@ export const useDetailModal = () => {
       </>,
     );
   };
-
-  // 구매자
-  const cancel = (onCancel: () => void) =>
-    confirm(modalMessage.product.bid.cancel.DEFAULT, onCancel);
-  const cancelEarly = () => alert(modalMessage.product.bid.cancel.early);
-  const editEarly = () => alert(modalMessage.product.bid.edit.early);
-  const bid = (price: number) => alert(modalMessage.product.bid.DEFAULT(price));
-  // 판매자
-  const earlyClosing = (onEarlyClosing: () => void) =>
-    confirm(modalMessage.product.seller.early, onEarlyClosing);
-  const removeHasBuyer = (onRemove: () => void) =>
-    confirm(modalMessage.product.seller.remove.hasBuyer, onRemove);
-
+  const todo = () =>
+    openModal(
+      <>
+        <Modal.Body>
+          <Text variant="writing_bold" content={modalMessage.todo.title} />
+          <Text variant="desc_regular" content={modalMessage.todo.desc} />
+        </Modal.Body>
+        <Modal.ButtonContainer
+          buttons={[
+            {
+              title: "확인",
+              onClick: () => {
+                closeModal();
+              },
+            },
+          ]}
+        />
+      </>,
+    );
   return {
-    cancel,
-    cancelEarly,
-    editEarly,
-    bid,
-    earlyClosing,
-    removeHasBuyer,
+    alert,
+    confirm,
+    todo,
   };
 };
