@@ -7,7 +7,7 @@ interface FontStyle {
 
 export const defaultTheme = {
   sizes: {
-    max_width: "430px",
+    max_width: "402px",
     min_width: "375px",
   },
   colors: {

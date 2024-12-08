@@ -11,6 +11,7 @@ import {
   PostItemRemainingTimeWrapper,
   PostItemRootWrapper,
 } from "./styled";
+import { TextVariant } from "components/atoms/Text";
 
 /* -------------------------------------------------------------------
  * PostItem Root
@@ -121,6 +122,7 @@ const PostItemLocationAndTime = ({
 interface IPostItemPriceProps {
   price: number;
   title?: string;
+  variant?: TextVariant;
 }
 
 /**
@@ -128,11 +130,15 @@ interface IPostItemPriceProps {
  * @param price 가격
  * @param title `optional` 가격에 대한 타이틀
  */
-const PostItemPrice = ({ price, title }: IPostItemPriceProps) => {
+const PostItemPrice = ({
+  price,
+  title,
+  variant = "title_bold",
+}: IPostItemPriceProps) => {
   return (
     <PostItemPriceWrapper>
-      {title && <Text variant="title_bold" content={`${title}`} />}
-      <Text variant="title_bold" content={`${price.toLocaleString()}원`} />
+      {title && <Text variant={variant} content={`${title}`} />}
+      <Text variant={variant} content={`${price.toLocaleString()}원`} />
     </PostItemPriceWrapper>
   );
 };
@@ -155,8 +161,9 @@ const PostItemRemainingTime = ({
   const { timeRemaining } = useRemainingTimer(expiredTime);
   return (
     <PostItemRemainingTimeWrapper>
-      <Text variant="body1" content="남은 시간" />
-      <Text variant="body1" content={timeRemaining} />
+      <Text variant="tag_regular" content="남은 시간" />
+      <Text variant="tag_regular" content="·" />
+      <Text variant="tag_regular" content={timeRemaining} />
     </PostItemRemainingTimeWrapper>
   );
 };

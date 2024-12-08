@@ -4,13 +4,14 @@ import { Text, TextButton } from "components/atoms";
 import {
   LabeledInput,
   LabeledSelect,
-  LabeledTextarea
+  LabeledTextarea,
 } from "components/molecules";
 import { PostImageManager } from "components/organisms";
 import { PostRegisterFormWrapper, DivWrapper } from "./styled";
 import type { IProductForm, IImageInfo } from "types";
 import { CATEGORY_OPTIONS, EXPIRED_TIMES } from "constants/options";
 import { isISOFormat } from "utils";
+import { ThemeType } from "styles/theme";
 
 interface IPostRegisterFormProps {
   /** product Id */
@@ -27,7 +28,7 @@ export const PostRegisterForm = ({
   productId,
   postForm,
   onSubmit,
-  onClick
+  onClick,
 }: IPostRegisterFormProps) => {
   const [imageInfos, setImageInfos] = useState<IImageInfo[]>(
     postForm?.imgUrls || []
@@ -41,8 +42,8 @@ export const PostRegisterForm = ({
       minimumPrice: postForm?.minimumPrice,
       category: postForm?.category,
       expiredTime: postForm?.expiredTime,
-      location: postForm?.location
-    }
+      location: postForm?.location,
+    },
   });
 
   useEffect(() => {
@@ -57,8 +58,8 @@ export const PostRegisterForm = ({
         rules={{
           validate: {
             notEmpty: () =>
-              imageInfos.length > 0 || "이미지를 1개 이상 업로드해주세요."
-          }
+              imageInfos.length > 0 || "이미지를 1개 이상 업로드해주세요.",
+          },
         }}
         render={({ fieldState: { invalid, error } }) => (
           <DivWrapper>
@@ -68,7 +69,12 @@ export const PostRegisterForm = ({
               disabled={!!productId}
             />
             {invalid && (
-              <div style={{ color: "#FF2E4D" }}>
+              <div
+                style={{
+                  color: `${({ theme }: { theme: ThemeType }) =>
+                    theme.colors.black}`,
+                }}
+              >
                 <Text variant="explan_regular" content={error?.message || ""} />{" "}
               </div>
             )}
@@ -79,12 +85,12 @@ export const PostRegisterForm = ({
         name="category"
         control={control}
         rules={{
-          required: "카테고리는 필수 입력 항목입니다."
+          required: "카테고리는 필수 입력 항목입니다.",
         }}
         render={({
           field: { onChange, value },
           fieldState: { invalid },
-          formState
+          formState,
         }) => (
           <DivWrapper>
             <LabeledSelect
@@ -96,7 +102,12 @@ export const PostRegisterForm = ({
               placeholder="카테고리를 검색해보세요!"
             />
             {invalid && (
-              <div style={{ color: "#FF2E4D" }}>
+              <div
+                style={{
+                  color: `${({ theme }: { theme: ThemeType }) =>
+                    theme.colors.blue_light}`,
+                }}
+              >
                 <Text
                   variant="explan_regular"
                   content={formState.errors.category?.message || ""}
@@ -110,7 +121,7 @@ export const PostRegisterForm = ({
         name="title"
         control={control}
         rules={{
-          required: "제목은 필수 입력 항목입니다."
+          required: "제목은 필수 입력 항목입니다.",
         }}
         render={({ field: { value }, fieldState: { invalid }, formState }) => (
           <DivWrapper>
@@ -138,7 +149,7 @@ export const PostRegisterForm = ({
         name="content"
         control={control}
         rules={{
-          required: "설명은 필수 입력 항목입니다."
+          required: "설명은 필수 입력 항목입니다.",
         }}
         render={({ field: { value }, fieldState: { invalid }, formState }) => (
           <DivWrapper>
@@ -168,7 +179,7 @@ export const PostRegisterForm = ({
         name="minimumPrice"
         control={control}
         rules={{
-          required: "최종 입찰가는 필수 입력 항목입니다."
+          required: "최종 입찰가는 필수 입력 항목입니다.",
         }}
         render={({ field: { value }, fieldState: { invalid }, formState }) => (
           <DivWrapper>
@@ -198,12 +209,12 @@ export const PostRegisterForm = ({
         name="expiredTime"
         control={control}
         rules={{
-          required: "경매 마감 일시는 필수 입력 항목입니다."
+          required: "경매 마감 일시는 필수 입력 항목입니다.",
         }}
         render={({
           field: { onChange, value },
           fieldState: { invalid },
-          formState
+          formState,
         }) => {
           const expiredTimeDisabled = isISOFormat(
             postForm?.expiredTime as string
@@ -219,8 +230,8 @@ export const PostRegisterForm = ({
                     ? [
                         {
                           value: postForm!.expiredTime as string,
-                          label: postForm!.expiredTime as string
-                        }
+                          label: postForm!.expiredTime as string,
+                        },
                       ]
                     : EXPIRED_TIMES
                 }
@@ -228,7 +239,7 @@ export const PostRegisterForm = ({
                   expiredTimeDisabled
                     ? {
                         value: postForm!.expiredTime as string,
-                        label: postForm!.expiredTime as string
+                        label: postForm!.expiredTime as string,
                       }
                     : EXPIRED_TIMES.find((option) => option.value === value)
                 }
@@ -259,7 +270,7 @@ export const PostRegisterForm = ({
         name="location"
         control={control}
         rules={{
-          required: "거래 희망 장소는 필수 입력 항목입니다."
+          required: "거래 희망 장소는 필수 입력 항목입니다.",
         }}
         render={({ field: { value }, fieldState: { invalid }, formState }) => (
           <DivWrapper>

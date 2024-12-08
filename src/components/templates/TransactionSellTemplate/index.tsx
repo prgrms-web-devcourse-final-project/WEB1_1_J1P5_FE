@@ -21,7 +21,6 @@ export const TransactionSellTemplate = ({
     onClick(tab);
     const newType = tab === SELLING_TAB ? "selling" : "completed";
     setType(newType); // 상태 업데이트
-    console.log(`탭 클릭: ${tab}, type: ${newType}`);
   };
 
   return (

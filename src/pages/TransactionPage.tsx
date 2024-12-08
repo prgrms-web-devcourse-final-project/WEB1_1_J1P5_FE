@@ -1,3 +1,4 @@
+import { useQuery } from "@tanstack/react-query";
 import { IPost } from "components/organisms/PostList";
 import {
   TransactionBuyTemplate,
@@ -5,7 +6,8 @@ import {
 } from "components/templates";
 import { DEFAULT_IMG_PATH } from "constants/imgPath";
 import { BUYING_TAB, COMPLETED_TAB, SELLING_TAB } from "constants/transaction";
-import { useEffect, useState } from "react";
+import { useModalForm } from "hooks";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { http } from "services/api";
 import { useTopBarStore } from "stores";
@@ -44,11 +46,32 @@ interface ITransactionPageResponse extends IResponse {
 
 export const TransactionPage = ({ type }: TransactionPageProps) => {
   const { clear, setTitle } = useTopBarStore();
-  const [posts, setPosts] = useState<IPost[]>([]);
+  const { todo } = useModalForm();
+  const navigate = useNavigate();
+
   /** TODO: 백엔드 API에 따라 변경 필요 */
   const TRANSACTION_API_URL = `/transaction/${type}`;
   const TRANSACTION_NAVIGATE_URL = "/product";
-  const navigate = useNavigate();
+
+  const tempPosts: IPost[] = Array.from({ length: 10 }, (_, index) => ({
+    productId: index + 1,
+    imgUrl: DEFAULT_IMG_PATH,
+    title: `물품 ${index + 1}`,
+    price: 3500 + index * 1000,
+    address: "신림동",
+    uploadTime: `2024-11-28 ${11 + index}:00:00`,
+    onClick: () => {
+      todo();
+    },
+    expiredTime: `2024-12-29 ${11 + index}:00:00`,
+    maxPrice: 30000,
+    onTextButtonClick: () => {
+      todo();
+    },
+    onIconButtonClick: () => {
+      console.log("Icon Button 클릭");
+    },
+  }));
 
   /** 백엔드 IHomePost 타입을 프론트 IPost 으로 변환 함수
    * @param homePost : ITransactionPost
@@ -98,79 +121,61 @@ export const TransactionPage = ({ type }: TransactionPageProps) => {
    * @returns void
    */
   const fetchPosts = async () => {
+    const response = await http.get<ITransactionPageResponse>(
+      TRANSACTION_API_URL
+    );
+    if (response.success && response.code === "COMMON200") {
+      // 백엔드 타입 프론트엔드 타입으로 변환
+      return response.result.content.map(createTransactionPostItem);
+    }
+    throw new Error("Failed to fetch data");
+  };
+
+  const { data, refetch } = useQuery({
+    queryKey: ["transactionPosts", type],
+    queryFn: fetchPosts,
+    initialData: tempPosts, // 에러 시 대체 데이터로 사용
+    retry: 2, // 최대 2번만 재시도
+    retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 3000), // 재시도 간격 (옵션)
+  });
+
+  /** TODO : 탭 바뀔때마다 fecth 하도록 변경 필요 */
+  const onHandleTab = async (tab: string) => {
     try {
-      const response = await http.get<ITransactionPageResponse>(
-        TRANSACTION_API_URL
-      );
-      if (response.success && response.code === "COMMON200") {
-        // 백엔드 타입 프론트엔드 타입으로 변환
-        const posts = response.result.content.map(createTransactionPostItem);
-        setPosts(posts);
+      if (type === "sell") {
+        if (tab === SELLING_TAB) {
+          await refetch();
+        } else if (tab === COMPLETED_TAB) {
+          await refetch();
+        }
+      } else if (type === "buy") {
+        if (tab === BUYING_TAB) {
+          await refetch();
+        } else if (tab === COMPLETED_TAB) {
+          await refetch();
+        }
       }
     } catch (error) {
-      console.error("Failed to fetch messages:", error);
+      console.error("Failed to refetch data:", error);
     }
   };
 
-  /** 최초 접속시 post리스트 fetch 해오는 함수
+  /** 최초 접속시 헤더 변경
    * @returns void
    */
   useEffect(() => {
     clear();
     setTitle(type === "sell" ? "판매 내역" : "입찰 내역");
-    const fetchTransactionPosts = async () => {
-      await fetchPosts();
-    };
-    fetchTransactionPosts().catch((error) => {
-      console.error("Error fetchting Home Post:", error);
-    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  const tempPosts: IPost[] = Array.from({ length: 5 }, (_, index) => ({
-    productId: index + 1,
-    imgUrl: DEFAULT_IMG_PATH,
-    title: `물품 ${index + 1}`,
-    price: 3500 + index * 1000,
-    address: "신림동",
-    uploadTime: `2024-11-28 ${11 + index}:00:00`,
-    onClick: () => {
-      console.log(`클릭 ${index + 1}`);
-    },
-    expiredTime: `2024-12-29 ${11 + index}:00:00`,
-    maxPrice: 30000,
-    onTextButtonClick: () => {
-      console.log("Text Button 클릭");
-    },
-    onIconButtonClick: () => {
-      console.log("Icon Button 클릭");
-    },
-  }));
-
-  /** TODO : 탭 바뀔때마다 fecth 하도록 변경 필요 */
-  const onHandleTab = (tab: string) => {
-    if (type === "sell") {
-      if (tab === SELLING_TAB) {
-        setPosts(tempPosts);
-      } else if (tab === COMPLETED_TAB) {
-        setPosts([]);
-      }
-    } else if (type === "buy") {
-      if (tab === BUYING_TAB) {
-        setPosts(tempPosts);
-      } else if (tab === COMPLETED_TAB) {
-        setPosts([]);
-      }
-    }
-  };
 
   return (
     <>
       {type === "buy" && (
-        <TransactionBuyTemplate onClick={onHandleTab} posts={posts} />
+        <TransactionBuyTemplate onClick={onHandleTab} posts={data} />
       )}
       {type === "sell" && (
-        <TransactionSellTemplate onClick={onHandleTab} posts={posts} />
+        <TransactionSellTemplate onClick={onHandleTab} posts={data} />
       )}
     </>
   );
