@@ -23,10 +23,13 @@ export const LocationMap = ({
     <LocationMapWrapper onClick={onClick}>
       <TextContainer>
         <TitleWrapper>
-          <Text variant="body1" content="거래희망장소" />
+          <Text variant="title_bold" content="거래희망장소" />
         </TitleWrapper>
         <IconWithText>
-          <IconWithText.Content content={location} />
+          <IconWithText.Content
+            contentVariant="title_bold"
+            content={location}
+          />
           <IconWithText.Icon icon={LinkIcon} size="s" />
         </IconWithText>
       </TextContainer>

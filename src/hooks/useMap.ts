@@ -44,9 +44,7 @@ export const useMap = ({
     /**
      * TODO: 권한 요청을 했는데, 그냥 취소 누른 경우 실행되는 부분
      */
-    locationErrorEvent?.(
-      "위치를 불러오는데 실패했어요. 잠시 후에 다시 실행해주세요."
-    );
+    locationErrorEvent?.("위치를 불러오는데 실패했어요.");
   }, [locationErrorEvent]);
 
   const handlePermission = useCallback(
@@ -61,9 +59,7 @@ export const useMap = ({
           type === "getMyLocation" ||
           (type === "init" && !coord && !isCenterMarkerExist)
         ) {
-          locationErrorEvent?.(
-            "위치 권한이 거부되었습니다. 권한을 허용해주세요."
-          );
+          locationErrorEvent?.("지금은 위치를 불러올 수 없어요.");
         }
       }
     },
@@ -84,9 +80,7 @@ export const useMap = ({
          * 만일의 경우를 대비한 처리. 실제로 사용될 일은 드물 것으로 예상됨
          * TODO: 추후에 개발 후 처분 결정
          */
-        locationErrorEvent?.(
-          "브라우저가 위치 정보를 지원하지 않습니다. 위치 권한을 허용해주세요."
-        );
+        locationErrorEvent?.("브라우저가 위치 정보를 지원하지 않아요.");
 
         myMarker.setPosition(defaultCenter);
         myMarker.setVisible(!coord && !isCenterMarkerExist);

@@ -59,6 +59,7 @@ interface IBaseDetailTemplateProps extends Omit<IProductDetail, ""> {
 }
 
 export const DetailTemplate = ({
+  productId,
   // 이미지 슬라이더
   images,
   // AuctionTimer
@@ -94,7 +95,7 @@ export const DetailTemplate = ({
     handleOpenBottomSheet,
     handleCloseBottomSheet,
     handleBid,
-  } = useBid();
+  } = useBid(productId);
 
   return (
     <DetailTemplateWrapper>
@@ -117,10 +118,12 @@ export const DetailTemplate = ({
       <Comment comments={comments} />
       <AuctionControlBar>
         <AuctionControlBar.BidContainer>
-          <AuctionControlBar.Bid
-            title={priceNames.minimumPrice}
-            price={minimumPrice}
-          />
+          {(!isSeller || !maximumPrice) && (
+            <AuctionControlBar.Bid
+              title={priceNames.minimumPrice}
+              price={minimumPrice}
+            />
+          )}
           {myPrice && (
             <AuctionControlBar.Bid title={priceNames.myPrice} price={myPrice} />
           )}
@@ -141,6 +144,7 @@ export const DetailTemplate = ({
           {myPrice && (
             <>
               <AuctionControlBar.Button
+                backgroundColor="grey"
                 text={buttonNames.cancel}
                 onClick={
                   isEarly
@@ -156,6 +160,8 @@ export const DetailTemplate = ({
           )}
           {isSeller && maximumPrice && (
             <AuctionControlBar.Button
+              backgroundColor="red"
+              variant="btn_bold"
               text={buttonNames.early}
               onClick={() => modal.earlyClosing(onEarlyClosing)}
             />

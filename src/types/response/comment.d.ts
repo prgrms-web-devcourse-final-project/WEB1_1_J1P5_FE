@@ -4,7 +4,7 @@ export interface IComment {
   commentId: number;
   commentMemeberDto: {
     nickname: string;
-    profileImage: string;
+    profileIamge: string;
   };
   content: string;
   isSeller: boolean;

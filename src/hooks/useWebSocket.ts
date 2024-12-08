@@ -9,6 +9,7 @@ export function useWebSocket() {
 
   const subscribeToChatRoom = (
     roomId: string,
+    userId: string,
     //TODO : 이 message 뭐 들어오는지 확인
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     setChats: React.Dispatch<React.SetStateAction<IChatMsg[]>>
@@ -22,13 +23,12 @@ export function useWebSocket() {
           newMsg.id = "0";
           console.log("메시지 수신:", JSON.parse(message.body));
           setChats((prev) => [...prev, newMsg]);
-        }
-        /** TODO: 채팅 방 목록에서 userID 받아서 여기에 userId 넣어야함 
-         * 채팅방 목록에서 userID 받는 법은 기본 chatroom basic Info 에서 추가하기로 하였음. 
+        },
+        /** TODO: 채팅 방 목록에서 userID 받아서 여기에 userId 넣어야함
+         * 채팅방 목록에서 userID 받는 법은 기본 chatroom basic Info 에서 추가하기로 하였음.  */
         {
-          userId: "your-user-id", // 헤더에 userId 추가
+          userId: userId, // 헤더에 userId 추가
         }
-          */
       );
     } else {
       console.error("WebSocket is not connected for subscription.");
@@ -37,6 +37,7 @@ export function useWebSocket() {
 
   const connect = async (
     roomId: string,
+    userId: string,
     setChats: React.Dispatch<React.SetStateAction<IChatMsg[]>>
   ) => {
     if (isConnected) {
@@ -45,16 +46,15 @@ export function useWebSocket() {
     }
 
     stompClient = new Client({
-      brokerURL: "ws://localhost:8080/ws", // WebSocket 서버 URL
+      brokerURL: `wss://${import.meta.env.VITE_WEBSOCKET_URL}/ws`, // WebSocket 서버 URL
       debug: function (str: string) {
         console.log(str);
       },
       onConnect: () => {
         console.log("연결 완료");
         setIsConnected(true); // 상태 업데이트
-
         // 구독 실행 및 반환 값 확인
-        const subscription = subscribeToChatRoom(roomId, setChats);
+        const subscription = subscribeToChatRoom(roomId, userId, setChats);
 
         if (subscription) {
           console.log("Successfully subscribed to room:", subscription);
@@ -92,12 +92,18 @@ export function useWebSocket() {
    * chatMessage쪽에 receiverId는 receiverId, senderId: senderId, 로 재변경 필요
    *
    */
-  const sendMessage = (roomId: string, senderId: number, content: string) => {
+  const sendMessage = (
+    roomId: string,
+    content: string,
+    senderId: number, // 나
+    receiverId: number // 받는 사람
+  ) => {
     if (stompClient && stompClient.connected) {
       const chatMessage = {
         roomId: roomId,
-        receiverId: senderId, //받는 사람 otheruserId
+        receiverId: receiverId, //받는 사람 otheruserId
         content: content,
+        senderId: senderId,
       };
       console.log("Sending message:", chatMessage);
       stompClient.publish({

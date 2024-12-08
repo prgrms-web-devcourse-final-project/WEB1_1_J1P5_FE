@@ -3,7 +3,7 @@ import {
   Navigate,
   useNavigate,
   useParams,
-  useSearchParams,
+  useSearchParams
 } from "react-router-dom";
 import { oauthLogin } from "services/apis";
 import { useUserStore } from "stores";
@@ -33,18 +33,11 @@ export const OAuthCallbackPage = () => {
           setUser({
             profile: result.profileUrl || undefined,
             nickname: result.nickname || undefined,
-            emdId: result.emdId || undefined,
             emdName: result.emdName || undefined,
+            emdId: result.emdId || undefined
           });
 
-          navigate(
-            !result.nickname
-              ? "/profile"
-              : !result.emdName
-                ? "/neighborhood-selection"
-                : "/",
-            { replace: true },
-          );
+          navigate("/", { replace: true });
         })
         .catch(console.error);
     }

@@ -1,4 +1,8 @@
 export const modalMessage = {
+  todo: {
+    title: "아직 개발중인 기능이예요. ㅠㅠ",
+    desc: "정식 출시때는 포함이 될거예요!",
+  },
   product: {
     bid: {
       DEFAULT: (price: number) =>

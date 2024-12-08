@@ -3,9 +3,17 @@ import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { DetailTemplate } from "components/templates";
 import { KebabMenu } from "components/molecules";
 import { KebabIcon } from "components/atoms/Icon";
+import { Loading } from "components/molecules/Loading";
 import { useTopBarStore } from "stores";
-import { useFetchProduct, useFetchComment, useKebabMenu } from "hooks";
+import {
+  useFetchProduct,
+  useFetchComment,
+  useKebabMenu,
+  useBid,
+  useDetailModal,
+} from "hooks";
 import { KebabWrapper } from "./styled";
+import { earlyClose } from "services/apis";
 
 export const DetailPage = () => {
   const navigate = useNavigate();
@@ -13,7 +21,9 @@ export const DetailPage = () => {
   const { product, isProductLoading } = useFetchProduct(productId!);
   const { comments, isCommentLoading } = useFetchComment(productId!);
   const { setTitle, setRightIcon } = useTopBarStore();
-  const { open, handleOpen, menuRef } = useKebabMenu();
+  const { open, handleOpen, handleClose, menuRef } = useKebabMenu();
+  const { handleCancel, myPrice } = useBid(parseInt(productId!));
+  const { todo } = useDetailModal();
 
   /**
    * 거래 희망 장소 클릭
@@ -28,6 +38,8 @@ export const DetailPage = () => {
    */
   const handleBlock = () => {
     // TODO 차단
+    todo();
+    handleClose();
   };
 
   /**
@@ -35,20 +47,25 @@ export const DetailPage = () => {
    */
   const handleReport = () => {
     // TODO 신고
+    todo();
+    handleClose();
   };
 
   /**
    * (구매자) 입찰 취소
    */
   const handleCancelBid = () => {
-    // TODO 입찰 취소
+    handleCancel();
   };
 
   /**
    * (판매자) 조기마감
    */
   const handleEarlyClosing = () => {
-    // TODO 조기마감
+    // TODO 조기마감 (판매자 확인 필요)
+    if (product?.isSeller) {
+      earlyClose(productId!).then(console.log).catch(console.error);
+    }
   };
 
   /**
@@ -86,8 +103,7 @@ export const DetailPage = () => {
   }, [isProductLoading, product]);
 
   if (isProductLoading || isCommentLoading) {
-    // TODO 스켈레톤 UI
-    return null;
+    return <Loading />;
   }
 
   if (!product) {
@@ -96,7 +112,6 @@ export const DetailPage = () => {
   }
 
   return (
-    // 	TODO 로딩...
     <Suspense fallback={null}>
       <DetailTemplate
         seller={product.seller}
@@ -110,8 +125,8 @@ export const DetailPage = () => {
         onLocationClick={handleLocationMapClick}
         comments={comments}
         minimumPrice={product.minimumPrice}
-        myPrice={product.myPrice}
-        maximumPrice={product.maximumPrice}
+        myPrice={myPrice?.bidPrice}
+        maximumPrice={product.winningPrice}
         isEarly={product.isEarly}
         productId={product.productId}
         hasBuyer={product.hasBuyer}

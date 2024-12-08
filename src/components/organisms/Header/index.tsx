@@ -1,5 +1,5 @@
 import { IconButton, Text } from "components/atoms";
-import { DownIcon, NotificationIcon, SearchIcon } from "components/atoms/Icon";
+import { DownIcon, SearchIcon } from "components/atoms/Icon";
 import { IconWithText } from "components/molecules";
 import { ButtonsWrapper, HeaderWrapper } from "./styled";
 
@@ -21,8 +21,8 @@ export const Header = ({
   title,
   onLocationClick,
   onSearchClick,
-  onNotificationClick,
-}: IHeaderProps) => {
+}: //onNotificationClick,
+IHeaderProps) => {
   return (
     <HeaderWrapper>
       {type === "home" ? (
@@ -44,11 +44,12 @@ export const Header = ({
             backgroundColor="transparent"
           />
         )}
-        <IconButton
+        {/* 알림 쪽 아이콘 일괄 삭제*/}
+        {/* <IconButton
           icon={NotificationIcon}
           onClick={onNotificationClick}
           backgroundColor="transparent"
-        />
+        /> */}
       </ButtonsWrapper>
     </HeaderWrapper>
   );

@@ -26,7 +26,7 @@ export interface IProductDetail {
   isEarly: boolean;
   images: string[];
   myPrice?: number;
-  maximumPrice?: number;
+  winningPrice?: number;
   isSeller: boolean;
 }
 

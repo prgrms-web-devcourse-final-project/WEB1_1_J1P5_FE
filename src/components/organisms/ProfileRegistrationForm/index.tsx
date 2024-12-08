@@ -75,7 +75,7 @@ export const ProfileRegistrationForm = ({
       />
       <TextButton
         size="l"
-        text="등록 완료"
+        text={`${!user ? "등록" : "수정"} 완료`}
         onClick={() => handleSubmit(onSubmit)}
       />
     </ProfileRegistrationFormWrapper>

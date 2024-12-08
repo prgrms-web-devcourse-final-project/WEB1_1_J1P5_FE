@@ -12,8 +12,8 @@ export const ImageUploadWrapper: ReturnType<typeof styled.div> = styled.div`
       display: none;
     }
   }
-  // 투명하게 변경했기 때문에 위치를 알기 위해 마우스 hover 색상 설정
-  &:hover {
-    background-color: #00000022;
-  }
+  // // 투명하게 변경했기 때문에 위치를 알기 위해 마우스 hover 색상 설정
+  // &:hover {
+  //   background-color: #00000022;
+  // }
 `;

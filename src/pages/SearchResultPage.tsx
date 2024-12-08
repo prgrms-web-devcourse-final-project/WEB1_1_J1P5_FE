@@ -27,7 +27,8 @@ interface ISearchPostResponse extends IResponse {
 }
 export const SearchResultPage = () => {
   /** 2. 키워드 검색결과 관련 변수 및 함수   */
-  const SEARCH_API_URL = `/products`;
+  const SEARCH_KEYWORD_API_URL = `/products/keywords`;
+  const SEARCH_CATEGORY_API_URL = `/products/categories`;
   const SEARCH_NAVIGATE_URL = "/product";
   const navigate = useNavigate();
   const [posts, setPosts] = useState<IPost[]>([]);
@@ -73,6 +74,7 @@ export const SearchResultPage = () => {
    * @returns void
    */
   const fetchPosts = async (url: string) => {
+    console.log(url);
     try {
       const response = await http.get<ISearchPostResponse>(url);
       if (response.success && response.code === "COMMON200") {
@@ -106,8 +108,8 @@ export const SearchResultPage = () => {
     const fetchSearchPosts = async () => {
       // URL 결정
       const url = category
-        ? SEARCH_API_URL + `?category=${category}`
-        : SEARCH_API_URL + `?keyword=${keyword}`;
+        ? SEARCH_CATEGORY_API_URL + `?category=${category}`
+        : SEARCH_KEYWORD_API_URL + `?keyword=${keyword}`;
       await fetchPosts(url);
     };
     fetchSearchPosts().catch((error) => {

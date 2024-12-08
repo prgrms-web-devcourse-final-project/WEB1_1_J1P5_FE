@@ -2,7 +2,7 @@ import {
   type ChangeEvent,
   type MouseEvent,
   useCallback,
-  useState,
+  useState
 } from "react";
 
 import { InputWrapper } from "./styled";
@@ -37,7 +37,7 @@ export const Input = ({
   placeholder,
   setValue,
   onClick,
-  onKeyDown,
+  onKeyDown
 }: IInputProps) => {
   const [focus, setFocus] = useState(false);
 
@@ -51,9 +51,22 @@ export const Input = ({
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (setValue) {
-      setValue(event.target.value);
+      let value = event.target.value;
+      if (type === "number") {
+        const numCheck = /^[0-9,]/.test(value);
+        if (!numCheck && value) return;
+
+        if (numCheck) {
+          const numValue = value.split(",").join("");
+          value = Number(numValue).toLocaleString();
+        }
+        setValue(value);
+      } else {
+        setValue(value);
+      }
     }
   };
+
   const handleInputClick = (event: MouseEvent<HTMLInputElement>) => {
     event.currentTarget.blur(); // Focusout
     onClick!();
@@ -74,8 +87,7 @@ export const Input = ({
     <InputWrapper focus={focus}>
       {type === "number" && <p>₩</p>}
       <input
-        type={type}
-        min="0"
+        type="text"
         id={id}
         name={name}
         value={value}

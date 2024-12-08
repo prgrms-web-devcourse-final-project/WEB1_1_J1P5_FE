@@ -10,9 +10,11 @@ export const SelectWrapper: ReturnType<typeof styled.div> = styled.div`
 		 * isOpen: 메뉴가 오픈된 상태
 		 */
     &__control {
+      height: 50px;
+      padding: 16px;
       min-height: auto;
       padding: 0.75rem 0.5rem;
-      border-radius: 0.5rem;
+      border-radius: 10px;
       border: 1px solid #eceef3;
       &--is-focused,
       &--is-open {
@@ -54,6 +56,8 @@ export const SelectWrapper: ReturnType<typeof styled.div> = styled.div`
 		 */
     &__option {
       position: relative;
+      text-align: center;
+
       &:not(:last-child)::after {
         content: "";
         display: block;
@@ -81,4 +85,12 @@ export const SelectWrapper: ReturnType<typeof styled.div> = styled.div`
       }
     }
   }
+
+  color: var(--grey-field-guide-but-deactivate, #9b9fbc);
+  /* 가이드/regular */
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 145%; /* 18.85px */
+  letter-spacing: -0.325px;
 `;

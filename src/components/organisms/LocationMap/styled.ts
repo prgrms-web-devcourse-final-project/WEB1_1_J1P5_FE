@@ -9,7 +9,7 @@ export const LocationMapWrapper: ReturnType<typeof styled.div> = styled.div`
 `;
 
 export const TitleWrapper: ReturnType<typeof styled.div> = styled.div`
-  color: #344fff;
+  color: ${({ theme }) => theme.colors.blue_main};
 `;
 export const TextContainer: ReturnType<typeof styled.div> = styled.div`
   display: flex;

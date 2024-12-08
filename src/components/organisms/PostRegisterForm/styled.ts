@@ -13,6 +13,7 @@ export const PostRegisterFormWrapper: ReturnType<
 
   ${TextButtonWrapper} {
     width: 100%;
+    height: 54px;
   }
 `;
 

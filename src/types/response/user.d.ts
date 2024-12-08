@@ -4,7 +4,14 @@ import type { IResponse } from "types";
  * Profile Response
  */
 export interface IUserProfileResponse extends IResponse {
-  result: null;
+  result: {
+    /** 인증한 읍면동 */
+    activityEmdName: string | null;
+    /** 프로필 이미지 URL */
+    imageUrl: string | null;
+    /** 닉네임 */
+    nickname: string | null;
+  };
 }
 
 /**
