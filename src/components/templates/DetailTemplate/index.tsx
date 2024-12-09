@@ -184,7 +184,11 @@ export const DetailTemplate = ({
           minPrice={isEarly ? myPrice || minimumPrice : minimumPrice}
           beforePrice={myPrice || undefined}
           onBid={() =>
-            handleBid(minimumPrice, myAuctionId || undefined, isEarly)
+            handleBid(
+              isEarly ? myPrice || minimumPrice : minimumPrice,
+              myAuctionId || undefined,
+              isEarly,
+            )
           }
           open={open}
           onClose={handleCloseBottomSheet}
