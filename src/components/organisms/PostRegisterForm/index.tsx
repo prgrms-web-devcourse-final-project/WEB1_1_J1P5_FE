@@ -11,7 +11,6 @@ import { PostRegisterFormWrapper, DivWrapper } from "./styled";
 import type { IProductForm, IImageInfo } from "types";
 import { CATEGORY_OPTIONS, EXPIRED_TIMES } from "constants/options";
 import { isISOFormat, formatToDateTime } from "utils";
-import { ThemeType } from "styles/theme";
 
 interface IPostRegisterFormProps {
   /** product Id */
@@ -31,7 +30,7 @@ export const PostRegisterForm = ({
   onClick,
 }: IPostRegisterFormProps) => {
   const [imageInfos, setImageInfos] = useState<IImageInfo[]>(
-    postForm?.imgUrls || []
+    postForm?.imgUrls || [],
   );
 
   const { control, handleSubmit, setValue, getValues } = useForm<IProductForm>({
@@ -53,7 +52,7 @@ export const PostRegisterForm = ({
   return (
     <PostRegisterFormWrapper onSubmit={handleSubmit(onSubmit)}>
       <Controller
-        name='imgUrls'
+        name="imgUrls"
         control={control}
         rules={{
           validate: {
@@ -74,14 +73,14 @@ export const PostRegisterForm = ({
                   color: "#FF2E4D",
                 }}
               >
-                <Text variant='explan_regular' content={error?.message || ""} />
+                <Text variant="explan_regular" content={error?.message || ""} />
               </div>
             )}
           </DivWrapper>
         )}
       />
       <Controller
-        name='category'
+        name="category"
         control={control}
         rules={{
           required: "카테고리는 필수 입력 항목입니다.",
@@ -93,12 +92,12 @@ export const PostRegisterForm = ({
         }) => (
           <DivWrapper>
             <LabeledSelect
-              id='product-category'
-              label='카테고리'
+              id="product-category"
+              label="카테고리"
               options={CATEGORY_OPTIONS}
               value={CATEGORY_OPTIONS.find((option) => option.value === value)}
               onChange={(option) => onChange(option)}
-              placeholder='카테고리를 검색해보세요!'
+              placeholder="카테고리를 검색해보세요!"
             />
             {invalid && (
               <div
@@ -107,7 +106,7 @@ export const PostRegisterForm = ({
                 }}
               >
                 <Text
-                  variant='explan_regular'
+                  variant="explan_regular"
                   content={formState.errors.category?.message || ""}
                 />
               </div>
@@ -116,7 +115,7 @@ export const PostRegisterForm = ({
         )}
       />
       <Controller
-        name='title'
+        name="title"
         control={control}
         rules={{
           required: "제목은 필수 입력 항목입니다.",
@@ -124,18 +123,18 @@ export const PostRegisterForm = ({
         render={({ field: { value }, fieldState: { invalid }, formState }) => (
           <DivWrapper>
             <LabeledInput
-              id='product-title'
-              label='제목'
+              id="product-title"
+              label="제목"
               value={value || ""}
               setValue={(value) => {
                 setValue("title", value);
               }}
-              placeholder='제목을 입력해주세요.'
+              placeholder="제목을 입력해주세요."
             />
             {invalid && (
               <div style={{ color: "#FF2E4D" }}>
                 <Text
-                  variant='explan_regular'
+                  variant="explan_regular"
                   content={formState.errors.title?.message || ""}
                 />
               </div>
@@ -144,7 +143,7 @@ export const PostRegisterForm = ({
         )}
       />
       <Controller
-        name='content'
+        name="content"
         control={control}
         rules={{
           required: "설명은 필수 입력 항목입니다.",
@@ -152,8 +151,8 @@ export const PostRegisterForm = ({
         render={({ field: { value }, fieldState: { invalid }, formState }) => (
           <DivWrapper>
             <LabeledTextarea
-              id='product-content'
-              label='설명'
+              id="product-content"
+              label="설명"
               value={value || ""}
               setValue={(value) => {
                 setValue("content", value);
@@ -165,7 +164,7 @@ export const PostRegisterForm = ({
             {invalid && (
               <div style={{ color: "#FF2E4D" }}>
                 <Text
-                  variant='explan_regular'
+                  variant="explan_regular"
                   content={formState.errors.content?.message || ""}
                 />
               </div>
@@ -174,7 +173,7 @@ export const PostRegisterForm = ({
         )}
       />
       <Controller
-        name='minimumPrice'
+        name="minimumPrice"
         control={control}
         rules={{
           required: "최저 입찰가는 필수 입력 항목입니다.",
@@ -182,19 +181,19 @@ export const PostRegisterForm = ({
         render={({ field: { value }, fieldState: { invalid }, formState }) => (
           <DivWrapper>
             <LabeledInput
-              type='number'
-              id='product-minimumPrice'
-              label='최저 입찰가'
+              type="number"
+              id="product-minimumPrice"
+              label="최저 입찰가"
               value={value || ""}
               setValue={(value) => {
                 setValue("minimumPrice", value);
               }}
-              placeholder='최저 입찰가를 입력해주세요.'
+              placeholder="최저 입찰가를 입력해주세요."
             />
             {invalid && (
               <div style={{ color: "#FF2E4D" }}>
                 <Text
-                  variant='explan_regular'
+                  variant="explan_regular"
                   content={formState.errors.minimumPrice?.message || ""}
                 />
               </div>
@@ -203,7 +202,7 @@ export const PostRegisterForm = ({
         )}
       />
       <Controller
-        name='expiredTime'
+        name="expiredTime"
         control={control}
         rules={{
           required: "경매 마감 일시는 필수 입력 항목입니다.",
@@ -214,7 +213,7 @@ export const PostRegisterForm = ({
           formState,
         }) => {
           const expiredTimeDisabled = isISOFormat(
-            postForm?.expiredTime as string
+            postForm?.expiredTime as string,
           );
 
           const formattedTime = expiredTimeDisabled
@@ -224,8 +223,8 @@ export const PostRegisterForm = ({
           return (
             <DivWrapper>
               <LabeledSelect
-                id='product-expiredTime'
-                label='경매 마감 일시'
+                id="product-expiredTime"
+                label="경매 마감 일시"
                 options={
                   expiredTimeDisabled
                     ? [
@@ -245,20 +244,20 @@ export const PostRegisterForm = ({
                     : EXPIRED_TIMES.find((option) => option.value === value)
                 }
                 onChange={(option) => onChange(option)}
-                placeholder='경매 마감 일시를 선택해주세요.'
+                placeholder="경매 마감 일시를 선택해주세요."
               />
               {!productId && (
                 <div style={{ color: "#707192" }}>
                   <Text
-                    variant='explan_regular'
-                    content='포스팅이 등록될 때 경매 마감 시간이 카운트됩니다.'
+                    variant="explan_regular"
+                    content="포스팅이 등록될 때 경매 마감 시간이 카운트됩니다."
                   />
                 </div>
               )}
               {invalid && (
                 <div style={{ color: "#FF2E4D" }}>
                   <Text
-                    variant='explan_regular'
+                    variant="explan_regular"
                     content={formState.errors.expiredTime?.message || ""}
                   />
                 </div>
@@ -268,7 +267,7 @@ export const PostRegisterForm = ({
         }}
       />
       <Controller
-        name='location'
+        name="location"
         control={control}
         rules={{
           required: "거래 희망 장소는 필수 입력 항목입니다.",
@@ -276,19 +275,19 @@ export const PostRegisterForm = ({
         render={({ field: { value }, fieldState: { invalid }, formState }) => (
           <DivWrapper>
             <LabeledInput
-              id='product-location'
-              label='거래 희망 장소'
+              id="product-location"
+              label="거래 희망 장소"
               value={value || ""}
               onClick={() => {
                 const formData = getValues();
                 onClick(formData);
               }}
-              placeholder='거래 희망 장소를 입력해주세요.'
+              placeholder="거래 희망 장소를 입력해주세요."
             />
             {invalid && (
               <div style={{ color: "#FF2E4D" }}>
                 <Text
-                  variant='explan_regular'
+                  variant="explan_regular"
                   content={formState.errors.location?.message || ""}
                 />
               </div>
@@ -297,7 +296,7 @@ export const PostRegisterForm = ({
         )}
       />
       <TextButton
-        size='l'
+        size="l"
         text={`${productId ? "수정" : "등록"} 완료`}
         onClick={() => handleSubmit(onSubmit)}
       />
