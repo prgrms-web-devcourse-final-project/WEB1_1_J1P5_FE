@@ -13,7 +13,7 @@ export const SelectLocationPage = () => {
   const lat = useFormDataStore((state) => state.formData.latitude);
   const lng = useFormDataStore((state) => state.formData.longitude);
   const location = useFormDataStore((state) => state.formData.location);
-  const { setFormData } = useFormDataStore((state) => state.actions);
+  const { setFormData } = useFormDataStore();
   const [isOpenBottomSheet, setIsOpenBottomSheet] = useState(false);
   const locationErrorEvent = useLocationErrorEvent();
   const [isError, setIsError] = useState<boolean>(false);

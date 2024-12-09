@@ -35,9 +35,7 @@ export const DetailPage = () => {
     actions: { setCoord, setLocation, setAddress },
   } = useSelectedLocationStore();
   // TODO
-  const {
-    actions: { setFormData, setProductId },
-  } = useFormDataStore();
+  const { setFormData, setProductId } = useFormDataStore();
   const { open, handleOpen, handleClose, menuRef } = useKebabMenu();
   const { handleCancel } = useBid(parseInt(productId!));
   const { todo } = useDetailModal();
