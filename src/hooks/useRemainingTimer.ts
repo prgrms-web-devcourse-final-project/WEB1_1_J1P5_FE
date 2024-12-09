@@ -28,16 +28,20 @@ export const useRemainingTimer = (
       intervalId.current = setInterval(updateTimer, 1000);
     }
 
-    if (timeRemaining === "over" && !!refetch) {
-      refetch();
-    }
-
     return () => {
       if (intervalId.current) {
         clearInterval(intervalId.current);
       }
     };
   }, [targetDate, timeRemaining]);
+
+  useEffect(() => {
+    if (timeRemaining === "over") {
+      if (refetch) {
+        refetch();
+      }
+    }
+  }, [timeRemaining]);
 
   return {
     timeRemaining,
