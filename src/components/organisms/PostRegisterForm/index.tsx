@@ -189,7 +189,6 @@ export const PostRegisterForm = ({
               label='최저 입찰가'
               value={value || ""}
               setValue={(value) => {
-                console.log("price", value);
                 setValue("minimumPrice", value);
               }}
               placeholder='최저 입찰가를 입력해주세요.'

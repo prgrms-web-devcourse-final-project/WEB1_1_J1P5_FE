@@ -15,7 +15,10 @@ interface State {
   clear: () => void;
 }
 
-export const defaultState: State = {
+export const defaultState: Omit<
+  State,
+  "setFormData" | "setProductId" | "isFormDataEmpty" | "clear"
+> = {
   productId: undefined,
   formData: {
     title: "",
@@ -29,10 +32,6 @@ export const defaultState: State = {
     expiredTime: undefined,
     imgUrls: [],
   },
-  setProductId: () => {},
-  setFormData: () => {},
-  isFormDataEmpty: () => false,
-  clear: () => {},
 };
 
 export const useFormDataStore: UseBoundStore<StoreApi<State>> = create(
