@@ -5,7 +5,7 @@ import { HomeTemplate } from "components/templates";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { http } from "services/api";
-import { useHeaderStore, useUserStore } from "stores";
+import { useHeaderStore, useUserStore, useFormDataStore } from "stores";
 import { IResponse } from "types";
 interface IHomePost {
   myLocation: string;
@@ -31,6 +31,7 @@ export const HomePage = () => {
   const HOME_API_URL = `/products`;
   const HOME_NAVIGATE_URL = "/product";
   const navigate = useNavigate();
+  const { clear } = useFormDataStore();
 
   /** 백엔드 IHomePost 타입을 프론트 IPost 으로 변환 함수
    * @param homePost : IHomePost
@@ -102,6 +103,7 @@ export const HomePage = () => {
    * @returns void
    */
   const onHandleRegisterButton = () => {
+    clear();
     navigate(HOME_NAVIGATE_URL);
   };
   const loadingMsg = "사용자 주변 게시글\n불러오는 중...";

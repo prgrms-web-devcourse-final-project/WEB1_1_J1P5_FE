@@ -1,7 +1,7 @@
-import { useCallback, useEffect, useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { Header, BottomNavBar, TopBar } from "components/organisms";
-import { useHeaderStore, useTopBarStore, useFormDataStore } from "stores";
+import { useHeaderStore, useTopBarStore } from "stores";
 import { PageLayoutWrapper, RootLayoutWrapper } from "./styled";
 
 export const RootLayout = () => {
@@ -18,7 +18,6 @@ export const RootLayout = () => {
     placeholder,
     setBackClick,
   } = useTopBarStore();
-  // const { clear } = useFormDataStore();
   /**
    * 현재 페이지 체크 시 사용되는 pathname
    * 첫 번째 path만 사용
@@ -46,13 +45,9 @@ export const RootLayout = () => {
   /**
    * 뒤로가기
    */
-  const handleBackButtonClick = useCallback(() => {
-    // TODO: 이 로직 문제 원인 찾기
-    // if (pathname === "/product") {
-    //   clear();
-    // }
+  const handleBackButtonClick = () => {
     navigate(-1);
-  }, []);
+  };
 
   /** backIcon 클릭 기본 함수 지정 */
   useEffect(() => {
