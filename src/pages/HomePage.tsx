@@ -75,7 +75,10 @@ export const HomePage = () => {
    * @returns void
    */
   const fetchPosts = async () => {
-    const response = await http.get<IHomePostResponse>(HOME_API_URL);
+    const response = await http.get<IHomePostResponse, { size: number }>(
+      HOME_API_URL,
+      { size: 100 }
+    );
     if (response.success && response.code === "COMMON200") {
       return response.result.content.map(createHomePostItem);
     }
