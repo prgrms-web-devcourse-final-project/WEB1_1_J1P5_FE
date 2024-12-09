@@ -1,14 +1,20 @@
 import dayjs from "dayjs";
 import duration from "dayjs/plugin/duration";
 import relativeTime from "dayjs/plugin/relativeTime";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
 import "dayjs/locale/ko"; /** 한국어 로케일 임포트 */
 
 /** 플러그인 확장 */
 dayjs.extend(duration);
 dayjs.extend(relativeTime);
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 /** 로케일 설정 (한국어) */
 dayjs.locale("ko");
+
+dayjs.tz.setDefault("Asia/Seoul");
 
 /**
  * 현재 시간이랑 param으로 들어온 Date 비교해서 남은 시간을 `XX일 XX시간 XX분 XX초` 형태로 리턴하는 함수입니다.
@@ -91,16 +97,18 @@ export const areDatesDifferent = (
 };
 
 export const getExpiredDate = (value: string): string => {
-  const now = dayjs();
+  const now = dayjs().tz("Asia/Seoul");
 
   if (value.includes("일")) {
     const days = parseInt(value.replace("일 후", ""));
-    return now.add(days, "day").toISOString();
+    return now.add(days, "day").format("YYYY-MM-DDTHH:mm:ssZ");
   } else if (value.includes("시간")) {
     const hours = parseInt(value.replace("시간 후", ""));
-    return now.add(hours, "hour").toISOString();
+    return now.add(hours, "hour").format("YYYY-MM-DDTHH:mm:ssZ");
   } else {
-    return dayjs(value, "YYYY-MM-DD HH:mm:ss").toISOString();
+    return dayjs(value, "YYYY-MM-DD HH:mm:ss")
+      .tz("Asia/Seoul")
+      .format("YYYY-MM-DDTHH:mm:ssZ");
   }
 };
 
