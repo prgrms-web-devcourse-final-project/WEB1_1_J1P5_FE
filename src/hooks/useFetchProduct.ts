@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 export const useFetchProduct = (productId: string) => {
   const navigate = useNavigate();
-  const { data, isLoading, refetch, isError, error } = useQuery({
+  const { data, isLoading, refetch, isRefetching, isError, error } = useQuery({
     queryKey: queries.product.detail(productId),
     queryFn: () => getProduct(productId),
     select: (data) => data.result,
@@ -34,5 +34,6 @@ export const useFetchProduct = (productId: string) => {
     product: data,
     isProductLoading: isLoading,
     productRefetch: refetch,
+    isProductRefetching: isRefetching,
   };
 };
