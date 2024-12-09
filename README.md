@@ -15,6 +15,8 @@
 
 [meerket-backend](https://github.com/prgrms-web-devcourse-final-project/WEB1_1_J1P5_BE)
 
+## 시연 영상
+[시연 영상 유투브 링크](https://www.youtube.com/watch?v=SZBPjolv118)
 
 ## 팀원 소개
 
