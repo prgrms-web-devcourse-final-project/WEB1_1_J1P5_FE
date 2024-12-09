@@ -1,9 +1,10 @@
-import { TextButton } from "components/atoms";
+import { Text, TextButton } from "components/atoms";
 import { Profile, MyPageMenu } from "components/organisms";
 import {
   MyPageTemplateWrapper,
   ProfileContainer,
-  BackGroundWrapper
+  BackGroundWrapper,
+  LogoutWrapper,
 } from "./styled";
 
 interface IMyPageTemplateProps {
@@ -17,6 +18,8 @@ interface IMyPageTemplateProps {
   onProfileEditButtonClick: () => void;
   /** 메뉴 클릭 시 실행될 함수 */
   onMenuClick: (pathname: string) => void;
+  /** 로그아웃 함수 */
+  onLogout: () => void;
 }
 
 /**
@@ -30,7 +33,8 @@ export const MyPageTemplate = ({
   nickname,
   location,
   onProfileEditButtonClick,
-  onMenuClick
+  onMenuClick,
+  onLogout,
 }: IMyPageTemplateProps) => {
   return (
     <MyPageTemplateWrapper>
@@ -38,13 +42,16 @@ export const MyPageTemplate = ({
         <ProfileContainer>
           <Profile imgUrl={imgUrl} nickname={nickname} location={location} />
           <TextButton
-            text="프로필 편집"
+            text='프로필 편집'
             onClick={onProfileEditButtonClick}
-            variant="explan_regular"
+            variant='explan_regular'
           />
         </ProfileContainer>
       </BackGroundWrapper>
       <MyPageMenu onMenuClick={onMenuClick} />
+      <LogoutWrapper>
+        <Text variant='explan_regular' content='로그아웃' onClick={onLogout} />
+      </LogoutWrapper>
     </MyPageTemplateWrapper>
   );
 };
