@@ -96,7 +96,6 @@ export const PostRegisterPage = () => {
 
   const handleClick = useCallback(
     (formData: IProductForm) => {
-      console.log(formData);
       if (formData.category && typeof formData.category === "object") {
         formData.category = formData.category.value as Category;
       }
