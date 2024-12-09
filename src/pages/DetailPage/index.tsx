@@ -1,5 +1,5 @@
 import { Suspense, useEffect } from "react";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { DetailTemplate } from "components/templates";
 import { KebabMenu } from "components/molecules";
 import { KebabIcon } from "components/atoms/Icon";
@@ -185,8 +185,7 @@ export const DetailPage = () => {
   }
 
   if (!product) {
-    // 에러페이지로 이동
-    return <Navigate to="/error" replace />;
+    return null;
   }
 
   return (
