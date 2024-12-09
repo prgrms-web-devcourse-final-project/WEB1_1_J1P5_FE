@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { SearchIcon } from "components/atoms/Icon";
 import { useTopBarStore } from "stores";
+import { Toast } from "../components/atoms";
 
 /**
  * SearchTopBar가 필요한 페이지(search, searchResult)에서 사용하는 hook
@@ -16,8 +17,11 @@ export const useSearchTopBar = () => {
    * 검색 페이지로 이동하는 함수
    */
   const handleSearch = () => {
+    if (!searchTerm.trim()) {
+      Toast.show("검색어를 입력홰주세요.", 2000);
+    }
     if (searchTerm.trim()) {
-      navigate(`/search/keyword/${searchTerm}`);
+      navigate(`/search/keyword/${encodeURIComponent(searchTerm)}`);
     }
   };
 
