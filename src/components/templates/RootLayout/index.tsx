@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { Header, BottomNavBar, TopBar } from "components/organisms";
 import { useHeaderStore, useTopBarStore } from "stores";
@@ -46,19 +46,19 @@ export const RootLayout = () => {
   /**
    * 뒤로가기
    */
-  const handleBackButtonClick = () => {
+  const handleBackButtonClick = useCallback(() => {
     const productRegex = /^\/product\/\d+$/; // "/product/"로 시작하고 숫자가 오는 형식
     if (productRegex.test(_pathname)) {
       navigate("/");
     } else {
       navigate(-1);
     }
-  };
+  }, [_pathname]);
 
   /** backIcon 클릭 기본 함수 지정 */
   useEffect(() => {
     setBackClick(handleBackButtonClick);
-  }, []);
+  }, [handleBackButtonClick]);
 
   return (
     <RootLayoutWrapper>
