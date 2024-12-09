@@ -1,4 +1,4 @@
-import { Suspense, useEffect } from "react";
+import { Suspense, useEffect, useMemo } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { DetailTemplate } from "components/templates";
 import { KebabMenu } from "components/molecules";
@@ -21,13 +21,13 @@ import { KebabWrapper } from "./styled";
 import { deleteProduct, earlyClose } from "services/apis";
 import type { Category } from "types";
 import { Toast } from "components/atoms";
+import { isExpired } from "../../utils";
 
 export const DetailPage = () => {
   const navigate = useNavigate();
   const { productId } = useParams<{ productId: string }>();
-  const { product, isProductLoading, productRefetch } = useFetchProduct(
-    productId!,
-  );
+  const { product, isProductLoading, productRefetch, isProductRefetching } =
+    useFetchProduct(productId!);
   const { comments, isCommentLoading } = useFetchComment(productId!);
   const {
     actions: { closeModal },
@@ -41,6 +41,10 @@ export const DetailPage = () => {
   const { open, handleOpen, handleClose, menuRef } = useKebabMenu();
   const { handleCancel } = useBid(parseInt(productId!));
   const { todo, removeNoBuyer, removeHasBuyer } = useDetailModal();
+  const isExpiredTime = useMemo(
+    () => !!product?.expiredTime && isExpired(product?.expiredTime),
+    [isProductRefetching],
+  );
 
   /**
    * 거래 희망 장소 클릭
@@ -169,13 +173,14 @@ export const DetailPage = () => {
   };
 
   useEffect(() => {
-    setRightIcon(KebabIcon, () => {
-      handleOpen();
-    });
+    setRightIcon(
+      KebabIcon,
+      isExpiredTime ? () => Toast.show("마감된 상품입니다.", 2000) : handleOpen,
+    );
     return () => {
       clear();
     };
-  }, []);
+  }, [isExpiredTime]);
 
   useEffect(() => {
     if (!isProductLoading && product) {
@@ -215,7 +220,7 @@ export const DetailPage = () => {
         isSeller={product.isSeller}
         myAuctionId={product.myAuctionId}
       />
-      {open && (
+      {open && !isExpiredTime && (
         <KebabWrapper ref={menuRef}>
           <KebabMenu>
             {product.isSeller && (
