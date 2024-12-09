@@ -6,10 +6,10 @@ import { IconButtonWrapper } from "components/atoms/Button/IconButton/styled";
 
 const CommonIconWrapper: ReturnType<typeof styled.div> = styled.div``;
 export const TopBarBackIconWrapper: typeof CommonIconWrapper = styled(
-  CommonIconWrapper
+  CommonIconWrapper,
 )``;
 export const TopBarIconWrapper: typeof CommonIconWrapper = styled(
-  CommonIconWrapper
+  CommonIconWrapper,
 )`
   ${IconButtonWrapper}:has(${NoIconWrapper}) {
     cursor: default;
@@ -29,11 +29,15 @@ export const TopBarWrapper: ReturnType<typeof styled.div> = styled.div`
     flex: 1;
     padding: 0.5rem;
     text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
   & > ${InputWrapper} {
     flex: 1;
-    height: 19/16rem;
-    padding: 15.5/16rem 1rem;
+    // 적용 안되고있는 속성이라 주석처리했습니다!
+    // height: 19/16rem;
+    // padding: 15.5/16rem 1rem;
     background-color: #eee;
   }
   &:has(${InputWrapper}) ${TopBarIconWrapper} {
