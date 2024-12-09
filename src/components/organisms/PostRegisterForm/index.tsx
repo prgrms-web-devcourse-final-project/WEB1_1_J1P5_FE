@@ -179,20 +179,20 @@ export const PostRegisterForm = ({
         name='minimumPrice'
         control={control}
         rules={{
-          required: "최종 입찰가는 필수 입력 항목입니다.",
+          required: "최저 입찰가는 필수 입력 항목입니다.",
         }}
         render={({ field: { value }, fieldState: { invalid }, formState }) => (
           <DivWrapper>
             <LabeledInput
               type='number'
               id='product-minimumPrice'
-              label='최종 입찰가'
+              label='최저 입찰가'
               value={value || ""}
               setValue={(value) => {
                 console.log("price", value);
                 setValue("minimumPrice", value);
               }}
-              placeholder='최종 입찰가를 입력해주세요.'
+              placeholder='최저 입찰가를 입력해주세요.'
             />
             {invalid && (
               <div style={{ color: "#FF2E4D" }}>
