@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Loading } from "components/molecules/Loading";
 import { IPost } from "components/organisms/PostList";
 import { HomeTemplate } from "components/templates";
-import { useEffect, useCallback } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { http } from "services/api";
 import { useHeaderStore, useUserStore } from "stores";
