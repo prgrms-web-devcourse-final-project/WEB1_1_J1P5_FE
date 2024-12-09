@@ -38,7 +38,7 @@ export const DetailPage = () => {
   const { setFormData, setProductId } = useFormDataStore();
   const { open, handleOpen, handleClose, menuRef } = useKebabMenu();
   const { handleCancel } = useBid(parseInt(productId!));
-  const { todo } = useDetailModal();
+  const { todo, removeNoBuyer, removeHasBuyer } = useDetailModal();
 
   /**
    * 거래 희망 장소 클릭
@@ -139,24 +139,28 @@ export const DetailPage = () => {
   /**
    * (판매자) 삭제하기
    */
+  const handleDeleteProduct = () => {
+    deleteProduct(productId!)
+      .then((data) => {
+        console.log(data);
+        Toast.show("삭제되었습니다.", 2000);
+        navigate("/", { replace: true });
+        closeModal();
+      })
+      .catch(console.error);
+  };
   const handleDelete = () => {
     if (!product) {
       return;
     }
     if (product.hasBuyer) {
-      // TODO 구매자 있는 게시글은 삭제할 수 없습니다. 모달
-      Toast.show("구매자가 있는 게시물은 삭제할 수 없습니다.", 2000);
+      removeHasBuyer(handleDeleteProduct);
       handleClose();
       return;
     }
     if (!product.hasBuyer) {
-      // TODO 삭제 처리 (내일 확인 ㅠ)
-      deleteProduct(productId!)
-        .then((data) => {
-          console.log(data);
-          navigate("/", { replace: true });
-        })
-        .catch(console.error);
+      removeNoBuyer(handleDeleteProduct);
+      handleClose();
       return;
     }
   };
