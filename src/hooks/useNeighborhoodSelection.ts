@@ -8,6 +8,7 @@ import {
   searchActivityAreas,
 } from "services/apis";
 import { useUserStore } from "../stores";
+import { Toast } from "../components/atoms";
 
 /**
  * 동네 선택 시 사용되는 훅
@@ -26,7 +27,9 @@ export const useNeighborhoodSelection = () => {
    * 동네 검색 함수
    */
   const handleSearchNeighborhoods = () => {
-    console.log(term);
+    if (!term.trim()) {
+      Toast.show("검색어를 입력해주세요.", 2000);
+    }
     searchActivityAreas(term)
       .then((data) => {
         const {

@@ -69,14 +69,24 @@ interface ITopBarInputProps {
   setValue: (value: string) => void;
   /** placeholder */
   placeholder?: string;
+  /** 엔터 클릭 시 함수 */
+  onEnter?: () => void;
 }
 
 const TopBarInput = ({
   value,
   setValue,
   placeholder = "",
+  onEnter,
 }: ITopBarInputProps) => {
-  return <Input value={value} setValue={setValue} placeholder={placeholder} />;
+  return (
+    <Input
+      value={value}
+      setValue={setValue}
+      placeholder={placeholder}
+      onKeyDown={onEnter}
+    />
+  );
 };
 
 export const TopBar: typeof TopBarRoot & {
