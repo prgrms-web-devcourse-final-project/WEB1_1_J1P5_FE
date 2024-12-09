@@ -2,10 +2,10 @@ import { useQuery } from "@tanstack/react-query";
 import { Loading } from "components/molecules/Loading";
 import { IPost } from "components/organisms/PostList";
 import { HomeTemplate } from "components/templates";
-import { useEffect } from "react";
+import { useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { http } from "services/api";
-import { useHeaderStore, useUserStore, useFormDataStore } from "stores";
+import { useHeaderStore, useUserStore } from "stores";
 import { IResponse } from "types";
 interface IHomePost {
   myLocation: string;
@@ -31,7 +31,7 @@ export const HomePage = () => {
   const HOME_API_URL = `/products`;
   const HOME_NAVIGATE_URL = "/product";
   const navigate = useNavigate();
-  const { clear } = useFormDataStore();
+  // const { clear } = useFormDataStore();
 
   /** 백엔드 IHomePost 타입을 프론트 IPost 으로 변환 함수
    * @param homePost : IHomePost
@@ -103,9 +103,10 @@ export const HomePage = () => {
    * @returns void
    */
   const onHandleRegisterButton = () => {
-    clear();
+    // clear();
     navigate(HOME_NAVIGATE_URL);
   };
+
   const loadingMsg = "사용자 주변 게시글\n불러오는 중...";
 
   if (isLoading) {
