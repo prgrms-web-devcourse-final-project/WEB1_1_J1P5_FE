@@ -24,7 +24,7 @@ export const LoginTemplateWrapper: ReturnType<typeof styled.div> = styled.div`
   ${LogoWrapper} {
     flex: 1;
     align-self: center;
-    width: 80px;
-    height: 80px;
+    width: 120px;
+    height: auto;
   }
 `;
