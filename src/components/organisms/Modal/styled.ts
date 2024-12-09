@@ -69,9 +69,8 @@ export const ModalRootWrapper: ReturnType<
   left: 50%;
   translate: -50%;
   z-index: 9999;
-  max-width: 400px;
-  // max-width: 375px;
-  width: calc(100% - 2rem);
+  max-width: ${({ theme }) => theme.sizes.max_width};
+  width: 100%;
   height: 100%;
   // 자식 요소 배치
   display: flex;
