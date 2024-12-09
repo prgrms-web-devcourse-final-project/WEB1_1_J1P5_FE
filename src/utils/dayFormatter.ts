@@ -103,7 +103,7 @@ export const getExpiredDate = (value: string): string => {
     return now.add(days, "day").format("YYYY-MM-DDTHH:mm:ss.SSS[Z]");
   } else if (value.includes("시간")) {
     const hours = parseInt(value.replace("시간 후", ""));
-    return now.add(hours, "day").format("YYYY-MM-DDTHH:mm:ss.SSS[Z]");
+    return now.add(hours, "hour").format("YYYY-MM-DDTHH:mm:ss.SSS[Z]");
   } else {
     return dayjs(value, "YYYY-MM-DD HH:mm:ss")
       .tz("Asia/Seoul")
