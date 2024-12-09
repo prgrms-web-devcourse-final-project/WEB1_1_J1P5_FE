@@ -2,7 +2,15 @@
 
 <p align="center">
   <img src="./public/Logo.svg" alt="미어켓 Logo" width="300">
+</p> 
+
+
+___
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/192bc07f-eb66-40e4-b881-ef8a870ba368" alt="미어켓_메인화면">
 </p>
+
 
 ## 배포 주소
 
