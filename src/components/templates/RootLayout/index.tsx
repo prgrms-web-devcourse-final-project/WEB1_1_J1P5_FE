@@ -1,7 +1,7 @@
-import { useCallback, useEffect, useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { Header, BottomNavBar, TopBar } from "components/organisms";
-import { useHeaderStore, useTopBarStore, useFormDataStore } from "stores";
+import { useHeaderStore, useTopBarStore } from "stores";
 import { PageLayoutWrapper, RootLayoutWrapper } from "./styled";
 
 export const RootLayout = () => {

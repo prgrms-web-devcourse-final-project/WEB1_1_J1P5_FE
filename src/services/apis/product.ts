@@ -4,7 +4,6 @@ import type {
   IProductDetailResponse,
   IProductPost,
   IProductResponse,
-  IProductResponse,
 } from "types";
 
 /**
@@ -28,7 +27,7 @@ export const earlyClose = async (productId: string) => {
  * @returns
  */
 export const registerProduct = async (
-  newProduct: IProductPost,
+  newProduct: IProductPost
 ): Promise<void> => {
   const requestBody = new FormData();
   const jsonRequestData = JSON.stringify({
@@ -56,7 +55,7 @@ export const registerProduct = async (
       requestBody,
       {
         withCredentials: true,
-      },
+      }
     );
     console.log("Response:", res.data); // 요청 성공 시 응답 데이터 출력
     return res.data; // 요청 성공 시 응답 데이터 반환
@@ -90,12 +89,12 @@ export const registerProduct = async (
  */
 export const editProduct = async (
   productId: number,
-  updatedProduct: Omit<IProductPost, "images" | "expiredTime">,
+  updatedProduct: Omit<IProductPost, "images" | "expiredTime">
 ) => {
   console.log("updatedProduct", updatedProduct);
   return http.patch<IProductResponse, typeof updatedProduct>(
     `/products/${productId}`,
-    updatedProduct,
+    updatedProduct
   );
 };
 
