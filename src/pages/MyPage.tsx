@@ -49,6 +49,9 @@ export const MyPage = () => {
       });
   }, [navigate, setUser]);
 
+  if (!user) {
+    return null;
+  }
   return (
     <MyPageTemplate
       imgUrl={user!.profile as string}
