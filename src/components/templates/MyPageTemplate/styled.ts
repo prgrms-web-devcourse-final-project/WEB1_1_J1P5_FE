@@ -3,6 +3,7 @@ import { TextButtonWrapper } from "components/atoms/Button/TextButton/styled";
 import {
   ProfileWrapper,
   ImageWrapper,
+  TextWrapper,
 } from "components/organisms/Profile/styled";
 import { ThemeType } from "styles/theme";
 
@@ -11,10 +12,6 @@ export const MyPageTemplateWrapper: ReturnType<typeof styled.div> = styled.div`
   width: 100%;
   flex-direction: column;
   gap: 1rem;
-
-  ${ImageWrapper} {
-    width: 80px;
-  }
 
   ${TextButtonWrapper} {
     display: flex;
@@ -41,6 +38,13 @@ export const MyPageTemplateWrapper: ReturnType<typeof styled.div> = styled.div`
 
   ${ProfileWrapper} {
     background: var(--white, #fff);
+    gap: ${12 / 16}rem;
+    ${TextWrapper} {
+      width: 100%;
+    }
+    ${ImageWrapper} {
+      width: 80px;
+    }
   }
 `;
 
