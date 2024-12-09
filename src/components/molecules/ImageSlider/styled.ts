@@ -5,7 +5,8 @@ export const ImageSliderWrapper: ReturnType<typeof styled.div> = styled.div`
 
   .swiper {
     width: 100%;
-    height: 100%;
+    //402px;
+    height: 25.125rem;
   }
 
   .swiper-slide {
