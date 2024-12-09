@@ -25,7 +25,9 @@ import { Toast } from "components/atoms";
 export const DetailPage = () => {
   const navigate = useNavigate();
   const { productId } = useParams<{ productId: string }>();
-  const { product, isProductLoading } = useFetchProduct(productId!);
+  const { product, isProductLoading, productRefetch } = useFetchProduct(
+    productId!,
+  );
   const { comments, isCommentLoading } = useFetchComment(productId!);
   const {
     actions: { closeModal },
@@ -95,6 +97,7 @@ export const DetailPage = () => {
       earlyClose(productId!)
         .then((data) => {
           console.log(data);
+          productRefetch().catch(console.error);
           Toast.show("조기 종료가 적용되었습니다.", 2000);
           closeModal();
         })
