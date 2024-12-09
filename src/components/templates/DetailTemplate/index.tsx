@@ -84,11 +84,12 @@ export const DetailTemplate = ({
   myPrice,
   myAuctionId,
   isEarly,
-  // hasBuyer,
   onCancel,
   onEarlyClosing,
   // 판매자 여부
   isSeller,
+  // 구매자 있는지 여부
+  hasBuyer,
 }: IBaseDetailTemplateProps) => {
   const modal = useDetailModal();
   const {
@@ -119,7 +120,7 @@ export const DetailTemplate = ({
         location={location}
         onClick={onLocationClick}
       />
-      <Comment comments={comments} />
+      <Comment hasBuyer={hasBuyer} comments={comments} />
       <AuctionControlBar>
         <AuctionControlBar.BidContainer>
           {(!isSeller || !maximumPrice) && (
@@ -166,19 +167,25 @@ export const DetailTemplate = ({
             <AuctionControlBar.Button
               backgroundColor="red"
               variant="btn_bold"
-              text={buttonNames.early}
+              text={
+                isEarly ? "경매 조기종료가 진행중입니다." : buttonNames.early
+              }
               onClick={() => modal.earlyClosing(onEarlyClosing)}
+              disabled={isEarly}
             />
           )}
         </AuctionControlBar.ButtonContainer>
       </AuctionControlBar>
       {createPortal(
+        // TODO 조기마감 진행중인 상태를 어디에서 보여줄지??
         <AuctionBidBottomSheet
           price={price}
           setPrice={setPrice}
-          minPrice={minimumPrice}
+          minPrice={isEarly ? myPrice || minimumPrice : minimumPrice}
           beforePrice={myPrice || undefined}
-          onBid={() => handleBid(minimumPrice, myAuctionId || undefined)}
+          onBid={() =>
+            handleBid(minimumPrice, myAuctionId || undefined, isEarly)
+          }
           open={open}
           onClose={handleCloseBottomSheet}
         />,

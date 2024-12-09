@@ -23,6 +23,7 @@ export const useCommentWriter = (commentContent: string = "") => {
         // 댓글 작성 이후 댓글 refetch
         fetchComments().catch(console.error);
         setComment("");
+        setReplyMode(false);
       })
       .catch(console.error);
   };

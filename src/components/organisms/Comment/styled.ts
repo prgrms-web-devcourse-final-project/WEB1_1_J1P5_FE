@@ -3,11 +3,22 @@ import { InputWrapper } from "components/atoms/Input/styled";
 import { TextButtonWrapper } from "components/atoms/Button/TextButton/styled";
 import { InputWithButtonWrapper } from "components/molecules/InputWithButton/styled";
 import { TitleBoldWrapper } from "components/atoms/Text/styled";
+import {
+  CommentItemContainer,
+  CommentItemWrapper,
+} from "../CommentItem/styled";
 
 export const CommentListWrapper: ReturnType<typeof styled.div> = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  & > ${CommentItemContainer} {
+    & > ${CommentItemWrapper} {
+      &.deleted {
+        padding: 1rem;
+      }
+    }
+  }
 `;
 
 export const CommentWriteBoxWrapper: ReturnType<typeof styled.div> = styled.div`

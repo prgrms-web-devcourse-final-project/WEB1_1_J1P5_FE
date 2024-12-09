@@ -22,12 +22,12 @@ export const NeighborhoodAuthForm = ({
   nickname,
   myAddress,
   onSubmitButtonClick,
-  locationErrorEvent
+  locationErrorEvent,
 }: INeighborhoodAuthFormProps) => {
   const [myCoord, setMyCoord] = useState<any>(null);
   const [location, setLocation] = useState<ILocation>({
     coord: undefined,
-    address: ""
+    address: "",
   });
   const [isOpenBottomSheet, setIsOpenBottomSheet] = useState(false);
 
@@ -37,7 +37,7 @@ export const NeighborhoodAuthForm = ({
     if (myCoord) {
       const iCoord: ICoord = {
         lat: myCoord.lat(),
-        lng: myCoord.lng()
+        lng: myCoord.lng(),
       } as const;
 
       searchCoordinateToAddress(myCoord)
@@ -55,7 +55,10 @@ export const NeighborhoodAuthForm = ({
     if (location.address) {
       setIsOpenBottomSheet(true);
     }
-  }, [location]);
+
+    console.log("location.address", location.address);
+    console.log("myAddress", myAddress);
+  }, [location, myAddress]);
 
   const handleSubmitButtonClick = useCallback(() => {
     onSubmitButtonClick?.(location);

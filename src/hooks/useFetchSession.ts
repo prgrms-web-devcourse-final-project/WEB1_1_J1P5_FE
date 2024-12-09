@@ -3,7 +3,7 @@ import { queries } from "constants/queryKeys";
 import { getUserSession } from "services/apis";
 
 export const useFetchSession = () => {
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, isError } = useQuery({
     queryKey: queries.session.DEFAULT,
     queryFn: getUserSession,
     select: (data) => data.result,
@@ -12,5 +12,6 @@ export const useFetchSession = () => {
   return {
     sessionUser: data,
     isLoading,
+    isError,
   };
 };

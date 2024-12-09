@@ -19,7 +19,7 @@ export const UserLocationBottomSheet = ({
   address,
   open,
   onClose,
-  onSubmitButtonClick
+  onSubmitButtonClick,
 }: IUserLocationBottomSheetProps) => {
   return (
     <UserLocationBottomSheetWrapper open={open} onClose={onClose}>
@@ -28,36 +28,37 @@ export const UserLocationBottomSheet = ({
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          gap: "10px"
+          gap: "10px",
         }}
       >
         {/* // TODO: 선택하신 동네는 나의 동네 선택에서 설정한 동네를 말하는 것 같아서 추후 수정 필요 */}
         <div style={{ display: "flex", alignItems: "center" }}>
-          <Text variant="explan_regular" content="선택하신 동네는&nbsp;" />
-          <Text variant="explan_bold" content={`${myAddress}`} />
-          <Text variant="explan_regular" content="이에요." />
+          <Text variant='explan_regular' content='선택하신 동네는&nbsp;' />
+          <Text variant='explan_bold' content={`${myAddress}`} />
+          <Text variant='explan_regular' content='이에요.' />
         </div>
         <div
           style={{
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            textAlign: "center"
+            textAlign: "center",
           }}
         >
-          <Text variant="writing_bold" content={`${nickname}님의 현 위치는`} />
+          <Text variant='writing_bold' content={`${nickname}님의 현 위치는`} />
           <div style={{ display: "flex", alignItems: "center" }}>
             <div style={{ color: "#344FFF" }}>
-              <Text variant="writing_bold" content={`${address}`} />
+              <Text variant='writing_bold' content={`${address}`} />
             </div>
-            <Text variant="writing_bold" content="이에요!" />
+            <Text variant='writing_bold' content='이에요!' />
           </div>
         </div>
       </div>
 
       <TextButton
         text={
-          myAddress === address
+          // TODO: location.address 경기도 성남시 수정구 태평동 myAddress 태평동
+          myAddress === address?.split(" ").pop()
             ? "네, 여기로 인증할게요"
             : "그래도 여기로 인증할래요"
         }
