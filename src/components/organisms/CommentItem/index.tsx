@@ -18,6 +18,7 @@ import {
 import type { CommentStatus, IComment, IWriteCommentData } from "types";
 import { useUserStore } from "stores";
 import { DeletedComment } from "./deleted";
+import { LOGO_PATH } from "../../../constants/imgPath";
 
 export interface ICommentItemProps {
   /** 댓글 아이디 */
@@ -132,7 +133,7 @@ export const CommentItem = ({
       {status !== "DELETED" && (
         <CommentItemWrapper key={commentId}>
           <CommentHeaderContainer className="content-con">
-            <Image url={imgUrl} type="round" />
+            <Image url={imgUrl || LOGO_PATH} type="round" />
             <WriterInformationWrapper>
               <WriterBadgeWrapper>
                 <Text variant="title_bold" content={nickname} />
