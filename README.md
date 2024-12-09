@@ -1,4 +1,4 @@
-# 🤝 meerket
+# 🐱 meerket
 
 <p align="center">
   <img src="./public/Logo.svg" alt="미어켓 Logo" width="300">
