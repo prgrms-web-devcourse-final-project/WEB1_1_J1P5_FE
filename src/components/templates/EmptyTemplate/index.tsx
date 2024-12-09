@@ -71,7 +71,7 @@ export const EmptyTemplate = ({ type = "default" }: IEmptyTemplateProps) => {
   // 버튼을 렌더링하지 않을 타입 배열
   const noButtonTypes = ["default", "blockedUser"];
   return (
-    <EmptyTemplateWrapper>
+    <EmptyTemplateWrapper className={type}>
       <div className="text-con">
         <Text variant="h5" content={msg}></Text>
       </div>

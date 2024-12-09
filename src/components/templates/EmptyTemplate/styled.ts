@@ -1,6 +1,9 @@
 import styled from "@emotion/styled";
+import { ThemeType } from "styles/theme";
 
 export const EmptyTemplateWrapper: ReturnType<typeof styled.div> = styled.div`
+  max-width: ${({ theme }: { theme: ThemeType }) => theme.sizes.max_width};
+  background-color: ${({ theme }: { theme: ThemeType }) => theme.colors.white};
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -14,5 +17,9 @@ export const EmptyTemplateWrapper: ReturnType<typeof styled.div> = styled.div`
   .text-con {
     display: flex;
     justify-content: center;
+  }
+
+  &.error {
+    height: 100vh;
   }
 `;
