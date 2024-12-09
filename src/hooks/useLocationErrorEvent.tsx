@@ -50,7 +50,7 @@ export const useLocationErrorEvent = () => {
               {
                 title: "확인",
                 onClick: () => {
-                  navigate("/my-page");
+                  navigate(-1);
                   closeModal();
                 },
               },

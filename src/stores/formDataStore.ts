@@ -1,21 +1,22 @@
 import { create, type StoreApi, type UseBoundStore } from "zustand";
 import { produce } from "immer";
+import { persist } from "zustand/middleware";
 
 import type { IProductForm } from "types";
 
-interface State {
-  formData: IProductForm;
-}
+const localStorageKey = "meerket--formData" as const;
 
-interface Actions {
-  actions: {
-    setFormData: (data: Partial<IProductForm>) => void;
-    isFormDataEmpty: () => boolean;
-    clear: () => void;
-  };
+interface State {
+  productId?: number;
+  formData: IProductForm;
+  setProductId: (id: string | number) => void;
+  setFormData: (data: Partial<IProductForm>) => void;
+  isFormDataEmpty: () => boolean;
+  clear: () => void;
 }
 
 export const defaultState: State = {
+  productId: undefined,
   formData: {
     title: "",
     content: "",
@@ -28,12 +29,20 @@ export const defaultState: State = {
     expiredTime: undefined,
     imgUrls: [],
   },
+  setProductId: () => {},
+  setFormData: () => {},
+  isFormDataEmpty: () => false,
+  clear: () => {},
 };
 
-export const useFormDataStore: UseBoundStore<StoreApi<State & Actions>> =
-  create<State & Actions>((set, get) => ({
-    ...defaultState,
-    actions: {
+export const useFormDataStore: UseBoundStore<StoreApi<State>> = create(
+  persist<State>(
+    (set, get) => ({
+      ...defaultState,
+      setProductId: (id: string | number) =>
+        set(() => ({
+          productId: Number(id),
+        })),
       setFormData: (data) =>
         set(
           produce((state: State) => {
@@ -46,6 +55,13 @@ export const useFormDataStore: UseBoundStore<StoreApi<State & Actions>> =
           (value) => value === undefined || value === null || value === ""
         );
       },
-      clear: () => set(defaultState),
-    },
-  }));
+      clear: () =>
+        set(() => ({
+          ...defaultState,
+        })),
+    }),
+    {
+      name: localStorageKey,
+    }
+  )
+);

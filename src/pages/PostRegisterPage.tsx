@@ -19,7 +19,7 @@ export const PostRegisterPage = () => {
   const lat = useFormDataStore((state) => state.formData.latitude);
   const lng = useFormDataStore((state) => state.formData.longitude);
   const address = useFormDataStore((state) => state.formData.address);
-  const { setFormData, clear } = useFormDataStore((state) => state.actions);
+  const { setFormData, clear } = useFormDataStore();
 
   // const { product, isProductLoading } = useFetchProduct(
   //   productId?.toString() || ""

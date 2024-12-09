@@ -4,6 +4,7 @@ import type {
   IProductDetailResponse,
   IProductPost,
   IProductResponse,
+  IProductResponse,
 } from "types";
 
 /**
@@ -91,6 +92,7 @@ export const editProduct = async (
   productId: number,
   updatedProduct: Omit<IProductPost, "images" | "expiredTime">,
 ) => {
+  console.log("updatedProduct", updatedProduct);
   return http.patch<IProductResponse, typeof updatedProduct>(
     `/products/${productId}`,
     updatedProduct,

@@ -106,8 +106,8 @@ export const getExpiredDate = (value: string): string => {
 
 export const isISOFormat = (dateString: string) => {
   // const isoFormatRegex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z$/;
-  // return isoFormatRegex.test(dateString);
-  return dateString.startsWith("20");
+  const isoFormatRegex = /^20/;
+  return isoFormatRegex.test(dateString);
 };
 
 /**

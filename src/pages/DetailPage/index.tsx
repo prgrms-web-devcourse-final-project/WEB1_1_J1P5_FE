@@ -35,9 +35,7 @@ export const DetailPage = () => {
     actions: { setCoord, setLocation, setAddress },
   } = useSelectedLocationStore();
   // TODO
-  const {
-    actions: { setFormData },
-  } = useFormDataStore();
+  const { setFormData, setProductId } = useFormDataStore();
   const { open, handleOpen, handleClose, menuRef } = useKebabMenu();
   const { handleCancel } = useBid(parseInt(productId!));
   const { todo } = useDetailModal();
@@ -120,6 +118,7 @@ export const DetailPage = () => {
     if (!product.hasBuyer) {
       // 수정 페이지로 이동
       // TODO 확인 필요
+      setProductId(productId!);
       setFormData({
         title: product.title,
         content: product.content,

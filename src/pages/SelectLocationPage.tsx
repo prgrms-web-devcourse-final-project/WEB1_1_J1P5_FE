@@ -9,10 +9,11 @@ import type { ILocation } from "types";
 export const SelectLocationPage = () => {
   const navigate = useNavigate();
   const { setTitle } = useTopBarStore();
+  const productId = useFormDataStore((state) => state.productId);
   const lat = useFormDataStore((state) => state.formData.latitude);
   const lng = useFormDataStore((state) => state.formData.longitude);
   const location = useFormDataStore((state) => state.formData.location);
-  const { setFormData } = useFormDataStore((state) => state.actions);
+  const { setFormData } = useFormDataStore();
   const [isOpenBottomSheet, setIsOpenBottomSheet] = useState(false);
   const locationErrorEvent = useLocationErrorEvent();
   const [isError, setIsError] = useState<boolean>(false);
@@ -21,7 +22,7 @@ export const SelectLocationPage = () => {
     return lat && lng
       ? {
           lat,
-          lng
+          lng,
         }
       : undefined;
   }, [lat, lng]);
@@ -33,12 +34,16 @@ export const SelectLocationPage = () => {
         return;
       }
       setFormData({
-        location: place
+        location: place,
       });
       setIsOpenBottomSheet(false);
-      navigate("/product");
+      if (productId) {
+        navigate(`/product?productId=${productId}`);
+      } else {
+        navigate("/product");
+      }
     },
-    [setFormData, navigate]
+    [setFormData, navigate, productId]
   );
 
   const handleLocationSelect = useCallback(
@@ -46,7 +51,7 @@ export const SelectLocationPage = () => {
       setFormData({
         latitude: selectedLocation.coord?.lat,
         longitude: selectedLocation.coord?.lng,
-        address: selectedLocation.address
+        address: selectedLocation.address,
       });
       setIsOpenBottomSheet(true);
     },
