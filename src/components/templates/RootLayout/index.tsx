@@ -47,7 +47,12 @@ export const RootLayout = () => {
    * 뒤로가기
    */
   const handleBackButtonClick = () => {
-    navigate(-1);
+    const productRegex = /^\/product\/\d+$/; // "/product/"로 시작하고 숫자가 오는 형식
+    if (productRegex.test(_pathname)) {
+      navigate("/");
+    } else {
+      navigate(-1);
+    }
   };
 
   /** backIcon 클릭 기본 함수 지정 */
