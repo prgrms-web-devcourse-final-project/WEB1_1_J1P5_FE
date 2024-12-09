@@ -82,7 +82,7 @@ interface TopSheetProps {
   post: IPost;
 }
 export const TopSheet = ({ post }: TopSheetProps) => {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
   const toggleSheet = () => {
     setIsOpen((prev) => !prev);
   };

@@ -23,13 +23,13 @@ import {
   TransactionPage,
 } from "pages";
 import { AuthGuard, LoginGuard, RequiredGuard } from "pages/guards";
-import { RootLayout } from "components/templates";
+import { EmptyTemplate, RootLayout } from "components/templates";
 
 export const routes: RouteObject[] = [
   {
     path: "/",
     element: <RootLayout />,
-    errorElement: <>404</>,
+    errorElement: <EmptyTemplate type={"error"} />,
     children: [
       // 권한 요청
       { path: "permission-request", element: <PermissionRequestPage /> },
