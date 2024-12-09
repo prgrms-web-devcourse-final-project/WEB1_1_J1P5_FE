@@ -1,5 +1,5 @@
 import { Suspense, useEffect } from "react";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { DetailTemplate } from "components/templates";
 import { KebabMenu } from "components/molecules";
 import { KebabIcon } from "components/atoms/Icon";
@@ -25,7 +25,9 @@ import { Toast } from "components/atoms";
 export const DetailPage = () => {
   const navigate = useNavigate();
   const { productId } = useParams<{ productId: string }>();
-  const { product, isProductLoading } = useFetchProduct(productId!);
+  const { product, isProductLoading, productRefetch } = useFetchProduct(
+    productId!,
+  );
   const { comments, isCommentLoading } = useFetchComment(productId!);
   const {
     actions: { closeModal },
@@ -38,7 +40,7 @@ export const DetailPage = () => {
   const { setFormData, setProductId } = useFormDataStore();
   const { open, handleOpen, handleClose, menuRef } = useKebabMenu();
   const { handleCancel } = useBid(parseInt(productId!));
-  const { todo } = useDetailModal();
+  const { todo, removeNoBuyer, removeHasBuyer } = useDetailModal();
 
   /**
    * 거래 희망 장소 클릭
@@ -95,6 +97,7 @@ export const DetailPage = () => {
       earlyClose(productId!)
         .then((data) => {
           console.log(data);
+          productRefetch().catch(console.error);
           Toast.show("조기 종료가 적용되었습니다.", 2000);
           closeModal();
         })
@@ -139,24 +142,28 @@ export const DetailPage = () => {
   /**
    * (판매자) 삭제하기
    */
+  const handleDeleteProduct = () => {
+    deleteProduct(productId!)
+      .then((data) => {
+        console.log(data);
+        Toast.show("삭제되었습니다.", 2000);
+        navigate("/", { replace: true });
+        closeModal();
+      })
+      .catch(console.error);
+  };
   const handleDelete = () => {
     if (!product) {
       return;
     }
     if (product.hasBuyer) {
-      // TODO 구매자 있는 게시글은 삭제할 수 없습니다. 모달
-      Toast.show("구매자가 있는 게시물은 삭제할 수 없습니다.", 2000);
+      removeHasBuyer(handleDeleteProduct);
       handleClose();
       return;
     }
     if (!product.hasBuyer) {
-      // TODO 삭제 처리 (내일 확인 ㅠ)
-      deleteProduct(productId!)
-        .then((data) => {
-          console.log(data);
-          navigate("/", { replace: true });
-        })
-        .catch(console.error);
+      removeNoBuyer(handleDeleteProduct);
+      handleClose();
       return;
     }
   };
@@ -181,8 +188,7 @@ export const DetailPage = () => {
   }
 
   if (!product) {
-    // 에러페이지로 이동
-    return <Navigate to="/error" replace />;
+    return null;
   }
 
   return (

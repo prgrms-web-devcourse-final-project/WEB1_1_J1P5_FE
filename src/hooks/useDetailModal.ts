@@ -15,6 +15,8 @@ export const useDetailModal = () => {
   // 판매자
   const earlyClosing = (onEarlyClosing: () => void) =>
     confirm(modalMessage.product.seller.early, onEarlyClosing);
+  const removeNoBuyer = (onRemove: () => void) =>
+    confirm(modalMessage.product.seller.remove.DEFAULT, onRemove);
   const removeHasBuyer = (onRemove: () => void) =>
     confirm(modalMessage.product.seller.remove.hasBuyer, onRemove);
 
@@ -27,6 +29,7 @@ export const useDetailModal = () => {
     editEarly,
     bid,
     earlyClosing,
+    removeNoBuyer,
     removeHasBuyer,
     todo,
   };

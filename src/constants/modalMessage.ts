@@ -25,6 +25,7 @@ export const modalMessage = {
       early:
         "조기 마감을 적용해서 마감시간을 2시간으로 앞당길 수 있어요! 조기 마감하시겠어요?",
       remove: {
+        DEFAULT: "삭제하시겠습니까?",
         hasBuyer:
           "입찰자가 존재하는 게시글입니다. \n" +
           "정말 삭제하시겠습니까? \n" +
