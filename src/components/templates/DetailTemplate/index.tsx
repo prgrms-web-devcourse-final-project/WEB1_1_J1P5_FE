@@ -10,10 +10,12 @@ import {
   Profile,
 } from "components/organisms";
 import { DetailTemplateWrapper, ImageSliderAndTimer } from "./styled";
-import { useBid, useDetailModal } from "hooks";
+import { useBid, useDetailModal, useFetchProduct } from "hooks";
 import { buttonNames, priceNames } from "constants/auctionControlBarNames";
 import type { IComment, IProductDetail } from "types";
 import { LOGO_PATH } from "constants/imgPath";
+import { isExpired } from "utils";
+import { useMemo } from "react";
 
 interface IBaseDetailTemplateProps
   extends Omit<IProductDetail, "winningPrice"> {
@@ -92,6 +94,9 @@ export const DetailTemplate = ({
   hasBuyer,
 }: IBaseDetailTemplateProps) => {
   const modal = useDetailModal();
+  const { productRefetch, isProductRefetching } = useFetchProduct(
+    productId.toString(),
+  );
   const {
     open,
     price,
@@ -100,12 +105,20 @@ export const DetailTemplate = ({
     handleCloseBottomSheet,
     handleBid,
   } = useBid(productId);
+  const isExpiredTime = useMemo(
+    () => isExpired(expiredTime),
+    [isProductRefetching],
+  );
 
   return (
     <DetailTemplateWrapper>
       <ImageSliderAndTimer>
         <ImageSlider imgUrls={images} />
-        <AuctionTimer targetDate={new Date(expiredTime)} />
+        <AuctionTimer
+          targetDate={new Date(expiredTime)}
+          isEarly={isEarly}
+          refetch={productRefetch}
+        />
       </ImageSliderAndTimer>
       <ItemDetails
         title={title}
@@ -121,63 +134,67 @@ export const DetailTemplate = ({
         onClick={onLocationClick}
       />
       <Comment hasBuyer={hasBuyer} comments={comments} />
-      <AuctionControlBar>
-        <AuctionControlBar.BidContainer>
-          {(!isSeller || !maximumPrice) && (
-            <AuctionControlBar.Bid
-              title={priceNames.minimumPrice}
-              price={minimumPrice}
-            />
-          )}
-          {myPrice && (
-            <AuctionControlBar.Bid title={priceNames.myPrice} price={myPrice} />
-          )}
-          {isSeller && maximumPrice && (
-            <AuctionControlBar.Bid
-              title={priceNames.maximumPrice}
-              price={maximumPrice}
-            />
-          )}
-        </AuctionControlBar.BidContainer>
-        <AuctionControlBar.ButtonContainer>
-          {!isSeller && !myPrice && (
-            <AuctionControlBar.Button
-              text={buttonNames.bid}
-              onClick={handleOpenBottomSheet}
-            />
-          )}
-          {myPrice && (
-            <>
-              <AuctionControlBar.Button
-                backgroundColor="grey"
-                text={buttonNames.cancel}
-                onClick={
-                  isEarly
-                    ? () => modal.cancelEarly()
-                    : () => modal.cancel(onCancel)
-                }
+      {!isExpiredTime && (
+        <AuctionControlBar>
+          <AuctionControlBar.BidContainer>
+            {(!isSeller || !maximumPrice) && (
+              <AuctionControlBar.Bid
+                title={priceNames.minimumPrice}
+                price={minimumPrice}
               />
+            )}
+            {myPrice && (
+              <AuctionControlBar.Bid
+                title={priceNames.myPrice}
+                price={myPrice}
+              />
+            )}
+            {isSeller && maximumPrice && (
+              <AuctionControlBar.Bid
+                title={priceNames.maximumPrice}
+                price={maximumPrice}
+              />
+            )}
+          </AuctionControlBar.BidContainer>
+          <AuctionControlBar.ButtonContainer>
+            {!isSeller && !myPrice && (
               <AuctionControlBar.Button
-                text={buttonNames.edit}
+                text={buttonNames.bid}
                 onClick={handleOpenBottomSheet}
               />
-            </>
-          )}
-          {isSeller && maximumPrice && (
-            <AuctionControlBar.Button
-              backgroundColor="red"
-              variant="btn_bold"
-              text={
-                isEarly ? "경매 조기종료가 진행중입니다." : buttonNames.early
-              }
-              onClick={() => modal.earlyClosing(onEarlyClosing)}
-              disabled={isEarly}
-            />
-          )}
-        </AuctionControlBar.ButtonContainer>
-      </AuctionControlBar>
+            )}
+            {myPrice && (
+              <>
+                <AuctionControlBar.Button
+                  backgroundColor="grey"
+                  text={buttonNames.cancel}
+                  onClick={
+                    isEarly
+                      ? () => modal.cancelEarly()
+                      : () => modal.cancel(onCancel)
+                  }
+                />
+                <AuctionControlBar.Button
+                  text={buttonNames.edit}
+                  onClick={handleOpenBottomSheet}
+                />
+              </>
+            )}
+            {isSeller && maximumPrice && (
+              <AuctionControlBar.Button
+                backgroundColor="red"
+                variant="btn_bold"
+                text={
+                  isEarly ? "경매 조기종료가 진행중입니다." : buttonNames.early
+                }
+                onClick={() => modal.earlyClosing(onEarlyClosing)}
+                disabled={isEarly}
+              />
+            )}
+          </AuctionControlBar.ButtonContainer>
+        </AuctionControlBar>
+      )}
       {createPortal(
-        // TODO 조기마감 진행중인 상태를 어디에서 보여줄지??
         <AuctionBidBottomSheet
           price={price}
           setPrice={setPrice}

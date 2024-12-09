@@ -57,7 +57,7 @@ export const getRelativeTime = (date: Date | string): string => {
   const now = dayjs();
   const target = dayjs(date);
   if (target.isAfter(now)) {
-    return "전달받은 시간 값이 미래의 시간입니다.";
+    return "방금 전"; // TODO 댓글 작성 시 계속 "전달받은 시간 값이 미래의 시간입니다."가 나와서 임시로 수정합니다.
   }
   return dayjs.duration(target.diff(now)).humanize(true);
 };
@@ -89,7 +89,7 @@ export const formatDate = (dateStr: Date | string) => {
  */
 export const areDatesDifferent = (
   dateStr1: string,
-  dateStr2: string
+  dateStr2: string,
 ): boolean => {
   const date1 = new Date(dateStr1).toISOString().split("T")[0];
   const date2 = new Date(dateStr2).toISOString().split("T")[0];
@@ -124,4 +124,12 @@ export const isISOFormat = (dateString: string) => {
  */
 export const formatToDateTime = (date: Date | string | number): string => {
   return dayjs(date).format("YYYY-MM-DD HH:mm:ss");
+};
+
+/**
+ * 현재 날짜가 마감일자 이후인지 반환하는 함수
+ * @param date 날짜
+ */
+export const isExpired = (date: string) => {
+  return dayjs().isAfter(date);
 };
