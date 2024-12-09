@@ -14,6 +14,7 @@ export const RootLayout = () => {
     onBackClick,
     onRightClick,
     setValue,
+    onSearch,
     value,
     placeholder,
     setBackClick,
@@ -83,6 +84,7 @@ export const RootLayout = () => {
               value={value}
               setValue={setValue}
               placeholder={placeholder}
+              onEnter={onSearch}
             />
           )}
           <TopBar.Icon icon={icon} onIconClick={onRightClick} />

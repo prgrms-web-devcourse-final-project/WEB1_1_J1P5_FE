@@ -24,7 +24,12 @@ export const NeighborhoodSelectionPage = () => {
   };
 
   useEffect(() => {
-    setSearchBar(term, setTerm, "동네를 입력해주세요.");
+    setSearchBar(
+      term,
+      setTerm,
+      "동네를 입력해주세요.",
+      handleSearchNeighborhoods,
+    );
     setRightIcon(SearchIcon, handleSearchNeighborhoods);
   }, [term]);
 

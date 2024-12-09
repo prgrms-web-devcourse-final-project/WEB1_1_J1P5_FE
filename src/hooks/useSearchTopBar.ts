@@ -23,7 +23,12 @@ export const useSearchTopBar = () => {
 
   useEffect(() => {
     setRightIcon(SearchIcon, handleSearch);
-    setSearchBar(searchTerm, setSearchTerm, "검색어를 입력해주세요.");
+    setSearchBar(
+      searchTerm,
+      setSearchTerm,
+      "검색어를 입력해주세요.",
+      handleSearch,
+    );
   }, [searchTerm]);
 
   return {
