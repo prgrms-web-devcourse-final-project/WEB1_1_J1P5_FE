@@ -16,5 +16,10 @@ export const NeighborhoodSelectionListWrapper: ReturnType<
 
   ${IconWithTextWrapper} {
     gap: 10px;
+    cursor: pointer;
+    :hover {
+      background: ${({ theme }: { theme: ThemeType }) =>
+        theme.colors.grey_button_deactivate};
+    }
   }
 `;
