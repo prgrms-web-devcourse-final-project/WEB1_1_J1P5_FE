@@ -49,7 +49,7 @@ export const UserLocationBottomSheet = ({
           <div style={{ display: "flex", alignItems: "center" }}>
             <div style={{ color: "#344FFF" }}>
               <Text
-                variant={address!.length > 10 ? "btn_bold" : "writing_bold"}
+                variant={address!.length > 15 ? "btn_bold" : "writing_bold"}
                 content={`${address}`}
               />
             </div>
