@@ -3,6 +3,9 @@ import { KebabIcon, ReplyIcon } from "components/atoms/Icon";
 import { InputWithButton, KebabMenu } from "components/molecules";
 import { getRelativeTime } from "utils";
 import { useCommentWriter, useDetailModal, useKebabMenu } from "hooks";
+import { useUserStore } from "stores";
+import type { CommentStatus, IComment, IWriteCommentData } from "types";
+import { LOGO_PATH } from "constants/imgPath";
 import {
   CommentContentWrapper,
   CommentItemContainer,
@@ -15,10 +18,7 @@ import {
   WriterInformationWrapper,
   WriterBadgeWrapper,
 } from "./styled";
-import type { CommentStatus, IComment, IWriteCommentData } from "types";
-import { useUserStore } from "stores";
 import { DeletedComment } from "./deleted";
-import { LOGO_PATH } from "../../../constants/imgPath";
 
 export interface ICommentItemProps {
   /** 댓글 아이디 */
