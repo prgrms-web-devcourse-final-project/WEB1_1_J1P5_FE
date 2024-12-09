@@ -71,8 +71,7 @@ export const PostRegisterForm = ({
             {invalid && (
               <div
                 style={{
-                  color: `${({ theme }: { theme: ThemeType }) =>
-                    theme.colors.black}`,
+                  color: "#FF2E4D",
                 }}
               >
                 <Text variant='explan_regular' content={error?.message || ""} />
@@ -104,8 +103,7 @@ export const PostRegisterForm = ({
             {invalid && (
               <div
                 style={{
-                  color: `${({ theme }: { theme: ThemeType }) =>
-                    theme.colors.blue_light}`,
+                  color: "#FF2E4D",
                 }}
               >
                 <Text
