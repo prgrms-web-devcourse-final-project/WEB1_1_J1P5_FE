@@ -18,7 +18,7 @@ export const useSearchTopBar = () => {
    */
   const handleSearch = () => {
     if (!searchTerm.trim()) {
-      Toast.show("검색어를 입력홰주세요.", 2000);
+      Toast.show("검색어를 입력해주세요.", 2000);
     }
     if (searchTerm.trim()) {
       navigate(`/search/keyword/${encodeURIComponent(searchTerm)}`);

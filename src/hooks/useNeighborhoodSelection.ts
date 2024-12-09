@@ -28,7 +28,7 @@ export const useNeighborhoodSelection = () => {
    */
   const handleSearchNeighborhoods = () => {
     if (!term.trim()) {
-      Toast.show("검색어를 입력홰주세요.", 2000);
+      Toast.show("검색어를 입력해주세요.", 2000);
     }
     searchActivityAreas(term)
       .then((data) => {
