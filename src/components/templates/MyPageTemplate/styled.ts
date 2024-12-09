@@ -2,8 +2,9 @@ import styled from "@emotion/styled";
 import { TextButtonWrapper } from "components/atoms/Button/TextButton/styled";
 import {
   ProfileWrapper,
-  ImageWrapper
+  ImageWrapper,
 } from "components/organisms/Profile/styled";
+import { ThemeType } from "styles/theme";
 
 export const MyPageTemplateWrapper: ReturnType<typeof styled.div> = styled.div`
   display: flex;
@@ -49,7 +50,17 @@ export const ProfileContainer: ReturnType<typeof styled.div> = styled.div`
   flex-direction: column;
   align-items: flex-start;
 `;
+
 export const BackGroundWrapper: ReturnType<typeof styled.div> = styled.div`
   background: #f4f6f9;
   padding: 1rem;
+`;
+
+export const LogoutWrapper: ReturnType<typeof styled.div> = styled.div`
+  color: ${({ theme }: { theme: ThemeType }) =>
+    theme.colors.grey_field_guide_but_deactivate};
+  text-decoration: underline;
+  margin: 0 1rem;
+  cursor: pointer;
+  width: fit-content;
 `;

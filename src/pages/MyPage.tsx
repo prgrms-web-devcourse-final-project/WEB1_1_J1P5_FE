@@ -1,8 +1,9 @@
 import { useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
+import { Toast } from "components/atoms";
 import { MyPageTemplate } from "components/templates";
 import { useHeaderStore, useUserStore } from "stores";
-import { getUserProfile } from "services/apis";
+import { getUserProfile, oauthLogout } from "services/apis";
 
 export const MyPage = () => {
   const { setTitle } = useHeaderStore();
@@ -28,13 +29,25 @@ export const MyPage = () => {
         setUser({
           nickname: result.nickname || undefined,
           profile: result.imageUrl || undefined,
-          emdName: result.activityEmdName || undefined
+          emdName: result.activityEmdName || undefined,
         });
       })
       .catch(() => {
         setUser(null);
       });
   }, []);
+
+  const handleLogout = useCallback(() => {
+    oauthLogout()
+      .then(() => {
+        setUser(null);
+        location.reload();
+      })
+      .catch((error) => {
+        Toast.show("잠시 후에 다시 시도해주세요.", 2000);
+        console.error("Logout failed", error);
+      });
+  }, [navigate, setUser]);
 
   return (
     <MyPageTemplate
@@ -43,6 +56,7 @@ export const MyPage = () => {
       location={user!.emdName as string}
       onProfileEditButtonClick={handleProfileEditButtonClick}
       onMenuClick={handleMenuClick}
+      onLogout={handleLogout}
     />
   );
 };
