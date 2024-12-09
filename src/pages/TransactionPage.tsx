@@ -4,8 +4,13 @@ import {
   TransactionBuyTemplate,
   TransactionSellTemplate,
 } from "components/templates";
-import { DEFAULT_IMG_PATH } from "constants/imgPath";
-import { BUYING_TAB, COMPLETED_TAB, SELLING_TAB } from "constants/transaction";
+import {
+  BUYING_TAB,
+  COMPLETED_TAB,
+  SELLING_TAB,
+  TempBuyData,
+  TempSellData,
+} from "constants/transaction";
 import { useModalForm } from "hooks";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -53,18 +58,37 @@ export const TransactionPage = ({ type }: TransactionPageProps) => {
   const TRANSACTION_API_URL = `/transaction/${type}`;
   const TRANSACTION_NAVIGATE_URL = "/product";
 
-  const tempPosts: IPost[] = Array.from({ length: 10 }, (_, index) => ({
-    productId: index + 1,
-    imgUrl: DEFAULT_IMG_PATH,
-    title: `물품 ${index + 1}`,
-    price: 3500 + index * 1000,
-    address: "신림동",
-    uploadTime: `2024-11-28 ${11 + index}:00:00`,
+  const tempSellPosts: IPost[] = TempSellData.map((data, idx) => ({
+    productId: idx + 1,
+    imgUrl: data.imgUrl,
+    title: data.title,
+    price: data.price,
+    address: data.address,
+    uploadTime: data.uploadTime,
     onClick: () => {
       todo();
     },
-    expiredTime: `2024-12-29 ${11 + index}:00:00`,
-    maxPrice: 30000,
+    expiredTime: data.expiredTime,
+    maxPrice: data.maxPrice,
+    onTextButtonClick: () => {
+      todo();
+    },
+    onIconButtonClick: () => {
+      console.log("Icon Button 클릭");
+    },
+  }));
+  const tempBuyPosts: IPost[] = TempBuyData.map((data, idx) => ({
+    productId: idx + 1,
+    imgUrl: data.imgUrl,
+    title: data.title,
+    price: data.price,
+    address: data.address,
+    uploadTime: data.uploadTime,
+    onClick: () => {
+      todo();
+    },
+    expiredTime: data.expiredTime,
+    maxPrice: data.maxPrice,
     onTextButtonClick: () => {
       todo();
     },
@@ -134,11 +158,11 @@ export const TransactionPage = ({ type }: TransactionPageProps) => {
   const { data, refetch } = useQuery({
     queryKey: ["transactionPosts", type],
     queryFn: fetchPosts,
-    initialData: tempPosts, // 에러 시 대체 데이터로 사용
+    initialData: tempSellPosts, // 에러 시 대체 데이터로 사용
     retry: 2, // 최대 2번만 재시도
     retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 3000), // 재시도 간격 (옵션)
   });
-
+  console.log(data);
   /** TODO : 탭 바뀔때마다 fecth 하도록 변경 필요 */
   const onHandleTab = async (tab: string) => {
     try {
@@ -172,10 +196,10 @@ export const TransactionPage = ({ type }: TransactionPageProps) => {
   return (
     <>
       {type === "buy" && (
-        <TransactionBuyTemplate onClick={onHandleTab} posts={data} />
+        <TransactionBuyTemplate onClick={onHandleTab} posts={tempBuyPosts} />
       )}
       {type === "sell" && (
-        <TransactionSellTemplate onClick={onHandleTab} posts={data} />
+        <TransactionSellTemplate onClick={onHandleTab} posts={tempSellPosts} />
       )}
     </>
   );
