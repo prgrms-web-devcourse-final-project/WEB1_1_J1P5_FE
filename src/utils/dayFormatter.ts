@@ -98,17 +98,16 @@ export const areDatesDifferent = (
 
 export const getExpiredDate = (value: string): string => {
   const now = dayjs().tz("Asia/Seoul");
-
   if (value.includes("일")) {
     const days = parseInt(value.replace("일 후", ""));
-    return now.add(days, "day").format("YYYY-MM-DDTHH:mm:ssZ");
+    return now.add(days, "day").format("YYYY-MM-DDTHH:mm:ss.SSS[Z]");
   } else if (value.includes("시간")) {
     const hours = parseInt(value.replace("시간 후", ""));
-    return now.add(hours, "hour").format("YYYY-MM-DDTHH:mm:ssZ");
+    return now.add(hours, "day").format("YYYY-MM-DDTHH:mm:ss.SSS[Z]");
   } else {
     return dayjs(value, "YYYY-MM-DD HH:mm:ss")
       .tz("Asia/Seoul")
-      .format("YYYY-MM-DDTHH:mm:ssZ");
+      .format("YYYY-MM-DDTHH:mm:ss.SSS[Z]");
   }
 };
 
