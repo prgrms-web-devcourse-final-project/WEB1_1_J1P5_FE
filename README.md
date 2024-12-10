@@ -1,36 +1,30 @@
 # 🐱 meerket
 
-<p align="center">
-  <img src="./public/Logo.svg" alt="미어켓 Logo" width="300">
-</p> 
+<div align="center">
 
+![image](https://github.com/user-attachments/assets/b569f7f9-11bf-4808-b605-a586bdfaa226)
 
-___
+[![백엔드 레포지토리](https://img.shields.io/badge/백엔드_레포지토리_바로가기-ffffff?style=flat-square&color=777777)](https://github.com/prgrms-web-devcourse-final-project/WEB1_1_J1P5_BE)
 
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/192bc07f-eb66-40e4-b881-ef8a870ba368" alt="미어켓_메인화면">
-</p>
+[![배포링크](https://img.shields.io/badge/배포링크-ffffff?style=flat-square&color=000000)](https://meerket.vercel.app/)
+[![스토리북](https://img.shields.io/badge/스토리북-ffffff?style=flat-square&logo=storybook&logoColor=ffffff&labelColor=FF4785&color=FF4785)](https://meerket-storybook.vercel.app/)
+[![시연영상](https://img.shields.io/badge/시연영상-ffffff?style=flat-square&logo=youtube&logoColor=ffffff&labelColor=FF0000&color=FF0000)](https://www.youtube.com/watch?v=SZBPjolv118)
 
-
-## 배포 주소
-
-[meerket.vercel.appp](https://meerket.vercel.app/)
-
-## 스토리북 링크
-[meerket-storybook](https://meerket-storybook.vercel.app/)
-
-## 백앤드 레포지토리
-
-[meerket-backend](https://github.com/prgrms-web-devcourse-final-project/WEB1_1_J1P5_BE)
-
-## 시연 영상
-[시연 영상 유투브 링크](https://www.youtube.com/watch?v=SZBPjolv118)
+</div>
 
 ## 팀원 소개
 
-| 안준우                               | 이예진                                | 노윤지                                 | 
-| ----------------------------------- | --------------------------------------- | --------------------------------------- | 
-| [JW-Ahn0](https://github.com/JW-Ahn0) | [ppyom](https://github.com/ppyom) | [y0unj1NoH](https://github.com/y0unj1NoH) | 
+### Front-end
+
+| <img src="https://github.com/JW-Ahn0.png" width="150" /> | <img src="https://github.com/ppyom.png" width="150" /> | <img src="https://github.com/y0unj1NoH.png" width="150" /> | 
+| :--: | :--: | :--: | 
+| [안준우](https://github.com/JW-Ahn0) | [이예진](https://github.com/ppyom) | [노윤지](https://github.com/y0unj1NoH) | 
+
+### Back-end
+
+| <img src="https://github.com/Icecoff22.png" width="150" /> | <img src="https://github.com/sunghyun0610.png" width="150" /> | <img src="https://github.com/macmorning0116.png" width="150" /> |
+| :--: | :--: | :--: | 
+| [정승주](https://github.com/Icecoff22) | [문성현](https://github.com/sunghyun0610) | [김예찬](https://github.com/macmorning0116) |  
 
 ## 개발 기간
 
