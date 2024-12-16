@@ -2,6 +2,7 @@ import { useQuery, type UseQueryOptions } from "@tanstack/react-query";
 import { queries } from "constants/queryKeys";
 import {
   getBidding,
+  getCompletedBidding,
   getCompletedProducts,
   getInProgressProducts,
 } from "services/apis";
@@ -23,7 +24,6 @@ export type TransactionTab = "in_progress" | "completed";
 const getQuery = (
   type: TransactionType,
   tab: TransactionTab,
-  // TODO IGetBiddingResponse쪽에 해당 함수 Response Type 넣어주세요!!
 ): UseQueryOptions<ITransactionResponse | IGetBiddingResponse> => {
   if (type === "sell") {
     // 판매자 입장
@@ -41,7 +41,6 @@ const getQuery = (
       };
     }
   } else {
-    // TODO 구매자 입장
     if (tab === "in_progress") {
       // 구매중
       return {
@@ -52,7 +51,7 @@ const getQuery = (
       // 구매 완료
       return {
         queryKey: queries.auction.purchases,
-        queryFn: () => getBidding(),
+        queryFn: () => getCompletedBidding(),
       };
     }
   }
