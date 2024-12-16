@@ -1,186 +1,117 @@
-import { useQuery } from "@tanstack/react-query";
 import { IPost } from "components/organisms/PostList";
 import {
   TransactionBuyTemplate,
   TransactionSellTemplate,
 } from "components/templates";
-import {
-  BUYING_TAB,
-  COMPLETED_TAB,
-  SELLING_TAB,
-  TempBuyData,
-  TempSellData,
-} from "constants/transaction";
-import { useModalForm } from "hooks";
-import { useEffect } from "react";
+import { BUYING_TAB, COMPLETED_TAB, SELLING_TAB } from "constants/transaction";
+import { Suspense, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { http } from "services/api";
 import { useTopBarStore } from "stores";
-import { IResponse } from "types";
+import { type TransactionTab, useFetchTransactions } from "hooks";
+import { Loading } from "components/molecules/Loading";
+import type { IAuction, ITransactionProduct } from "types";
 
 interface TransactionPageProps {
   /** 판매내역 구매내역 */
   type: "buy" | "sell";
 }
-interface ITransactionPost {
-  /** product ID */
-  productId: number;
-  /** 물품 이미지 경로 */
-  imageUrl: string;
-  /** 물품 이름 */
-  title: string;
-  /** 물품 등록된 주소 */
-  productAddress: string;
-  /** 물품 등록 시간 */
-  createdAt: string;
-  /** 물품 최소 입찰가 */
-  price: number;
-  /** 물품 낙찰까지 남은 시간 */
-  expiredTime?: string;
-  /** 판매중 기준 최고 입찰가 */
-  maxPrice?: number;
-  /** 구매자 기준 나의 입찰가 */
-  buyPrice?: number;
-}
-
-interface ITransactionPageResponse extends IResponse {
-  result: {
-    content: ITransactionPost[];
-  };
-}
 
 export const TransactionPage = ({ type }: TransactionPageProps) => {
-  const { clear, setTitle } = useTopBarStore();
-  const { todo } = useModalForm();
   const navigate = useNavigate();
+  const TransactionTemplate =
+    // 현재 페이지 타입에 따라 Template 설정
+    type === "buy" ? TransactionBuyTemplate : TransactionSellTemplate;
+  const [tab, setTab] = useState<TransactionTab>("in_progress");
+  const { clear, setTitle } = useTopBarStore();
+  const { products } = useFetchTransactions(type, tab);
 
-  /** TODO: 백엔드 API에 따라 변경 필요 */
-  const TRANSACTION_API_URL = `/transaction/${type}`;
-  const TRANSACTION_NAVIGATE_URL = "/product";
-
-  const tempSellPosts: IPost[] = TempSellData.map((data, idx) => ({
-    productId: idx + 1,
-    imgUrl: data.imgUrl,
-    title: data.title,
-    price: data.price,
-    address: data.address,
-    uploadTime: data.uploadTime,
-    onClick: () => {
-      todo();
-    },
-    expiredTime: data.expiredTime,
-    maxPrice: data.maxPrice,
-    onTextButtonClick: () => {
-      todo();
-    },
-    onIconButtonClick: () => {
-      console.log("Icon Button 클릭");
-    },
-  }));
-  const tempBuyPosts: IPost[] = TempBuyData.map((data, idx) => ({
-    productId: idx + 1,
-    imgUrl: data.imgUrl,
-    title: data.title,
-    price: data.price,
-    address: data.address,
-    uploadTime: data.uploadTime,
-    onClick: () => {
-      todo();
-    },
-    expiredTime: data.expiredTime,
-    maxPrice: data.maxPrice,
-    onTextButtonClick: () => {
-      todo();
-    },
-    onIconButtonClick: () => {
-      console.log("Icon Button 클릭");
-    },
-  }));
-
-  /** 백엔드 IHomePost 타입을 프론트 IPost 으로 변환 함수
-   * @param homePost : ITransactionPost
+  /**
+   * 백엔드 ResponseData를 IPost Item에 들어갈 형식으로 변환하는 함수
+   * @param post ResponseData로 넘어온 post
    * @returns IPost
    */
   const createTransactionPostItem = (
-    transactionPost: ITransactionPost
-  ): IPost => ({
-    /** 게시글 ID */
-    productId: transactionPost.productId,
-    /** 게시글 썸네일 이미지 */
-    imgUrl: transactionPost.imageUrl,
-    /** 게시글 제목 */
-    title: transactionPost.title,
-    /** 게시글 가격 */
-    price: transactionPost.price,
-    /** 게시글 등록된 주소 */
-    address: transactionPost.productAddress,
-    /** 게시글 등록된 시간 */
-    uploadTime: transactionPost.createdAt,
-    /** 남은 시간 */
-    expiredTime: transactionPost.expiredTime || "",
-    /** 판매자 : 최고 입찰가, 구매자 : 나의 입찰가  */
-    maxPrice: transactionPost.maxPrice
-      ? transactionPost.maxPrice
-      : transactionPost.buyPrice
-      ? transactionPost.buyPrice
-      : -1,
-    /** 게시글 아이템 클릭 이벤트
-     * 해당 페이지로 이동하게 로직 변경
-     */
-    onClick: () => {
-      /** 상세 페이지로 이동 */
-      navigate(TRANSACTION_NAVIGATE_URL + `/${transactionPost.productId}`);
-    },
-    /** 판매중 : 끌어올리기, 완료 : 받은 후기 보기
-     * 홈 화면에는 필요없는 함수
-     */
-    onTextButtonClick: () => {},
-    /** 아이콘 버튼 클릭 이벤트
-     * 홈 화면에는 필요 없는 함수
-     */
-    onIconButtonClick: () => {},
-  });
-
-  /** userId 를 기반으로 해당 유저가 볼 수 있는 post 목록을 가져오는 함수
-   * @returns void
-   */
-  const fetchPosts = async () => {
-    const response = await http.get<ITransactionPageResponse>(
-      TRANSACTION_API_URL
-    );
-    if (response.success && response.code === "COMMON200") {
-      // 백엔드 타입 프론트엔드 타입으로 변환
-      return response.result.content.map(createTransactionPostItem);
-    }
-    throw new Error("Failed to fetch data");
+    post: IAuction | ITransactionProduct,
+  ): IPost => {
+    const product: Omit<
+      IPost,
+      "onClick" | "onTextButtonClick" | "onIconButtonClick"
+    > = {
+      /** 게시글 ID */
+      productId: ("productId" in post && post.productId) || -1,
+      /** 게시글 썸네일 이미지 */
+      imgUrl:
+        ("imageUrl" in post && post.imageUrl) ||
+        ("productImage" in post && post.productImage) ||
+        "",
+      /** 게시글 제목 */
+      title:
+        ("title" in post && post.title) ||
+        ("productTitle" in post && post.productTitle) ||
+        "",
+      /** 게시글 가격 */
+      price:
+        ("price" in post && post.price) ||
+        ("minPrice" in post && post.minPrice) ||
+        -1,
+      /** 게시글 등록된 주소 */
+      address:
+        ("productAddress" in post && post.productAddress) ||
+        ("sellerAddress" in post && post.sellerAddress) ||
+        "",
+      /** 게시글 등록된 시간 */
+      uploadTime:
+        ("createdAt" in post && post.createdAt) ||
+        ("productCreatedAt" in post && post.productCreatedAt) ||
+        "",
+      /** 남은 시간 */
+      expiredTime:
+        ("expiredTime" in post && post.expiredTime) ||
+        ("expireTime" in post && post.expireTime) ||
+        "",
+      /** 판매자 : 최고 입찰가, 구매자 : 나의 입찰가  */
+      maxPrice:
+        ("winningPrice" in post && post.winningPrice) ||
+        ("bidPrice" in post && post.bidPrice) ||
+        -1,
+    };
+    return {
+      ...product,
+      /** 게시글 아이템 클릭 이벤트
+       * 해당 페이지로 이동하게 로직 변경
+       */
+      onClick: () => {
+        /** 상세 페이지로 이동 */
+        navigate(`/product/${product.productId}`);
+      },
+      /** 판매중 : 끌어올리기, 완료 : 받은 후기 보기
+       * 홈 화면에는 필요없는 함수
+       */
+      onTextButtonClick: () => {},
+      /** 아이콘 버튼 클릭 이벤트
+       * 홈 화면에는 필요 없는 함수
+       */
+      onIconButtonClick: () => {},
+    };
   };
 
-  const { data, refetch } = useQuery({
-    queryKey: ["transactionPosts", type],
-    queryFn: fetchPosts,
-    initialData: tempSellPosts, // 에러 시 대체 데이터로 사용
-    retry: 2, // 최대 2번만 재시도
-    retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 3000), // 재시도 간격 (옵션)
-  });
-  console.log(data);
-  /** TODO : 탭 바뀔때마다 fecth 하도록 변경 필요 */
-  const onHandleTab = async (tab: string) => {
-    try {
-      if (type === "sell") {
-        if (tab === SELLING_TAB) {
-          await refetch();
-        } else if (tab === COMPLETED_TAB) {
-          await refetch();
-        }
-      } else if (type === "buy") {
-        if (tab === BUYING_TAB) {
-          await refetch();
-        } else if (tab === COMPLETED_TAB) {
-          await refetch();
-        }
+  /**
+   * Tab 클릭 시 실행할 함수
+   * @param tab
+   */
+  const onHandleTab = (tab: string) => {
+    if (type === "sell") {
+      if (tab === SELLING_TAB) {
+        setTab("in_progress");
+      } else if (tab === COMPLETED_TAB) {
+        setTab("completed");
       }
-    } catch (error) {
-      console.error("Failed to refetch data:", error);
+    } else if (type === "buy") {
+      if (tab === BUYING_TAB) {
+        setTab("in_progress");
+      } else if (tab === COMPLETED_TAB) {
+        setTab("completed");
+      }
     }
   };
 
@@ -194,13 +125,13 @@ export const TransactionPage = ({ type }: TransactionPageProps) => {
   }, []);
 
   return (
-    <>
-      {type === "buy" && (
-        <TransactionBuyTemplate onClick={onHandleTab} posts={tempBuyPosts} />
-      )}
-      {type === "sell" && (
-        <TransactionSellTemplate onClick={onHandleTab} posts={tempSellPosts} />
-      )}
-    </>
+    <Suspense fallback={<Loading />}>
+      <TransactionTemplate
+        onClick={onHandleTab}
+        posts={
+          products?.map((product) => createTransactionPostItem(product)) || []
+        }
+      />
+    </Suspense>
   );
 };
