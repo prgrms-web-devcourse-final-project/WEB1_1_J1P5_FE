@@ -14,6 +14,14 @@ export const getBidding = async () => {
 };
 
 /**
+ * 입찰 후 거래완료 내역 조회
+ */
+export const getCompletedBidding = async () => {
+  return http.get<IGetBiddingResponse>("/auctions/purchases");
+};
+
+
+/**
  * 입찰하기
  */
 export const bidding = async ({ productId, price }: IAuctionBid) => {
