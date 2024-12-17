@@ -20,6 +20,16 @@ export const PostItemContainerWrapper: ReturnType<
   gap: 0.25rem;
 `;
 
+export const PostItemTitleWrapper: ReturnType<
+  typeof styled.div
+> = styled.div`
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    -webkit-line-clamp: 1;
+    white-space: normal;
+`;
+
 export const PostItemLocationAndTimeWrapper: ReturnType<
   typeof styled.div
 > = styled.div`

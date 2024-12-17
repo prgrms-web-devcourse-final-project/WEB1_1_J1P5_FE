@@ -6,6 +6,7 @@ import {
   PostItemButtonContainerWrapper,
   PostItemContainerWrapper,
   PostItemImageWrapper,
+  PostItemTitleWrapper,
   PostItemLocationAndTimeWrapper,
   PostItemPriceWrapper,
   PostItemRemainingTimeWrapper,
@@ -85,7 +86,7 @@ interface IPostItemTitleProps {
  * @param title 제목
  */
 const PostItemTitle = ({ title }: IPostItemTitleProps) => {
-  return <Text variant="title_bold" content={title} />;
+  return <PostItemTitleWrapper><Text variant="title_bold" content={title} /></PostItemTitleWrapper>;
 };
 
 /* -------------------------------------------------------------------
