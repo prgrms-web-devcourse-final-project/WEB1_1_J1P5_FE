@@ -30,8 +30,7 @@ export const EmptyTemplate = ({ type = "default" }: IEmptyTemplateProps) => {
     buying: "구매중인 목록이 존재하지 않아요\n 다시 홈으로 이동할까요?",
     completed: "거래완료된 목록이 존재하지 않아요\n 다시 홈으로 이동할까요?",
     blockedUser: "차단한 사용자가 없어요",
-    marketPrice:
-      "아직 개발중인 기능이예요. ㅠㅠ\n 정식 출시때는 포함이 될거예요!",
+    marketPrice: "거래완료된 목록이 존재하지 않아요\n 다시 홈으로 이동할까요?",
     chatRoom: "채팅 내역을 불러오는데 실패했어요",
     error: "잘못된 접근이예요..!\n다시 메인화면으로 갈까요?",
   };
