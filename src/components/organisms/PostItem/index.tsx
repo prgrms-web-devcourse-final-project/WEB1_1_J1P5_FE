@@ -170,7 +170,10 @@ const PostItemRemainingTime = ({
     <PostItemRemainingTimeWrapper>
       <Text variant="tag_regular" content="남은 시간" />
       <Text variant="tag_regular" content="·" />
-      <Text variant="tag_regular" content={timeRemaining} />
+      <Text
+        variant="tag_regular"
+        content={timeRemaining === "over" ? "종료" : timeRemaining}
+      />
     </PostItemRemainingTimeWrapper>
   );
 };
