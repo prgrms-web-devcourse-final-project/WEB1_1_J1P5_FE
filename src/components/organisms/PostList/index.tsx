@@ -231,7 +231,7 @@ export const PostList = ({ posts, type }: IPostListProps) => {
           <div className="price-con">
             <PostItem.Price
               title={"최소 입찰가 ·"}
-              price={maxPrice}
+              price={price}
               variant="tag_regular"
             />
           </div>
@@ -240,7 +240,7 @@ export const PostList = ({ posts, type }: IPostListProps) => {
             <Text
               color={"#344fff"}
               variant="explan_bold"
-              content={price.toLocaleString() + "원"}
+              content={maxPrice.toLocaleString() + "원"}
             ></Text>
           </div>
         </PostItem.Container>
