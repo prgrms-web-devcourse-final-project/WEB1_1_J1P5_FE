@@ -28,17 +28,19 @@ export const TransactionPage = ({ type }: TransactionPageProps) => {
   /**
    * 백엔드 ResponseData를 IPost Item에 들어갈 형식으로 변환하는 함수
    * @param post ResponseData로 넘어온 post
+   * @param index
    * @returns IPost
    */
   const createTransactionPostItem = (
     post: IAuction | ITransactionProduct,
+    index: number,
   ): IPost => {
     const product: Omit<
       IPost,
       "onClick" | "onTextButtonClick" | "onIconButtonClick"
     > = {
       /** 게시글 ID */
-      productId: ("productId" in post && post.productId) || -1,
+      productId: ("productId" in post && post.productId) || index,
       /** 게시글 썸네일 이미지 */
       imgUrl:
         ("imageUrl" in post && post.imageUrl) ||
@@ -129,7 +131,9 @@ export const TransactionPage = ({ type }: TransactionPageProps) => {
       <TransactionTemplate
         onClick={onHandleTab}
         posts={
-          products?.map((product) => createTransactionPostItem(product)) || []
+          products?.map((product, idx) =>
+            createTransactionPostItem(product, idx),
+          ) || []
         }
       />
     </Suspense>
