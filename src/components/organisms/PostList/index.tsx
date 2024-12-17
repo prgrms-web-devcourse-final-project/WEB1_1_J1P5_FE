@@ -28,6 +28,8 @@ export interface IPost {
   onIconButtonClick: () => void;
   /** 판매자 여부 */
   isSeller?: boolean;
+  /** 게시글 상태 */
+  status: "BIDDING" | "IN_PROGRESS" | "COMPLETED";
 }
 export type PostItemType =
   | "completed"
@@ -38,9 +40,11 @@ export type PostItemType =
 interface IPostListProps {
   posts: IPost[];
   type: PostItemType;
+  /** 거래 완료 여부 */
+  isCompleted?: boolean;
 }
 
-export const PostList = ({ posts, type }: IPostListProps) => {
+export const PostList = ({ posts, type, isCompleted }: IPostListProps) => {
   /**
    * default : 홈/글 목록
    */
@@ -76,6 +80,7 @@ export const PostList = ({ posts, type }: IPostListProps) => {
     address,
     uploadTime,
   }: IPost) => {
+    console.log("postList isCompleted", isCompleted);
     return (
       <PostItem key={productId} onClick={onClick}>
         <PostItem.Image imgUrl={imgUrl} />
@@ -90,14 +95,14 @@ export const PostList = ({ posts, type }: IPostListProps) => {
             />
           </div>
         </PostItem.Container>
-        {isSeller && (
+        {isSeller &&
           <PostItem.ButtonContainer
-            buttonText={"거래 완료"}
+            buttonText={isCompleted ? "거래가 완료되었어요!" : "거래 완료"}
             onTextButtonClick={onTextButtonClick}
             icon={DownIcon}
             onIconButtonClick={onIconButtonClick}
-          />
-        )}
+            disabled={isCompleted}
+          />}
       </PostItem>
     );
   };
@@ -136,12 +141,12 @@ export const PostList = ({ posts, type }: IPostListProps) => {
             />
           </div>
           <div className="max-price-con">
-            <Text variant="explan_bold" content={"낙찰된 가격"}></Text>
+            <Text variant="explan_bold" content={"낙찰된 가격"} />
             <Text
               color={"#344fff"}
               variant="explan_bold"
               content={maxPrice.toLocaleString() + "원"}
-            ></Text>
+            />
           </div>
         </PostItem.Container>
         <PostItem.ButtonContainer
@@ -187,12 +192,12 @@ export const PostList = ({ posts, type }: IPostListProps) => {
             />
           </div>
           <div className="max-price-con">
-            <Text variant="explan_bold" content={"현재 입찰가"}></Text>
+            <Text variant="explan_bold" content={"현재 입찰가"} />
             <Text
               color={"#344fff"}
               variant="explan_bold"
               content={price.toLocaleString() + "원"}
-            ></Text>
+            />
           </div>
         </PostItem.Container>
         {/* <PostItem.ButtonContainer
@@ -236,12 +241,12 @@ export const PostList = ({ posts, type }: IPostListProps) => {
             />
           </div>
           <div className="max-price-con">
-            <Text variant="explan_bold" content={"나의 입찰가"}></Text>
+            <Text variant="explan_bold" content={"나의 입찰가"} />
             <Text
               color={"#344fff"}
               variant="explan_bold"
               content={price.toLocaleString() + "원"}
-            ></Text>
+            />
           </div>
         </PostItem.Container>
       </PostItem>
@@ -258,9 +263,9 @@ export const PostList = ({ posts, type }: IPostListProps) => {
   const SelectedStateComponent = StateComponents[type] || DefaultState;
   return (
     <PostListWrapper>
-      {posts.map((post) => (
+      {posts.map(post =>
         <SelectedStateComponent key={post.productId} {...post} />
-      ))}
+      )}
     </PostListWrapper>
   );
 };

@@ -184,6 +184,7 @@ interface IPostItemButtonContainerProps {
   onTextButtonClick: () => void;
   icon?: IconType;
   onIconButtonClick?: () => void;
+  disabled?: boolean;
 }
 
 /**
@@ -196,6 +197,7 @@ interface IPostItemButtonContainerProps {
 const PostItemButtonContainer = ({
   buttonText,
   onTextButtonClick,
+  disabled
 }: //icon,
 //onIconButtonClick,
 IPostItemButtonContainerProps) => {
@@ -204,7 +206,7 @@ IPostItemButtonContainerProps) => {
   };
   return (
     <PostItemButtonContainerWrapper onClick={handleStopPropagation}>
-      <TextButton text={buttonText} onClick={onTextButtonClick} />
+      <TextButton text={buttonText} onClick={onTextButtonClick} disabled={disabled} />
 
       {/* 채팅방 물품 정보 오른쪽 아이콘 버튼 임시 삭제(디자인시안에 존재 X) 
       {icon && <IconButton size="m" icon={icon} onClick={onIconButtonClick} />} */}

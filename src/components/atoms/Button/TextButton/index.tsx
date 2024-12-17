@@ -28,11 +28,11 @@ export const TextButton = ({
     <TextButtonWrapper
       text={text}
       size={size}
-      backgroundColor={backgroundColor}
+      backgroundColor={disabled ? "grey" : backgroundColor}
       onClick={onClick}
       disabled={disabled}
     >
-      <Text content={text} variant={variant}></Text>
+      <Text content={text} variant={variant} />
     </TextButtonWrapper>
   );
 };
