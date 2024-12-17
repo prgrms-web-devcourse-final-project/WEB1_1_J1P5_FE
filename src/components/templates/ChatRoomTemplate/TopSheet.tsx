@@ -39,7 +39,10 @@ const TopSheetContainer = styled.div`
   }
 `;
 
-const ToggleButton = styled.button<TopSheetWrapperProps>`
+const ToggleButton =
+  styled.button <
+  TopSheetWrapperProps >
+  `
   position: fixed;
   width: 100%;
   max-width: ${({ theme }: { theme: ThemeType }) => theme.sizes.max_width};
@@ -56,12 +59,8 @@ const ToggleButton = styled.button<TopSheetWrapperProps>`
 
   top: ${({ isOpen, isSeller }) =>
     isSeller
-      ? isOpen
-        ? "15.7725rem"
-        : "4.77375rem"
-      : isOpen
-      ? "12.398125rem"
-      : "4.77375rem"};
+      ? isOpen ? "15.7725rem" : "4.77375rem"
+      : isOpen ? "12.398125rem" : "4.77375rem"};
   background-color: ${({ theme }: { theme: ThemeType }) => theme.colors.white};
   border: none;
 
@@ -80,11 +79,12 @@ const ToggleButton = styled.button<TopSheetWrapperProps>`
 
 interface TopSheetProps {
   post: IPost;
+  isCompleted: boolean;
 }
-export const TopSheet = ({ post }: TopSheetProps) => {
+export const TopSheet = ({ post, isCompleted }: TopSheetProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const toggleSheet = () => {
-    setIsOpen((prev) => !prev);
+    setIsOpen(prev => !prev);
   };
   return (
     <TopSheetWrapper>
@@ -93,11 +93,11 @@ export const TopSheet = ({ post }: TopSheetProps) => {
         isOpen={isOpen}
         isSeller={post.isSeller || false}
       >
-        {isOpen ? "" : <Text content={post.title} variant="tag_regular"></Text>}
-        <div className="btn-bar"></div>
+        {isOpen ? "" : <Text content={post.title} variant="tag_regular" />}
+        <div className="btn-bar" />
       </ToggleButton>
       <TopSheetContainer isOpen={isOpen} isSeller={post.isSeller || false}>
-        <PostList posts={[post]} type={"chat"}></PostList>
+        <PostList posts={[post]} type={"chat"} isCompleted={isCompleted} />
       </TopSheetContainer>
     </TopSheetWrapper>
   );

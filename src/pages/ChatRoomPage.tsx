@@ -41,6 +41,8 @@ interface IChatRoomBasic {
   sellerAddress: string;
   /** 게시글 등록 날짜 */
   productCreatedAt: string;
+  /** 게시글 상태 */
+  productStatus:  "BIDDING" | "IN_PROGRESS" | "COMPLETED";
 }
 
 export interface IChatMsg {
@@ -78,6 +80,7 @@ export const ChatRoomPage = () => {
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
   const { connect, disconnect, sendMessage, isConnected } = useWebSocket();
   const [isMsgSended, setIsMsgSended] = useState<boolean>(false);
+  const [isCompleted, setIsCompleted] = useState<boolean>(false);
 
   const [loading, setLoading] = useState(true); // 로딩 상태
 
@@ -87,34 +90,38 @@ export const ChatRoomPage = () => {
    */
   const createChatRoomBasicInfo = (
     chatRoomBasicInfo: IChatRoomBasic
-  ): IPost => ({
-    productId: chatRoomBasicInfo.productId,
-    imgUrl: chatRoomBasicInfo.productImage || DEFAULT_IMG_PATH,
-    title: chatRoomBasicInfo.productTitle,
-    maxPrice: 0,
-    price: chatRoomBasicInfo.price,
-    address: chatRoomBasicInfo.sellerAddress,
-    uploadTime: chatRoomBasicInfo.productCreatedAt,
-    expiredTime: "",
-    isSeller: chatRoomBasicInfo.isSeller,
-    onClick: () => {
-      navigate(`/product/${chatRoomBasicInfo.productId}`);
-    },
-    onTextButtonClick: () => {
-      completeProduct(chatRoomBasicInfo.productId!.toString())
-              .then((data) => {
-                console.log(data);
-                Toast.show("거래가 완료되었어요!", 2000);
-              })
-              .catch((error) => {
-                Toast.show("잠시 후에 다시 시도해 주세요.", 2000);
-                console.error(error);
-              });
-    },
-    onIconButtonClick: () => {
-      console.log("onIconButtonClick");
-    },
-  });
+  ): IPost => {
+    setIsCompleted(chatRoomBasicInfo.productStatus === "COMPLETED");
+    return {
+      productId: chatRoomBasicInfo.productId,
+      imgUrl: chatRoomBasicInfo.productImage || DEFAULT_IMG_PATH,
+      title: chatRoomBasicInfo.productTitle,
+      maxPrice: 0,
+      price: chatRoomBasicInfo.price,
+      address: chatRoomBasicInfo.sellerAddress,
+      uploadTime: chatRoomBasicInfo.productCreatedAt,
+      expiredTime: "",
+      isSeller: chatRoomBasicInfo.isSeller,
+      status: chatRoomBasicInfo.productStatus,
+      onClick: () => {
+        navigate(`/product/${chatRoomBasicInfo.productId}`);
+      },
+      onTextButtonClick: () => {
+        completeProduct(chatRoomBasicInfo.productId!.toString())
+        .then((data) => {
+          Toast.show("거래가 완료되었어요!", 2000);
+          setIsCompleted(true);
+        })
+        .catch((error) => {
+          Toast.show("잠시 후에 다시 시도해 주세요.", 2000);
+          console.error(error);
+        });
+      },
+      onIconButtonClick: () => {
+        console.log("onIconButtonClick");
+      },
+    }
+  };
 
   /** 메시지 시간순(오름차순) 으로 정렬하는 함수
    * @param messages : IChatMsg[]
@@ -305,7 +312,7 @@ export const ChatRoomPage = () => {
   }
   return post ? (
     <>
-      <TopSheet post={post}></TopSheet>
+      <TopSheet post={post} isCompleted={isCompleted}></TopSheet>
       <ChatRoomTemplate
         post={post}
         chatBubbles={chatGroups}

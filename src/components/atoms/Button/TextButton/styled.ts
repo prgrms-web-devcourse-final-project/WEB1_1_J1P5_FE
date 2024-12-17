@@ -46,6 +46,11 @@ export const TextButtonWrapper: ReturnType<
 
   font-size: 1rem;
 
+  &:disabled {
+    background-color: ${({ theme }: {theme: ThemeType}) => theme.colors.grey_field_deactivate};
+    color: ${({ theme }: {theme: ThemeType}) => theme.colors.grey_text_guide};
+  }
+
   /**
    * TODO : s 디자인 적용 필요
    */
