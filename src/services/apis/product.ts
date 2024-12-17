@@ -105,3 +105,11 @@ export const editProduct = async (
 export const deleteProduct = async (productId: string) => {
   return http.delete<IProductResponse>(`/products/${productId}`);
 };
+
+/**
+ * 중고 제품 게시글 거래 완료하기기
+ * @param productId 거래 완료 제품 id
+ */
+export const completeProduct = async (productId: string) => {
+  return http.patch<IProductResponse>(`/products/${productId}/complete`);
+};
