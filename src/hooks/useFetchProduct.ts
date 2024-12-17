@@ -26,6 +26,8 @@ export const useFetchProduct = (productId: string) => {
           // PRODUCT404 조회 실패
           navigate("/error", { replace: true });
         }
+        // 그 이외 처리
+        navigate("/", { replace: true });
       }
     }
   }, [isError]);
