@@ -2,6 +2,11 @@ import { useQuery } from "@tanstack/react-query";
 import { Loading } from "components/molecules/Loading";
 import { IPost } from "components/organisms/PostList";
 import { HomeTemplate } from "components/templates";
+import {
+  HOME_API_URL,
+  HOME_LOADING_MESSAGE,
+  HOME_NAVIGATE_URL,
+} from "constants/HomePageConstants";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { http } from "services/api";
@@ -28,8 +33,6 @@ interface IHomePostResponse extends IResponse {
 export const HomePage = () => {
   const { user } = useUserStore();
   const { setTitle } = useHeaderStore();
-  const HOME_API_URL = `/products`;
-  const HOME_NAVIGATE_URL = "/product";
   const navigate = useNavigate();
   const { clear } = useFormDataStore();
 
@@ -110,10 +113,8 @@ export const HomePage = () => {
     navigate(HOME_NAVIGATE_URL);
   };
 
-  const loadingMsg = "사용자 주변 게시글\n불러오는 중...";
-
   if (isLoading) {
-    return <Loading message={loadingMsg} />;
+    return <Loading message={HOME_LOADING_MESSAGE} />;
   }
   return (
     <HomeTemplate
