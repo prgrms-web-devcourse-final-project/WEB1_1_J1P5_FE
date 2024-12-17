@@ -28,7 +28,7 @@ export const TextButton = ({
     <TextButtonWrapper
       text={text}
       size={size}
-      backgroundColor={disabled ? "grey" : backgroundColor}
+      backgroundColor={backgroundColor}
       onClick={onClick}
       disabled={disabled}
     >
