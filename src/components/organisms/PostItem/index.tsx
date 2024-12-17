@@ -6,6 +6,7 @@ import {
   PostItemButtonContainerWrapper,
   PostItemContainerWrapper,
   PostItemImageWrapper,
+  PostItemTitleWrapper,
   PostItemLocationAndTimeWrapper,
   PostItemPriceWrapper,
   PostItemRemainingTimeWrapper,
@@ -85,7 +86,7 @@ interface IPostItemTitleProps {
  * @param title 제목
  */
 const PostItemTitle = ({ title }: IPostItemTitleProps) => {
-  return <Text variant="title_bold" content={title} />;
+  return <PostItemTitleWrapper><Text variant="title_bold" content={title} /></PostItemTitleWrapper>;
 };
 
 /* -------------------------------------------------------------------
@@ -170,7 +171,10 @@ const PostItemRemainingTime = ({
     <PostItemRemainingTimeWrapper>
       <Text variant="tag_regular" content="남은 시간" />
       <Text variant="tag_regular" content="·" />
-      <Text variant="tag_regular" content={timeRemaining} />
+      <Text
+        variant="tag_regular"
+        content={timeRemaining === "over" ? "종료" : timeRemaining}
+      />
     </PostItemRemainingTimeWrapper>
   );
 };
@@ -184,6 +188,7 @@ interface IPostItemButtonContainerProps {
   onTextButtonClick: () => void;
   icon?: IconType;
   onIconButtonClick?: () => void;
+  disabled?: boolean;
 }
 
 /**
@@ -196,6 +201,7 @@ interface IPostItemButtonContainerProps {
 const PostItemButtonContainer = ({
   buttonText,
   onTextButtonClick,
+  disabled
 }: //icon,
 //onIconButtonClick,
 IPostItemButtonContainerProps) => {
@@ -204,7 +210,7 @@ IPostItemButtonContainerProps) => {
   };
   return (
     <PostItemButtonContainerWrapper onClick={handleStopPropagation}>
-      <TextButton text={buttonText} onClick={onTextButtonClick} />
+      <TextButton text={buttonText} onClick={onTextButtonClick} disabled={disabled} />
 
       {/* 채팅방 물품 정보 오른쪽 아이콘 버튼 임시 삭제(디자인시안에 존재 X) 
       {icon && <IconButton size="m" icon={icon} onClick={onIconButtonClick} />} */}

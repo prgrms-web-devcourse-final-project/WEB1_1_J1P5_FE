@@ -32,7 +32,7 @@ export const TextButton = ({
       onClick={onClick}
       disabled={disabled}
     >
-      <Text content={text} variant={variant}></Text>
+      <Text content={text} variant={variant} />
     </TextButtonWrapper>
   );
 };

@@ -30,7 +30,7 @@ export const TransactionSellTemplate = ({
         onClick={handleTabClick}
         posts={posts}
         type={type}
-      ></TransactionOverview>
+      />
     </TransactionSellTemplateWrapper>
   );
 };
