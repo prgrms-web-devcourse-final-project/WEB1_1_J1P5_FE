@@ -1,16 +1,17 @@
 import { Loading } from "components/molecules/Loading";
 import { IPost } from "components/organisms/PostList";
+import { Toast } from "components/atoms";
 import { EmptyTemplate } from "components/templates";
 import { ChatRoomTemplate } from "components/templates/ChatRoomTemplate";
 import { TopSheet } from "components/templates/ChatRoomTemplate/TopSheet";
 import { DEFAULT_IMG_PATH } from "constants/imgPath";
-import { useModalForm } from "hooks";
 import { useChatGroups } from "hooks/useChatGroups";
 import { useWebSocket } from "hooks/useWebSocket";
 import { throttle } from "lodash";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { http } from "services/api";
+import { completeProduct } from "services/apis";
 import { useTopBarStore } from "stores";
 import { IResponse } from "types";
 import { decryptRoomId } from "utils/security";
@@ -60,7 +61,6 @@ interface IChatRoomNewMsgResponse extends IResponse {
 }
 export const ChatRoomPage = () => {
   const { clear, setTitle } = useTopBarStore();
-  const { todo } = useModalForm();
   const navigate = useNavigate();
   const { roomId, userId } = useParams(); // URL에서 roomId 가져오기
   const decrtyptRoomId = roomId ? decryptRoomId(roomId) : "";
@@ -101,7 +101,15 @@ export const ChatRoomPage = () => {
       navigate(`/product/${chatRoomBasicInfo.productId}`);
     },
     onTextButtonClick: () => {
-      todo();
+      completeProduct(chatRoomBasicInfo.productId!.toString())
+              .then((data) => {
+                console.log(data);
+                Toast.show("거래가 완료되었어요!", 2000);
+              })
+              .catch((error) => {
+                Toast.show("잠시 후에 다시 시도해 주세요.", 2000);
+                console.error(error);
+              });
     },
     onIconButtonClick: () => {
       console.log("onIconButtonClick");
