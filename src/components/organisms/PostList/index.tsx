@@ -118,8 +118,8 @@ export const PostList = ({ posts, type, isCompleted }: IPostListProps) => {
     address,
     uploadTime,
     maxPrice,
-    onTextButtonClick,
-    onIconButtonClick,
+    // onTextButtonClick,
+    // onIconButtonClick,
     onClick,
   }: IPost) => {
     return (
@@ -149,12 +149,12 @@ export const PostList = ({ posts, type, isCompleted }: IPostListProps) => {
             />
           </div>
         </PostItem.Container>
-        <PostItem.ButtonContainer
+        {/* <PostItem.ButtonContainer
           buttonText={"받은 후기 보기"}
           onTextButtonClick={onTextButtonClick}
           icon={DownIcon}
           onIconButtonClick={onIconButtonClick}
-        />
+        /> */}
       </PostItem>
     );
   };
@@ -246,7 +246,7 @@ export const PostList = ({ posts, type, isCompleted }: IPostListProps) => {
               color={"#344fff"}
               variant="explan_bold"
               content={maxPrice.toLocaleString() + "원"}
-            ></Text>
+            />
           </div>
         </PostItem.Container>
       </PostItem>
