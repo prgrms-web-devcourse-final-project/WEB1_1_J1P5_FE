@@ -147,11 +147,10 @@ export const HomePage = () => {
    */
   const onHandleRegisterButton = () => {
     clear();
-    setTimeout(() => {
+    requestAnimationFrame(() => {   
       saveScroll();
-      window.scrollTo(0, 0);
       navigate(HOME_NAVIGATE_URL);
-    }, 0);
+    });
   };
 
   const { ref, inView } = useInView({

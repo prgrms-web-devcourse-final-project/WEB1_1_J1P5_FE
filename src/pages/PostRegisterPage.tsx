@@ -21,6 +21,10 @@ export const PostRegisterPage = () => {
   const address = useFormDataStore((state) => state.formData.address);
   const { setFormData, clear } = useFormDataStore();
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   // const { product, isProductLoading } = useFetchProduct(
   //   productId?.toString() || ""
   // );
