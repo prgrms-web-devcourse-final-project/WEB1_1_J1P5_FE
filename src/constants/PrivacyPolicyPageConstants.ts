@@ -378,14 +378,12 @@ export const PRIVACY_POLICY: PrivacyPolicySection[] = [
       },
     ],
   },
+  {
+    title: "부칙",
+    content: [
+      {
+        text: "제1조 본 방침은 2024.12.20.부터 시행됩니다.",
+      },
+    ],
+  },
 ];
-
-// 부칙 추가
-export const PRIVACY_POLICY_APPENDIX = {
-  title: "부칙",
-  content: [
-    {
-      text: "제1조 본 방침은 2024.12.20.부터 시행됩니다.",
-    },
-  ],
-};
