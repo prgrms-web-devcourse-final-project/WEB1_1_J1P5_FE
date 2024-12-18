@@ -1,5 +1,6 @@
 import {
   PRIVACY_POLICY,
+  PRIVACY_POLICY_TITLE,
   PrivacyPolicySection,
 } from "constants/PrivacyPolicyPageConstants";
 import {
@@ -56,7 +57,9 @@ export const PrivacyPolicyTemplate = () => {
 
   return (
     <PrivacyPolicyTemplateWrapper>
-      <PrivacyPolicyTemplateTitle>개인정보 처리방침</PrivacyPolicyTemplateTitle>
+      <PrivacyPolicyTemplateTitle>
+        {PRIVACY_POLICY_TITLE}
+      </PrivacyPolicyTemplateTitle>
       <section>{renderContent(PRIVACY_POLICY)}</section>
     </PrivacyPolicyTemplateWrapper>
   );
