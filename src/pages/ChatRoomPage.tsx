@@ -108,7 +108,7 @@ export const ChatRoomPage = () => {
       },
       onTextButtonClick: () => {
         completeProduct(chatRoomBasicInfo.productId!.toString())
-        .then((data) => {
+        .then(() => {
           Toast.show("거래가 완료되었어요!", 2000);
           setIsCompleted(true);
         })
