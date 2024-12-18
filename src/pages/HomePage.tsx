@@ -8,11 +8,13 @@ import {
   HOME_LOADING_MESSAGE,
   HOME_NAVIGATE_URL,
 } from "constants/HomePageConstants";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useScrollRestoration } from 'hooks';
 import { http } from "services/api";
 import { useHeaderStore, useUserStore, useFormDataStore } from "stores";
 import { IResponse } from "types";
+
 interface IHomePost {
   myLocation: string;
   productId: number;
@@ -33,11 +35,19 @@ interface IHomePostResponse extends IResponse {
   };
 }
 
+const SCROLL_KEY = 'home_scroll';
+
+
 export const HomePage = () => {
   const { user } = useUserStore();
   const { setTitle } = useHeaderStore();
   const navigate = useNavigate();
   const { clear } = useFormDataStore();
+  const { saveScroll, getStoredPosition, clearScroll } = useScrollRestoration(SCROLL_KEY);
+  const storedPosition = getStoredPosition();
+  const [navigationType, setNavigationType] = useState<'back_forward' | 'navigate' | 'reload'>('navigate');
+
+
 
   /** 백엔드 IHomePost 타입을 프론트 IPost 으로 변환 함수
    * @param homePost : IHomePost
@@ -64,6 +74,8 @@ export const HomePage = () => {
      * 해당 페이지로 이동하게 로직 변경
      */
     onClick: () => {
+      saveScroll();
+      window.scrollTo(0, 0); 
       /** 상세 페이지로 이동 */
       navigate(HOME_NAVIGATE_URL + `/${homePost.productId}`);
     },
@@ -81,52 +93,65 @@ export const HomePage = () => {
    * @returns void
    */
   const fetchPosts = async ({ pageParam }: { pageParam: number|undefined }) => {
-
     const response = await http.get<IHomePostResponse, { cursor: number|undefined, size: number }>(
       HOME_API_URL,
       { cursor: pageParam, size: 10 }
     );
+
     if (response.success && response.code === "COMMON200") {
-      return {content: response.result.content.map(createHomePostItem),
+      return {
+        content: response.result.content.map(createHomePostItem),
         nextCursor: response.result.nextCursor
       };
     }
+
     throw new Error("Failed to fetch home posts");
   };
 
   const {
     data,
     isLoading,
-    isError,
     fetchNextPage,
-    hasNextPage,
-    isFetching,
     isFetchingNextPage,
+    refetch
   } = useInfiniteQuery({
     queryKey: ["homePosts", HOME_API_URL],
     queryFn: fetchPosts,
-    staleTime: 1000 * 60 * 5, // 5분간 캐시 유지
+    staleTime: navigationType === 'back_forward' ? Infinity : 0,
     refetchOnWindowFocus: false,
-    retry: 3,
     initialPageParam: undefined,
-    getNextPageParam: (lastPage, pages) => lastPage.nextCursor,
-  })
-
+    getNextPageParam: (lastPage) => lastPage.nextCursor,
+  });
 
   /** 헤더에 동네 이름 받아서 출력
    * @returns void
    */
   useEffect(() => {
     setTitle(user?.emdName || "");
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const navigation = performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming;
+    setNavigationType(navigation.type as 'back_forward' | 'navigate' | 'reload');
+
   }, []);
+
+  useEffect(() => {
+    if (data && storedPosition) {
+      requestAnimationFrame(() => {
+        window.scrollTo(0, storedPosition);
+        clearScroll();
+      });
+    }
+  }, [data, storedPosition]);
 
   /** 내 물건 판매하기 버튼 클릭 이벤트(물품 등록 페이지로 이동)
    * @returns void
    */
   const onHandleRegisterButton = () => {
     clear();
-    navigate(HOME_NAVIGATE_URL);
+    setTimeout(() => {
+      saveScroll();
+      window.scrollTo(0, 0);
+      navigate(HOME_NAVIGATE_URL);
+    }, 0);
   };
 
   const { ref, inView } = useInView({
@@ -137,21 +162,32 @@ export const HomePage = () => {
     if (inView) {
       // eslint-disable-next-line @typescript-eslint/no-floating-promises
       fetchNextPage();
-      console.log("inView");
-
     }
   }, [inView]);
+
+
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (
+        document.visibilityState === 'visible' && 
+        navigationType !== 'back_forward'
+      ) {
+        // eslint-disable-next-line @typescript-eslint/no-floating-promises
+        refetch();  // 필요할 때 수동으로 갱신
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
+  }, [navigationType, refetch]);
 
 
   if (isLoading) {
     return <Loading message={HOME_LOADING_MESSAGE} />;
   }
 
-  if (isError) {
-    return (
-      <></>
-    );
-  }
   return (
     <HomeTemplate
       posts={data?.pages.flatMap(page => page.content) || []}
