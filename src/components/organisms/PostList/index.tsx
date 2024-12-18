@@ -29,7 +29,7 @@ export interface IPost {
   /** 판매자 여부 */
   isSeller?: boolean;
   /** 게시글 상태 */
-  status: "BIDDING" | "IN_PROGRESS" | "COMPLETED";
+  status?: "BIDDING" | "IN_PROGRESS" | "COMPLETED";
 }
 export type PostItemType =
   | "completed"

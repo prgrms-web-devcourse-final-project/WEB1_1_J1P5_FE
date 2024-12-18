@@ -6,9 +6,10 @@ import { EmptyTemplate } from "../EmptyTemplate";
 interface IHomeTemplateProps {
   posts: IPost[];
   onClick?: () => void;
+  children?: React.ReactNode;
 }
 
-export const HomeTemplate = ({ posts, onClick }: IHomeTemplateProps) => {
+export const HomeTemplate = ({ posts, onClick, children }: IHomeTemplateProps) => {
   const textBtnContent = "내 물건 판매하기";
   return (
     <HomeTemplateWrapper>
@@ -19,6 +20,7 @@ export const HomeTemplate = ({ posts, onClick }: IHomeTemplateProps) => {
           <PostList posts={posts} type={"default"}></PostList>
         )}
       </div>
+      {children}
       <TextButton text={textBtnContent} onClick={onClick} size="m"></TextButton>
     </HomeTemplateWrapper>
   );

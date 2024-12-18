@@ -1,4 +1,5 @@
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
+import { useInView } from "react-intersection-observer";
 import { Loading } from "components/molecules/Loading";
 import { IPost } from "components/organisms/PostList";
 import { HomeTemplate } from "components/templates";
@@ -28,8 +29,10 @@ interface IHomePost {
 interface IHomePostResponse extends IResponse {
   result: {
     content: IHomePost[];
+    nextCursor: number;
   };
 }
+
 export const HomePage = () => {
   const { user } = useUserStore();
   const { setTitle } = useHeaderStore();
@@ -77,25 +80,38 @@ export const HomePage = () => {
   /** userId 를 기반으로 해당 유저가 볼 수 있는 post 목록을 가져오는 함수
    * @returns void
    */
-  const fetchPosts = async () => {
-    const response = await http.get<IHomePostResponse, { size: number }>(
+  const fetchPosts = async ({ pageParam }: { pageParam: number|undefined }) => {
+
+    const response = await http.get<IHomePostResponse, { cursor: number|undefined, size: number }>(
       HOME_API_URL,
-      { size: 100 }
+      { cursor: pageParam, size: 10 }
     );
     if (response.success && response.code === "COMMON200") {
-      return response.result.content.map(createHomePostItem);
+      return {content: response.result.content.map(createHomePostItem),
+        nextCursor: response.result.nextCursor
+      };
     }
     throw new Error("Failed to fetch home posts");
   };
 
-  /** React Query로 데이터 패칭 */
-  const { data, isLoading } = useQuery({
+  const {
+    data,
+    isLoading,
+    isError,
+    fetchNextPage,
+    hasNextPage,
+    isFetching,
+    isFetchingNextPage,
+  } = useInfiniteQuery({
     queryKey: ["homePosts", HOME_API_URL],
     queryFn: fetchPosts,
-    staleTime: 0,
-    refetchOnWindowFocus: false, // 화면 포커스 시 리페치 비활성화
-    retry: 3, // 실패 시 최대 3회 재시도
-  });
+    staleTime: 1000 * 60 * 5, // 5분간 캐시 유지
+    refetchOnWindowFocus: false,
+    retry: 3,
+    initialPageParam: undefined,
+    getNextPageParam: (lastPage, pages) => lastPage.nextCursor,
+  })
+
 
   /** 헤더에 동네 이름 받아서 출력
    * @returns void
@@ -113,13 +129,35 @@ export const HomePage = () => {
     navigate(HOME_NAVIGATE_URL);
   };
 
+  const { ref, inView } = useInView({
+    rootMargin: '400px'
+  });
+  
+  useEffect(() => {
+    if (inView) {
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
+      fetchNextPage();
+      console.log("inView");
+
+    }
+  }, [inView]);
+
+
   if (isLoading) {
     return <Loading message={HOME_LOADING_MESSAGE} />;
   }
+
+  if (isError) {
+    return (
+      <></>
+    );
+  }
   return (
     <HomeTemplate
-      posts={data || []}
+      posts={data?.pages.flatMap(page => page.content) || []}
       onClick={onHandleRegisterButton}
-    ></HomeTemplate>
+    >
+      {!isFetchingNextPage && (<div ref={ref} />)}
+    </HomeTemplate>
   );
 };
