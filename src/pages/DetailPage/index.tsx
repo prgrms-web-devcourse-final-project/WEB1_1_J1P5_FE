@@ -249,11 +249,11 @@ export const DetailPage = () => {
             {!product.isSeller && (
               <>
                 <KebabMenu.Button
-                  content="작성자 차단하기"
+                  content="유저 차단하기"
                   onClick={handleBlock}
                 />
                 <KebabMenu.Button
-                  content="작성자 신고하기"
+                  content="유저 신고하기"
                   onClick={handleReport}
                 />
               </>

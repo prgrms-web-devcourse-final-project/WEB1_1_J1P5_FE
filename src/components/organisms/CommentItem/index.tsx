@@ -203,7 +203,7 @@ export const CommentItem = ({
                       {!isMyComment && (
                         <>
                           <KebabMenu.Button
-                            content="댓글 차단하기"
+                            content="유저 차단하기"
                             onClick={handleBlockClick}
                           />
                           <KebabMenu.Button
