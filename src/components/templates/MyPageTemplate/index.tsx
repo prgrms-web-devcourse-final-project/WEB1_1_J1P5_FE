@@ -4,7 +4,7 @@ import {
   MyPageTemplateWrapper,
   ProfileContainer,
   BackGroundWrapper,
-  LogoutWrapper,
+  LogoutWithDrawWrapper,
 } from "./styled";
 
 interface IMyPageTemplateProps {
@@ -20,6 +20,8 @@ interface IMyPageTemplateProps {
   onMenuClick: (pathname: string) => void;
   /** 로그아웃 함수 */
   onLogout: () => void;
+  /** 회원탈퇴 함수 */
+  onServiceExit: () => void;
 }
 
 /**
@@ -35,6 +37,7 @@ export const MyPageTemplate = ({
   onProfileEditButtonClick,
   onMenuClick,
   onLogout,
+  onServiceExit,
 }: IMyPageTemplateProps) => {
   return (
     <MyPageTemplateWrapper>
@@ -42,16 +45,21 @@ export const MyPageTemplate = ({
         <ProfileContainer>
           <Profile imgUrl={imgUrl} nickname={nickname} location={location} />
           <TextButton
-            text='프로필 편집'
+            text="프로필 편집"
             onClick={onProfileEditButtonClick}
-            variant='explan_regular'
+            variant="explan_regular"
           />
         </ProfileContainer>
       </BackGroundWrapper>
       <MyPageMenu onMenuClick={onMenuClick} />
-      <LogoutWrapper>
-        <Text variant='explan_regular' content='로그아웃' onClick={onLogout} />
-      </LogoutWrapper>
+      <LogoutWithDrawWrapper>
+        <Text variant="explan_regular" content="로그아웃" onClick={onLogout} />
+        <Text
+          variant="explan_regular"
+          content="회원탈퇴"
+          onClick={onServiceExit}
+        />
+      </LogoutWithDrawWrapper>
     </MyPageTemplateWrapper>
   );
 };
