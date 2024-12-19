@@ -21,3 +21,5 @@ export { SelectLocationTemplate } from "./SelectLocationTemplate";
 export { TransactionBuyTemplate } from "./TransactionBuyTemplate";
 export { TransactionLocationTemplate } from "./TransactionLocationTemplate";
 export { TransactionSellTemplate } from "./TransactionSellTemplate";
+export { PrivacyPolicyTemplate } from "./PrivacyPolicyTemplate";
+export { TermsOfServiceTemplate } from "./TermsOfServiceTemplate";
