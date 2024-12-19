@@ -21,6 +21,9 @@ export const useDetailModal = () => {
     confirm(modalMessage.product.seller.remove.hasBuyer, onRemove);
 
   // 차단 / 신고
+  const blockUser = (onBlockUser: () => void) =>
+    confirm(modalMessage.product.blockUser.DEFAULT, onBlockUser);
+
   const todo = todoModal;
 
   return {
@@ -31,6 +34,7 @@ export const useDetailModal = () => {
     earlyClosing,
     removeNoBuyer,
     removeHasBuyer,
+    blockUser,
     todo,
   };
 };

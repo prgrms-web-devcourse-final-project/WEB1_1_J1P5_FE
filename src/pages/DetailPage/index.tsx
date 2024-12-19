@@ -18,7 +18,7 @@ import {
   useDetailModal,
 } from "hooks";
 import { KebabWrapper } from "./styled";
-import { deleteProduct, earlyClose } from "services/apis";
+import { deleteProduct, earlyClose, blockUser as blockSeller } from "services/apis";
 import type { Category } from "types";
 import { Toast } from "components/atoms";
 import { isExpired } from "../../utils";
@@ -40,7 +40,7 @@ export const DetailPage = () => {
   const { setFormData, setProductId } = useFormDataStore();
   const { open, handleOpen, handleClose, menuRef } = useKebabMenu();
   const { handleCancel } = useBid(parseInt(productId!));
-  const { todo, removeNoBuyer, removeHasBuyer } = useDetailModal();
+  const { todo, removeNoBuyer, removeHasBuyer, blockUser } = useDetailModal();
   const isExpiredTime = useMemo(
     () => !!product?.expiredTime && isExpired(product?.expiredTime),
     [isProductRefetching],
@@ -65,8 +65,17 @@ export const DetailPage = () => {
    * (구매자) 차단
    */
   const handleBlock = () => {
-    // TODO 차단
-    todo();
+    if (!product?.seller.id) return;
+    
+    const onBlockUser = () => {
+      blockSeller(product.seller.id).then(() => {
+        Toast.show(`${product.seller.name}님을 차단했어요.`, 2000);
+      }).catch(() => { 
+        Toast.show("차단에 실패했어요. 잠시 후에 다시 시도해주세요.", 2000);
+      });
+    }
+
+    blockUser(onBlockUser);
     handleClose();
   };
 
@@ -231,7 +240,7 @@ export const DetailPage = () => {
             )}
             {!product.isSeller && (
               <>
-                <KebabMenu.Button content="차단하기" onClick={handleBlock} />
+                <KebabMenu.Button content="해당 유저 차단하기" onClick={handleBlock} />
                 <KebabMenu.Button content="신고하기" onClick={handleReport} />
               </>
             )}

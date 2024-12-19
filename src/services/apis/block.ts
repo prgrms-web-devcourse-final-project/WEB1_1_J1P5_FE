@@ -1,3 +1,4 @@
+
 import { http } from "services/api";
 import type {
     IBlockUser,
@@ -5,19 +6,12 @@ import type {
     IGetBlockedUsersResponse,
     IBlockResponse
 } from "types";
-import { BlockedUserResponse } from "types/response/block.d.ts";
 
-export const getBlockedUsers = async ({ 
-  page = 0, 
-  size = 10 
-}: { 
-  page?: number; 
-  size?: number;
-}) => {
-  const response = await http.get<BlockedUserResponse>(
-    `/api/blocks?page=${page}&size=${size}`
-  );
-  return response.data;
+
+export const getBlockedUsers = async ({page, size}: {page: number, size: number}) => {
+    return http.get<IGetBlockedUsersResponse, {page: number, size:number}>("/blocks",{
+        page: page, size: size
+      });
 };
   
 export const blockUser = async (blockUserId: number) => {

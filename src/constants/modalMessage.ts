@@ -35,5 +35,9 @@ export const modalMessage = {
           "잘 확인해주세요",
       },
     },
+    blockUser: {
+      DEFAULT: "차단하면 서로의 게시글을 볼 수 없고, 서로 채팅도 보낼 수 없어요. \n" + 
+                "차단할까요?",
+    }
   },
 } as const;
