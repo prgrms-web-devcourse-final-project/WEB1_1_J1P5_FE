@@ -11,6 +11,6 @@ export interface IReportUser {
   title: string;
   content: string;
   reportType: ReportType;
-  targetId: string;
+  targetId: number;
   images?: File[];
 }
