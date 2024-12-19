@@ -87,5 +87,5 @@ export const registerAndEditProfile = async ({
  * 회원탈퇴 API
  */
 export const withdraw = async () => {
-  return http.get("/users/withdraw");
+  return http.delete("/users/withdraw");
 };
