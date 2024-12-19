@@ -40,7 +40,7 @@ export const MyPage = () => {
   }, []);
 
   const handleLogout = useCallback(() => {
-    confirm("정말 탈퇴하시겠습니까? 이 작업은 되돌릴 수 없습니다.", () => {
+    confirm("로그아웃 하시겠습니까?", () => {
       oauthLogout()
         .then(() => {
           setUser(null);
