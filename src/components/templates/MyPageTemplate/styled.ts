@@ -60,7 +60,9 @@ export const BackGroundWrapper: ReturnType<typeof styled.div> = styled.div`
   padding: 1rem;
 `;
 
-export const LogoutWrapper: ReturnType<typeof styled.div> = styled.div`
+export const LogoutWithDrawWrapper: ReturnType<typeof styled.div> = styled.div`
+  display: flex;
+  gap: 1rem;
   color: ${({ theme }: { theme: ThemeType }) =>
     theme.colors.grey_field_guide_but_deactivate};
   text-decoration: underline;

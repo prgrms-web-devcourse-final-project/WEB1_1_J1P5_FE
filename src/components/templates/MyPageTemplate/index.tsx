@@ -4,7 +4,7 @@ import {
   MyPageTemplateWrapper,
   ProfileContainer,
   BackGroundWrapper,
-  LogoutWrapper,
+  LogoutWithDrawWrapper,
 } from "./styled";
 
 interface IMyPageTemplateProps {
@@ -52,14 +52,14 @@ export const MyPageTemplate = ({
         </ProfileContainer>
       </BackGroundWrapper>
       <MyPageMenu onMenuClick={onMenuClick} />
-      <LogoutWrapper>
+      <LogoutWithDrawWrapper>
         <Text variant="explan_regular" content="로그아웃" onClick={onLogout} />
         <Text
           variant="explan_regular"
           content="회원탈퇴"
           onClick={onServiceExit}
         />
-      </LogoutWrapper>
+      </LogoutWithDrawWrapper>
     </MyPageTemplateWrapper>
   );
 };
