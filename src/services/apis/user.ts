@@ -47,7 +47,7 @@ export const registerAndEditProfile = async ({
       formData,
       {
         withCredentials: true,
-      },
+      }
     );
     console.log("Response:", res.data); // 요청 성공 시 응답 데이터 출력
     return res.data; // 요청 성공 시 응답 데이터 반환
@@ -82,3 +82,10 @@ export const registerAndEditProfile = async ({
 //     },
 //   });
 // };
+
+/**
+ * 회원탈퇴 API
+ */
+export const withdraw = async () => {
+  return http.get("/users/withdraw");
+};
