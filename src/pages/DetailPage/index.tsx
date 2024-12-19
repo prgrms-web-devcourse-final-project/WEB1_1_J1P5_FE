@@ -18,8 +18,8 @@ import {
   useDetailModal,
 } from "hooks";
 import { KebabWrapper } from "./styled";
-import { deleteProduct, earlyClose } from "services/apis";
-import type { Category } from "types";
+import { deleteProduct, earlyClose, reportUser } from "services/apis";
+import type { Category, ReportType } from "types";
 import { Toast } from "components/atoms";
 import { isExpired } from "../../utils";
 
@@ -40,10 +40,11 @@ export const DetailPage = () => {
   const { setFormData, setProductId } = useFormDataStore();
   const { open, handleOpen, handleClose, menuRef } = useKebabMenu();
   const { handleCancel } = useBid(parseInt(productId!));
-  const { todo, removeNoBuyer, removeHasBuyer } = useDetailModal();
+  const { todo, removeNoBuyer, removeHasBuyer, reportPost, reportComplete } =
+    useDetailModal();
   const isExpiredTime = useMemo(
     () => !!product?.expiredTime && isExpired(product?.expiredTime),
-    [isProductRefetching],
+    [isProductRefetching]
   );
 
   /**
@@ -74,8 +75,24 @@ export const DetailPage = () => {
    * (구매자) 신고
    */
   const handleReport = () => {
-    // TODO 신고
-    todo();
+    reportPost(() => {
+      if (product) {
+        const requestData = {
+          title: product.title,
+          content: product.content,
+          reportType: "POST" as ReportType,
+          targetId: product.seller.id,
+        };
+        reportUser(requestData)
+          .then(() => {
+            reportComplete();
+          })
+          .catch(() => {
+            console.error();
+            closeModal();
+          });
+      }
+    });
     handleClose();
   };
 
@@ -175,7 +192,7 @@ export const DetailPage = () => {
   useEffect(() => {
     setRightIcon(
       KebabIcon,
-      isExpiredTime ? () => Toast.show("마감된 상품입니다.", 2000) : handleOpen,
+      isExpiredTime ? () => Toast.show("마감된 상품입니다.", 2000) : handleOpen
     );
     return () => {
       clear();
@@ -231,8 +248,14 @@ export const DetailPage = () => {
             )}
             {!product.isSeller && (
               <>
-                <KebabMenu.Button content="차단하기" onClick={handleBlock} />
-                <KebabMenu.Button content="신고하기" onClick={handleReport} />
+                <KebabMenu.Button
+                  content="유저 차단하기"
+                  onClick={handleBlock}
+                />
+                <KebabMenu.Button
+                  content="유저 신고하기"
+                  onClick={handleReport}
+                />
               </>
             )}
           </KebabMenu>

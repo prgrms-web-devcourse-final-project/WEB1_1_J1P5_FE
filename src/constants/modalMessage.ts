@@ -35,5 +35,18 @@ export const modalMessage = {
           "잘 확인해주세요",
       },
     },
+    comment: {
+      report: {
+        DEFAULT: "해당 댓글을 작성한 사용자를 신고하시겠습니까?",
+      },
+    },
+    post: {
+      report: {
+        DEFAULT: "해당 게시글을 작성한 사용자를 신고하시겠습니까?",
+      },
+    },
+    report: {
+      COMPLETE: "신고가 접수되었습니다.",
+    },
   },
 } as const;

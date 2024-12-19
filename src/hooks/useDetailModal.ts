@@ -20,9 +20,16 @@ export const useDetailModal = () => {
   const removeHasBuyer = (onRemove: () => void) =>
     confirm(modalMessage.product.seller.remove.hasBuyer, onRemove);
 
-  // 차단 / 신고
+  // 차단
   const todo = todoModal;
-
+  // 댓글 신고하기
+  const reportComment = (onReportComment: () => void) =>
+    confirm(modalMessage.product.comment.report.DEFAULT, onReportComment);
+  // 게시글 신고하기
+  const reportPost = (onReportPost: () => void) =>
+    confirm(modalMessage.product.post.report.DEFAULT, onReportPost);
+  // 신고 완료
+  const reportComplete = () => alert(modalMessage.product.report.COMPLETE);
   return {
     cancel,
     cancelEarly,
@@ -32,5 +39,8 @@ export const useDetailModal = () => {
     removeNoBuyer,
     removeHasBuyer,
     todo,
+    reportComment,
+    reportPost,
+    reportComplete,
   };
 };
