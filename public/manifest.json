@@ -3,7 +3,7 @@
   "short_name": "미어켓",
   "start_url": "/",
   "display": "standalone",
-  "theme_color": "#344fff",
+  "theme_color": "#ffffff",
   "background_color": "#ffffff",
   "id": "meerket",
   "description": "중고 거래 경매 서비스 : 미어켓",
