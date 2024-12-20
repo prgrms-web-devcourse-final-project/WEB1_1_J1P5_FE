@@ -1,14 +1,20 @@
-import { useState, useMemo } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { Toast } from "components/atoms";
 import { BlockedUsersTemplate, EmptyTemplate } from "components/templates";
 import { blockUser, unblockUser} from "services/apis";
+import { useTopBarStore } from "stores";
 import { useFetchBlockedUsers } from "hooks";
 import { Loading } from "components/molecules/Loading";
 import { IBlockedUserItem } from "types";
 
 export const BlockedUsersPage = () => {
+  const { setTitle } = useTopBarStore();
   const [unblockingUsers, setUnblockingUsers] = useState<Set<number>>(new Set());
   const [processingUsers, setProcessingUsers] = useState<Set<number>>(new Set());
+
+  useEffect(() => {
+    setTitle("차단 사용자 관리");
+  }, []);
 
   const {
     data,
@@ -18,7 +24,7 @@ export const BlockedUsersPage = () => {
   } = useFetchBlockedUsers();
 
   const blockedUsers = useMemo<IBlockedUserItem[]>(() => 
-    data?.pages.flatMap(page => page.result.content).map(user => ({
+    data?.pages.map(user => ({
       ...user,
       isBlocked: !unblockingUsers.has(user.userId)
     })) ?? [], 
@@ -56,6 +62,8 @@ export const BlockedUsersPage = () => {
       });
     }
   };
+  
+
 
   if (isLoading) {
     return <Loading />;
