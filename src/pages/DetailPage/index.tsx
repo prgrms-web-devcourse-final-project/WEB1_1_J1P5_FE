@@ -71,6 +71,7 @@ export const DetailPage = () => {
     blockUser(() => {
       blockSeller(product.seller.id).then(() => {
         blockUserComplete();
+        navigate("/", { replace: true });
       }).catch(() => { 
         console.error();
         closeModal();
