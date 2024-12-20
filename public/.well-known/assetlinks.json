@@ -3,6 +3,6 @@
       "target": {
         "namespace": "android_app",
         "package_name": "app.vercel.meerket.twa",
-        "sha256_cert_fingerprints": ["D9:63:F6:1F:40:4B:90:F7:7B:E8:A9:F5:83:1E:0B:3D:28:58:40:8A:BF:15:38:F7:76:1A:52:D6:DA:3E:FA:70"]
+        "sha256_cert_fingerprints": ["C1:7E:CC:B6:55:5E:70:00:A7:77:08:B0:3D:36:DC:5F:34:1A:8C:4A:52:C3:E9:A0:B6:53:16:B4:55:43:54:98"]
       }
     }]
