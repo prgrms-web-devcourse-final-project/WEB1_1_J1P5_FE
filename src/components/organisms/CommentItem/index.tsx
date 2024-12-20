@@ -26,6 +26,8 @@ import {
 import { DeletedComment } from "./deleted";
 import { BlockedComment } from "./blocked";
 import { reportUser, blockUser as blockCommentUser } from "services/apis";
+import { useParams } from "react-router-dom";
+import { useFetchComment } from "hooks";
 
 export interface ICommentItemProps {
   /** 댓글 아이디 */
@@ -91,6 +93,11 @@ export const CommentItem = ({
   const {
     actions: { closeModal },
   } = useModalStore();
+
+  const { productId } = useParams<{ productId: string }>();
+  const { fetchComments } = useFetchComment(productId!);
+
+  
   /**
    * 답글 메뉴 클릭
    */
@@ -133,6 +140,7 @@ export const CommentItem = ({
       blockUser(() => {
         blockCommentUser(targetId).then(() => {
           blockUserComplete();
+          fetchComments().catch(console.error);
         }).catch(() => { 
           console.error();
           closeModal();
