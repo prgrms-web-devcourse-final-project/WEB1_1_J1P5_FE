@@ -1,5 +1,5 @@
 import {
-  // BanIcon,
+  BanIcon,
   BuyIcon,
   MyLocationIcon,
   PlusIcon,
@@ -49,7 +49,11 @@ export const MY_PAGE_MENUS: IMyPageMenus[] = [
         pathname: "/neighborhood-auth",
       },
       // { icon: NotificationIcon, name: "알림", pathname: "/notification" },
-      // { icon: BanIcon, name: "차단 사용자 관리", pathname: "/blocked" }
+      { icon: BanIcon,
+        name: "차단 사용자 관리", 
+        desc: "차단 사용자를 관리할 수 있어요.",
+        pathname: "/blocked"
+      },
       {
         icon: PlusIcon,
         name: "이용약관",

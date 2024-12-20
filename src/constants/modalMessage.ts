@@ -35,5 +35,16 @@ export const modalMessage = {
           "잘 확인해주세요",
       },
     },
+    report: {
+      post: "해당 게시글을 작성한 사용자를 신고하시겠습니까?",
+      comment: "해당 댓글을 작성한 사용자를 신고하시겠습니까?",
+      COMPLETE: "신고가 접수되었습니다.",
+    },
+
+    blockUser: {
+      DEFAULT: "차단하면 서로의 게시글을 볼 수 없고, 서로 채팅도 보낼 수 없어요. \n" + 
+                "차단할까요?",
+      COMPLETE: "해당 유저가 차단되었습니다.",
+    }
   },
 } as const;

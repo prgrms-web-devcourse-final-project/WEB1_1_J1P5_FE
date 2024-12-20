@@ -176,12 +176,12 @@ export const PostRegisterForm = ({
         name="minimumPrice"
         control={control}
         rules={{
-          required: "최저 입찰가는 필수 입력 항목입니다.",
           validate: {
-            checkValue: (value) =>
-              value &&
-              parseInt(value.replace(/,/g, "")) > 2000000000 &&
-              "20억 이하로 입력해주세요.",
+            checkValue: (value) => {
+              if (!value) return "최저 입찰가는 필수 입력 항목입니다.";
+              const numValue = parseInt(value.replace(/,/g, ""));
+              return numValue <= 2000000000 || "20억 이하로 입력해주세요.";
+            },
           },
         }}
         render={({ field: { value }, fieldState: { invalid }, formState }) => (

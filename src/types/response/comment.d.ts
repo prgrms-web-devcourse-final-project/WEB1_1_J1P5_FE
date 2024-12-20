@@ -7,8 +7,10 @@ export interface IComment {
   commentMemeberDto: {
     nickname: string;
     profileIamge: string;
+    userId: number;
   };
   content: string;
+  isBlocked: boolean;
   isSeller: boolean;
   isUpdatable: boolean;
   createdAt: string;

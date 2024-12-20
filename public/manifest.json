@@ -3,7 +3,10 @@
   "short_name": "미어켓",
   "start_url": "/",
   "display": "standalone",
-  "theme_color": "#344fff",
+  "theme_color": "#ffffff",
+  "background_color": "#ffffff",
+  "id": "meerket",
+  "description": "중고 거래 경매 서비스 : 미어켓",
   "icons": [
     {
       "src": "icons/logo-64x64.png",
@@ -26,5 +29,24 @@
       "type": "image/png",
       "purpose": "any"
     }
-  ]
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshot/screenshot1.jpg",
+      "sizes": "1080x1920",
+      "type": "image/jpeg"
+    },
+    {
+      "src": "/screenshot/screenshot2.jpg ",
+      "sizes": "1080x1920",
+      "type": "image/jpeg"
+    }
+  ],
+  "dir": "ltr",
+  "lang": "ko-KR",
+  "categories": ["shopping", "marketplace", "lifestyle"],
+  "orientation": "portrait",
+  "launch_handler": {
+    "client_mode": "navigate-existing"
+  }
 }

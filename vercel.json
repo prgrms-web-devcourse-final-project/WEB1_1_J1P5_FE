@@ -1,3 +1,9 @@
 {
-  "routes": [{ "src": "/[^.]+", "dest": "/", "status": 200 }]
+  "routes": [
+    {
+      "src": "/.well-known/assetlinks.json",
+      "dest": "/.well-known/assetlinks.json"
+    },
+    { "src": "/[^.]+", "dest": "/", "status": 200 }
+  ]
 }

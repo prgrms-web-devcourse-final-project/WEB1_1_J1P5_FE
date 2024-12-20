@@ -3,8 +3,13 @@ import { KebabIcon, ReplyIcon } from "components/atoms/Icon";
 import { InputWithButton, KebabMenu } from "components/molecules";
 import { getRelativeTime } from "utils";
 import { useCommentWriter, useDetailModal, useKebabMenu } from "hooks";
-import { useUserStore } from "stores";
-import type { CommentStatus, IComment, IWriteCommentData } from "types";
+import { useModalStore, useUserStore } from "stores";
+import type {
+  CommentStatus,
+  IComment,
+  IWriteCommentData,
+  ReportType,
+} from "types";
 import { LOGO_PATH } from "constants/imgPath";
 import {
   CommentContentWrapper,
@@ -19,6 +24,8 @@ import {
   WriterBadgeWrapper,
 } from "./styled";
 import { DeletedComment } from "./deleted";
+import { BlockedComment } from "./blocked";
+import { reportUser, blockUser as blockCommentUser } from "services/apis";
 
 export interface ICommentItemProps {
   /** 댓글 아이디 */
@@ -39,10 +46,14 @@ export interface ICommentItemProps {
   parentId: IWriteCommentData["parentId"];
   /** 댓글 상태 */
   status: CommentStatus;
+  /** 차단된 사용자인지 여부 */
+  isBlocked: boolean;
   /** 판매자인지 여부 */
   isSeller: boolean;
   /** 현재 구매자가 있는 상태인지 여부 */
   hasBuyer?: boolean;
+  /** 신고 대상 아이디 */
+  targetId?: number;
 }
 
 export const CommentItem = ({
@@ -55,8 +66,10 @@ export const CommentItem = ({
   replies,
   parentId,
   status,
+  isBlocked,
   isSeller,
   hasBuyer,
+  targetId,
 }: ICommentItemProps) => {
   const { user } = useUserStore();
   const { menuRef, open, handleOpen, handleClose } = useKebabMenu();
@@ -74,8 +87,10 @@ export const CommentItem = ({
     handleDeleteComment,
   } = useCommentWriter(content);
   const time = getRelativeTime(createdAt);
-  const { todo } = useDetailModal();
-
+  const { reportComment, reportComplete, blockUser, blockUserComplete } = useDetailModal();
+  const {
+    actions: { closeModal },
+  } = useModalStore();
   /**
    * 답글 메뉴 클릭
    */
@@ -114,8 +129,16 @@ export const CommentItem = ({
    * 차단하기 메뉴 클릭
    */
   const handleBlockClick = () => {
-    // TODO 차단하기
-    todo();
+    if (!isBlocked && targetId) {
+      blockUser(() => {
+        blockCommentUser(targetId).then(() => {
+          blockUserComplete();
+        }).catch(() => { 
+          console.error();
+          closeModal();
+        });
+      });
+    }
     handleClose();
   };
 
@@ -123,14 +146,30 @@ export const CommentItem = ({
    * 신고하기 메뉴 클릭
    */
   const handleReportClick = () => {
-    // TODO 신고하기
-    todo();
+    reportComment(() => {
+      if (targetId) {
+        const requestData = {
+          title: "댓글 신고",
+          content: content,
+          reportType: "COMMENT" as ReportType,
+          targetId: targetId,
+        };
+        reportUser(requestData)
+          .then(() => {
+            reportComplete();
+          })
+          .catch(() => {
+            console.error();
+            closeModal();
+          });
+      }
+    });
     handleClose();
   };
 
   return (
     <CommentItemContainer>
-      {status !== "DELETED" && (
+      {(status !== "DELETED" && !isBlocked) && (
         <CommentItemWrapper key={commentId}>
           <CommentHeaderContainer className="content-con">
             <Image url={imgUrl || LOGO_PATH} type="round" />
@@ -176,11 +215,11 @@ export const CommentItem = ({
                       {!isMyComment && (
                         <>
                           <KebabMenu.Button
-                            content="차단하기"
+                            content="유저 차단하기"
                             onClick={handleBlockClick}
                           />
                           <KebabMenu.Button
-                            content="신고하기"
+                            content="유저 신고하기"
                             onClick={handleReportClick}
                           />
                         </>
@@ -205,6 +244,7 @@ export const CommentItem = ({
         </CommentItemWrapper>
       )}
       {status === "DELETED" && <DeletedComment />}
+      {isBlocked && <BlockedComment />}
       {parentId === null && (
         <ReplyContainer>
           {replies.length !== 0 && (
@@ -221,7 +261,7 @@ export const CommentItem = ({
                     isSeller,
                     status,
                   },
-                  idx,
+                  idx
                 ) => (
                   <ReplyCommentWrapper key={`comment_${idx}_${childId}`}>
                     <ReplyIcon />
@@ -235,11 +275,12 @@ export const CommentItem = ({
                       replies={replies}
                       parentId={commentId}
                       status={status}
+                      isBlocked={isBlocked}
                       isSeller={isSeller}
                       hasBuyer={hasBuyer}
                     />
                   </ReplyCommentWrapper>
-                ),
+                )
               )}
             </ReplyCommentContainer>
           )}

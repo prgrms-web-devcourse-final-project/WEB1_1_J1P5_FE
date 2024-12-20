@@ -13,14 +13,14 @@ type Story = StoryObj<typeof meta>;
 /** 공통 프로필 생성 함수 */
 const createProfile = (
   isBlocked: boolean,
-  memberId = 1,
+  userId = 1,
   nickname = "11시27분",
-  address = "망원동"
+  emdName = "망원동"
 ): IBlockedUserItem => ({
-  memberId,
-  imgUrl: "https://github.com/ppyom.png",
+  userId,
+  imageUrl: "https://github.com/ppyom.png",
   nickname,
-  address,
+  emdName,
   isBlocked
 });
 

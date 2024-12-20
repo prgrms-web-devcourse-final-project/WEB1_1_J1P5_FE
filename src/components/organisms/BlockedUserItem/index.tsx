@@ -2,6 +2,7 @@ import { TextButton } from "components/atoms";
 import { Profile } from "../Profile";
 import { BlockedUserItemWrapper } from "./styled";
 import type { IBlockedUserItem } from "types";
+import { LOGO_PATH } from "constants/imgPath"; 
 
 interface IBlockedUserItemWrapperProps {
   /** 유저 프로필 */
@@ -13,13 +14,13 @@ export const BlockedUserItem = ({
   blockedUserItem,
   onClick
 }: IBlockedUserItemWrapperProps) => {
-  const btnText = blockedUserItem.isBlocked ? "차단하기" : "차단해제";
+  const btnText = blockedUserItem.isBlocked ? "차단해제" : "차단하기";
   return (
     <BlockedUserItemWrapper>
       <Profile
-        imgUrl={blockedUserItem.imgUrl}
+        imgUrl={blockedUserItem.imageUrl || LOGO_PATH}
         nickname={blockedUserItem.nickname}
-        location={blockedUserItem.address}
+        location={blockedUserItem.emdName}
       ></Profile>
       <TextButton text={btnText} onClick={onClick}></TextButton>
     </BlockedUserItemWrapper>

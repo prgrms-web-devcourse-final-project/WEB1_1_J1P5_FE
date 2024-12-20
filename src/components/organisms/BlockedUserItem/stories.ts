@@ -10,17 +10,17 @@ const meta: Meta<typeof BlockedUserItem> = {
 type Story = StoryObj<typeof meta>;
 
 const blockedUserItem: IBlockedUserItem = {
-  memberId: 1,
-  imgUrl: "https://github.com/ppyom.png",
+ userId: 1,
+  imageUrl: "https://github.com/ppyom.png",
   nickname: "11시27분",
-  address: "망원동",
+  emdName: "망원동",
   isBlocked: true
 };
 const unblockedUserItem: IBlockedUserItem = {
-  memberId: 1,
-  imgUrl: "https://github.com/ppyom.png",
+  userId: 1,
+  imageUrl: "https://github.com/ppyom.png",
   nickname: "11시27분",
-  address: "망원동",
+  emdName: "망원동",
   isBlocked: false
 };
 

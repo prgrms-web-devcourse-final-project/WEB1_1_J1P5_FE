@@ -13,10 +13,10 @@ type Story = StoryObj<typeof meta>;
 
 /**  공통 유저 아이템 생성 함수 */
 const createUserItem = (isBlocked: boolean): IBlockedUserItem => ({
-  memberId: 1,
-  imgUrl: "https://github.com/ppyom.png",
+  userId: 1,
+  imageUrl: "https://github.com/ppyom.png",
   nickname: "11시27분",
-  address: "망원동",
+  emdName: "망원동",
   isBlocked
 });
 

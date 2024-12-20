@@ -39,15 +39,16 @@ export const Comment = ({ comments, hasBuyer }: ICommentProps) => {
           (
             {
               commentId,
-              commentMemeberDto: { profileIamge, nickname },
+              commentMemeberDto: { profileIamge, nickname, userId },
               createdAt,
               content,
               replies,
               // isUpdatable,
+              isBlocked,
               isSeller,
               status,
             },
-            idx,
+            idx
           ) => (
             <CommentItem
               key={`comment_${idx}_${commentId}`}
@@ -60,10 +61,12 @@ export const Comment = ({ comments, hasBuyer }: ICommentProps) => {
               replies={replies}
               parentId={null}
               status={status}
+              isBlocked={isBlocked}
               isSeller={isSeller}
               hasBuyer={hasBuyer}
+              targetId={userId}
             />
-          ),
+          )
         )}
       </CommentListWrapper>
     </CommentWrapper>
