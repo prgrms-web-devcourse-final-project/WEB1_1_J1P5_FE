@@ -46,12 +46,13 @@ export const CommentHeaderContainer: ReturnType<typeof styled.div> = styled.div`
 /**
  * 댓글 작성자 / 작성 시간
  */
-export const WriterInformationWrapper: ReturnType<typeof styled.div> =
-  styled.div`
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-  `;
+export const WriterInformationWrapper: ReturnType<
+  typeof styled.div
+> = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+`;
 
 export const WriterBadgeWrapper: ReturnType<typeof styled.div> = styled.div`
   display: flex;
@@ -116,7 +117,8 @@ export const CommentItemWrapper: ReturnType<typeof styled.div> = styled.div`
   gap: ${10 / 16}rem;
   position: relative;
   padding-left: 1rem;
-  &.deleted {
+  &.deleted,
+  &.blocked {
     color: ${({ theme }) => theme.colors.grey_field_guide_but_deactivate};
   }
 `;
