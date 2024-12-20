@@ -16,6 +16,10 @@ export const LoginPage = () => {
   const handleNaverLoginClick = () => {
     requestOAuthLogin("NAVER");
   };
+  // 콜백 경로일 경우 로그인 템플릿을 보여주지 않음
+  if (location.pathname.includes("/callback")) {
+    return <Outlet />;
+  }
 
   return (
     <>
