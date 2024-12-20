@@ -18,8 +18,8 @@ import {
   useDetailModal,
 } from "hooks";
 import { KebabWrapper } from "./styled";
-import { deleteProduct, earlyClose, blockUser as blockSeller } from "services/apis";
-import type { Category } from "types";
+import { deleteProduct, earlyClose, reportUser, blockUser as blockSeller } from "services/apis";
+import type { Category, ReportType } from "types";
 import { Toast } from "components/atoms";
 import { isExpired } from "../../utils";
 
@@ -40,10 +40,11 @@ export const DetailPage = () => {
   const { setFormData, setProductId } = useFormDataStore();
   const { open, handleOpen, handleClose, menuRef } = useKebabMenu();
   const { handleCancel } = useBid(parseInt(productId!));
-  const { todo, removeNoBuyer, removeHasBuyer, blockUser } = useDetailModal();
+  const { removeNoBuyer, removeHasBuyer, reportPost, reportComplete, blockUser, blockUserComplete } =
+    useDetailModal();
   const isExpiredTime = useMemo(
     () => !!product?.expiredTime && isExpired(product?.expiredTime),
-    [isProductRefetching],
+    [isProductRefetching]
   );
 
   /**
@@ -66,16 +67,16 @@ export const DetailPage = () => {
    */
   const handleBlock = () => {
     if (!product?.seller.id) return;
-    
-    const onBlockUser = () => {
-      blockSeller(product.seller.id).then(() => {
-        Toast.show(`${product.seller.name}님을 차단했어요.`, 2000);
-      }).catch(() => { 
-        Toast.show("차단에 실패했어요. 잠시 후에 다시 시도해주세요.", 2000);
-      });
-    }
 
-    blockUser(onBlockUser);
+    blockUser(() => {
+      blockSeller(product.seller.id).then(() => {
+        blockUserComplete();
+      }).catch(() => { 
+        console.error();
+        closeModal();
+      });
+    });
+
     handleClose();
   };
 
@@ -83,8 +84,24 @@ export const DetailPage = () => {
    * (구매자) 신고
    */
   const handleReport = () => {
-    // TODO 신고
-    todo();
+    reportPost(() => {
+      if (product) {
+        const requestData = {
+          title: product.title,
+          content: product.content,
+          reportType: "POST" as ReportType,
+          targetId: product.seller.id,
+        };
+        reportUser(requestData)
+          .then(() => {
+            reportComplete();
+          })
+          .catch(() => {
+            console.error();
+            closeModal();
+          });
+      }
+    });
     handleClose();
   };
 
@@ -184,7 +201,7 @@ export const DetailPage = () => {
   useEffect(() => {
     setRightIcon(
       KebabIcon,
-      isExpiredTime ? () => Toast.show("마감된 상품입니다.", 2000) : handleOpen,
+      isExpiredTime ? () => Toast.show("마감된 상품입니다.", 2000) : handleOpen
     );
     return () => {
       clear();
@@ -240,8 +257,14 @@ export const DetailPage = () => {
             )}
             {!product.isSeller && (
               <>
-                <KebabMenu.Button content="해당 유저 차단하기" onClick={handleBlock} />
-                <KebabMenu.Button content="신고하기" onClick={handleReport} />
+                <KebabMenu.Button
+                  content="유저 차단하기"
+                  onClick={handleBlock}
+                />
+                <KebabMenu.Button
+                  content="유저 신고하기"
+                  onClick={handleReport}
+                />
               </>
             )}
           </KebabMenu>

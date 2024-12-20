@@ -19,3 +19,5 @@ export { ChatListPage } from "./ChatListPage";
 export { ChatRoomPage } from "./ChatRoomPage";
 export { MarketPricePage } from "./MarketPricePage";
 export { OAuthCallbackPage } from "./OAuthCallbackPage";
+export { PrivacyPolicyPage } from "./PrivacyPolicyPage";
+export { TermsOfServicePage } from "./TermsOfServicePage";

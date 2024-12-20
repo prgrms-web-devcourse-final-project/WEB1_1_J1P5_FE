@@ -15,10 +15,12 @@ import {
   OAuthCallbackPage,
   PermissionRequestPage,
   PostRegisterPage,
+  PrivacyPolicyPage,
   ProfileRegistrationPage,
   SearchPage,
   SearchResultPage,
   SelectLocationPage,
+  TermsOfServicePage,
   TransactionLocationPage,
   TransactionPage,
 } from "pages";
@@ -33,6 +35,10 @@ export const routes: RouteObject[] = [
     children: [
       // 권한 요청
       { path: "permission-request", element: <PermissionRequestPage /> },
+      // 개인정보 처리방침
+      { path: "privacy-policy", element: <PrivacyPolicyPage /> },
+      // 이용약관
+      { path: "terms-of-service", element: <TermsOfServicePage /> },
       // 로그인
       {
         path: "login",
