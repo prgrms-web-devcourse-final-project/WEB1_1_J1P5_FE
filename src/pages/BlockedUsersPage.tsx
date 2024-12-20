@@ -13,23 +13,37 @@ export const BlockedUsersPage = () => {
   const [processingUsers, setProcessingUsers] = useState<Set<number>>(new Set());
 
   useEffect(() => {
+    console.log('BlockedUsersPage 마운트됨');
     setTitle("차단 사용자 관리");
+    
+    return () => {
+      console.log('BlockedUsersPage 언마운트됨');
+      setUnblockingUsers(new Set());
+      setProcessingUsers(new Set());
+    };
   }, []);
 
   const {
     data,
     isLoading,
+    isFetching,
     isFetchingNextPage,
     ref,
   } = useFetchBlockedUsers();
 
-  const blockedUsers = useMemo<IBlockedUserItem[]>(() => 
-    data?.pages.map(user => ({
+  const blockedUsers = useMemo<IBlockedUserItem[]>(() => {
+    console.log('현재 데이터:', data?.pages);
+    console.log('차단 해제 중인 유저:', Array.from(unblockingUsers));
+    console.log('처리 중인 유저:', Array.from(processingUsers));
+    console.log('데이터 fetch 중:', isFetching);  // fetch 상태 로깅
+
+    if (!data?.pages?.length) return [];
+    
+    return data.pages.map(user => ({
       ...user,
       isBlocked: !unblockingUsers.has(user.userId)
-    })) ?? [], 
-    [data, unblockingUsers]
-  );
+    }));
+  }, [data, unblockingUsers, isFetching]);
 
   const handleClick = async (index: number) => {
     const user = blockedUsers[index];
