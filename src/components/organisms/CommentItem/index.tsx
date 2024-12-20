@@ -24,7 +24,8 @@ import {
   WriterBadgeWrapper,
 } from "./styled";
 import { DeletedComment } from "./deleted";
-import { reportUser } from "services/apis";
+import { BlockedComment } from "./blocked";
+import { reportUser, blockUser as blockCommentUser } from "services/apis";
 
 export interface ICommentItemProps {
   /** 댓글 아이디 */
@@ -45,6 +46,8 @@ export interface ICommentItemProps {
   parentId: IWriteCommentData["parentId"];
   /** 댓글 상태 */
   status: CommentStatus;
+  /** 차단된 사용자인지 여부 */
+  isBlocked: boolean;
   /** 판매자인지 여부 */
   isSeller: boolean;
   /** 현재 구매자가 있는 상태인지 여부 */
@@ -63,6 +66,7 @@ export const CommentItem = ({
   replies,
   parentId,
   status,
+  isBlocked,
   isSeller,
   hasBuyer,
   targetId,
@@ -83,7 +87,7 @@ export const CommentItem = ({
     handleDeleteComment,
   } = useCommentWriter(content);
   const time = getRelativeTime(createdAt);
-  const { todo, reportComment, reportComplete } = useDetailModal();
+  const { reportComment, reportComplete, blockUser, blockUserComplete } = useDetailModal();
   const {
     actions: { closeModal },
   } = useModalStore();
@@ -125,8 +129,16 @@ export const CommentItem = ({
    * 차단하기 메뉴 클릭
    */
   const handleBlockClick = () => {
-    // TODO 차단하기
-    todo();
+    if (!isBlocked && targetId) {
+      blockUser(() => {
+        blockCommentUser(targetId).then(() => {
+          blockUserComplete();
+        }).catch(() => { 
+          console.error();
+          closeModal();
+        });
+      });
+    }
     handleClose();
   };
 
@@ -157,7 +169,7 @@ export const CommentItem = ({
 
   return (
     <CommentItemContainer>
-      {status !== "DELETED" && (
+      {(status !== "DELETED" && !isBlocked) && (
         <CommentItemWrapper key={commentId}>
           <CommentHeaderContainer className="content-con">
             <Image url={imgUrl || LOGO_PATH} type="round" />
@@ -232,6 +244,7 @@ export const CommentItem = ({
         </CommentItemWrapper>
       )}
       {status === "DELETED" && <DeletedComment />}
+      {isBlocked && <BlockedComment />}
       {parentId === null && (
         <ReplyContainer>
           {replies.length !== 0 && (
@@ -262,6 +275,7 @@ export const CommentItem = ({
                       replies={replies}
                       parentId={commentId}
                       status={status}
+                      isBlocked={isBlocked}
                       isSeller={isSeller}
                       hasBuyer={hasBuyer}
                     />

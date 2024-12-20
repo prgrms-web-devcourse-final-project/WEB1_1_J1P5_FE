@@ -8,6 +8,7 @@ const TRANSACTION = "transaction" as const;
 const SELL = "sell" as const;
 const IN_PROGRESS = "in_progress" as const;
 const COMPLETED = "completed" as const;
+const BLOCK = "block" as const;
 
 export const queries = {
   session: {
@@ -33,4 +34,7 @@ export const queries = {
       completed: [TRANSACTION, SELL, COMPLETED],
     },
   },
+  block:{
+    DEFAULT: [BLOCK],
+  }
 } as const;

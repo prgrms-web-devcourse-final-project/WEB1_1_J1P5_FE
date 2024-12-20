@@ -18,7 +18,7 @@ import {
   useDetailModal,
 } from "hooks";
 import { KebabWrapper } from "./styled";
-import { deleteProduct, earlyClose, reportUser } from "services/apis";
+import { deleteProduct, earlyClose, reportUser, blockUser as blockSeller } from "services/apis";
 import type { Category, ReportType } from "types";
 import { Toast } from "components/atoms";
 import { isExpired } from "../../utils";
@@ -40,7 +40,7 @@ export const DetailPage = () => {
   const { setFormData, setProductId } = useFormDataStore();
   const { open, handleOpen, handleClose, menuRef } = useKebabMenu();
   const { handleCancel } = useBid(parseInt(productId!));
-  const { todo, removeNoBuyer, removeHasBuyer, reportPost, reportComplete } =
+  const { removeNoBuyer, removeHasBuyer, reportPost, reportComplete, blockUser, blockUserComplete } =
     useDetailModal();
   const isExpiredTime = useMemo(
     () => !!product?.expiredTime && isExpired(product?.expiredTime),
@@ -66,8 +66,18 @@ export const DetailPage = () => {
    * (구매자) 차단
    */
   const handleBlock = () => {
-    // TODO 차단
-    todo();
+    if (!product?.seller.id) return;
+
+    blockUser(() => {
+      blockSeller(product.seller.id).then(() => {
+        blockUserComplete();
+        navigate("/", { replace: true });
+      }).catch(() => { 
+        console.error();
+        closeModal();
+      });
+    });
+
     handleClose();
   };
 

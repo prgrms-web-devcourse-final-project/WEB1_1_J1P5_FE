@@ -44,6 +44,7 @@ export const Comment = ({ comments, hasBuyer }: ICommentProps) => {
               content,
               replies,
               // isUpdatable,
+              isBlocked,
               isSeller,
               status,
             },
@@ -60,6 +61,7 @@ export const Comment = ({ comments, hasBuyer }: ICommentProps) => {
               replies={replies}
               parentId={null}
               status={status}
+              isBlocked={isBlocked}
               isSeller={isSeller}
               hasBuyer={hasBuyer}
               targetId={userId}

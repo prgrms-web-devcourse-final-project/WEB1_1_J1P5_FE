@@ -10,6 +10,7 @@ export interface IComment {
     userId: number;
   };
   content: string;
+  isBlocked: boolean;
   isSeller: boolean;
   isUpdatable: boolean;
   createdAt: string;
