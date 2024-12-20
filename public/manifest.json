@@ -46,5 +46,7 @@
   "lang": "ko-KR",
   "categories": ["shopping", "marketplace", "lifestyle"],
   "orientation": "portrait",
-  "launch_handler": {}
+  "launch_handler": {
+    "client_mode": "navigate-existing"
+  }
 }
