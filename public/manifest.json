@@ -44,5 +44,7 @@
   ],
   "dir": "ltr",
   "lang": "ko-KR",
-  "categories": ["shopping", "marketplace", "lifestyle"]
+  "categories": ["shopping", "marketplace", "lifestyle"],
+  "orientation": "portrait",
+  "launch_handler": {}
 }
