@@ -87,7 +87,7 @@ export const CommentItem = ({
     handleDeleteComment,
   } = useCommentWriter(content);
   const time = getRelativeTime(createdAt);
-  const { todo, reportComment, reportComplete, blockUser, blockUserComplete } = useDetailModal();
+  const { reportComment, reportComplete, blockUser, blockUserComplete } = useDetailModal();
   const {
     actions: { closeModal },
   } = useModalStore();
@@ -275,6 +275,7 @@ export const CommentItem = ({
                       replies={replies}
                       parentId={commentId}
                       status={status}
+                      isBlocked={isBlocked}
                       isSeller={isSeller}
                       hasBuyer={hasBuyer}
                     />
